@@ -16,6 +16,7 @@
     "@fontsource-variable/onest": "^5.0.3",
     "@midudev/tailwind-animations": "^0.0.7",
     "astro": "^4.6.1",
+    "flowbite": "^2.3.0",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5"
