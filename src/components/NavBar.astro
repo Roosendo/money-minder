@@ -49,45 +49,47 @@ isLogin = Astro.url.pathname === '/login';
 <script>
   import { Collapse } from 'flowbite';
 
-  const sections = document.querySelectorAll('section')
-  const navItems = document.querySelectorAll('li a')
-
-  const callback = (entries: any[]) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        navItems.forEach((item) => {
-          console.log(item.getAttribute('aria-label'))
-          console.log(entry.target.id)
-          if (item.getAttribute('aria-label') === entry.target.id) {
-            item.classList.add('text-cyan-600')
-          } else {
-            item.classList.remove('text-cyan-600')
-          }
-        })
-      }
-    })
-  }
-
-  const observer = new IntersectionObserver(callback, {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.3,
-  })
-
-  sections.forEach((section) => {
-    observer.observe(section);
-  })
-
-  // Cleanup function
-  document.onvisibilitychange = () => {
-    if (document.visibilityState === 'hidden') {
-      observer.disconnect();
-    } else {
-      sections.forEach((section) => {
-        observer.observe(section);
+  document.addEventListener('astro:page-load', ()=> {
+    const sections = document.querySelectorAll('section')
+    const navItems = document.querySelectorAll('li a')
+  
+    const callback = (entries: any[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          navItems.forEach((item) => {
+            console.log(item.getAttribute('aria-label'))
+            console.log(entry.target.id)
+            if (item.getAttribute('aria-label') === entry.target.id) {
+              item.classList.add('text-cyan-600')
+            } else {
+              item.classList.remove('text-cyan-600')
+            }
+          })
+        }
       })
     }
-  }
+  
+    const observer = new IntersectionObserver(callback, {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.3,
+    })
+  
+    sections.forEach((section) => {
+      observer.observe(section);
+    })
+  
+    // Cleanup function
+    document.onvisibilitychange = () => {
+      if (document.visibilityState === 'hidden') {
+        observer.disconnect();
+      } else {
+        sections.forEach((section) => {
+          observer.observe(section);
+        })
+      }
+    }
+  })
 
   const $targetEl: HTMLElement = document.getElementById('navbar-sticky')!;
 
