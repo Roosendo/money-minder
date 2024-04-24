@@ -7,6 +7,7 @@
       "@components/*": ["./src/components/*"],
       "@pages/*": ["./src/components/pages/*"],
       "@images/*": ["./src/images/*"],
+      "@login/*": ["./src/components/login/*"],
     }
   }
 }
