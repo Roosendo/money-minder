@@ -1,13 +1,13 @@
 ---
 import Piggy from "public/Piggy.astro";
 
-let isLogin: boolean;
-let isSignup: boolean
-let isMain: boolean
+const getPageState = (pathname: string) => {
+  if (pathname === '/login') return 'login'
+  if (pathname === '/signup') return 'signup'
+  return 'main'
+}
 
-isLogin = Astro.url.pathname === '/login'
-isSignup = Astro.url.pathname === '/signup'
-isMain = Astro.url.pathname === '/'
+const currentPageState = getPageState(Astro.url.pathname)
 ---
 
 <nav class="bg-white dark:bg-gray-900 sticky w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
@@ -18,14 +18,14 @@ isMain = Astro.url.pathname === '/'
   </a>
   <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
     {
-      !isLogin && (  
+      (currentPageState !== 'login') && (  
         <a href="/login" id="login" class="text-white bg-cyan-500 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm md:px-4 md:py-2 px-2 py-1 text-center dark:bg-cyan-500 dark:hover:bg-cyan-600 dark:focus:ring-blue-800">
           Iniciar Sesión
         </a>
       )
     }
     {
-      (!isSignup && !isMain) && (
+      (currentPageState === 'login') && (
         <a href="/signup" id="signup" class="text-white bg-cyan-500 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm md:px-4 md:py-2 px-2 py-1 text-center dark:bg-cyan-500 dark:hover:bg-cyan-600 dark:focus:ring-blue-800">
           Registrarse
         </a>
