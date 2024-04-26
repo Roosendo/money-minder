@@ -33,6 +33,7 @@ import AlertMessage from './AlertMessage.astro'
     <label for="terms" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Estoy de acuerdo con los <a href="/#terms-conds" class="text-blue-600 hover:underline dark:text-blue-500">terminos y condiciones.</a></label>
   </div>
   <AlertMessage alertId="alert-terms-conds" alertMessage="Debes aceptar los términos y condiciones" typeAlert="warning" />
+  <AlertMessage alertId="alert-duplicate" alertMessage="El usuario ya existe" typeAlert="warning" />
   <AlertMessage alertId="alert-success" alertMessage="Registrado con exito" typeAlert="success" />
   <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Registrar nueva cuenta</button>
 </form>
@@ -46,6 +47,7 @@ import AlertMessage from './AlertMessage.astro'
   const alertEmail = document.querySelector('#alert-email') as HTMLDivElement
   const alertPasswords = document.querySelector('#alert-passwords') as HTMLDivElement
   const alertTermsConds = document.querySelector('#alert-terms-conds') as HTMLDivElement
+  const alertDuplicate = document.querySelector('#alert-duplicate') as HTMLDivElement
   const alertSuccess = document.querySelector('#alert-success') as HTMLDivElement
 
   const form = document.querySelector('form')
@@ -59,16 +61,16 @@ import AlertMessage from './AlertMessage.astro'
     const terms = (form.querySelector('#terms') as HTMLInputElement).checked
 
     if (name === '' || lastname === '' || email === '' || password === '' || repeatPassword === '') {
-      return showAndHideAlert(alertErrorUser, 10000)
+      return showAndHideAlert(alertErrorUser)
     }
     if (!validator.isEmail(email)) {
-      return showAndHideAlert(alertEmail, 10000)
+      return showAndHideAlert(alertEmail)
     }
     if (password !== repeatPassword) {
-      return showAndHideAlert(alertPasswords, 10000)
+      return showAndHideAlert(alertPasswords)
     }
     if (!terms) {
-      return showAndHideAlert(alertTermsConds, 10000)
+      return showAndHideAlert(alertTermsConds)
     }
 
     const apiBody = {
@@ -80,10 +82,16 @@ import AlertMessage from './AlertMessage.astro'
 
     const apiResponse = await signUpUser(apiBody)
 
-    if (!apiResponse) {
-      return showAndHideAlert(alertErrorUser, 10000)
+    if (typeof apiResponse === 'boolean') {
+      apiResponse ?? showAndHideAlert(alertSuccess)
     }
 
-    return showAndHideAlert(alertSuccess, 10000)
+    if (typeof apiResponse === 'string' && apiResponse === 'Conflict') {
+      return showAndHideAlert(alertDuplicate)
+    } else if (typeof apiResponse === 'string' && apiResponse === 'Bad Request') {
+      return showAndHideAlert(alertErrorUser)
+    }
+
+    return showAndHideAlert(alertErrorUser)
   })
 </script>

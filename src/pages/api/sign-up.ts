@@ -24,6 +24,17 @@ export const POST: APIRoute = async ({ request }) => {
     }), { status: 400 })
   }
 
+  const user = await client.execute({
+    sql: 'SELECT * FROM users WHERE email = ?',
+    args: [email]
+  })
+
+  if (user.rows.length > 0) {
+    return new Response(JSON.stringify({
+      error: 'User already exists'
+    }), { status: 409 })
+  }
+
   const newUserId = uuid()
 
   await client.execute({
