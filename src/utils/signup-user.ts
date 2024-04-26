@@ -3,10 +3,9 @@ interface SignUpUser {
   lastname: string
   email: string
   password: string
-
 }
 
-export const signUpUser = async ({ name, lastname, email, password }: SignUpUser) => {
+export const signUpUser = async ({ name, lastname, email, password }: SignUpUser): Promise<boolean | string> => {
   const body = { name, lastname, email, password }
   const apiURL = '/api/sign-up'
 
@@ -19,8 +18,8 @@ export const signUpUser = async ({ name, lastname, email, password }: SignUpUser
   try {
     const response = await fetch(apiURL, requestOptions)
 
-    if (!response.ok) {
-      throw new Error('Error creating user')
+    if (response.status === 400 || response.status === 409) {
+      return response.statusText
     }
 
     return true
