@@ -3,8 +3,8 @@ import { createClient } from '@libsql/client'
 import { v4 as uuid } from 'uuid'
 
 const client = createClient({
-  url: import.meta.env.TURSO_DATABASE_URL,
-  authToken: import.meta.env.TURSO_AUTH_TOKEN,
+  url: process.env.TURSO_DATABASE_URL ?? '',
+  authToken: process.env.TURSO_AUTH_TOKEN ?? '',
 })
 
 interface SignUpBody {
