@@ -83,7 +83,7 @@ import AlertMessage from './AlertMessage.astro'
     const apiResponse = await signUpUser(apiBody)
 
     if (typeof apiResponse === 'boolean') {
-      apiResponse ?? showAndHideAlert(alertSuccess)
+      apiResponse && showAndHideAlert(alertSuccess)
     }
 
     if (typeof apiResponse === 'number' && apiResponse === 409) {
