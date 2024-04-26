@@ -5,7 +5,7 @@ interface SignUpUser {
   password: string
 }
 
-export const signUpUser = async ({ name, lastname, email, password }: SignUpUser): Promise<boolean | string> => {
+export const signUpUser = async ({ name, lastname, email, password }: SignUpUser): Promise<boolean | number> => {
   const body = { name, lastname, email, password }
   const apiURL = '/api/sign-up'
 
@@ -19,7 +19,7 @@ export const signUpUser = async ({ name, lastname, email, password }: SignUpUser
     const response = await fetch(apiURL, requestOptions)
 
     if (response.status === 400 || response.status === 409) {
-      return response.statusText
+      return response.status
     }
 
     return true

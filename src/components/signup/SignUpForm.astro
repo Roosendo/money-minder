@@ -86,9 +86,9 @@ import AlertMessage from './AlertMessage.astro'
       apiResponse ?? showAndHideAlert(alertSuccess)
     }
 
-    if (typeof apiResponse === 'string' && apiResponse === 'Conflict') {
+    if (typeof apiResponse === 'number' && apiResponse === 409) {
       return showAndHideAlert(alertDuplicate)
-    } else if (typeof apiResponse === 'string' && apiResponse === 'Bad Request') {
+    } else if (typeof apiResponse === 'number' && apiResponse === 400) {
       return showAndHideAlert(alertErrorUser)
     }
 
