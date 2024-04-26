@@ -14,11 +14,14 @@ interface SignUpBody {
   password: string
 }
 
-export const Post: APIRoute = async ({ request }) => {
-  const { name, lastname, email, password }: SignUpBody = await request.json()
+export const POST: APIRoute = async ({ request }) => {
+  const body = await request.json()
+  const { name, lastname, email, password } = body as SignUpBody
 
   if (!name || !lastname || !email || !password) {
-    return new Response('Missing required fields', { status: 400 })
+    return new Response(JSON.stringify({
+      error: 'Missing required fields'
+    }), { status: 400 })
   }
 
   const newUserId = uuid()
@@ -28,5 +31,7 @@ export const Post: APIRoute = async ({ request }) => {
     args: [newUserId, name, lastname, email, password]
   })
 
-  return new Response('User created', { status: 201 })
+  return new Response(JSON.stringify({
+    message: 'User created'
+  }), { status: 201 })
 }

@@ -1,4 +1,4 @@
-export function showAndHideAlert (alertElement: HTMLElement, timeout: number = 2000) {
+export function showAndHideAlert (alertElement: HTMLDivElement, timeout: number = 2000) {
   alertElement.classList.remove('hidden')
   alertElement.classList.add('flex')
   setTimeout(() => {
