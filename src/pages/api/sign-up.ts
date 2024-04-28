@@ -1,10 +1,16 @@
 import type { APIRoute } from 'astro'
 import { createClient } from '@libsql/client'
 import { v4 as uuid } from 'uuid'
+import bcrypt from 'bcrypt'
+
+const saltRounds = 10
+const encryptPassword = async (password: string) => {
+  return bcrypt.hash(password, saltRounds)
+}
 
 const client = createClient({
-  url: process.env.TURSO_DATABASE_URL ?? '',
-  authToken: process.env.TURSO_AUTH_TOKEN ?? '',
+  url: import.meta.env.TURSO_DATABASE_URL ?? '',
+  authToken: import.meta.env.TURSO_AUTH_TOKEN ?? '',
 })
 
 interface SignUpBody {
@@ -16,7 +22,7 @@ interface SignUpBody {
 
 export const POST: APIRoute = async ({ request }) => {
   const body = await request.json()
-  const { name, lastname, email, password } = body as SignUpBody
+  let { name, lastname, email, password } = body as SignUpBody
 
   if (!name || !lastname || !email || !password) {
     return new Response(JSON.stringify({
@@ -36,6 +42,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const newUserId = uuid()
+  password = await encryptPassword(password)
 
   await client.execute({
     sql: 'INSERT INTO users (id, name, lastname, email, password) VALUES (?, ?, ?, ?, ?)',
