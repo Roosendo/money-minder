@@ -29,6 +29,7 @@ import AlertMessage from '@components/AlertMessage.astro'
   import validator from 'validator'
   import { showAndHideAlert } from '@utils/alerts'
   import { loginUser } from '@utils/login-user'
+  import type { UserData } from 'src/types'
 
   const alertMissing = document.querySelector('#alert-missing') as HTMLDivElement
   const alertEmail = document.querySelector('#alert-email') as HTMLDivElement
@@ -42,6 +43,7 @@ import AlertMessage from '@components/AlertMessage.astro'
 
     const email = (document.querySelector('#email') as HTMLInputElement).value
     const userPassword = (document.querySelector('#password') as HTMLInputElement).value
+    const remember = (document.querySelector('#remember') as HTMLInputElement).checked
 
     if (email === '' || userPassword === '') {
       return showAndHideAlert(alertMissing)
@@ -50,7 +52,23 @@ import AlertMessage from '@components/AlertMessage.astro'
       return showAndHideAlert(alertEmail)
     }
 
-    // implementar la función de coockies en caso de que quiera
+    const userData: UserData = {
+      IsLoggedIn: true,
+      Sales: [],
+      Incomes: [],
+      MonthlyLimit: 0
+    }
+
+    let options = {}
+
+    if (remember) {
+      const today = new Date()
+      const expirationDate = new Date(today)
+      expirationDate.setDate(today.getDate() + 30)
+      options = { expires: expirationDate }
+    }
+
+    Astro.cookies.set('userData', JSON.stringify(userData), options)
 
     const apiBody = {
       email,
