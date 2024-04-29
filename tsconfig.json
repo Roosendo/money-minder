@@ -10,6 +10,7 @@
       "@login/*": ["./src/components/login/*"],
       "@signup/*": ["./src/components/signup/*"],
       "@utils/*": ["./src/utils/*"],
+      "@icons/*": ["./src/assets/icons/*"],
     }
   }
 }
