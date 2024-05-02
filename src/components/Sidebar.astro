@@ -18,7 +18,7 @@ import ThemeToggle from './ThemeToggle.astro'
 
 <aside
 	id='sidebar'
-	class='fixed left-0 top-0 z-40 h-screen w-64 -translate-x-full transition-transform'
+	class='fixed left-0 top-0 z-40 h-screen w-64 -translate-x-full transition-transform shadow-gray-800 dark:shadow-gray-500'
 >
 	<div class='h-full overflow-y-auto bg-gray-50 px-3 py-4 dark:bg-gray-800'>
 		<ul class='space-y-2 font-medium'>
@@ -144,7 +144,8 @@ import ThemeToggle from './ThemeToggle.astro'
 			</li>
 			<li>
 				<a
-					href='/'
+					id="logout"
+					href='/dashboard'
 					class='group flex items-center rounded-lg p-2 text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
 				>
 					<svg
@@ -160,7 +161,8 @@ import ThemeToggle from './ThemeToggle.astro'
 					<span class='ms-3'>Cerrar Sesión</span>
 				</a>
 			</li>
-			<li>
+			<li class="flex flex-col gap-3 mt-3">
+				<p>Temas</p>
 				<ThemeToggle />
 			</li>
 		</ul>
@@ -169,14 +171,21 @@ import ThemeToggle from './ThemeToggle.astro'
 </aside>
 
 <script>
-	document.addEventListener('astro:page-load', () => {
+	import { $ } from '@lib/dom-selector'
+	import { signOut } from 'auth-astro/client'
+	document.addEventListener('astro:page-load', async () => {
 		let isSidebarOpen = false
+		const $logout = $('#logout')
+		if ($logout) {
+			$logout.onclick = () => signOut()
+		}
 
 		document.getElementById('separator-sidebar')?.addEventListener('click', () => {
 			const sidebar = document.getElementById('sidebar')!
 			const separator = document.getElementById('separator-sidebar')!
 
 			sidebar.classList.toggle('-translate-x-full', isSidebarOpen)
+			sidebar.classList.toggle('shadow-2xl', !isSidebarOpen)
 			separator.classList.toggle('translate-x-64', !isSidebarOpen)
 
 			isSidebarOpen = !isSidebarOpen

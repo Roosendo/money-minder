@@ -87,8 +87,6 @@ const currentPageState = getPageState(Astro.url.pathname)
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           navItems.forEach((item) => {
-            console.log(item.getAttribute('aria-label'))
-            console.log(entry.target.id)
             if (item.getAttribute('aria-label') === entry.target.id) {
               item.classList.add('text-cyan-500')
             } else {

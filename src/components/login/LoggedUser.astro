@@ -1,0 +1,27 @@
+---
+interface Props {
+  name: string | null | undefined
+  email: string | null | undefined
+  imageUrl: string | null | undefined
+}
+
+const { name, email, imageUrl } = Astro.props
+---
+
+<section class="flex flex-col items-center justify-center gap-6 p-6 text-lg text-gray-800 dark:text-gray-50 rounded-lg shadow-lg dark:shadow-2xl">
+  <h1>¡Hola {name}!</h1>
+  <img src={imageUrl} alt={`Foto de perfil de ${name}`} class="rounded-full" />
+  <p>Tú correo es: {email}</p>
+  <p>Si tus datos son correctos, puedes pasar al Dashboard, sino sientete libre de cambiar de cuenta cerrando sesión</p>
+  <button id="dashboard" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ir al Dashboard</button>
+  <button id="logout-g" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cerrar</button>
+</section>
+
+<script>
+  import { $ } from '@lib/dom-selector'
+
+  const $dashboard = $('#dashboard')
+  if ($dashboard) {
+    $dashboard.onclick = () => window.location.href = '/dashboard'
+  }
+</script>
