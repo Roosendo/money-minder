@@ -11,6 +11,7 @@
       "@signup/*": ["./src/components/signup/*"],
       "@utils/*": ["./src/utils/*"],
       "@icons/*": ["./src/assets/icons/*"],
+      "@lib/*": ["./src/lib/*"],
     }
   }
 }
