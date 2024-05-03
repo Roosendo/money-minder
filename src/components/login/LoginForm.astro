@@ -6,7 +6,7 @@ import NotLoggedUser from '@login/NotLoggedUser.astro'
 const session = await getSession(Astro.request)
 ---
 
-<section class="max-w-96 mx-auto my-12">
+<section class="max-w-lg mx-auto my-12">
     {session !== null ? (
       <LoggedUser name={session.user?.name} email={session.user?.email} imageUrl={session.user?.image} />
     ) : (
