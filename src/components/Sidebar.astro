@@ -1,5 +1,9 @@
 ---
 import ThemeToggle from './ThemeToggle.astro'
+import { getSession } from 'auth-astro/server'
+import { Image } from 'astro:assets'
+
+const session = await getSession(Astro.request)
 ---
 <button
 	id='separator-sidebar'
@@ -21,7 +25,13 @@ import ThemeToggle from './ThemeToggle.astro'
 	class='fixed left-0 top-0 z-40 h-screen w-64 -translate-x-full transition-transform shadow-gray-800 dark:shadow-gray-500'
 >
 	<div class='h-full overflow-y-auto bg-gray-50 px-3 py-4 dark:bg-gray-800'>
-		<ul class='space-y-2 font-medium'>
+		{session && (
+			<section class="flex flex-row gap-3">
+				<Image src={session.user?.image ?? ''} alt={`Foto de perfil de ${session.user?.name}`} inferSize={true} class='rounded-xl size-16' />
+				<h3 class='text-lg font-semibold text-black dark:text-white m-auto'>{session.user?.name}</h3>
+			</section>
+		)}
+		<ul class='space-y-2 font-medium border-t mt-3'>
 			<li>
 				<a
 					href='/dashboard'
@@ -124,43 +134,45 @@ import ThemeToggle from './ThemeToggle.astro'
 			</li>
 		</ul>
 		<ul class='mt-4 space-y-2 border-t border-gray-200 pt-4 font-medium dark:border-gray-700'>
-			<li>
-				<a
-					href='/account'
-					class='group flex items-center rounded-lg p-2 text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
-				>
-					<svg
-						class='h-5 w-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'
-						aria-hidden='true'
-						fill='currentColor'
-						viewBox='0 0 17 20'
+			{session ? (
+				<li>
+					<button
+						id="logout"
+						class='group flex items-center rounded-lg p-2 text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
 					>
-						<path
-							d='M7.958 19.393a7.7 7.7 0 0 1-6.715-3.439c-2.868-4.832 0-9.376.944-10.654l.091-.122a3.286 3.286 0 0 0 .765-3.288A1 1 0 0 1 4.6.8c.133.1.313.212.525.347A10.451 10.451 0 0 1 10.6 9.3c.5-1.06.772-2.213.8-3.385a1 1 0 0 1 1.592-.758c1.636 1.205 4.638 6.081 2.019 10.441a8.177 8.177 0 0 1-7.053 3.795Z'
-						></path>
-					</svg>
-					<span class='ms-3'>Cuenta</span>
-				</a>
-			</li>
-			<li>
-				<a
-					id="logout"
-					href='/dashboard'
-					class='group flex items-center rounded-lg p-2 text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
-				>
-					<svg
-						class='h-5 w-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'
-						aria-hidden='true'
-						fill='currentColor'
-						viewBox='0 0 17 20'
+						<svg
+							class='h-5 w-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'
+							aria-hidden='true'
+							fill='currentColor'
+							viewBox='0 0 17 20'
+						>
+							<path
+								d='M7.958 19.393a7.7 7.7 0 0 1-6.715-3.439c-2.868-4.832 0-9.376.944-10.654l.091-.122a3.286 3.286 0 0 0 .765-3.288A1 1 0 0 1 4.6.8c.133.1.313.212.525.347A10.451 10.451 0 0 1 10.6 9.3c.5-1.06.772-2.213.8-3.385a1 1 0 0 1 1.592-.758c1.636 1.205 4.638 6.081 2.019 10.441a8.177 8.177 0 0 1-7.053 3.795Z'
+							></path>
+						</svg>
+						<span class='ms-3'>Cerrar Sesión</span>
+					</button>
+				</li>
+			) : (
+				<li>
+					<button
+						id="login"
+						class='group flex items-center rounded-lg p-2 text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
 					>
-						<path
-							d='M7.958 19.393a7.7 7.7 0 0 1-6.715-3.439c-2.868-4.832 0-9.376.944-10.654l.091-.122a3.286 3.286 0 0 0 .765-3.288A1 1 0 0 1 4.6.8c.133.1.313.212.525.347A10.451 10.451 0 0 1 10.6 9.3c.5-1.06.772-2.213.8-3.385a1 1 0 0 1 1.592-.758c1.636 1.205 4.638 6.081 2.019 10.441a8.177 8.177 0 0 1-7.053 3.795Z'
-						></path>
-					</svg>
-					<span class='ms-3'>Cerrar Sesión</span>
-				</a>
-			</li>
+						<svg
+							class='h-5 w-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'
+							aria-hidden='true'
+							fill='currentColor'
+							viewBox='0 0 17 20'
+						>
+							<path
+								d='M7.958 19.393a7.7 7.7 0 0 1-6.715-3.439c-2.868-4.832 0-9.376.944-10.654l.091-.122a3.286 3.286 0 0 0 .765-3.288A1 1 0 0 1 4.6.8c.133.1.313.212.525.347A10.451 10.451 0 0 1 10.6 9.3c.5-1.06.772-2.213.8-3.385a1 1 0 0 1 1.592-.758c1.636 1.205 4.638 6.081 2.019 10.441a8.177 8.177 0 0 1-7.053 3.795Z'
+							></path>
+						</svg>
+						<span class='ms-3'>Iniciar sesión</span>
+					</button>
+				</li>
+			)}
 			<li class="flex flex-col gap-3 mt-3">
 				<p>Temas</p>
 				<ThemeToggle />
@@ -172,10 +184,15 @@ import ThemeToggle from './ThemeToggle.astro'
 
 <script>
 	import { $ } from '@lib/dom-selector'
-	import { signOut } from 'auth-astro/client'
+	import { signIn, signOut } from 'auth-astro/client'
 	document.addEventListener('astro:page-load', async () => {
 		let isSidebarOpen = false
 		const $logout = $('#logout')
+		const $login = $('#login')
+
+		if ($login) {
+			$login.onclick = () => signIn('google')
+		}
 		if ($logout) {
 			$logout.onclick = () => signOut()
 		}
