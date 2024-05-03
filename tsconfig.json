@@ -8,7 +8,6 @@
       "@pages/*": ["./src/components/pages/*"],
       "@images/*": ["./src/images/*"],
       "@login/*": ["./src/components/login/*"],
-      "@signup/*": ["./src/components/signup/*"],
       "@utils/*": ["./src/utils/*"],
       "@icons/*": ["./src/assets/icons/*"],
       "@lib/*": ["./src/lib/*"],
