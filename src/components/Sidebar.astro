@@ -1,5 +1,6 @@
 ---
 import ThemeToggle from './ThemeToggle.astro'
+import ButtonLogin from './ButtonLogin.astro'
 import { getSession } from 'auth-astro/server'
 import { Image } from 'astro:assets'
 
@@ -37,47 +38,32 @@ const session = await getSession(Astro.request)
 					href='/dashboard'
 					class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
 				>
-					<svg
-						class='h-5 w-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'
-						aria-hidden='true'
-						fill='currentColor'
-						viewBox='0 0 22 21'
-					>
-						<path
-							d='M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z'
-						></path>
-						<path
-							d='M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z'
-						></path>
-					</svg>
+					<svg viewBox="0 0 24 24" fill="currentColor" class="size-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white">
+						<path fill-rule="evenodd" d="M2.25 5.25a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3V15a3 3 0 0 1-3 3h-3v.257c0 .597.237 1.17.659 1.591l.621.622a.75.75 0 0 1-.53 1.28h-9a.75.75 0 0 1-.53-1.28l.621-.622a2.25 2.25 0 0 0 .659-1.59V18h-3a3 3 0 0 1-3-3V5.25Zm1.5 0v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5Z" clip-rule="evenodd" />
+					</svg>				
 					<span class='ms-3'>Dashboard</span>
 				</a>
 			</li>
 			<li>
 				<a
-					href='/incomes'
+					href='#'
 					class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
 				>
-					<svg
-						class='h-5 w-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'
-						aria-hidden='true'
-						fill='currentColor'
-						viewBox='0 0 20 18'
-					>
-						<path
-							d='M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z'
-						></path>
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white">
+						<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+						<path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
+						<path d="M12 3v3m0 12v3" />
 					</svg>
 					<span class='ms-3 flex-1 whitespace-nowrap'>Ingresos</span>
 				</a>
 			</li>
 			<li>
 				<a
-					href='/sales'
+					href='#'
 					class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
 				>
 					<svg
-						class='h-5 w-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'
+						class='size-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'
 						aria-hidden='true'
 						fill='currentColor'
 						viewBox='0 0 18 20'
@@ -91,32 +77,23 @@ const session = await getSession(Astro.request)
 			</li>
 			<li>
 				<a
-					href='/analysis'
+					href='#'
 					class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
 				>
-					<svg
-						class='h-5 w-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'
-						aria-hidden='true'
-						fill='none'
-						viewBox='0 0 18 16'
-					>
-						<path
-							stroke='currentColor'
-							stroke-linecap='round'
-							stroke-linejoin='round'
-							stroke-width='2'
-							d='M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3'></path>
-					</svg>
+					<svg viewBox="0 0 24 24" fill="currentColor" class="size-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white">
+						<path fill-rule="evenodd" d="M2.25 13.5a8.25 8.25 0 0 1 8.25-8.25.75.75 0 0 1 .75.75v6.75H18a.75.75 0 0 1 .75.75 8.25 8.25 0 0 1-16.5 0Z" clip-rule="evenodd" />
+						<path fill-rule="evenodd" d="M12.75 3a.75.75 0 0 1 .75-.75 8.25 8.25 0 0 1 8.25 8.25.75.75 0 0 1-.75.75h-7.5a.75.75 0 0 1-.75-.75V3Z" clip-rule="evenodd" />
+					</svg>				
 					<span class='ms-3 flex-1 whitespace-nowrap'>Análisis</span>
 				</a>
 			</li>
 			<li>
 				<a
-					href='/recomendations'
+					href='#'
 					class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
 				>
 					<svg
-						class='h-5 w-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'
+						class='size-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'
 						aria-hidden='true'
 						fill='currentColor'
 						viewBox='0 0 20 20'
@@ -134,6 +111,18 @@ const session = await getSession(Astro.request)
 			</li>
 		</ul>
 		<ul class='mt-4 space-y-2 border-t border-gray-200 pt-4 font-medium dark:border-gray-700'>
+			<li>
+				<a
+					href='/'
+					class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
+				>
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="size-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white">
+					<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+					<path d="M12.707 2.293l9 9c.63 .63 .184 1.707 -.707 1.707h-1v6a3 3 0 0 1 -3 3h-1v-7a3 3 0 0 0 -2.824 -2.995l-.176 -.005h-2a3 3 0 0 0 -3 3v7h-1a3 3 0 0 1 -3 -3v-6h-1c-.89 0 -1.337 -1.077 -.707 -1.707l9 -9a1 1 0 0 1 1.414 0m.293 11.707a1 1 0 0 1 1 1v7h-4v-7a1 1 0 0 1 .883 -.993l.117 -.007z" />
+				</svg>
+					<span class='ms-3 flex-1 whitespace-nowrap'>Inicio</span>
+				</a>
+			</li>
 			{session ? (
 				<li>
 					<button
@@ -141,36 +130,24 @@ const session = await getSession(Astro.request)
 						class='group flex items-center rounded-lg p-2 text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
 					>
 						<svg
-							class='h-5 w-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'
+							class='size-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'
 							aria-hidden='true'
-							fill='currentColor'
-							viewBox='0 0 17 20'
+							fill='none'
+							viewBox='0 0 18 16'
 						>
 							<path
-								d='M7.958 19.393a7.7 7.7 0 0 1-6.715-3.439c-2.868-4.832 0-9.376.944-10.654l.091-.122a3.286 3.286 0 0 0 .765-3.288A1 1 0 0 1 4.6.8c.133.1.313.212.525.347A10.451 10.451 0 0 1 10.6 9.3c.5-1.06.772-2.213.8-3.385a1 1 0 0 1 1.592-.758c1.636 1.205 4.638 6.081 2.019 10.441a8.177 8.177 0 0 1-7.053 3.795Z'
-							></path>
+								stroke='currentColor'
+								stroke-linecap='round'
+								stroke-linejoin='round'
+								stroke-width='2'
+								d='M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3'></path>
 						</svg>
 						<span class='ms-3'>Cerrar Sesión</span>
 					</button>
 				</li>
 			) : (
 				<li>
-					<button
-						id="login"
-						class='group flex items-center rounded-lg p-2 text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
-					>
-						<svg
-							class='h-5 w-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'
-							aria-hidden='true'
-							fill='currentColor'
-							viewBox='0 0 17 20'
-						>
-							<path
-								d='M7.958 19.393a7.7 7.7 0 0 1-6.715-3.439c-2.868-4.832 0-9.376.944-10.654l.091-.122a3.286 3.286 0 0 0 .765-3.288A1 1 0 0 1 4.6.8c.133.1.313.212.525.347A10.451 10.451 0 0 1 10.6 9.3c.5-1.06.772-2.213.8-3.385a1 1 0 0 1 1.592-.758c1.636 1.205 4.638 6.081 2.019 10.441a8.177 8.177 0 0 1-7.053 3.795Z'
-							></path>
-						</svg>
-						<span class='ms-3'>Iniciar sesión</span>
-					</button>
+					<ButtonLogin />
 				</li>
 			)}
 			<li class="flex flex-col gap-3 mt-3">
@@ -184,15 +161,11 @@ const session = await getSession(Astro.request)
 
 <script>
 	import { $ } from '@lib/dom-selector'
-	import { signIn, signOut } from 'auth-astro/client'
+	import { signOut } from 'auth-astro/client'
 	document.addEventListener('astro:page-load', async () => {
 		let isSidebarOpen = false
 		const $logout = $('#logout')
-		const $login = $('#login')
 
-		if ($login) {
-			$login.onclick = () => signIn('google')
-		}
 		if ($logout) {
 			$logout.onclick = () => signOut()
 		}

@@ -13,19 +13,3 @@ const session = await getSession(Astro.request)
       <NotLoggedUser />
     )}
 </section>
-
-<script>
-  import { $ } from '@lib/dom-selector'
-  const { signIn, signOut } = await import('auth-astro/client')
-
-  const $loginG = $('#login-g')
-  const $logoutG = $('#logout-g')
-
-  if ($loginG) {
-    $loginG.onclick = () => signIn('google')
-  }
-
-  if ($logoutG) {
-    $logoutG.onclick = () => signOut()
-  }
-</script>
