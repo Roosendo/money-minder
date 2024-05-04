@@ -1,0 +1,15 @@
+---
+import { Image } from 'astro:assets'
+import BannerDash from '@images/banner-dash.webp'
+---
+
+<section class="flex flex-col mx-auto items-center w-[80dvw] h-[80dvh] justify-center rounded-3xl px-4">
+  <Image 
+    src={BannerDash}
+    alt='Main banner from Money Minder'
+    class='absolute w-[80dvw] h-[80dvh] md:object-fit object-cover rounded-3xl opacity-30 dark:opacity-20' />
+    <div class="flex flex-col gap-3">
+      <h1 class="text-center text-4xl font-bold mix-blend-difference md:text-8xl">Bienvenido a Money Minder</h1>
+      <p class="text-center text-base fonrt-medium mix-blend-difference md:text-xl w-1/2 m-auto">Explora las opciones disponibles para personalizar tu experiencia y aprovechar al máximo nuestros servicios.</p>
+    </div>
+</section>
