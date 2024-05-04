@@ -1,6 +1,5 @@
 ---
 import ThemeToggle from './ThemeToggle.astro'
-import ButtonLogin from './ButtonLogin.astro'
 import { getSession } from 'auth-astro/server'
 import { Image } from 'astro:assets'
 
@@ -123,7 +122,7 @@ const session = await getSession(Astro.request)
 					<span class='ms-3 flex-1 whitespace-nowrap'>Inicio</span>
 				</a>
 			</li>
-			{session ? (
+			{session && (
 				<li>
 					<button
 						id="logout"
@@ -144,10 +143,6 @@ const session = await getSession(Astro.request)
 						</svg>
 						<span class='ms-3'>Cerrar Sesión</span>
 					</button>
-				</li>
-			) : (
-				<li>
-					<ButtonLogin />
 				</li>
 			)}
 			<li class="flex flex-col gap-3 mt-3">
