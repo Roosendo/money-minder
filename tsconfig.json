@@ -11,6 +11,7 @@
       "@utils/*": ["./src/utils/*"],
       "@icons/*": ["./src/assets/icons/*"],
       "@lib/*": ["./src/lib/*"],
+      "@dashboard/*": ["./src/components/dashboard/*"],
     }
   }
 }
