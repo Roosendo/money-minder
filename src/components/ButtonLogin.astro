@@ -12,9 +12,9 @@ import Google from '@icons/Google.astro'
 
 <script>
   import { $ } from '@lib/dom-selector'
-  const { signIn } = await import('auth-astro/client')
-
-  document.addEventListener('astro:page-load', () => {
+  
+  document.addEventListener('astro:page-load', async () => {
+    const { signIn } = await import('auth-astro/client')
     const $loginButton = $('#login-g')
   
     if ($loginButton) {
