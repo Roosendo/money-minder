@@ -1,11 +1,12 @@
 ---
 import Google from '@icons/Google.astro'
 ---
+
 <button
 	id='login-g'
 	class='w-full rounded-lg bg-gray-200 px-5 py-2.5 text-center text-sm font-bold text-black hover:bg-gray-300 focus:outline-none sm:w-auto'
 >
-  <Google class='w-5 h-5 inline-block mr-2' />
+  <Google class='size-5 inline-block mr-2' />
 	Ingresar
 </button>
 
@@ -13,9 +14,12 @@ import Google from '@icons/Google.astro'
   import { $ } from '@lib/dom-selector'
   const { signIn } = await import('auth-astro/client')
 
-  const $loginButton = $('#login-g')
+  document.addEventListener('astro:page-load', () => {
+    const $loginButton = $('#login-g')
+  
+    if ($loginButton) {
+      $loginButton.onclick = () => signIn('google')
+    }
+  })
 
-  if ($loginButton) {
-    $loginButton.onclick = () => signIn('google')
-  }
 </script>
