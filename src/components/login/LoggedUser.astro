@@ -21,16 +21,18 @@ const { name, email, imageUrl } = Astro.props
 
 <script>
   import { $ } from '@lib/dom-selector'
-  const { signOut } = await import('auth-astro/client')
-
-  const $logoutG = $('#logout-g')
-  const $dashboard = $('#dashboard')
-
-  if ($logoutG) {
-    $logoutG.onclick = () => signOut()
-  }
-
-  if ($dashboard) {
-    $dashboard.onclick = () => window.location.href = '/dashboard'
-  }
+  document.addEventListener('astro:page-load', async () => {
+    const { signOut } = await import('auth-astro/client')
+  
+    const $logoutG = $('#logout-g')
+    const $dashboard = $('#dashboard')
+  
+    if ($logoutG) {
+      $logoutG.onclick = () => signOut()
+    }
+  
+    if ($dashboard) {
+      $dashboard.onclick = () => window.location.href = '/dashboard'
+    }
+  })
 </script>
