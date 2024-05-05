@@ -17,16 +17,12 @@
     "@fontsource-variable/onest": "^5.0.4",
     "@libsql/client": "0.6.0",
     "@midudev/tailwind-animations": "^0.0.7",
-    "@types/bcrypt": "5.0.2",
     "@types/uuid": "9.0.8",
-    "@types/validator": "13.11.9",
     "astro": "^4.7.1",
     "auth-astro": "^4.1.1",
-    "bcrypt": "5.1.1",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5",
-    "uuid": "9.0.1",
-    "validator": "13.11.0"
+    "uuid": "9.0.1"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
