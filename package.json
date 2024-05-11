@@ -10,24 +10,24 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.10",
-    "@astrojs/tailwind": "^5.1.0",
-    "@astrojs/vercel": "^7.5.4",
+    "@astrojs/check": "^0.6.0",
+    "@astrojs/tailwind": "5.1.0",
+    "@astrojs/vercel": "7.6.0",
     "@auth/core": "0.18.6",
-    "@fontsource-variable/onest": "^5.0.4",
+    "@fontsource-variable/onest": "5.0.4",
     "@libsql/client": "0.6.0",
-    "@midudev/tailwind-animations": "^0.0.7",
+    "@midudev/tailwind-animations": "0.0.7",
     "@types/uuid": "9.0.8",
-    "astro": "^4.7.1",
-    "auth-astro": "^4.1.1",
-    "tailwindcss": "^3.4.3",
-    "typescript": "^5.4.5",
+    "astro": "^4.8.2",
+    "auth-astro": "4.1.1",
+    "tailwindcss": "3.4.3",
+    "typescript": "5.4.5",
     "uuid": "9.0.1"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.13.0",
-    "prettier-plugin-astro-organize-imports": "^0.4.5",
+    "prettier-plugin-astro-organize-imports": "^0.4.7",
     "prettier-plugin-tailwindcss": "^0.5.14"
   }
 }
