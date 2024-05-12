@@ -82,6 +82,7 @@ import Table from '@dashboard/Table.astro'
     const $alertWarning = $('#alert-error') as HTMLDivElement
     const $form = $('#form') as HTMLFormElement
     const $table = $('#table-body') as HTMLTableElement
+    $table.innerHTML = ''
 
     interface Exit {
       entry_id: number
