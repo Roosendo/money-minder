@@ -13,6 +13,7 @@
       "@lib/*": ["./src/lib/*"],
       "@dashboard/*": ["./src/components/dashboard/*"],
       "@entries/*": ["./src/components/entries/*"],
+      "@exits/*": ["./src/components/exits/*"],
     }
   }
 }
