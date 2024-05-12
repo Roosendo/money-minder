@@ -1,0 +1,95 @@
+---
+
+---
+
+<form id="form"class="max-w-md mx-auto shadow-lg shadow-gray-800 dark:shadow-gray-500 rounded-md p-6 text-gray-900 dark:text-white">
+  <h1 class="text-center text-2xl mb-6 uppercase">registro de ingresos</h1>
+  <div class="mb-5">
+    <label for="date" class="block mb-2 text-sm font-medium">Fecha del monto</label>
+    <input type="date" id="date" class="shadow-sm bg-gray-50 border border-gray-300 rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600">
+  </div>
+  <div class="mb-5">
+    <label for="currency-input" class="block mb-2 text-sm font-medium">Monto del ingreso:</label>
+    <div class="flex">
+      <div class="relative w-full">
+          <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
+            <svg class="size-4 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="none" viewBox="0 0 20 16">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1M2 5h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm8 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
+            </svg>
+          </div>
+          <input type="number" id="currency-input" class="block p-2.5 w-full z-20 ps-10 text-sm text-gray-900 bg-gray-50 rounded-s-lg border-e-gray-50 border-e-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="3.99" required step="0.01" />
+      </div>
+      <div class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-e-lg dark:bg-gray-700  dark:text-white dark:border-gray-600">
+        <svg class="size-5 mr-1" viewBox="0 0 640 480">
+          <path fill="#bd3d44" d="M0 0h640v480H0"/>
+          <path stroke="#fff" stroke-width="37" d="M0 55.3h640M0 129h640M0 203h640M0 277h640M0 351h640M0 425h640"/>
+          <path fill="#192f5d" d="M0 0h364.8v258.5H0"/>
+          <marker id="us-a" markerHeight="30" markerWidth="30">
+            <path fill="#fff" d="m14 0 9 27L0 10h28L5 27z"/>
+          </marker>
+          <path fill="none" marker-mid="url(#us-a)" d="m0 0 16 11h61 61 61 61 60L47 37h61 61 60 61L16 63h61 61 61 61 60L47 89h61 61 60 61L16 115h61 61 61 61 60L47 141h61 61 60 61L16 166h61 61 61 61 60L47 192h61 61 60 61L16 218h61 61 61 61 60z"/>
+        </svg>
+          USD
+      </div>
+    </div>
+  </div>
+  <div class="mb-5">
+    <label for="underline_select" class="sr-only">Underline select</label>
+    <select id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+      <option selected>Elige una categoría...</option>
+      <option value="Ingreso Laboral">Ingreso Laboral</option>
+				<option value="Ingreso de Negocios">Ingreso de Negocios</option>
+				<option value="Ingreso Familiar">Ingreso Familiar</option>
+				<option value="Ingreso de Inversiones">Ingreso de Inversiones</option>
+				<option value="Ingreso de Propiedades">Ingreso de Propiedades</option>
+				<option value="Ingreso por Trabajos Independientes">
+					Ingreso por Trabajos Independientes
+				</option>
+				<option value="Ingreso por Subsidios o Becas">
+					Ingreso por Subsidios o Becas
+				</option>
+				<option value="Ingreso por Prestaciones">
+					Ingreso por Prestaciones
+				</option>
+				<option value="Ingreso de Pensión">Ingreso de Pensión</option>
+				<option value="Ingresos Adicionales">Ingresos Adicionales</option>
+    </select>
+  </div>
+  <div class="mb-5 mx-auto max-w-sm">
+    <label for="message" class="block mb-2 text-sm font-medium">Descripción del ingreso:</label>
+    <textarea id="message" rows="4" class="resize-none block p-2.5 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Deja tu descripción..."></textarea>
+  </div>
+  <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700">Registrar ingreso</button>
+</form>
+
+<style>
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+  }
+  input[type=number] { -moz-appearance:textfield; }
+</style>
+
+<script>
+  import { $ } from '@lib/dom-selector'
+
+  document.addEventListener('astro:page-load', () => {
+    const $form = $('#form') as HTMLFormElement
+    $form?.addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const date = ($('#date') as HTMLInputElement).value
+      const amount = ($('#currency-input') as HTMLInputElement).value
+      const category = ($('#underline_select') as HTMLInputElement).value
+      const description = ($('#message') as HTMLInputElement).value
+
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ date, amount, category, description })
+      }
+      await fetch('/api/entries', requestOptions)
+      $form.reset()
+    })
+  })
+</script>
