@@ -1,8 +1,9 @@
 ---
 import AlertMessage from '@components/AlertMessage.astro'
+import Table from '@dashboard/Table.astro'
 ---
 
-<form id="form"class="max-w-md mx-auto shadow-lg shadow-gray-800 dark:shadow-gray-500 rounded-md p-6 text-gray-900 dark:text-white">
+<form id="form"class="max-w-md mx-auto shadow-lg shadow-gray-800 dark:shadow-gray-500 rounded-md p-6 mt-6 mb-8 text-gray-900 dark:text-white">
   <h1 class="text-center text-2xl mb-6 uppercase">registro de ingresos</h1>
   <div class="mb-5">
     <label for="date" class="block mb-2 text-sm font-medium">Fecha del monto</label>
@@ -64,6 +65,8 @@ import AlertMessage from '@components/AlertMessage.astro'
   <AlertMessage alertId='alert-error' alertMessage='Error al registrar el ingreso 😔' typeAlert='warning' />
 </form>
 
+<Table />
+
 <style>
   input[type=number]::-webkit-inner-spin-button, 
   input[type=number]::-webkit-outer-spin-button { 
@@ -76,11 +79,41 @@ import AlertMessage from '@components/AlertMessage.astro'
 <script>
   import { $ } from '@lib/dom-selector'
   import { showAndHideAlert } from '@utils/alerts'
+  import { renderTable } from '@utils/render-table'
 
   document.addEventListener('astro:page-load', () => {
     const $alertMessage = $('#alert-success') as HTMLDivElement
     const $alertWarning = $('#alert-error') as HTMLDivElement
     const $form = $('#form') as HTMLFormElement
+    const $table = $('#table-body') as HTMLTableElement
+
+    interface Entry {
+      entry_id: number
+      user_email: string
+      amount: number
+      description: string
+      category: string
+      DATE: string
+    }
+
+    const fetchAndRender = async () => {
+      const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      }
+      const response = await fetch('/api/get-entries', requestOptions)
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+  
+      const Entries: Entry[] = await response.json()
+      const tbody = renderTable(Entries)
+
+      $table.innerHTML = tbody
+    }
+    fetchAndRender()
+
     $form?.addEventListener('submit', async (e) => {
       e.preventDefault()
       const date = ($('#date') as HTMLInputElement).value
@@ -97,6 +130,7 @@ import AlertMessage from '@components/AlertMessage.astro'
 
       if (response.ok && $alertMessage) {
         showAndHideAlert($alertMessage)
+        fetchAndRender()
         $form.reset()
       } else {
         showAndHideAlert($alertWarning)
