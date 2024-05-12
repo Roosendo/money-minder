@@ -78,8 +78,8 @@ import AlertMessage from '@components/AlertMessage.astro'
   import { showAndHideAlert } from '@utils/alerts'
 
   document.addEventListener('astro:page-load', () => {
-    const $alertMessage = $('#alert-success')
-    const $alertWarning = $('#alert-error')
+    const $alertMessage = $('#alert-success') as HTMLDivElement
+    const $alertWarning = $('#alert-error') as HTMLDivElement
     const $form = $('#form') as HTMLFormElement
     $form?.addEventListener('submit', async (e) => {
       e.preventDefault()
@@ -95,7 +95,7 @@ import AlertMessage from '@components/AlertMessage.astro'
       }
       const response = await fetch('/api/entries', requestOptions)
 
-      if (response.ok && alertMessage) {
+      if (response.ok && $alertMessage) {
         showAndHideAlert($alertMessage)
         $form.reset()
       } else {
