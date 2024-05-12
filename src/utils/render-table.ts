@@ -1,5 +1,5 @@
 interface Entry {
-  DATE: string;
+  date: string;
   amount: number;
   category: string;
   description: string;
@@ -8,6 +8,15 @@ interface Entry {
 export const renderTable = (entries: Entry[]): string => {
   let tableHTML = ''
 
+  if (entries.length === 0) {
+    return `
+      <tr class="bg-white dark:bg-gray-800">
+        <td class="px-4 py-3 text-center font-medium text-gray-900 dark:text-white" colspan="4">
+          Sin registros
+        </td>
+      </tr>
+    `
+  }
   entries.forEach((entry, index) => {
     const isLastRow = index === entries.length - 1
     const rowClass = isLastRow ? '' : 'border-b '
@@ -23,7 +32,7 @@ export const renderTable = (entries: Entry[]): string => {
           ${entry.description}
         </td>
         <td class="px-4 py-3">
-          ${entry.DATE}
+          ${entry.date}
         </td>
       </tr>
     `

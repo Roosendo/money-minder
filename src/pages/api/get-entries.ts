@@ -22,5 +22,5 @@ export const GET: APIRoute = async ({ request }) => {
     return new Response('Entries not found', { status: 404 })
   }
 
-  return new Response(JSON.stringify(user.rows), { status: 201 })
+  return new Response(JSON.stringify(user.rows), { status: 200 })
 }

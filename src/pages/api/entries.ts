@@ -39,7 +39,6 @@ const isValidAmount = (amount: any): boolean => {
   return false
 }
 
-
 export const POST: APIRoute = async ({ request }) => {
   const body = await request.json()
   const { date, amount, category, description } = body as Entry
@@ -72,5 +71,5 @@ export const POST: APIRoute = async ({ request }) => {
 
   return new Response(JSON.stringify({
     message: 'Entry added successfully'
-  }), { status: 200 })
+  }), { status: 201 })
 }
