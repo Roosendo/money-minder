@@ -6,7 +6,7 @@ import Table from '@dashboard/Table.astro'
 <form id="form"class="max-w-md mx-auto shadow-lg shadow-gray-800 dark:shadow-gray-500 rounded-md p-6 mt-6 mb-8 text-gray-900 dark:text-white">
   <h1 class="text-center text-2xl mb-6 uppercase">registro de ingresos</h1>
   <div class="mb-5">
-    <label for="date" class="block mb-2 text-sm font-medium">Fecha del monto</label>
+    <label for="date" class="block mb-2 text-sm font-medium">Fecha del monto:</label>
     <input type="date" id="date" class="shadow-sm bg-gray-50 border border-gray-300 rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600">
   </div>
   <div class="mb-5">
@@ -36,7 +36,7 @@ import Table from '@dashboard/Table.astro'
   </div>
   <div class="mb-5">
     <label for="underline_select" class="sr-only">Underline select</label>
-    <select id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+    <select id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200">
       <option selected>Elige una categoría...</option>
       <option value="Ingreso Laboral">Ingreso Laboral</option>
 				<option value="Ingreso de Negocios">Ingreso de Negocios</option>
@@ -93,7 +93,7 @@ import Table from '@dashboard/Table.astro'
       amount: number
       description: string
       category: string
-      DATE: string
+      date: string
     }
 
     const fetchAndRender = async () => {
@@ -104,6 +104,8 @@ import Table from '@dashboard/Table.astro'
       const response = await fetch('/api/get-entries', requestOptions)
   
       if (!response.ok) {
+        const tbodyError = renderTable([])
+        $table.innerHTML = tbodyError
         throw new Error('Network response was not ok')
       }
   
