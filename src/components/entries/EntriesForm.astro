@@ -1,5 +1,5 @@
 ---
-
+import AlertMessage from '@components/AlertMessage.astro'
 ---
 
 <form id="form"class="max-w-md mx-auto shadow-lg shadow-gray-800 dark:shadow-gray-500 rounded-md p-6 text-gray-900 dark:text-white">
@@ -59,7 +59,9 @@
     <label for="message" class="block mb-2 text-sm font-medium">Descripción del ingreso:</label>
     <textarea id="message" rows="4" class="resize-none block p-2.5 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Deja tu descripción..."></textarea>
   </div>
-  <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700">Registrar ingreso</button>
+  <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-4 text-center dark:bg-blue-600 dark:hover:bg-blue-700">Registrar ingreso</button>
+  <AlertMessage alertId='alert-success' alertMessage='Ingreso registrado 😁' typeAlert='success' />
+  <AlertMessage alertId='alert-error' alertMessage='Error al registrar el ingreso 😔' typeAlert='warning' />
 </form>
 
 <style>
@@ -73,8 +75,11 @@
 
 <script>
   import { $ } from '@lib/dom-selector'
+  import { showAndHideAlert } from '@utils/alerts'
 
   document.addEventListener('astro:page-load', () => {
+    const $alertMessage = $('#alert-success')
+    const $alertWarning = $('#alert-error')
     const $form = $('#form') as HTMLFormElement
     $form?.addEventListener('submit', async (e) => {
       e.preventDefault()
@@ -88,8 +93,14 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ date, amount, category, description })
       }
-      await fetch('/api/entries', requestOptions)
-      $form.reset()
+      const response = await fetch('/api/entries', requestOptions)
+
+      if (response.ok && alertMessage) {
+        showAndHideAlert($alertMessage)
+        $form.reset()
+      } else {
+        showAndHideAlert($alertWarning)
+      }
     })
   })
 </script>
