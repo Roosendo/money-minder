@@ -5,7 +5,7 @@ import Table from '@dashboard/Table.astro'
 
 <MoneyEntryForm typeForm='ingreso' />
 
-<Table />
+<Table typeForm='ingreso' />
 
 <script>
   import { $ } from '@lib/dom-selector'
@@ -15,8 +15,8 @@ import Table from '@dashboard/Table.astro'
   document.addEventListener('astro:page-load', async () => {
     const $alertMessage = $('#alert-success') as HTMLDivElement
     const $alertWarning = $('#alert-error') as HTMLDivElement
-    const $form = $('#form') as HTMLFormElement
-    const $table = $('#table-body') as HTMLTableElement
+    const $form = $('#form-ingreso') as HTMLFormElement
+    const $table = $('#table-body-ingreso') as HTMLTableElement
     $table.innerHTML = ''
     const url = 'entries'
 

@@ -30,5 +30,6 @@ export const fetchData = async (url: string): Promise<Transaction[]> => {
 
 export const renderData = async (data: Transaction[], element: HTMLElement) => {
   const tbody = renderTable(data)
+  element.innerHTML = ''
   element.innerHTML = tbody
 }
