@@ -55,7 +55,10 @@ export const createGraphic = (
           display: true,
           position: 'top',
           labels: {
-            color: 'rgba(0, 0, 0, 0.7)'
+            color: 'black',
+            font: {
+              family: 'Onest Variable'
+            }
           }
         }
       }
