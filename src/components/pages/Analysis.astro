@@ -1,12 +1,12 @@
 ---
 import Dashboard from '@layouts/Dashboard.astro'
 import NotLogged from '@dashboard/NotLogged.astro'
-import Graphic from '@analysis/Graphic.astro'
+import AnalysisMain from '@analysis/AnalysisMain.astro'
 import { getSession } from 'auth-astro/server'
 
 const session = await getSession(Astro.request)
 ---
 
 <Dashboard title='Análisis'>
-  {session ? <Graphic /> : <NotLogged />}
+  {session ? <AnalysisMain /> : <NotLogged />}
 </Dashboard>
