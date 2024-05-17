@@ -18,7 +18,13 @@
       <span class="font-medium text-gray-700 block mb-2 text-center">Egresos</span>
       <canvas id="canva-egreso"></canvas>
     </div>
-  </div>  
+  </div>
+
+  <div class="flex flex-col m-auto mt-6 w-1/2 text-center">
+    <h3>Total de Ingresos: <span id="totalIngresos"></span></h3>
+    <h3 class="border-b border-gray-400">- Total de Gastos: <span id="totalEgresos"></span></h3>
+    <h3>Saldo / Diferencia: <span id="difference"></span></h3>
+  </div>
 </div>
 
 <script>
@@ -30,10 +36,18 @@
     const monthText = $('#month-text') as HTMLHeadingElement
     const $canvaIngreso = $('#canva-ingreso') as HTMLCanvasElement
     const $canvaEgreso = $('#canva-egreso') as HTMLCanvasElement
+    const $totalIngresos = $('#totalIngresos') as HTMLSpanElement
+    const $totalEgresos = $('#totalEgresos') as HTMLSpanElement
+    const $difference = $('#difference') as HTMLSpanElement
 
     interface Transaction {
       category: string
       total: number
+    }
+
+    interface Summary {
+      totalEntries: number
+      totalExits: number
     }
 
     // Función para obtener las categorías de ingresos y egresos
@@ -65,6 +79,36 @@
       }
     }
 
+    // Función para obtener el resumen financiero
+    const fetchSummary = async (month: string, year: string) => {
+      const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      }
+
+      const responseSummary = await fetch(`/api/${month}/${year}/financial-summary`, requestOptions)
+
+      if (!responseSummary.ok) {
+        throw new Error('No se pudo obtener el resumen financiero')
+      }
+
+      const dataSummary: Summary = await responseSummary.json()
+
+      $totalIngresos.textContent = `$${dataSummary.totalEntries.toString()}`
+      $totalEgresos.textContent = `$${dataSummary.totalExits.toString()}`
+      
+      const difference = dataSummary.totalEntries - dataSummary.totalExits;
+      $difference.textContent = `$${difference.toString()}`
+
+      if (difference < 0) {
+        $difference.classList.remove('text-teal-600')
+        $difference.classList.add('text-rose-600')
+      } else {
+        $difference.classList.remove('text-rose-600')
+        $difference.classList.add('text-teal-600')
+      }
+    }
+
     // Función para actualizar el texto del H1
     const updateMonthText = (date: Date) => {
       const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
@@ -80,6 +124,7 @@
       const yearString = date.getFullYear().toString();
       const monthString = (date.getMonth() + 1).toString().padStart(2, '0')
       fetchCategories(monthString, yearString)
+      fetchSummary(monthString, yearString)
     }
 
     // Establecer el valor inicial del input al mes actual
