@@ -1,0 +1,76 @@
+<div class="bg-white p-6 rounded-lg shadow-md m-auto mt-6 w-full max-w-4xl text-white dark:text-gray-900">
+  <h2 id="month-text" class="text-xl font-semibold mb-4 text-center">Mostrando datos de October 2024</h2>
+  
+  <div class="flex justify-center mb-4">
+    <input
+      id="month-input"
+      type="month" 
+      class="border border-gray-300 rounded-lg p-2 w-auto text-center text-white"
+    />
+  </div>
+  
+  <div class="mt-4 flex flex-col md:flex-row w-2/3 mx-auto space-y-4 md:space-y-0 md:space-x-4">
+    <div class="flex-1">
+      <span class="font-medium text-gray-700 block mb-2 text-center">Ingresos</span>
+      <canvas id="canva-ingreso"></canvas>
+    </div>
+    <div class="flex-1">
+      <span class="font-medium text-gray-700 block mb-2 text-center">Egresos</span>
+      <canvas id="canva-egreso"></canvas>
+    </div>
+  </div>  
+</div>
+
+<script>
+  import { $ } from '@lib/dom-selector'
+  import { createGraphic } from '@utils/create-graph'
+
+  document.addEventListener('astro:page-load', async () => {
+    const monthInput = $('#month-input') as HTMLInputElement
+    const monthText = $('#month-text') as HTMLHeadingElement
+    const $canvaIngreso = $('#canva-ingreso') as HTMLCanvasElement
+    const $canvaEgreso = $('#canva-egreso') as HTMLCanvasElement
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    }
+
+    const response = await fetch(`/api/02/2024/entries-by-category`, requestOptions)
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+
+    interface Entry {
+      category: string
+      total: number
+    }
+
+    const data: Entry[] = await response.json()
+    const categorys = data.map(entry => entry.category)
+    const totals = data.map(entry => entry.total)
+    createGraphic($canvaIngreso, categorys, totals, 'Ingresos')
+    createGraphic($canvaEgreso, categorys, totals, 'Gastos')
+
+    // Función para actualizar el texto del H1
+    const updateMonthText = (date: Date) => {
+      const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+      const year = date.getFullYear()
+      const month = monthNames[date.getMonth()]
+
+      if (monthText) monthText.textContent = `Mostrando datos de ${month} de ${year}`
+    }
+
+    // Establecer el valor inicial del input al mes actual
+    const currentDate = new Date()
+    if (monthInput) monthInput.value = currentDate.toISOString().substring(0, 7)
+    updateMonthText(currentDate)
+
+    // Event listener para cambios en el input
+    monthInput.addEventListener('change', (event) => {
+      const [year, month] = (event.target as HTMLInputElement).value.split('-').map(Number)
+      const selectedDate = year && month ? new Date(year, month - 1) : new Date()
+      updateMonthText(selectedDate)
+    })
+  })
+</script>
