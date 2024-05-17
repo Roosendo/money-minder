@@ -1,4 +1,4 @@
-<div class="bg-white p-6 rounded-lg shadow-md m-auto mt-6 w-full max-w-4xl text-white dark:text-gray-900">
+<div class="bg-white p-6 rounded-lg shadow-md m-auto mt-6 w-full max-w-2xl text-white dark:text-gray-900">
   <h2 id="month-text" class="text-xl font-semibold mb-4 text-center">Mostrando datos de October 2024</h2>
   
   <div class="flex justify-center mb-4">
@@ -30,27 +30,40 @@
     const monthText = $('#month-text') as HTMLHeadingElement
     const $canvaIngreso = $('#canva-ingreso') as HTMLCanvasElement
     const $canvaEgreso = $('#canva-egreso') as HTMLCanvasElement
-    const requestOptions = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    }
 
-    const response = await fetch(`/api/02/2024/entries-by-category`, requestOptions)
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok')
-    }
-
-    interface Entry {
+    interface Transaction {
       category: string
       total: number
     }
 
-    const data: Entry[] = await response.json()
-    const categorys = data.map(entry => entry.category)
-    const totals = data.map(entry => entry.total)
-    createGraphic($canvaIngreso, categorys, totals, 'Ingresos')
-    createGraphic($canvaEgreso, categorys, totals, 'Gastos')
+    // Función para obtener las categorías de ingresos y egresos
+    const fetchCategories = async (month: string, year: string) => {
+      const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      }
+
+      const responseEntries = await fetch(`/api/${month}/${year}/entries-by-category`, requestOptions)
+      const responseExits = await fetch(`/api/${month}/${year}/exits-by-category`, requestOptions)
+
+      if (!responseEntries.ok) {
+        createGraphic($canvaIngreso, ['Sin datos'], [0], 'Ingresos')
+      } else {
+        const dataEntries: Transaction[] = await responseEntries.json()
+        const categorysEntries = dataEntries.map(entry => entry.category)
+        const totalsEntries = dataEntries.map(entry => entry.total)
+        createGraphic($canvaIngreso, categorysEntries, totalsEntries, 'Ingresos')
+      }
+
+      if (!responseExits.ok) {
+        createGraphic($canvaEgreso, ['Sin datos'], [0], 'Egresos')
+      } else {
+        const dataExits: Transaction[] = await responseExits.json()
+        const categorysExits = dataExits.map(exit => exit.category)
+        const totalsExits = dataExits.map(exit => exit.total)
+        createGraphic($canvaEgreso, categorysExits, totalsExits, 'Gastos')
+      }
+    }
 
     // Función para actualizar el texto del H1
     const updateMonthText = (date: Date) => {
@@ -61,16 +74,24 @@
       if (monthText) monthText.textContent = `Mostrando datos de ${month} de ${year}`
     }
 
+    // Función para obtener la fecha y llamar a fetchCategories
+    const fetchCategoryData = (date: Date) => {
+      updateMonthText(date)
+      const yearString = date.getFullYear().toString();
+      const monthString = (date.getMonth() + 1).toString().padStart(2, '0')
+      fetchCategories(monthString, yearString)
+    }
+
     // Establecer el valor inicial del input al mes actual
     const currentDate = new Date()
     if (monthInput) monthInput.value = currentDate.toISOString().substring(0, 7)
-    updateMonthText(currentDate)
+    fetchCategoryData(currentDate)
 
     // Event listener para cambios en el input
     monthInput.addEventListener('change', (event) => {
       const [year, month] = (event.target as HTMLInputElement).value.split('-').map(Number)
       const selectedDate = year && month ? new Date(year, month - 1) : new Date()
-      updateMonthText(selectedDate)
+      fetchCategoryData(selectedDate)
     })
   })
 </script>
