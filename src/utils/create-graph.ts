@@ -11,6 +11,8 @@ export const createGraphic = (
     chart.destroy()
   }
 
+  Chart.defaults.font.family = 'Onest Variable'
+
   const myChart = new Chart(ctx, {
     type: 'pie',
     data: {
@@ -54,12 +56,6 @@ export const createGraphic = (
         legend: {
           display: true,
           position: 'top',
-          labels: {
-            color: 'black',
-            font: {
-              family: 'Onest Variable'
-            }
-          }
         }
       }
     }
