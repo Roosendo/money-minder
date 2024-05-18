@@ -15,6 +15,7 @@
       "@entries/*": ["./src/components/entries/*"],
       "@exits/*": ["./src/components/exits/*"],
       "@analysis/*": ["./src/components/analysis/*"],
+      "@config/*": ["./src/config/*"],
     }
   }
 }

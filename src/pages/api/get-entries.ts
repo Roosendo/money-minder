@@ -1,14 +1,9 @@
 import type { APIRoute } from 'astro'
-import { createClient } from '@libsql/client'
-import { getSession } from 'auth-astro/server'
-
-const client = createClient({
-  url: import.meta.env.TURSO_DATABASE_URL ?? '',
-  authToken: import.meta.env.TURSO_AUTH_TOKEN ?? '',
-})
+import { getSessionAndClient } from '@config/utils'
 
 export const GET: APIRoute = async ({ request }) => {
-  const session = await getSession(request)
+  const { session, client } = await getSessionAndClient(request)
+
   const email = session?.user?.email
 
   if (!email) return new Response('Unauthorized', { status: 401 })

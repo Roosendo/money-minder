@@ -1,11 +1,6 @@
 import type { APIRoute } from 'astro'
-import { createClient } from '@libsql/client'
-import { getSession } from 'auth-astro/server'
-
-const client = createClient({
-  url: import.meta.env.TURSO_DATABASE_URL ?? '',
-  authToken: import.meta.env.TURSO_AUTH_TOKEN ?? '',
-})
+import { getSessionAndClient } from '@config/utils'
+import { isValidDate, isValidAmount } from '@utils/validation'
 
 interface Exit {
   date: string
@@ -14,35 +9,11 @@ interface Exit {
   description?: string
 }
 
-const isValidDate = (dateString: string): boolean => {
-  // Expresión regular para validar formato de fecha yyyy-mm-dd
-  const dateRegex = /^\d{4}-\d{2}-\d{2}$/
-  if (!dateRegex.test(dateString)) return false
-
-  // Validar si la fecha es válida en JS (puede ser una fecha inválida como 2022-02-30)
-  const date = new Date(dateString)
-  return !isNaN(date.getTime())
-}
-
-const isValidAmount = (amount: any): boolean => {
-  // Validar si la cantidad es un número positivo
-  if (typeof amount === 'number' && amount >= 0) {
-    return true
-  }
-
-  // Si no es un número, intentar convertirlo a número con 2 decimales
-  const parsedAmount = parseFloat(amount)
-  if (!isNaN(parsedAmount) && parsedAmount >= 0) {
-    return true
-  }
-
-  return false
-}
-
 export const POST: APIRoute = async ({ request }) => {
+  const { session, client } = await getSessionAndClient(request)
+
   const body = await request.json()
   const { date, amount, category, description } = body as Exit
-  const session = await getSession(request)
   const email = session?.user?.email
   const full_name = session?.user?.name
 

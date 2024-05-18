@@ -1,20 +1,15 @@
 import type { APIRoute } from 'astro'
-import { createClient } from '@libsql/client'
-import { getSession } from 'auth-astro/server'
-
-const client = createClient({
-  url: import.meta.env.TURSO_DATABASE_URL ?? '',
-  authToken: import.meta.env.TURSO_AUTH_TOKEN ?? '',
-})
+import { getSessionAndClient } from '@config/utils'
 
 // GET -> api/[month]/[year]/entries-by-category
 // []* replace with the month and year from the user
 // JSON -> [{ "category":"Ingreso Familiar","total":41.6 }]
 
 export const GET: APIRoute = async ({ params, request }) => {
+  const { session, client } = await getSessionAndClient(request)
+
   const month = params.month
   const year = params.year
-  const session = await getSession(request)
   const email = session?.user?.email
 
   if (!email) return new Response('Unauthorized', { status: 401 })
