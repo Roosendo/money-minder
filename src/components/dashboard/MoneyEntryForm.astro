@@ -84,12 +84,3 @@ const { typeForm } = Astro.props
   <AlertMessage alertId='alert-success' alertMessage=`${typeForm.charAt(0).toUpperCase() + typeForm.slice(1)} registrado 😁` typeAlert='success' />
   <AlertMessage alertId='alert-error' alertMessage=`Error al registrar el ${typeForm} 😔` typeAlert='warning' />
 </form>
-
-<style>
-  input[type=number]::-webkit-inner-spin-button, 
-  input[type=number]::-webkit-outer-spin-button { 
-    -webkit-appearance: none; 
-    margin: 0; 
-  }
-  input[type=number] { -moz-appearance:textfield; }
-</style>

@@ -1,8 +1,12 @@
 ---
 import Dashboard from '@layouts/Dashboard.astro'
-import AvailableSoon from '@components/AvailableSoon.astro'
+import NotLogged from '@dashboard/NotLogged.astro'
+import { getSession } from 'auth-astro/server'
+import SavingsForm from '@savings/SavingsForm.astro'
+
+const session = await getSession(Astro.request)
 ---
 
 <Dashboard title='Ahorros'>
-  <AvailableSoon />
+  {session ? <SavingsForm /> : <NotLogged />}
 </Dashboard>
