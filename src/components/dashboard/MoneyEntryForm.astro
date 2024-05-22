@@ -42,7 +42,7 @@ const { typeForm } = Astro.props
   <div class="mb-5">
     <label for="underline_select" class="sr-only">Underline select</label>
     <select id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200">
-      <option selected>Elige una categoría...</option>
+      <option value="" selected>Elige una categoría...</option>
       {typeForm === 'gasto' ? (
         <option value="Vivienda">Vivienda</option>
         <option value="Alimentación">Alimentación</option>
@@ -82,5 +82,6 @@ const { typeForm } = Astro.props
   </div>
   <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-4 text-center dark:bg-blue-600 dark:hover:bg-blue-700">Registrar {typeForm}</button>
   <AlertMessage alertId='alert-success' alertMessage=`${typeForm.charAt(0).toUpperCase() + typeForm.slice(1)} registrado 😁` typeAlert='success' />
+  <AlertMessage alertId='alert-category' alertMessage='Selecciona una categoría' typeAlert='warning' />
   <AlertMessage alertId='alert-error' alertMessage=`Error al registrar el ${typeForm} 😔` typeAlert='warning' />
 </form>

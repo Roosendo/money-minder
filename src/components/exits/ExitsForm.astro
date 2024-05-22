@@ -14,6 +14,7 @@ import Table from '@dashboard/Table.astro'
 
   document.addEventListener('astro:page-load', async () => {
     const $alertMessage = $('#alert-success') as HTMLDivElement
+    const $alertCategory = $('#alert-category') as HTMLDivElement
     const $alertWarning = $('#alert-error') as HTMLDivElement
     const $form = $('#form-gasto') as HTMLFormElement
     const $table = $('#table-body-gasto') as HTMLTableElement
@@ -33,6 +34,8 @@ import Table from '@dashboard/Table.astro'
       const amount = ($('#currency-input') as HTMLInputElement).value
       const category = ($('#underline_select') as HTMLInputElement).value
       const description = ($('#message') as HTMLInputElement).value
+
+      if (!category) return showAndHideAlert($alertCategory)
 
       const requestOptions = {
         method: 'POST',
