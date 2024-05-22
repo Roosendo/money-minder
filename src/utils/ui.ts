@@ -60,15 +60,15 @@ export const createSavingGoalElement = (saving: Saving): HTMLDivElement => {
   const savingGoal = document.createElement('div')
   const percentage = (saving.current_amount / saving.target_amount) * 100
   savingGoal.innerHTML = `
-    <div class="bg-white p-6 rounded-lg shadow-md relative">
-      <h3 class="text-lg font-bold mt-2 text-gray-700">Nombre del objetivo: ${saving.name}</h3>
-      <p class="text-gray-600">Monto objetivo: $${saving.target_amount}</p>
-      <p class="text-gray-600">Monto actual: $${saving.current_amount}</p>
-      <div class="w-full bg-gray-200 rounded-full h-2 mt-2 mb-4">
+    <div class="bg-gray-100 dark:bg-gray-600 p-6 rounded-lg shadow-md relative">
+      <h3 class="text-lg font-bold mt-2 text-gray-700 dark:text-gray-100">Nombre del objetivo: ${saving.name}</h3>
+      <p class="text-gray-600 dark:text-gray-50 font-semibold">Monto objetivo: $${saving.target_amount}</p>
+      <p class="text-gray-600 dark:text-gray-50 font-semibold">Monto actual: $${saving.current_amount}</p>
+      <div class="w-full bg-gray-200 dark:bg-gray-50 rounded-full h-2 mt-2 mb-3">
         <div class="bg-teal-500 h-2 rounded-full" style="width: ${percentage}%"></div>
       </div>
-      <button id="editButton-${saving.id}" class="absolute top-3 right-4 text-teal-500 hover:text-teal-700">Editar</button>
-      <button id="deleteButton-${saving.id}" class="absolute top-3 right-20 text-rose-500 hover:text-rose-700">Eliminar</button>
+      <button id="editButton-${saving.id}" class="absolute top-3 right-4 font-medium tracking-wide text-teal-500 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300">Editar</button>
+      <button id="deleteButton-${saving.id}" class="absolute top-3 right-20 font-medium tracking-wide text-rose-500 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300">Eliminar</button>
     </div>
   `
   return savingGoal
