@@ -10,6 +10,15 @@ export interface Summary {
   totalExits: number
 }
 
+// Represents a saving.
+export interface Saving {
+  id: number
+  name: string
+  target_amount: number
+  current_amount: number
+  end_date: string
+}
+
 const requestOptions = {
   method: 'GET',
   headers: { 'Content-Type': 'application/json' },
@@ -47,4 +56,40 @@ export const fetchSummary = async (month: string, year: string) => {
 
   const dataSummary: Summary = await responseSummary.json()
   return dataSummary
+}
+
+/* functions for Savings */
+
+/**
+ * Fetches savings data from the API.
+ * @returns A promise that resolves to an array of Saving objects.
+ * @throws An error if the network response is not successful.
+ */
+export async function fetchDataSavings(): Promise<Saving[]> {
+  const response = await fetch('/api/get-savings', requestOptions)
+
+  if (!response.ok) {
+    throw new Error('Network response was not ok')
+  }
+
+  return response.json()
+}
+
+/**
+ * Updates a saving in the database.
+ * @param id - The ID of the saving to update.
+ * @param requestOptions - The request options to use for the update.
+ * @returns A promise that resolves to the response from the API.
+ */
+export async function updateSaving(id: number, requestOptions: RequestInit): Promise<Response> {
+  return fetch(`/api/${id}/update-saving`, requestOptions)
+}
+
+/**
+ * Deletes a saving from the database.
+ * @param id - The ID of the saving to delete.
+ * @returns A promise that resolves to the response from the API.
+ */
+export async function deleteSaving(id: number, requestOptions: RequestInit): Promise<Response> {
+  return fetch(`/api/${id}/delete-saving`, requestOptions)
 }
