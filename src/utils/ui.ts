@@ -82,15 +82,15 @@ export const createEditModal = (saving: Saving): HTMLDivElement => {
         <h2 class="text-xl font-bold mb-4 text-center">Editar Objetivo de Ahorro</h2>
         <div class="mb-4">
           <label for="edit-goal-name-${saving.id}" id="label-edit-goal-name-${saving.id}" class="block font-semibold mb-2">Nombre actual</label>
-          <input type="text" id="edit-goal-name-${saving.id}" class="block p-2.5 w-full z-20 ps-10 text-sm text-gray-900 bg-gray-50 rounded-lg border-e-gray-50 border-e-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="PlayStation 5" required value="${saving.name}" />
+          <input type="text" id="edit-goal-name-${saving.id}" class="block p-2.5 w-full z-20 ps-10 text-sm text-gray-900 bg-gray-50 rounded-lg border-e-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="PlayStation 5" required value="${saving.name}" />
         </div>
         <div class="mb-4">
           <label for="edit-target-amount-${saving.id}" class="block text-gray-700 font-semibold mb-2">Monto objetivo actual</label>
-          <input type="number" id="edit-target-amount-${saving.id}" class="block p-2.5 w-full z-20 ps-10 text-sm text-gray-900 bg-gray-50 rounded-lg border-e-gray-50 border-e-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" value="${saving.target_amount}" step="0.01">
+          <input type="number" id="edit-target-amount-${saving.id}" class="block p-2.5 w-full z-20 ps-10 text-sm text-gray-900 bg-gray-50 rounded-lg border-e-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" value="${saving.target_amount}" step="0.01">
         </div>
         <div class="mb-4">
           <label for="edit-current-amount-${saving.id}" class="block text-gray-700 font-semibold mb-2">Monto actual</label>
-          <input type="number" id="edit-current-amount-${saving.id}" class="block p-2.5 w-full z-20 ps-10 text-sm text-gray-900 bg-gray-50 rounded-lg border-e-gray-50 border-e-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" value="${saving.current_amount}" step="0.01">
+          <input type="number" id="edit-current-amount-${saving.id}" class="block p-2.5 w-full z-20 ps-10 text-sm text-gray-900 bg-gray-50 rounded-lg border-e-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" value="${saving.current_amount}" step="0.01">
         </div>
         <div class="mb-4">
           <label for="edit-end-date-${saving.id}" class="block text-gray-700 font-semibold mb-2">Fecha de fin</label>
