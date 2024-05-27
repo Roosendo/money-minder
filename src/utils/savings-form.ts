@@ -102,9 +102,9 @@ const handleDeleteFormSubmit = async (e: Event, id: number, $divElement: HTMLDiv
   const response = await deleteSaving(id, requestOptions)
 
   if (response.ok) {
+    $(`#delete-modal-${id}`)?.classList.replace('flex', 'hidden')
     const data = await fetchDataSavings()
     renderDataSavings(data, $divElement)
-    $(`#delete-modal-${id}`)?.classList.replace('flex', 'hidden')
   } else {
     const $alertWarning = $('#alert-error') as HTMLDivElement
     showAndHideAlert($alertWarning)
