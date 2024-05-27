@@ -11,7 +11,7 @@ export const GET: APIRoute = async ({ request }) => {
   if (!email) return new Response('Unauthorized', { status: 401 })
 
   const user = await client.execute({
-    sql: 'SELECT id, title, description, reminder_date, is_completed FROM reminders WHERE user_email = ?',
+    sql: 'SELECT id, title, description, reminder_date FROM reminders WHERE user_email = ?',
     args: [email]
   })
 

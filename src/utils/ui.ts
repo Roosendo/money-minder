@@ -139,19 +139,15 @@ export const openDeleteModal = (item: SavingOrReminder) => {
 export const createReminderElement = (reminder: Reminder): HTMLDivElement => {
   const reminderElement = document.createElement('div')
   reminderElement.innerHTML = `
-    <div class="dark:bg-gray-700 bg-gray-200 p-6 rounded-lg shadow-md flex justify-between items-center relative ${reminder.is_completed ? 'opacity-40' : ''}" data-id="1">
+    <div class="dark:bg-gray-700 bg-gray-200 p-6 mb-6 rounded-lg shadow-md flex justify-between items-center relative ${reminder.is_completed ? 'opacity-40' : ''}" data-id="1">
       <div class="flex flex-col">
-        <h3 class="text-lg font-bold dark:text-gray-100 text-gray-600 reminder-title ${reminder.is_completed ? 'line-through' : ''}">${reminder.title}</h3>
+        <h3 class="text-lg font-bold dark:text-gray-100 text-gray-600 ${reminder.is_completed ? 'line-through' : ''}">${reminder.title}</h3>
         <p class="dark:text-gray-400 text-gray-600">${reminder.description ?? 'Sin descripción'}</p>
         <p class="dark:text-gray-400 text-gray-600">
           <relative-time datetime="${reminder.reminder_date}" lang="es">
             Tu navegador no soporta web components
           </relative-time>
         </p>
-      </div>
-      <div class="flex items-center space-x-2">
-        <button class="text-gray-400 hover:scale-110">✔️</button>
-        <button class="text-red-400 hover:scale-110">❌</button>
       </div>
       <button id="editButton-${reminder.id}" class="absolute top-3 right-4 font-medium tracking-wide text-teal-500 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300">Editar</button>
       <button id="deleteButton-${reminder.id}" class="absolute top-3 right-20 font-medium tracking-wide text-rose-500 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300">Eliminar</button>
