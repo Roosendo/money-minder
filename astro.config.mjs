@@ -8,4 +8,7 @@ export default defineConfig({
 	output: 'server',
 	adapter: vercel(),
 	integrations: [tailwind(), auth()],
+	security: {
+		checkOrigin: true
+	}
 })
