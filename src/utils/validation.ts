@@ -8,6 +8,22 @@ export const isValidDate = (dateString: string): boolean => {
   return !isNaN(date.getTime())
 }
 
+export const isValidISODateTime = (dateTimeString: string) => {
+  // Expresión regular para validar el formato YYYY-MM-DDTHH:MM
+  const isoDateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/
+
+  // Comprobar si la cadena coincide con la expresión regular
+  if (!isoDateTimeRegex.test(dateTimeString)) return false
+
+  // Si coincide, intentar crear un objeto Date con la cadena
+  const date = new Date(dateTimeString + 'Z')
+
+  // Validar que el objeto Date es válido y coincide con la cadena original
+  const isValidDate = date.toISOString().slice(0, 16) === dateTimeString
+
+  return isValidDate
+}
+
 export const isValidAmount = (amount: any): boolean => {
   // Validar si la cantidad es un número positivo
   if (typeof amount === 'number' && amount >= 0) {

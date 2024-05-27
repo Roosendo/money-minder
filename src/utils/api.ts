@@ -19,6 +19,15 @@ export interface Saving {
   end_date: string
 }
 
+// Represents a reminder
+export interface Reminder {
+  id: number
+  title: string
+  description: string
+  reminder_date: string
+  is_completed: 0 | 1
+}
+
 const requestOptions = {
   method: 'GET',
   headers: { 'Content-Type': 'application/json' },
@@ -92,4 +101,41 @@ export async function updateSaving(id: number, requestOptions: RequestInit): Pro
  */
 export async function deleteSaving(id: number, requestOptions: RequestInit): Promise<Response> {
   return fetch(`/api/${id}/delete-saving`, requestOptions)
+}
+
+/* functions for Reminders */
+
+/**
+ * Fetches reminders data from the API.
+ * @returns A promise that resolves to an array of Reminder objects.
+ * @throws An error if the network response is not successful.
+ */
+export const fetchDataReminders = async (): Promise<Reminder[]> => {
+  const response = await fetch('/api/get-reminders', requestOptions)
+
+  if (!response.ok) {
+    throw new Error('Network response was not ok')
+  }
+
+  return response.json()
+}
+
+/**
+ * Updates a reminder in the database.
+ * @param id - The ID of the reminder to delete.
+ * @param requestOptions - The request options to use for the update.
+ * @returns A promise that resolves to the response from the API.
+ */
+export const updateReminder = async (id: number, requestOptions: RequestInit): Promise<Response> => {
+  return fetch(`/api/${id}/update-reminder`, requestOptions)
+}
+
+/**
+ * Deletes a reminder from the database.
+ * @param id - The ID of the reminder to delete.
+ * @param requestOptions - The request options to use for the delete.
+ * @returns A promise that resolves to the response from the API.
+ */
+export const deleteReminder = async (id: number, requestOptions: RequestInit): Promise<Response> => {
+  return fetch(`/api/${id}/delete-reminder`, requestOptions)
 }

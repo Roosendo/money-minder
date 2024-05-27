@@ -1,4 +1,4 @@
-import type { Transaction, Summary, Saving } from '@utils/api'
+import type { Transaction, Summary, Saving, Reminder } from '@utils/api'
 import { $ } from '@lib/dom-selector'
 import { createGraphic } from '@utils/create-graph'
 
@@ -118,16 +118,84 @@ export const createDeleteModal = (saving: Saving): HTMLDivElement => {
   return modal
 }
 
-export const openEditModal = (saving: Saving) => {
-  const $editModal = $(`#edit-modal-${saving.id}`)
+type SavingOrReminder = Saving | Reminder
+
+export const openEditModal = (item: SavingOrReminder) => {
+  const $editModal = $(`#edit-modal-${item.id}`)
   $editModal?.classList.replace('hidden', 'flex')
-  const $cancelButton = $editModal?.querySelector(`#cancel-${saving.id}`)
+  const $cancelButton = $editModal?.querySelector(`#cancel-${item.id}`)
   $cancelButton?.addEventListener('click', () => $editModal?.classList.replace('flex', 'hidden'))
 }
 
-export const openDeleteModal = (saving: Saving) => {
-  const $deleteModal = $(`#delete-modal-${saving.id}`)
+export const openDeleteModal = (item: SavingOrReminder) => {
+  const $deleteModal = $(`#delete-modal-${item.id}`)
   $deleteModal?.classList.replace('hidden', 'flex')
-  const $cancelButton = $deleteModal?.querySelector(`#cancel-delete-${saving.id}`)
+  const $cancelButton = $deleteModal?.querySelector(`#cancel-delete-${item.id}`)
   $cancelButton?.addEventListener('click', () => $deleteModal?.classList.replace('flex', 'hidden'))
+}
+
+/* functions for Reminders */
+
+export const createReminderElement = (reminder: Reminder): HTMLDivElement => {
+  const reminderElement = document.createElement('div')
+  reminderElement.innerHTML = `
+    <div class="dark:bg-gray-700 bg-gray-200 p-6 rounded-lg shadow-md flex justify-between items-center relative ${reminder.is_completed ? 'opacity-40' : ''}" data-id="1">
+      <div class="flex flex-col">
+        <h3 class="text-lg font-bold dark:text-gray-100 text-gray-600 reminder-title ${reminder.is_completed ? 'line-through' : ''}">${reminder.title}</h3>
+        <p class="dark:text-gray-400 text-gray-600">${reminder.description ?? 'Sin descripción'}</p>
+        <p class="dark:text-gray-400 text-gray-600">
+          <relative-time datetime="${reminder.reminder_date}" lang="es">
+            Tu navegador no soporta web components
+          </relative-time>
+        </p>
+      </div>
+      <div class="flex items-center space-x-2">
+        <button class="text-gray-400 hover:scale-110">✔️</button>
+        <button class="text-red-400 hover:scale-110">❌</button>
+      </div>
+      <button id="editButton-${reminder.id}" class="absolute top-3 right-4 font-medium tracking-wide text-teal-500 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300">Editar</button>
+      <button id="deleteButton-${reminder.id}" class="absolute top-3 right-20 font-medium tracking-wide text-rose-500 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300">Eliminar</button>
+    </div>
+  `
+  return reminderElement
+}
+
+export const createEditReminderModal = (reminder: Reminder): HTMLDivElement => {
+  const modal = document.createElement('div')
+  modal.innerHTML = `
+    <form id="edit-modal-${reminder.id}" class="fixed inset-0 animate-zoom-in items-center justify-center bg-gray-900 bg-opacity-50 hidden">
+      <div class="bg-white text-black p-6 rounded-lg shadow-md max-w-lg w-full">
+        <h2 class="text-xl font-bold mb-4 text-center">Editar Recordatorio</h2>
+        <div class="mb-4">
+          <label for="edit-title-${reminder.id}" id="label-edit-title-${reminder.id}" class="block font-semibold mb-2">Título actual</label>
+          <input type="text" id="edit-title-${reminder.id}" class="block p-2.5 w-full z-20 ps-10 text-sm text-gray-900 bg-gray-50 rounded-lg border-e-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Título del recordatorio" required value="${reminder.title}" />
+        </div>
+        <div class="mb-4">
+          <label for="edit-description-${reminder.id}" class="block text-gray-700 font-semibold mb-2">Descripción actual</label>
+          <input type="text" id="edit-description-${reminder.id}" class="block p-2.5 w-full z-20 ps-10 text-sm text-gray-900 bg-gray-50 rounded-lg border-e-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" value="${reminder.description}">
+        </div>
+        <div class="mb-4">
+          <label for="edit-reminder-date-${reminder.id}" class="block text-gray-700 font-semibold mb-2">Fecha de recordatorio</label>
+          <input type="datetime-local" id="edit-reminder-date-${reminder.id}" class="w-full p-2 border text-white border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" value="${reminder.reminder_date}" />
+        </div>
+        <button type="submit" id="saveChanges-${reminder.id}" class="w-full bg-teal-500 text-white font-semibold p-2 rounded-md hover:bg-teal-600">Guardar Cambios</button>
+        <button type="button" id="cancel-${reminder.id}" class="w-full mt-2 border border-gray-500 text-gray-500 font-semibold p-2 rounded-md hover:bg-gray-600 hover:text-white">Cancelar</button>
+      </div>
+    </form>
+  `
+  return modal
+}
+
+export const createDeleteReminderModal = (reminder: Reminder): HTMLDivElement => {
+  const modal = document.createElement('div')
+  modal.innerHTML = `
+    <form id="delete-modal-${reminder.id}" class="fixed inset-0 animate-zoom-in items-center justify-center bg-gray-900 bg-opacity-50 hidden">
+      <div class="bg-white text-black p-6 rounded-lg shadow-md max-w-lg w-full">
+        <h2 class="text-xl font-bold mb-4 text-center">¿Estás seguro de eliminar este recordatorio: ${reminder.title}?</h2>
+        <button type="submit" id="confirm-delete-${reminder.id}" class="w-full bg-rose-500 text-white font-semibold p-2 rounded-md hover:bg-rose-600">Eliminar</button>
+        <button type="button" id="cancel-delete-${reminder.id}" class="w-full mt-2 border border-gray-500 text-gray-500 font-semibold p-2 rounded-md hover:bg-gray-600 hover:text-white">Cancelar</button>
+      </div>
+    </form>
+  `
+  return modal
 }
