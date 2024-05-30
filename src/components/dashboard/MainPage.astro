@@ -13,3 +13,254 @@ import Fifth from '@images/5.webp'
       <p class="text-center text-base fonrt-medium mix-blend-difference md:text-xl md:w-1/2 w-2/3 m-auto">Explora las opciones disponibles para personalizar tu experiencia y aprovechar al máximo nuestros servicios.</p>
     </div>
 </section>
+
+<div class="container mx-auto p-4 text-black dark:text-white">
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    
+    <!-- Resumen Financiero Rápido -->
+    <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4">
+      <h2 class="text-lg">Balance Total</h2>
+      <p id="balance" class="text-2xl font-semibold"></p>
+    </div>
+    
+    <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4">
+      <h2 class="text-lg">Total Ingresos</h2>
+      <p id="entries" class="text-2xl font-semibold"></p>
+    </div>
+    
+    <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4">
+      <h2 class="text-lg">Total Gastos</h2>
+      <p id="exits" class="text-2xl font-semibold"></p>
+    </div>
+    
+    <!-- Transacciones Recientes -->
+    <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2">
+      <h2 class="text-lg font-semibold">Transacciones Recientes</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full">
+          <thead>
+            <tr>
+              <th class="py-2">Fecha</th>
+              <th class="py-2">Categoría</th>
+              <th class="py-2">Monto</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <!-- Aquí añadirás filas con transacciones recientes -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- Gráfico de Flujo de Efectivo -->
+    <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2 lg:col-span-3">
+      <h2 class="text-lg font-semibold">Flujo de Efectivo</h2>
+      <canvas id="cashFlowChart"></canvas>
+    </div>
+    
+    <!-- Categorías Principales -->
+    <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2 lg:col-span-3">
+      <h2 class="text-lg font-semibold">Categorías Principales</h2>
+      <canvas id="topCategoriesChart" class=""></canvas>
+    </div>
+    
+    <!-- Progreso hacia Objetivos -->
+    <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4">
+      <h2 class="text-lg font-semibold mb-4">Progreso hacia Objetivos</h2>
+      <div id="goals" class="space-y-4">
+        <!-- Aquí podrías añadir barras de progreso para diferentes objetivos -->
+      </div>
+    </div>
+    
+    <!-- Alertas y Notificaciones -->
+    <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4">
+      <h2 class="text-lg font-semibold mb-4">Recordatorios</h2>
+      <div id="reminders" class="space-y-4">
+        <!-- Más alertas -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { Chart, registerables } from 'chart.js/auto'
+  import { $ } from '@lib/dom-selector'
+  import { createGraphic } from '@utils/create-graph'
+  import { renderTableDashboard } from '@utils/render-table'
+  import { createSavingGoalElement, createReminderElement } from '@utils/ui'
+  import { fetchDataSavings, fetchDataReminders } from '@utils/api'
+
+  document.addEventListener('astro:page-load', async () => {
+    Chart.register(...registerables)
+    Chart.defaults.font.family = 'Onest Variable'
+
+    const ctx = (document.getElementById('cashFlowChart') as HTMLCanvasElement).getContext('2d')
+    const ctxTopCategoriesChart = (document.getElementById('topCategoriesChart') as HTMLCanvasElement)
+    const $balance = $('#balance')
+    const $entries = $('#entries')
+    const $exits = $('#exits')
+    const $tableBody = $('#table-body') as HTMLTableSectionElement
+    const $reminders = $('#reminders') as HTMLDivElement
+    const $goals = $('#goals') as HTMLDivElement
+
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    }
+
+    const response = await fetch('/api/dashboard/get-cash-flow', requestOptions)
+    const responseFS = await fetch('/api/dashboard/financial-summary', requestOptions)
+    const responseMC = await fetch('/api/dashboard/main-categories', requestOptions)
+    const responseRT = await fetch('/api/dashboard/recent-transactions', requestOptions)
+    const dataReminders = await fetchDataReminders()
+    dataReminders.forEach((reminder) => {
+      const reminderElement = createReminderElement(reminder, false)
+      $reminders.appendChild(reminderElement)
+    })
+    const dataGoals = await fetchDataSavings()
+    dataGoals.forEach((goal) => {
+      const goalElement = createSavingGoalElement(goal, false)
+      $goals.appendChild(goalElement)
+    })
+
+
+    if (!response.ok) {
+      console.error('Error al obtener los datos del flujo de efectivo')
+    }
+
+    if (!responseFS.ok) {
+      console.error('Error al obtener los datos del resumen financiero')
+    }
+
+    if (!responseMC.ok) {
+      console.error('Error al obtener los datos de las categorías principales')
+    }
+
+    if (!responseRT.ok) {
+      console.error('Error al obtener los datos de las transacciones recientes')
+    }
+
+    interface RecentTransactions {
+      date: string
+      category: string
+      amount: number
+    }
+
+    const dataRT: RecentTransactions[] = await responseRT.json()
+    const table = renderTableDashboard(dataRT)
+    $tableBody.innerHTML = table
+
+    interface MainCategories {
+      category: string
+      total: number
+    }
+
+    const dataMC: MainCategories[] = await responseMC.json()
+    const categories = dataMC.map(item => item.category)
+    const totalAmounts = dataMC.map(item => item.total)
+
+    createGraphic(ctxTopCategoriesChart, categories, totalAmounts, 'Categorías Principales')
+
+    interface CashFLow {
+      month: string
+      total_ingresos: number
+      total_egresos: number
+    }
+
+    interface FinancialSummary {
+      totalEntries: number
+      totalExits: number
+    }
+
+    const dataApi: CashFLow[] = await response.json()
+    const dataFS: FinancialSummary = await responseFS.json()
+
+    if ($balance) $balance.textContent = `$${dataFS.totalEntries - dataFS.totalExits}`
+    if ($entries) $entries.textContent = `$${dataFS.totalEntries}`
+    if ($exits) $exits.textContent = `$${dataFS.totalExits}`
+    
+    // Datos de ejemplo
+    const months: Record<string, string> = {
+      '01': 'Enero',
+      '02': 'Febrero',
+      '03': 'Marzo',
+      '04': 'Abril',
+      '05': 'Mayo',
+      '06': 'Junio',
+      '07': 'Julio',
+      '08': 'Agosto',
+      '09': 'Septiembre',
+      '10': 'Octubre',
+      '11': 'Noviembre',
+      '12': 'Diciembre'
+    }
+    const ingresosMensuales = dataApi.map(item => item.total_ingresos)
+    const egresosMensuales = dataApi.map(item => item.total_egresos)
+    const saldoNetoMensual = ingresosMensuales.map((ingreso, index) => ingreso - (egresosMensuales[index] || 0))
+    const labelsToShow = dataApi.map(item => months[item.month])
+
+    const data = {
+      labels: labelsToShow,
+      datasets: [
+        {
+          label: 'Ingresos',
+          data: ingresosMensuales,
+          backgroundColor: 'rgba(54, 162, 235, 0.6)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        },
+        {
+          label: 'Egresos',
+          data: egresosMensuales,
+          backgroundColor: 'rgba(255, 99, 132, 0.6)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        },
+        {
+          label: 'Saldo Neto',
+          data: saldoNetoMensual,
+          type: 'line',
+          fill: false,
+          borderColor: 'rgba(75, 192, 192, 1)',
+          tension: 0.1
+        }
+      ]
+    }
+
+    const config = {
+      type: 'bar',
+      data: data,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          }
+        },
+        scales: {
+          x: {
+            display: true,
+            title: {
+              display: true,
+              text: 'Meses'
+            }
+          },
+          y: {
+            display: true,
+            title: {
+              display: true,
+              text: 'Monto en $'
+            },
+            beginAtZero: true
+          }
+        }
+      },
+    }
+
+    if (ctx) new Chart(ctx, config)
+  })
+</script>
