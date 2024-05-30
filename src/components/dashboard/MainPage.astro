@@ -83,18 +83,15 @@ import Fifth from '@images/5.webp'
 </div>
 
 <script>
-  import { Chart, registerables } from 'chart.js/auto'
   import { $ } from '@lib/dom-selector'
-  import { createGraphic } from '@utils/create-graph'
+  import { createGraphic, createGraphicBar } from '@utils/create-graph'
   import { renderTableDashboard } from '@utils/render-table'
   import { createSavingGoalElement, createReminderElement } from '@utils/ui'
   import { fetchDataSavings, fetchDataReminders } from '@utils/api'
 
   document.addEventListener('astro:page-load', async () => {
-    Chart.register(...registerables)
-    Chart.defaults.font.family = 'Onest Variable'
 
-    const ctx = (document.getElementById('cashFlowChart') as HTMLCanvasElement).getContext('2d')
+    const ctx = (document.getElementById('cashFlowChart') as HTMLCanvasElement)
     const ctxTopCategoriesChart = (document.getElementById('topCategoriesChart') as HTMLCanvasElement)
     const $balance = $('#balance')
     const $entries = $('#entries')
@@ -175,11 +172,16 @@ import Fifth from '@images/5.webp'
     const dataApi: CashFLow[] = await response.json()
     const dataFS: FinancialSummary = await responseFS.json()
 
-    if ($balance) $balance.textContent = `$${dataFS.totalEntries - dataFS.totalExits}`
-    if ($entries) $entries.textContent = `$${dataFS.totalEntries}`
-    if ($exits) $exits.textContent = `$${dataFS.totalExits}`
-    
-    // Datos de ejemplo
+    if (dataFS) {
+      if ($balance) $balance.textContent = `$${dataFS.totalEntries - dataFS.totalExits}`
+      if ($entries) $entries.textContent = `$${dataFS.totalEntries}`
+      if ($exits) $exits.textContent = `$${dataFS.totalExits}`
+    } else {
+      if ($balance) $balance.textContent = 'No disponible ❌'
+      if ($entries) $entries.textContent = 'No disponible ❌'
+      if ($exits) $exits.textContent = 'No disponible ❌'
+    }
+
     const months: Record<string, string> = {
       '01': 'Enero',
       '02': 'Febrero',
@@ -197,70 +199,8 @@ import Fifth from '@images/5.webp'
     const ingresosMensuales = dataApi.map(item => item.total_ingresos)
     const egresosMensuales = dataApi.map(item => item.total_egresos)
     const saldoNetoMensual = ingresosMensuales.map((ingreso, index) => ingreso - (egresosMensuales[index] || 0))
-    const labelsToShow = dataApi.map(item => months[item.month])
+    const labelsToShow = dataApi.map(item => months[item.month] || item.month)
 
-    const data = {
-      labels: labelsToShow,
-      datasets: [
-        {
-          label: 'Ingresos',
-          data: ingresosMensuales,
-          backgroundColor: 'rgba(54, 162, 235, 0.6)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1
-        },
-        {
-          label: 'Egresos',
-          data: egresosMensuales,
-          backgroundColor: 'rgba(255, 99, 132, 0.6)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1
-        },
-        {
-          label: 'Saldo Neto',
-          data: saldoNetoMensual,
-          type: 'line',
-          fill: false,
-          borderColor: 'rgba(75, 192, 192, 1)',
-          tension: 0.1
-        }
-      ]
-    }
-
-    const config = {
-      type: 'bar',
-      data: data,
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          tooltip: {
-            mode: 'index',
-            intersect: false,
-          }
-        },
-        scales: {
-          x: {
-            display: true,
-            title: {
-              display: true,
-              text: 'Meses'
-            }
-          },
-          y: {
-            display: true,
-            title: {
-              display: true,
-              text: 'Monto en $'
-            },
-            beginAtZero: true
-          }
-        }
-      },
-    }
-
-    if (ctx) new Chart(ctx, config)
+    if (labelsToShow) createGraphicBar(ctx, labelsToShow, ingresosMensuales, egresosMensuales, saldoNetoMensual)
   })
 </script>

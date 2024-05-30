@@ -1,4 +1,4 @@
-import { Chart } from 'chart.js/auto'
+import { Chart, registerables } from 'chart.js/auto'
 
 export const createGraphic = (
   ctx: HTMLCanvasElement,
@@ -59,6 +59,79 @@ export const createGraphic = (
         }
       }
     }
+  })
+
+  return myChart
+}
+
+export const createGraphicBar = (
+  ctx: HTMLCanvasElement,
+  labelsToShow: string[],
+  ingresosMensuales: number[],
+  egresosMensuales: number[],
+  saldoNetoMensual: number[]
+) => {
+  Chart.register(...registerables)
+  Chart.defaults.font.family = 'Onest Variable'
+
+  const myChart = new Chart(ctx, {
+    type: 'bar',
+      data: {
+        labels: labelsToShow,
+        datasets: [
+          {
+            label: 'Ingresos',
+            data: ingresosMensuales,
+            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Egresos',
+            data: egresosMensuales,
+            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Saldo Neto',
+            data: saldoNetoMensual,
+            type: 'line',
+            fill: false,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            tension: 0.1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          }
+        },
+        scales: {
+          x: {
+            display: true,
+            title: {
+              display: true,
+              text: 'Meses'
+            }
+          },
+          y: {
+            display: true,
+            title: {
+              display: true,
+              text: 'Monto en $'
+            },
+            beginAtZero: true
+          }
+        }
+      },
   })
 
   return myChart
