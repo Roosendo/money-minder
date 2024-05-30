@@ -141,9 +141,9 @@ export const openDeleteModal = (item: SavingOrReminder) => {
 export const createReminderElement = (reminder: Reminder, showButtons: boolean = true): HTMLDivElement => {
   const reminderElement = document.createElement('div')
   reminderElement.innerHTML = `
-    <div class="dark:bg-gray-700 bg-gray-200 p-6 mb-6 rounded-lg shadow-md flex justify-between items-center relative ${reminder.is_completed ? 'opacity-40' : ''}" data-id="1">
+    <div class="dark:bg-gray-700 bg-gray-200 p-6 mb-6 rounded-lg shadow-md flex justify-between items-center relative">
       <div class="flex flex-col">
-        <h3 class="text-lg font-bold dark:text-gray-100 text-gray-600 ${reminder.is_completed ? 'line-through' : ''}">${reminder.title}</h3>
+        <h3 class="text-lg font-bold dark:text-gray-100 text-gray-600">${reminder.title}</h3>
         <p class="dark:text-gray-400 text-gray-600">${reminder.description ?? 'Sin descripción'}</p>
         <p class="dark:text-gray-400 text-gray-600 uppercase">
           <relative-time datetime="${reminder.reminder_date}" lang="es">
