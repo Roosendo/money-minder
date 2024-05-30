@@ -27,6 +27,28 @@ export interface Reminder {
   reminder_date: string
 }
 
+export interface CashFLow {
+  month: string
+  total_ingresos: number
+  total_egresos: number
+}
+
+interface FinancialSummary {
+  totalEntries: number
+  totalExits: number
+}
+
+interface MainCategories {
+  category: string
+  total: number
+}
+
+interface RecentTransactions {
+  date: string
+  category: string
+  amount: number
+}
+
 const requestOptions = {
   method: 'GET',
   headers: { 'Content-Type': 'application/json' },
@@ -74,13 +96,18 @@ export const fetchSummary = async (month: string, year: string) => {
  * @throws An error if the network response is not successful.
  */
 export async function fetchDataSavings(): Promise<Saving[]> {
-  const response = await fetch('/api/get-savings', requestOptions)
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok')
+  try {
+    const response = await fetch('/api/get-savings', requestOptions)
+  
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+  
+    return response.json()
+  } catch (error) {
+    console.error(error)
+    return []
   }
-
-  return response.json()
 }
 
 /**
@@ -110,13 +137,18 @@ export async function deleteSaving(id: number, requestOptions: RequestInit): Pro
  * @throws An error if the network response is not successful.
  */
 export const fetchDataReminders = async (): Promise<Reminder[]> => {
-  const response = await fetch('/api/get-reminders', requestOptions)
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok')
+  try {
+    const response = await fetch('/api/get-reminders', requestOptions)
+  
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+  
+    return response.json()
+  } catch (error) {
+    console.error(error)
+    return []
   }
-
-  return response.json()
 }
 
 /**
@@ -137,4 +169,65 @@ export const updateReminder = async (id: number, requestOptions: RequestInit): P
  */
 export const deleteReminder = async (id: number, requestOptions: RequestInit): Promise<Response> => {
   return fetch(`/api/${id}/delete-reminder`, requestOptions)
+}
+
+export const fetchCashFlow = async (): Promise<CashFLow[]> => {
+  const response = await fetch('/api/dashboard/get-cash-flow', requestOptions)
+
+  if (!response.ok) {
+    return []
+  }
+
+  return response.json()
+}
+
+export const fetchFinancialSummary = async (): Promise<FinancialSummary> => {
+  try {
+    const response = await fetch('/api/dashboard/financial-summary', requestOptions)
+
+    if (!response.ok) {
+      throw new Error('La respuesta no fue exitosa')
+    }
+
+    const data = await response.json()
+
+    return data
+  } catch (error) {
+    console.error(error)
+    return { totalEntries: 0, totalExits: 0 }
+  }
+}
+
+export const fetchMainCategories = async (): Promise<MainCategories[]> => {
+  try {
+    const response = await fetch('/api/dashboard/main-categories', requestOptions)
+
+    if (!response.ok) {
+      throw new Error('La respuesta no fue exitosa')
+    }
+
+    const data = await response.json()
+
+    return data
+  } catch (error) {
+    console.error(error)
+    return []
+  }
+}
+
+export const fetchRecentTransactions = async (): Promise<RecentTransactions[]> => {
+  try {
+    const response = await fetch('/api/dashboard/recent-transactions', requestOptions)
+
+    if (!response.ok) {
+      throw new Error('La respuesta no fue exitosa')
+    }
+
+    const data = await response.json()
+
+    return data
+  } catch (error) {
+    console.error(error)
+    return []
+  }
 }

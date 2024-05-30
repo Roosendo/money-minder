@@ -87,10 +87,9 @@ import Fifth from '@images/5.webp'
   import { createGraphic, createGraphicBar } from '@utils/create-graph'
   import { renderTableDashboard } from '@utils/render-table'
   import { createSavingGoalElement, createReminderElement } from '@utils/ui'
-  import { fetchDataSavings, fetchDataReminders } from '@utils/api'
+  import { fetchDataSavings, fetchDataReminders, fetchCashFlow, fetchFinancialSummary, fetchMainCategories, fetchRecentTransactions } from '@utils/api'
 
   document.addEventListener('astro:page-load', async () => {
-
     const ctx = (document.getElementById('cashFlowChart') as HTMLCanvasElement)
     const ctxTopCategoriesChart = (document.getElementById('topCategoriesChart') as HTMLCanvasElement)
     const $balance = $('#balance')
@@ -100,79 +99,46 @@ import Fifth from '@images/5.webp'
     const $reminders = $('#reminders') as HTMLDivElement
     const $goals = $('#goals') as HTMLDivElement
 
-    const requestOptions = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
-
-    const response = await fetch('/api/dashboard/get-cash-flow', requestOptions)
-    const responseFS = await fetch('/api/dashboard/financial-summary', requestOptions)
-    const responseMC = await fetch('/api/dashboard/main-categories', requestOptions)
-    const responseRT = await fetch('/api/dashboard/recent-transactions', requestOptions)
     const dataReminders = await fetchDataReminders()
-    dataReminders.forEach((reminder) => {
-      const reminderElement = createReminderElement(reminder, false)
-      $reminders.appendChild(reminderElement)
-    })
+    if (dataReminders.length === 0) {
+      $reminders.innerHTML = '<p>No hay recordatorios disponibles</p>'
+    } else {
+      dataReminders.forEach((reminder) => {
+        const reminderElement = createReminderElement(reminder, false)
+        $reminders.appendChild(reminderElement)
+      })
+    }
+
     const dataGoals = await fetchDataSavings()
-    dataGoals.forEach((goal) => {
-      const goalElement = createSavingGoalElement(goal, false)
-      $goals.appendChild(goalElement)
-    })
-
-
-    if (!response.ok) {
-      console.error('Error al obtener los datos del flujo de efectivo')
+    if (dataGoals.length === 0) {
+      $goals.innerHTML = '<p>No hay objetivos de ahorro disponibles</p>'
+    } else {
+      dataGoals.forEach((goal) => {
+        const goalElement = createSavingGoalElement(goal, false)
+        $goals.appendChild(goalElement)
+      })
     }
 
-    if (!responseFS.ok) {
-      console.error('Error al obtener los datos del resumen financiero')
-    }
-
-    if (!responseMC.ok) {
-      console.error('Error al obtener los datos de las categorías principales')
-    }
-
-    if (!responseRT.ok) {
-      console.error('Error al obtener los datos de las transacciones recientes')
-    }
-
-    interface RecentTransactions {
-      date: string
-      category: string
-      amount: number
-    }
-
-    const dataRT: RecentTransactions[] = await responseRT.json()
+    const dataRT = await fetchRecentTransactions()
     const table = renderTableDashboard(dataRT)
     $tableBody.innerHTML = table
 
-    interface MainCategories {
-      category: string
-      total: number
+    // logica para obtener las categorías principales
+    const dataMC = await fetchMainCategories()
+
+    if (dataMC.length > 0) {
+      const categories = dataMC.map(item => item.category)
+      const totalAmounts = dataMC.map(item => item.total)
+  
+      createGraphic(ctxTopCategoriesChart, categories, totalAmounts, 'Categorías Principales')
+    } else {
+      createGraphic(ctxTopCategoriesChart, ['Sin datos'], [], 'Categorías Principales')
     }
 
-    const dataMC: MainCategories[] = await responseMC.json()
-    const categories = dataMC.map(item => item.category)
-    const totalAmounts = dataMC.map(item => item.total)
+    // logica para obtener el balance total
+    const dataFS = await fetchFinancialSummary()
 
-    createGraphic(ctxTopCategoriesChart, categories, totalAmounts, 'Categorías Principales')
-
-    interface CashFLow {
-      month: string
-      total_ingresos: number
-      total_egresos: number
-    }
-
-    interface FinancialSummary {
-      totalEntries: number
-      totalExits: number
-    }
-
-    const dataApi: CashFLow[] = await response.json()
-    const dataFS: FinancialSummary = await responseFS.json()
-
-    if (dataFS) {
+    if (dataFS.totalEntries !== 0 && dataFS.totalExits !== 0) {
       if ($balance) $balance.textContent = `$${dataFS.totalEntries - dataFS.totalExits}`
       if ($entries) $entries.textContent = `$${dataFS.totalEntries}`
       if ($exits) $exits.textContent = `$${dataFS.totalExits}`
@@ -181,6 +147,9 @@ import Fifth from '@images/5.webp'
       if ($entries) $entries.textContent = 'No disponible ❌'
       if ($exits) $exits.textContent = 'No disponible ❌'
     }
+
+    // logica para obtener el flujo de efectivo
+    const dataCF = await fetchCashFlow()
 
     const months: Record<string, string> = {
       '01': 'Enero',
@@ -196,11 +165,16 @@ import Fifth from '@images/5.webp'
       '11': 'Noviembre',
       '12': 'Diciembre'
     }
-    const ingresosMensuales = dataApi.map(item => item.total_ingresos)
-    const egresosMensuales = dataApi.map(item => item.total_egresos)
-    const saldoNetoMensual = ingresosMensuales.map((ingreso, index) => ingreso - (egresosMensuales[index] || 0))
-    const labelsToShow = dataApi.map(item => months[item.month] || item.month)
 
-    if (labelsToShow) createGraphicBar(ctx, labelsToShow, ingresosMensuales, egresosMensuales, saldoNetoMensual)
+    if (dataCF) {
+      const ingresosMensuales = dataCF.map(item => item.total_ingresos)
+      const egresosMensuales = dataCF.map(item => item.total_egresos)
+      const saldoNetoMensual = ingresosMensuales.map((ingreso, index) => ingreso - (egresosMensuales[index] || 0))
+      const labelsToShow = dataCF.map(item => months[item.month] || item.month)
+  
+      if (labelsToShow) createGraphicBar(ctx, labelsToShow, ingresosMensuales, egresosMensuales, saldoNetoMensual)
+    } else {
+      createGraphicBar(ctx, [], [], [], [])
+    }
   })
 </script>
