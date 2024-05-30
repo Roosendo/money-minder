@@ -25,7 +25,6 @@ export interface Reminder {
   title: string
   description: string
   reminder_date: string
-  is_completed: 0 | 1
 }
 
 const requestOptions = {
