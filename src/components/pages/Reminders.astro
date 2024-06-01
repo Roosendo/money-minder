@@ -1,45 +1,12 @@
 ---
-import AlertMessage from '@components/AlertMessage.astro'
 import Dashboard from '@layouts/Dashboard.astro'
+import NotLogged from '@dashboard/NotLogged.astro'
+import { getSession } from 'auth-astro/server'
+import RemindersForm from '@reminders/RemindersForm.astro'
+
+const session = await getSession(Astro.request)
 ---
 
 <Dashboard title='Recordatorios'>
-  <form id="reminder-form" class="max-w-lg mx-auto bg-gray-200 dark:bg-gray-900 text-gray-700 dark:text-gray-200 p-6 mt-6 rounded-lg shadow-md space-y-4">
-    <h1 class="text-xl font-bold mb-4 text-center">Agregar nuevo Recordatorio</h1>
-    <div>
-      <label for="reminder-title" class="block font-medium">Título del recordatorio</label>
-      <input type="text" id="reminder-title" placeholder="Título del recordatorio" required class="w-full mt-1 p-2 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 text-gray-600 border dark:border-gray-500 border-gray-50 rounded-md focus:outline-none focus:ring-2 dark:focus:ring-gray-500 focus:ring-gray-300 focus:border-transparent">
-    </div>
-    <div>
-      <label for="reminder-description" class="block font-medium">Descripción</label>
-      <textarea id="reminder-description" placeholder="Descripción" rows="4" class="w-full resize-none mt-1 p-2 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 text-gray-600 border dark:border-gray-500 border-gray-50 rounded-md focus:outline-none focus:ring-2 dark:focus:ring-gray-500 focus:ring-gray-300 focus:border-transparent"></textarea>
-    </div>
-    <div>
-      <label for="reminder-date" class="block font-medium">Fecha y hora</label>
-      <input type="datetime-local" id="reminder-date" required class="w-full mt-1 p-2 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 text-gray-600 border dark:border-gray-500 border-gray-50 rounded-md focus:outline-none focus:ring-2 dark:focus:ring-gray-500 focus:ring-gray-300 focus:border-transparent">
-    </div>
-    <button type="submit" class="w-full bg-teal-500 text-white font-semibold p-2 mb-4 rounded-md hover:bg-teal-600">Agregar Recordatorio</button>
-    <AlertMessage alertId='alert-success' alertMessage='Recordatorio registrado 😁' typeAlert='success' />
-    <AlertMessage alertId='alert-error' alertMessage="Error al registrar el recordatorio 😔" typeAlert='warning' />
-  </form>
-  <div id="reminders-list" class="max-w-lg mx-auto mt-6 space-y-4"></div>
-  <!-- Contenedor principal de la lista de recordatorios -->
-  
-  
+  {session ? <RemindersForm /> : <NotLogged />}
 </Dashboard>
-
-<script src="https://unpkg.com/@github/relative-time-element@latest/dist/bundle.js"></script>
-<script>
-  import { $ } from '@lib/dom-selector'
-  import { handleFormSubmit, init } from '@utils/reminders-form'
-
-  document.addEventListener('astro:page-load', async () => {
-    const $reminderForm = $('#reminder-form') as HTMLFormElement
-    const $alertMessage = $('#alert-success') as HTMLDivElement
-    const $alertWarning = $('#alert-error') as HTMLDivElement
-    const $remindersList = $('#reminders-list') as HTMLDivElement
-
-    $reminderForm?.addEventListener('submit', (e) => handleFormSubmit(e, $reminderForm, $alertMessage, $alertWarning, $remindersList))
-    init($remindersList)
-  })
-</script>
