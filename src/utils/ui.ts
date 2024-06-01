@@ -62,8 +62,8 @@ export const createSavingGoalElement = (saving: Saving, showButtons: boolean = t
   savingGoal.innerHTML = `
     <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md relative">
       <h3 class="text-lg font-bold mt-2 text-gray-700 dark:text-gray-100">Nombre del objetivo: ${saving.name}</h3>
-      <p class="text-gray-600 dark:text-gray-50">Monto objetivo: $${saving.target_amount}</p>
-      <p class="text-gray-600 dark:text-gray-50">Monto actual: $${saving.current_amount}</p>
+      <p class="text-gray-600 dark:text-gray-400">Monto objetivo: $${saving.target_amount}</p>
+      <p class="text-gray-600 dark:text-gray-400">Monto actual: $${saving.current_amount}</p>
       <div class="w-full bg-gray-200 dark:bg-gray-50 rounded-full h-2 mt-2 mb-3">
         <div class="bg-teal-500 h-2 rounded-full" style="width: ${percentage}%"></div>
       </div>
@@ -141,7 +141,7 @@ export const openDeleteModal = (item: SavingOrReminder) => {
 export const createReminderElement = (reminder: Reminder, showButtons: boolean = true): HTMLDivElement => {
   const reminderElement = document.createElement('div')
   reminderElement.innerHTML = `
-    <div class="dark:bg-gray-700 bg-gray-200 p-6 mb-6 rounded-lg shadow-md flex justify-between items-center relative">
+    <div class="dark:bg-gray-700 bg-gray-100 p-6 mb-6 rounded-lg shadow-md flex justify-between items-center relative">
       <div class="flex flex-col">
         <h3 class="text-lg font-bold dark:text-gray-100 text-gray-600">${reminder.title}</h3>
         <p class="dark:text-gray-400 text-gray-600">${reminder.description ?? 'Sin descripción'}</p>
