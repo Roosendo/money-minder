@@ -11,7 +11,7 @@ export const createGraphic = (
     chart.destroy()
   }
 
-  Chart.defaults.font.family = 'Onest Variable'
+  Chart.defaults.font.family = 'Saira Variable'
 
   const myChart = new Chart(ctx, {
     type: 'pie',
@@ -72,7 +72,7 @@ export const createGraphicBar = (
   saldoNetoMensual: number[]
 ) => {
   Chart.register(...registerables)
-  Chart.defaults.font.family = 'Onest Variable'
+  Chart.defaults.font.family = 'Saira Variable'
 
   const myChart = new Chart(ctx, {
     type: 'bar',
