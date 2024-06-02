@@ -139,9 +139,9 @@ import Fifth from '@images/5.webp'
     const dataFS = await fetchFinancialSummary()
 
     if (dataFS.totalEntries !== 0 && dataFS.totalExits !== 0) {
-      if ($balance) $balance.textContent = `$${dataFS.totalEntries - dataFS.totalExits}`
-      if ($entries) $entries.textContent = `$${dataFS.totalEntries}`
-      if ($exits) $exits.textContent = `$${dataFS.totalExits}`
+      if ($balance) $balance.textContent = `$${(dataFS.totalEntries - dataFS.totalExits).toFixed(2)}`
+      if ($entries) $entries.textContent = `$${dataFS.totalEntries.toFixed(2)}`
+      if ($exits) $exits.textContent = `$${dataFS.totalExits.toFixed(2)}`
     } else {
       if ($balance) $balance.textContent = 'No disponible ❌'
       if ($entries) $entries.textContent = 'No disponible ❌'
