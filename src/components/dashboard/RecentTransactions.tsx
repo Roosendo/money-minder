@@ -24,7 +24,7 @@ export default function RecentTransactions () {
     }
 
     fetchData()
-  })
+  }, [])
   return dataRT ? (
     <div className="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2">
       <h2 className="text-lg font-semibold">Transacciones Recientes</h2>
