@@ -3,21 +3,56 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@layouts/*": ["./src/layouts/*"],
-      "@components/*": ["./src/components/*"],
-      "@pages/*": ["./src/components/pages/*"],
-      "@images/*": ["./src/images/*"],
-      "@login/*": ["./src/components/login/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@icons/*": ["./src/assets/icons/*"],
-      "@lib/*": ["./src/lib/*"],
-      "@dashboard/*": ["./src/components/dashboard/*"],
-      "@entries/*": ["./src/components/entries/*"],
-      "@exits/*": ["./src/components/exits/*"],
-      "@analysis/*": ["./src/components/analysis/*"],
-      "@config/*": ["./src/config/*"],
-      "@savings/*": ["./src/components/savings/*"],
-      "@reminders/*": ["./src/components/reminders/*"],
-    }
+      "@layouts/*": [
+        "./src/layouts/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@pages/*": [
+        "./src/components/pages/*"
+      ],
+      "@images/*": [
+        "./src/images/*"
+      ],
+      "@login/*": [
+        "./src/components/login/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@icons/*": [
+        "./src/assets/icons/*"
+      ],
+      "@lib/*": [
+        "./src/lib/*"
+      ],
+      "@dashboard/*": [
+        "./src/components/dashboard/*"
+      ],
+      "@entries/*": [
+        "./src/components/entries/*"
+      ],
+      "@exits/*": [
+        "./src/components/exits/*"
+      ],
+      "@analysis/*": [
+        "./src/components/analysis/*"
+      ],
+      "@config/*": [
+        "./src/config/*"
+      ],
+      "@savings/*": [
+        "./src/components/savings/*"
+      ],
+      "@reminders/*": [
+        "./src/components/reminders/*"
+      ],
+      "@api/*": [
+        "./src/pages/api/*"
+      ]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   }
 }
