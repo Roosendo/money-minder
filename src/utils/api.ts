@@ -38,7 +38,7 @@ export interface FinancialSummary {
   totalExits: number
 }
 
-interface MainCategories {
+export interface MainCategories {
   category: string
   total: number
 }

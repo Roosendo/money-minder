@@ -71,6 +71,10 @@ export const createGraphicBar = (
   egresosMensuales: number[],
   saldoNetoMensual: number[]
 ) => {
+  const chart = Chart.getChart(ctx)
+  if (chart) {
+    chart.destroy()
+  }
   Chart.register(...registerables)
   Chart.defaults.font.family = 'Saira Variable'
 
