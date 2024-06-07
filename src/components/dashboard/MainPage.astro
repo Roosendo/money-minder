@@ -4,6 +4,10 @@ import Fifth from '@images/5.webp'
 import Quote from '@components/Quote.tsx'
 import FinancialSummary from '@dashboard/FinancialSummary.tsx'
 import RecentTransactions from '@dashboard/RecentTransactions.tsx'
+import CashFlow from '@dashboard/CashFlow.tsx'
+import MainCategories from '@dashboard/MainCategories.tsx'
+import Goals from '@dashboard/Goals.tsx'
+import Reminders from '@dashboard/Reminders.tsx'
 ---
 
 <section class="flex flex-col mx-auto items-center w-[80dvw] h-[80dvh] justify-center rounded-3xl px-4 my-6">
@@ -27,107 +31,18 @@ import RecentTransactions from '@dashboard/RecentTransactions.tsx'
     <RecentTransactions client:load />
     
     <!-- Gráfico de Flujo de Efectivo -->
-    <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2 lg:col-span-3">
-      <h2 class="text-lg font-semibold">Flujo de Efectivo</h2>
-      <canvas id="cashFlowChart"></canvas>
-    </div>
+    <CashFlow client:load />
     
     <!-- Categorías Principales -->
-    <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2 lg:col-span-3">
-      <h2 class="text-lg font-semibold">Categorías Principales</h2>
-      <canvas id="topCategoriesChart" class="max-h-96"></canvas>
-    </div>
+    <MainCategories client:load />
     
     <!-- Progreso hacia Objetivos -->
-    <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4">
-      <h2 class="text-lg font-semibold mb-4">Progreso hacia Objetivos</h2>
-      <div id="goals" class="space-y-4">
-        <!-- Aquí podrías añadir barras de progreso para diferentes objetivos -->
-      </div>
-    </div>
+    <Goals client:load />
     
     <!-- Alertas y Notificaciones -->
-    <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4">
-      <h2 class="text-lg font-semibold mb-4">Recordatorios</h2>
-      <div id="reminders" class="space-y-4">
-        <!-- Más alertas -->
-      </div>
-    </div>
+    <Reminders client:load />
+
     <Quote client:load />
+
   </div>
 </div>
-
-<script>
-  import { $ } from '@lib/dom-selector'
-  import { createGraphic, createGraphicBar } from '@utils/create-graph'
-  import { createSavingGoalElement, createReminderElement } from '@utils/ui'
-  import { fetchDataSavings, fetchDataReminders, fetchCashFlow, fetchMainCategories } from '@utils/api'
-
-  document.addEventListener('astro:page-load', async () => {
-    const ctx = (document.getElementById('cashFlowChart') as HTMLCanvasElement)
-    const ctxTopCategoriesChart = (document.getElementById('topCategoriesChart') as HTMLCanvasElement)
-    const $reminders = $('#reminders') as HTMLDivElement
-    const $goals = $('#goals') as HTMLDivElement
-
-    const dataReminders = await fetchDataReminders()
-    if (dataReminders.length === 0) {
-      $reminders.innerHTML = '<p>No hay recordatorios disponibles</p>'
-    } else {
-      dataReminders.forEach((reminder) => {
-        const reminderElement = createReminderElement(reminder, false)
-        $reminders.appendChild(reminderElement)
-      })
-    }
-
-    const dataGoals = await fetchDataSavings()
-    if (dataGoals.length === 0) {
-      $goals.innerHTML = '<p>No hay objetivos de ahorro disponibles</p>'
-    } else {
-      dataGoals.forEach((goal) => {
-        const goalElement = createSavingGoalElement(goal, false)
-        $goals.appendChild(goalElement)
-      })
-    }
-
-    // logica para obtener las categorías principales
-    const dataMC = await fetchMainCategories()
-
-    if (dataMC.length > 0) {
-      const categories = dataMC.map(item => item.category)
-      const totalAmounts = dataMC.map(item => item.total)
-  
-      createGraphic(ctxTopCategoriesChart, categories, totalAmounts, 'Categorías Principales')
-    } else {
-      createGraphic(ctxTopCategoriesChart, ['Sin datos'], [], 'Categorías Principales')
-    }
-
-    // logica para obtener el flujo de efectivo
-    const dataCF = await fetchCashFlow()
-
-    const months: Record<string, string> = {
-      '01': 'Enero',
-      '02': 'Febrero',
-      '03': 'Marzo',
-      '04': 'Abril',
-      '05': 'Mayo',
-      '06': 'Junio',
-      '07': 'Julio',
-      '08': 'Agosto',
-      '09': 'Septiembre',
-      '10': 'Octubre',
-      '11': 'Noviembre',
-      '12': 'Diciembre'
-    }
-
-    if (dataCF) {
-      const ingresosMensuales = dataCF.map(item => item.total_ingresos)
-      const egresosMensuales = dataCF.map(item => item.total_egresos)
-      const saldoNetoMensual = ingresosMensuales.map((ingreso, index) => ingreso - (egresosMensuales[index] || 0))
-      const labelsToShow = dataCF.map(item => months[item.month] || item.month)
-  
-      if (labelsToShow) createGraphicBar(ctx, labelsToShow, ingresosMensuales, egresosMensuales, saldoNetoMensual)
-    } else {
-      createGraphicBar(ctx, [], [], [], [])
-    }
-  })
-</script>
