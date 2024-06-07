@@ -5,12 +5,6 @@ interface Entry {
   description: string;
 }
 
-interface Transaction {
-  date: string
-  category: string
-  amount: number
-}
-
 export const renderTable = (entries: Entry[]): string => {
   let tableHTML = ''
 
@@ -39,38 +33,6 @@ export const renderTable = (entries: Entry[]): string => {
         </td>
         <td class="px-4 py-3">
           ${entry.date}
-        </td>
-      </tr>
-    `
-    tableHTML += rowHTML
-  })
-
-  return tableHTML
-}
-
-export const renderTableDashboard = (transactions: Transaction[]): string => {
-  let tableHTML = ''
-
-  if (transactions.length === 0) {
-    return `
-      <tr class="bg-gray-200 dark:bg-gray-800">
-        <td class="px-4 py-3 text-center font-medium text-gray-900 dark:text-white" colspan="3">
-          Sin registros
-        </td>
-      </tr>
-    `
-  }
-  transactions.forEach(transaction => {
-    const rowHTML = `
-      <tr class="bg-gray-200 dark:bg-gray-900 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
-        <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-          ${transaction.date}
-        </th>
-        <td class="px-4 py-3">
-          ${transaction.category}
-        </td>
-        <td class="px-4 py-3">
-          $${transaction.amount}
         </td>
       </tr>
     `

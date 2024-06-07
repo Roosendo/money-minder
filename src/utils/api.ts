@@ -33,7 +33,7 @@ export interface CashFLow {
   total_egresos: number
 }
 
-interface FinancialSummary {
+export interface FinancialSummary {
   totalEntries: number
   totalExits: number
 }
@@ -43,7 +43,7 @@ interface MainCategories {
   total: number
 }
 
-interface RecentTransactions {
+export interface RecentTransactions {
   date: string
   category: string
   amount: number
@@ -181,43 +181,9 @@ export const fetchCashFlow = async (): Promise<CashFLow[]> => {
   return response.json()
 }
 
-export const fetchFinancialSummary = async (): Promise<FinancialSummary> => {
-  try {
-    const response = await fetch('/api/dashboard/financial-summary', requestOptions)
-
-    if (!response.ok) {
-      throw new Error('La respuesta no fue exitosa')
-    }
-
-    const data = await response.json()
-
-    return data
-  } catch (error) {
-    console.error(error)
-    return { totalEntries: 0, totalExits: 0 }
-  }
-}
-
 export const fetchMainCategories = async (): Promise<MainCategories[]> => {
   try {
     const response = await fetch('/api/dashboard/main-categories', requestOptions)
-
-    if (!response.ok) {
-      throw new Error('La respuesta no fue exitosa')
-    }
-
-    const data = await response.json()
-
-    return data
-  } catch (error) {
-    console.error(error)
-    return []
-  }
-}
-
-export const fetchRecentTransactions = async (): Promise<RecentTransactions[]> => {
-  try {
-    const response = await fetch('/api/dashboard/recent-transactions', requestOptions)
 
     if (!response.ok) {
       throw new Error('La respuesta no fue exitosa')
