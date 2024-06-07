@@ -38,13 +38,13 @@ export default function RecentTransactions () {
             </tr>
           </thead>
           <tbody id="table-body">
-            {dataRT ? dataRT.map(({ date, category, amount }) => (
-              <tr className="bg-gray-200 dark:bg-gray-900 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
+            {dataRT.map(({ date, category, amount }, index) => (
+              <tr key={index} className="bg-gray-200 dark:bg-gray-900 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
                 <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{date}</th>
                 <td className="px-4 py-3 text-center">{category}</td>
                 <td className="px-4 py-3">${amount}</td>
               </tr>
-            )) : null}
+            ))}
           </tbody>
         </table>
       </div>
