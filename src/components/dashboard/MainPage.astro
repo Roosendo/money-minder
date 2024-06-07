@@ -1,6 +1,9 @@
 ---
 import { Image } from 'astro:assets'
 import Fifth from '@images/5.webp'
+import Quote from '@components/Quote.tsx'
+import FinancialSummary from '@dashboard/FinancialSummary.tsx'
+import RecentTransactions from '@dashboard/RecentTransactions.tsx'
 ---
 
 <section class="flex flex-col mx-auto items-center w-[80dvw] h-[80dvh] justify-center rounded-3xl px-4 my-6">
@@ -18,39 +21,10 @@ import Fifth from '@images/5.webp'
   <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
     
     <!-- Resumen Financiero Rápido -->
-    <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4">
-      <h2 class="text-lg">Balance Total</h2>
-      <p id="balance" class="text-2xl font-semibold"></p>
-    </div>
-    
-    <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4">
-      <h2 class="text-lg">Total Ingresos</h2>
-      <p id="entries" class="text-2xl font-semibold"></p>
-    </div>
-    
-    <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4">
-      <h2 class="text-lg">Total Gastos</h2>
-      <p id="exits" class="text-2xl font-semibold"></p>
-    </div>
+    <FinancialSummary client:load />
     
     <!-- Transacciones Recientes -->
-    <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2">
-      <h2 class="text-lg font-semibold">Transacciones Recientes</h2>
-      <div class="overflow-x-auto">
-        <table class="min-w-full">
-          <thead>
-            <tr>
-              <th class="py-2">Fecha</th>
-              <th class="py-2">Categoría</th>
-              <th class="py-2">Monto</th>
-            </tr>
-          </thead>
-          <tbody id="table-body">
-            <!-- Aquí añadirás filas con transacciones recientes -->
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <RecentTransactions client:load />
     
     <!-- Gráfico de Flujo de Efectivo -->
     <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2 lg:col-span-3">
@@ -61,7 +35,7 @@ import Fifth from '@images/5.webp'
     <!-- Categorías Principales -->
     <div class="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2 lg:col-span-3">
       <h2 class="text-lg font-semibold">Categorías Principales</h2>
-      <canvas id="topCategoriesChart" class=""></canvas>
+      <canvas id="topCategoriesChart" class="max-h-96"></canvas>
     </div>
     
     <!-- Progreso hacia Objetivos -->
@@ -79,23 +53,19 @@ import Fifth from '@images/5.webp'
         <!-- Más alertas -->
       </div>
     </div>
+    <Quote client:load />
   </div>
 </div>
 
 <script>
   import { $ } from '@lib/dom-selector'
   import { createGraphic, createGraphicBar } from '@utils/create-graph'
-  import { renderTableDashboard } from '@utils/render-table'
   import { createSavingGoalElement, createReminderElement } from '@utils/ui'
-  import { fetchDataSavings, fetchDataReminders, fetchCashFlow, fetchFinancialSummary, fetchMainCategories, fetchRecentTransactions } from '@utils/api'
+  import { fetchDataSavings, fetchDataReminders, fetchCashFlow, fetchMainCategories } from '@utils/api'
 
   document.addEventListener('astro:page-load', async () => {
     const ctx = (document.getElementById('cashFlowChart') as HTMLCanvasElement)
     const ctxTopCategoriesChart = (document.getElementById('topCategoriesChart') as HTMLCanvasElement)
-    const $balance = $('#balance')
-    const $entries = $('#entries')
-    const $exits = $('#exits')
-    const $tableBody = $('#table-body') as HTMLTableSectionElement
     const $reminders = $('#reminders') as HTMLDivElement
     const $goals = $('#goals') as HTMLDivElement
 
@@ -119,10 +89,6 @@ import Fifth from '@images/5.webp'
       })
     }
 
-    const dataRT = await fetchRecentTransactions()
-    const table = renderTableDashboard(dataRT)
-    $tableBody.innerHTML = table
-
     // logica para obtener las categorías principales
     const dataMC = await fetchMainCategories()
 
@@ -133,19 +99,6 @@ import Fifth from '@images/5.webp'
       createGraphic(ctxTopCategoriesChart, categories, totalAmounts, 'Categorías Principales')
     } else {
       createGraphic(ctxTopCategoriesChart, ['Sin datos'], [], 'Categorías Principales')
-    }
-
-    // logica para obtener el balance total
-    const dataFS = await fetchFinancialSummary()
-
-    if (dataFS.totalEntries !== 0 && dataFS.totalExits !== 0) {
-      if ($balance) $balance.textContent = `$${(dataFS.totalEntries - dataFS.totalExits).toFixed(2)}`
-      if ($entries) $entries.textContent = `$${dataFS.totalEntries.toFixed(2)}`
-      if ($exits) $exits.textContent = `$${dataFS.totalExits.toFixed(2)}`
-    } else {
-      if ($balance) $balance.textContent = 'No disponible ❌'
-      if ($entries) $entries.textContent = 'No disponible ❌'
-      if ($exits) $exits.textContent = 'No disponible ❌'
     }
 
     // logica para obtener el flujo de efectivo
