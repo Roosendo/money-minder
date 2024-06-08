@@ -34,8 +34,8 @@ export interface CashFLow {
 }
 
 export interface FinancialSummary {
-  totalEntries: number
-  totalExits: number
+  totalEntries: number | null
+  totalExits: number | null
 }
 
 export interface MainCategories {

@@ -12,7 +12,11 @@ export default function MainCategories () {
         const data = await fetchMainCategories()
         setDataMC(data)
       } catch (error) {
-        console.error('Error fetching data:', error)
+        if (error instanceof Response && error.status === 404) {
+          setDataMC(null)
+        } else {
+          console.error('Error fetching data:', error)
+        }
       }
     }
 

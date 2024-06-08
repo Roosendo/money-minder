@@ -30,8 +30,8 @@ export const GET: APIRoute = async ({ request }) => {
     return new Response('Exits not found', { status: 404 })
   }
 
-  const totalEntries = userEntries?.rows[0]?.totalEntries ?? 0
-  const totalExits = userExits?.rows[0]?.totalExits ?? 0
+  const totalEntries = userEntries?.rows[0]?.totalEntries ?? null
+  const totalExits = userExits?.rows[0]?.totalExits ?? null
 
   return new Response(JSON.stringify({ totalEntries, totalExits }), { status: 200 })
 }

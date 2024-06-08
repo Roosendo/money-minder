@@ -27,7 +27,11 @@ export default function CashFlow () {
         const data = await fetchCashFlow()
         setDataCF(data)
       } catch (error) {
-        console.error('Error fetching data:', error)
+        if (error instanceof Response && error.status === 404) {
+          setDataCF(null)
+        } else {
+          console.error('Error fetching data:', error)
+        }
       }
     }
 

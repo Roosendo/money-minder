@@ -12,8 +12,12 @@ export default function Goals () {
         const data = await fetchDataSavings()
         setDataGoals(data)
       } catch (error) {
-        setError('Error fetching data')
-        console.error('Error fetching data:', error)
+        if (error instanceof Response && error.status === 404) {
+          setDataGoals(null)
+        } else {
+          setError('Error fetching data')
+          console.error('Error fetching data:', error)
+        }
       }
     }
     fetchData()

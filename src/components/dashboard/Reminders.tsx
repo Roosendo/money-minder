@@ -12,8 +12,12 @@ export default function Reminders () {
         const data = await fetchDataReminders()
         setDataReminders(data)
       } catch (error) {
-        setError('Error fetching data')
-        console.error('Error fetching data:', error)
+        if (error instanceof Response && error.status === 404) {
+          setDataReminders(null)
+        } else {
+          setError('Error fetching data')
+          console.error('Error fetching data:', error)
+        }
       }
     }
     fetchData()
