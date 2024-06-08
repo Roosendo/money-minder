@@ -5,19 +5,15 @@ import { type MainCategories, fetchMainCategories } from '@utils/api'
 export default function MainCategories () {
   const canvasRef = useRef(null)
   const [dataMC, setDataMC] = useState<MainCategories[] | null>(null)
-  const [hasData, setHasData] = useState<boolean>(true)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await fetchMainCategories()
+        if (data.length === 0) return
         setDataMC(data)
       } catch (error) {
-        if (error instanceof Response && error.status === 404) {
-          setHasData(false)
-        } else {
-          console.error('Error fetching data:', error)
-        }
+        console.error('Error fetching data:', error)
       }
     }
 
@@ -35,8 +31,6 @@ export default function MainCategories () {
       if (ctx && labelsToShow) createGraphic(ctx, categories, totalAmounts, 'Categorías principales')
     }
   }, [dataMC])
-
-  if (!hasData) return null
 
   return dataMC ? (
     <div className="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2 lg:col-span-3">

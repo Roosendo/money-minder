@@ -20,19 +20,15 @@ export default function CashFlow () {
   }
 
   const [dataCF, setDataCF] = useState<CashFLow[] | null>(null)
-  const [hasData, setHasData] = useState<boolean>(true)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await fetchCashFlow()
+        if (data.length === 0) return
         setDataCF(data)
       } catch (error) {
-        if (error instanceof Response && error.status === 404) {
-          setHasData(false)
-        } else {
-          console.error('Error fetching data:', error)
-        }
+        console.error('Error fetching data:', error)
       }
     }
 
@@ -50,8 +46,6 @@ export default function CashFlow () {
       if (ctx && labelsToShow) createGraphicBar(ctx, labelsToShow, ingresosMensuales, egresosMensuales, saldoNetoMensual)
     }
   }, [dataCF])
-
-  if (!hasData) return null
 
   return dataCF ? (
     <div className="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2 lg:col-span-3">

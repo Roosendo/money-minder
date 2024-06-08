@@ -36,17 +36,11 @@ export default function Quote() {
     fetchData()
   }, [])
 
-  if (loading) {
-    return <div>Cargando...</div>
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>
-  }
-
   return result ? (
     <div className="flex items-center justify-center p-4">
       <div className="bg-gray-200 dark:bg-gray-900 p-6 rounded-lg shadow-lg max-w-lg">
+        {loading && <p className="text-lg text-gray-700 dark:text-gray-200">Cargando...</p>}
+        {error && <p className="text-lg text-rose-500">{error}</p>}
         <p className="text-2xl text-gray-900 dark:text-gray-200 mb-4">
           &ldquo;{result.phrase}&rdquo;
         </p>
