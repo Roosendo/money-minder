@@ -5,6 +5,7 @@ import { createSavingGoalElement } from '@utils/ui'
 export default function Goals () {
   const [dataGoals, setDataGoals] = useState<Saving[] | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [hasData, setHasData] = useState<boolean>(true)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -13,7 +14,7 @@ export default function Goals () {
         setDataGoals(data)
       } catch (error) {
         if (error instanceof Response && error.status === 404) {
-          setDataGoals(null)
+          setHasData(false)
         } else {
           setError('Error fetching data')
           console.error('Error fetching data:', error)
@@ -22,6 +23,8 @@ export default function Goals () {
     }
     fetchData()
   }, [])
+
+  if (!hasData) return null
 
   return dataGoals ? (
     <div className="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4">
