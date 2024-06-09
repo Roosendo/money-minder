@@ -1,4 +1,4 @@
-import type { Transaction, Summary, Saving, Reminder } from '@utils/api'
+import type { Transaction, Summary, Saving, Reminder } from '@src/types.d.ts'
 import { $ } from '@lib/dom-selector'
 import { createGraphic } from '@utils/create-graph'
 
@@ -39,13 +39,15 @@ export const updateSummary = (
   $totalEgresos: HTMLSpanElement,
   $difference: HTMLSpanElement
 ) => {
-  $totalIngresos.textContent = `$${dataSummary.totalEntries.toString()}`
-  $totalEgresos.textContent = `$${dataSummary.totalExits.toString()}`
+  const totalEntries = dataSummary.totalEntries !== null ? dataSummary.totalEntries : 0
+  const totalExits = dataSummary.totalExits !== null ? dataSummary.totalExits : 0
+  const balance = (totalEntries - totalExits).toFixed(2)
+  $totalIngresos.textContent = `$${totalEntries.toFixed(2)}`
+  $totalEgresos.textContent = `$${totalExits.toFixed(2)}`
 
-  const difference = dataSummary.totalEntries - dataSummary.totalExits
-  $difference.textContent = `$${difference.toString()}`
+  $difference.textContent = `$${balance.toString()}`
 
-  if (difference < 0) {
+  if (Number(balance) < 0) {
     $difference.classList.remove('text-teal-600')
     $difference.classList.add('text-rose-600')
   } else {
