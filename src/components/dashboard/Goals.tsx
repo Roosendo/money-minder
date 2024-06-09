@@ -8,7 +8,7 @@ export default function Goals () {
   if (loading) return <p>Cargando...</p>
   if (error) return null
 
-  return dataGoals &&(
+  return dataGoals && (
     <div className="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4">
       <h2 className="text-lg font-semibold mb-4">Progreso hacia Objetivos</h2>
       <div id="goals" className="space-y-4">
