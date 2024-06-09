@@ -1,7 +1,7 @@
 import { $ } from '@lib/dom-selector'
 import { showAndHideAlert } from '@utils/alerts'
 import { fetchDataReminders, updateReminder, deleteReminder } from '@utils/api'
-import type { Reminder } from '@utils/api'
+import type { Reminder } from '@src/types.d.ts'
 import { createReminderElement, createEditReminderModal, openEditModal, createDeleteReminderModal, openDeleteModal } from '@utils/ui'
 
 export const handleFormSubmit = async (

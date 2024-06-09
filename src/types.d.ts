@@ -44,3 +44,10 @@ export interface RecentTransactions {
   category: string
   amount: number
 }
+
+export interface Entry {
+  date: string;
+  amount: number;
+  category: string;
+  description: string;
+}

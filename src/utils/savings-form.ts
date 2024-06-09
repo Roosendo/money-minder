@@ -1,7 +1,7 @@
 import { $ } from '@lib/dom-selector'
 import { showAndHideAlert } from '@utils/alerts'
 import { fetchDataSavings, updateSaving, deleteSaving } from '@utils/api'
-import type { Saving } from '@utils/api'
+import type { Saving } from '@src/types.d.ts'
 import { createSavingGoalElement, createEditModal, openEditModal, createDeleteModal, openDeleteModal } from '@utils/ui'
 
 export const handleFormSubmit = async (

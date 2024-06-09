@@ -1,9 +1,4 @@
-interface Entry {
-  date: string;
-  amount: number;
-  category: string;
-  description: string;
-}
+import type { Entry } from '@src/types.d.ts'
 
 export const renderTable = (entries: Entry[]): string => {
   let tableHTML = ''
