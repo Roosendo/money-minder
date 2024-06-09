@@ -1,24 +1,11 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { useFetchData } from '@hooks/useFetchData'
 import { createGraphic } from '@utils/create-graph'
-import { type MainCategories, fetchMainCategories } from '@utils/api'
+import type { MainCategories } from '@src/types.d.ts'
 
 export default function MainCategories () {
+  const { data: dataMC, error, loading } = useFetchData<MainCategories[]>('/api/dashboard/main-categories')
   const canvasRef = useRef(null)
-  const [dataMC, setDataMC] = useState<MainCategories[] | null>(null)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchMainCategories()
-        if (data.length === 0) return
-        setDataMC(data)
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
-    }
-
-    fetchData()
-  }, [])
 
   useEffect(() => {
     if (dataMC && canvasRef.current) {
@@ -32,10 +19,13 @@ export default function MainCategories () {
     }
   }, [dataMC])
 
-  return dataMC ? (
+  if (loading) return <p>Cargando...</p>
+  if (error) return null
+
+  return (
     <div className="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2 lg:col-span-3">
       <h2 className="text-lg font-semibold">Categorías Principales</h2>
       <canvas ref={canvasRef} id="topCategoriesChart" className="max-h-96"></canvas>
     </div>
-  ): null
+  )
 }

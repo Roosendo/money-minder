@@ -1,31 +1,13 @@
-import { useState, useEffect } from 'react'
-import type { RecentTransactions } from '@utils/api'
+import { useFetchData } from '@hooks/useFetchData'
+import type { RecentTransactions } from '@src/types.d.ts'
 
 export default function RecentTransactions () {
-  const [dataRT, setDataRT] = useState<RecentTransactions[] | null>(null)
+  const { data: dataRT, error, loading } = useFetchData<RecentTransactions[]>('/api/dashboard/recent-transactions')
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/dashboard/recent-transactions', {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
-        })
+  if (loading) return <p>Cargando...</p>
+  if (error) return null
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch data')
-        }
-
-        const data: RecentTransactions[] = await response.json()
-        setDataRT(data)
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
-    }
-
-    fetchData()
-  }, [])
-  return dataRT ? (
+  return dataRT && (
     <div className="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2">
       <h2 className="text-lg font-semibold">Transacciones Recientes</h2>
       <div className="overflow-x-auto">
@@ -49,5 +31,5 @@ export default function RecentTransactions () {
         </table>
       </div>
     </div>
-  ): null
+  )
 }

@@ -1,24 +1,14 @@
-import { useState, useEffect } from 'react'
-import { type Reminder, fetchDataReminders} from '@utils/api'
+import { useFetchData } from '@hooks/useFetchData'
+import type { Reminder} from '@src/types.d.ts'
 import { createReminderElement } from '@utils/ui'
 
 export default function Reminders () {
-  const [dataReminders, setDataReminders] = useState<Reminder[] | null>(null)
+  const { data: dataReminders, error, loading } = useFetchData<Reminder[]>('/api/get-reminders')
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchDataReminders()
-        if (data.length === 0) return
-        setDataReminders(data)
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
-    }
-    fetchData()
-  }, [])
+  if (loading) return <p>Cargando...</p>
+  if (error) return null
 
-  return dataReminders ? (
+  return dataReminders && (
     <div className="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4">
       <h2 className="text-lg font-semibold mb-4">Recordatorios</h2>
       <div id="reminders" className="space-y-4">
@@ -28,5 +18,5 @@ export default function Reminders () {
         })}
       </div>
     </div>
-  ) : null
+  )
 }

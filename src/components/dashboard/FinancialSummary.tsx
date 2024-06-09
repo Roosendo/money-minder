@@ -1,38 +1,18 @@
-import { useState, useEffect } from 'react'
-import type { FinancialSummary } from '@utils/api'
+import { useFetchData } from '@hooks/useFetchData'
+import type { FinancialSummary } from '@src/types.d.ts'
 
 export default function FinancialSummary () {
-  const [dataFS, setDataFS] = useState<FinancialSummary | null>(null)
+  const { data: dataFS, error, loading } = useFetchData<FinancialSummary>('/api/dashboard/financial-summary')
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/dashboard/financial-summary', {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
-        })
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch data')
-        }
-
-        const data: FinancialSummary = await response.json()
-        setDataFS(data)
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
-    }
-
-    fetchData()
-  }, [])
-
+  if (loading) return <p>Cargando...</p>
+  if (error) return null
   if (!dataFS || (dataFS.totalEntries === null && dataFS.totalExits === null)) return null
 
   const totalEntries = dataFS.totalEntries !== null ? dataFS.totalEntries : 0
   const totalExits = dataFS.totalExits !== null ? dataFS.totalExits : 0
   const balance = (totalEntries - totalExits).toFixed(2)
 
-  return dataFS ? (
+  return (
     <>
       <div className="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4">
         <h2 className="text-lg">Balance Total</h2>
@@ -49,5 +29,5 @@ export default function FinancialSummary () {
         <p id="exits" className="text-2xl font-semibold">${totalExits}</p>
       </div>
     </>
-  ) : null
+  )
 }
