@@ -1,14 +1,24 @@
 ---
 import Google from '@icons/Google.astro'
+import GitHub from '@icons/GitHub.astro'
 ---
 
-<button
-	id='login-g'
-	class='w-full rounded-lg bg-gray-200 px-5 py-2.5 text-center text-sm font-bold text-black hover:bg-gray-300 focus:outline-none sm:w-auto'
->
-  <Google class='size-5 inline-block mr-2' />
-	Ingresar
-</button>
+<div class="flex flex-col space-y-3">
+  <button
+    id='login-g'
+    class='w-full rounded-lg bg-gray-200 px-5 py-2.5 text-center text-sm font-bold text-black hover:bg-gray-300 focus:outline-none sm:w-auto'
+  >
+    <Google class='size-5 inline-block mr-2' />
+    Ingresar
+  </button>
+  <button
+    id='login-gh'
+    class='w-full rounded-lg bg-gray-200 px-5 py-2.5 text-center text-sm font-bold text-black hover:bg-gray-300 focus:outline-none sm:w-auto'
+  >
+    <GitHub class='size-5 inline-block mr-2' />
+    Ingresar
+  </button>
+</div>
 
 <script>
   import { $ } from '@lib/dom-selector'
@@ -16,10 +26,14 @@ import Google from '@icons/Google.astro'
   document.addEventListener('astro:page-load', async () => {
     const { signIn } = await import('auth-astro/client')
     const $loginButton = $('#login-g')
+    const $loginButtonGH = $('#login-gh')
   
     if ($loginButton) {
       $loginButton.onclick = () => signIn('google')
     }
-  })
 
+    if ($loginButtonGH) {
+      $loginButtonGH.onclick = () => signIn('github')
+    }
+  })
 </script>
