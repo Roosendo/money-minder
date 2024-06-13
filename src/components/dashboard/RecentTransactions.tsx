@@ -1,11 +1,10 @@
+import { Suspense } from 'react'
+import LoadingSpinner from '@components/LoadingSpinner.tsx'
 import { useFetchData } from '@hooks/useFetchData'
 import type { RecentTransactions } from '@src/types.d.ts'
 
-export default function RecentTransactions () {
-  const { data: dataRT, error, loading } = useFetchData<RecentTransactions[]>('/api/dashboard/recent-transactions')
-
-  if (loading) return <p>Cargando...</p>
-  if (error) return null
+function RecentTransactionsComponent () {
+  const { data: dataRT } = useFetchData<RecentTransactions[]>('/api/dashboard/recent-transactions')
 
   return dataRT && (
     <div className="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2">
@@ -31,5 +30,13 @@ export default function RecentTransactions () {
         </table>
       </div>
     </div>
+  )
+}
+
+export default function RecentTransactions () {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <RecentTransactionsComponent />
+    </Suspense>
   )
 }

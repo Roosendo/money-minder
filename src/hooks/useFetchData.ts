@@ -1,35 +1,12 @@
-import { useState, useEffect } from  'react'
+import useSWR from 'swr'
 
-type FetchState<T> = {
-  data: T | null
-  error: Error | null
-  loading: boolean
-}
+const fetcher = (url: string) => fetch(url).then(res => {
+  if (!res.ok) throw new Error('Failed to fetch data')
+  return res.json()
+})
 
-export const useFetchData = <T>(url: string): FetchState<T> => {
-  const [data, setData] = useState<T | null>(null)
-  const [error, setError] = useState<Error | null>(null)
-  const [loading, setLoading] = useState<boolean>(true)
+export const useFetchData = <T>(url: string) => {
+  const { data, error } = useSWR<T>(url, fetcher)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
-      try {
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
-        })
-        if (!response.ok) throw new Error('Failed to fetch data')
-        const result: T = await response.json()
-        setData(result)
-      } catch (error) {
-        setError(error as Error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchData()
-  }, [url])
-
-  return { data, error, loading }
+  return { data, error, loading: !error && !data }
 }

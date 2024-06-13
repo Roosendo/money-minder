@@ -1,11 +1,11 @@
+import { Suspense } from 'react'
+import LoadingSpinner from '@components/LoadingSpinner.tsx'
 import { useFetchData } from '@hooks/useFetchData'
 import type { FinancialSummary } from '@src/types.d.ts'
 
-export default function FinancialSummary () {
-  const { data: dataFS, error, loading } = useFetchData<FinancialSummary>('/api/dashboard/financial-summary')
+function FinancialSummaryComponent () {
+  const { data: dataFS } = useFetchData<FinancialSummary>('/api/dashboard/financial-summary')
 
-  if (loading) return <p>Cargando...</p>
-  if (error) return null
   if (!dataFS || (dataFS.totalEntries === null && dataFS.totalExits === null)) return null
 
   const totalEntries = dataFS.totalEntries !== null ? dataFS.totalEntries : 0
@@ -29,5 +29,13 @@ export default function FinancialSummary () {
         <p id="exits" className="text-2xl font-semibold">${totalExits}</p>
       </div>
     </>
+  )
+}
+
+export default function FinancialSummary () {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <FinancialSummaryComponent />
+    </Suspense>
   )
 }

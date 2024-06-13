@@ -1,12 +1,11 @@
+import { Suspense } from 'react'
+import LoadingSpinner from '@components/LoadingSpinner.tsx'
 import { useFetchData } from '@hooks/useFetchData'
 import type { Saving } from '@src/types.d.ts'
 import { createSavingGoalElement } from '@utils/ui'
 
-export default function Goals () {
-  const { data: dataGoals, error, loading } = useFetchData<Saving[]>('/api/get-savings')
-
-  if (loading) return <p>Cargando...</p>
-  if (error) return null
+function GoalsComponent () {
+  const { data: dataGoals } = useFetchData<Saving[]>('/api/get-savings')
 
   return dataGoals && (
     <div className="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4">
@@ -18,5 +17,13 @@ export default function Goals () {
         })}
       </div>
     </div>
+  )
+}
+
+export default function Goals () {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <GoalsComponent />
+    </Suspense>
   )
 }
