@@ -2,10 +2,10 @@ import { useEffect, useRef } from 'react'
 import LoadingSpinner from '@components/LoadingSpinner.tsx'
 import { useFetchData } from '@hooks/useFetchData'
 import { createGraphic } from '@utils/create-graph'
-import type { MainCategories } from '@src/types.d.ts'
+import type { MainCategories as MainCategoriesType } from '@src/types.d.ts'
 
 const MainCategories = () => {
-  const { data: dataMC, error } = useFetchData<MainCategories[]>('/api/dashboard/main-categories')
+  const { data: dataMC, error } = useFetchData<MainCategoriesType[]>('/api/dashboard/main-categories')
   const canvasRef = useRef(null)
   
   if (error) return null

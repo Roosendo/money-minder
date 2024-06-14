@@ -1,10 +1,10 @@
 import React from 'react'
 import LoadingSpinner from '@components/LoadingSpinner.tsx'
 import { useFetchData } from '@hooks/useFetchData'
-import type { FinancialSummary } from '@src/types.d.ts'
+import type { FinancialSummary as FinancialSummaryType } from '@src/types.d.ts'
 
 const FinancialSummary = () => {
-  const { data: dataFS, error } = useFetchData<FinancialSummary>('/api/dashboard/financial-summary')
+  const { data: dataFS, error } = useFetchData<FinancialSummaryType>('/api/dashboard/financial-summary')
 
   if (error) return null
   if (!dataFS) return <LoadingSpinner />

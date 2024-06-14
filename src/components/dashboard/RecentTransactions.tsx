@@ -1,9 +1,9 @@
 import LoadingSpinner from '@components/LoadingSpinner.tsx'
 import { useFetchData } from '@hooks/useFetchData'
-import type { RecentTransactions } from '@src/types.d.ts'
+import type { RecentTransactions as RecentTransactionsType } from '@src/types.d.ts'
 
 function RecentTransactions () {
-  const { data: dataRT, error } = useFetchData<RecentTransactions[]>('/api/dashboard/recent-transactions')
+  const { data: dataRT, error } = useFetchData<RecentTransactionsType[]>('/api/dashboard/recent-transactions')
 
   if (error) return null
   if (!dataRT) return <LoadingSpinner />
