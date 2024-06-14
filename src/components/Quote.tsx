@@ -2,17 +2,16 @@ import { useFetchData } from '@hooks/useFetchData'
 import LoadingSpinner from '@components/LoadingSpinner.tsx'
 
 interface PhraseData {
-  phrase: string
-  author: string
+  phrase: string;
+  movie: string;
+  character: string;
 }
-
-// for english quotes use 'https://api.quotable.io/random'
 
 export default function Quote() {
   const { data: result, error } = useFetchData<PhraseData>('/api/get-quote')
 
-  if (!result) <LoadingSpinner />
   if (error) return null
+  if (!result) <LoadingSpinner />
 
   return result && (
     <div className="flex items-center justify-center p-4">
@@ -21,7 +20,7 @@ export default function Quote() {
           &ldquo;{result.phrase}&rdquo;
         </p>
         <p className="text-right text-lg font-semibold text-gray-700 dark:text-gray-100">
-          &mdash; {result.author}
+          &mdash; {result.character} en {result.movie}
         </p>
       </div>
     </div>

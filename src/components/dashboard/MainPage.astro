@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets'
 import Fifth from '@images/5.webp'
-// import Quote from '@components/Quote.tsx'
+import Quote from '@components/Quote.tsx'
 import FinancialSummary from '@dashboard/FinancialSummary.tsx'
 import RecentTransactions from '@dashboard/RecentTransactions.tsx'
 import CashFlow from '@dashboard/CashFlow.tsx'
@@ -42,7 +42,7 @@ import Reminders from '@dashboard/Reminders.tsx'
     <!-- Alertas y Notificaciones -->
     <Reminders client:load />
 
-    <!-- <Quote client:load /> -->
+    <Quote client:load />
 
   </div>
 </div>

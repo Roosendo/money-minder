@@ -1,11 +1,13 @@
 import type { APIRoute } from 'astro'
+import phrases from '@src/phrases.json'
 
 export const GET: APIRoute = async () => {
   try {
-    const requestOptions = { method: 'GET', headers: { 'Content-Type': 'application/json' } }
-    const response = await fetch('https://frasedeldia.azurewebsites.net/api/phrase', requestOptions)
-    const data = await response.json()
-    return new Response(JSON.stringify(data), { status: 200 })
+    const today = new Date()
+    const index = today.getDate() % phrases.length
+    const phrase = phrases[index]
+
+    return new Response(JSON.stringify(phrase), { status: 200 })
   } catch (error) {
     return new Response('Error', { status: 500 })
   }
