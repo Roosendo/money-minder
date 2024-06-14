@@ -1,6 +1,6 @@
 import LoadingSpinner from '@components/LoadingSpinner.tsx'
 import { useFetchData } from '@hooks/useFetchData'
-import type { Reminder} from '@src/types.d.ts'
+import type { Reminder } from '@src/types.d.ts'
 import { createReminderElement } from '@utils/ui'
 
 const Reminders = () => {

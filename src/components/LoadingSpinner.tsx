@@ -8,7 +8,7 @@ export default function LoadingSpinner () {
       <svg
         aria-hidden="true"
         role="status"
-        className="inline size-4 me-3 text-gray-200 animate-rotate-360 dark:text-gray-600"
+        className="inline size-4 me-3 text-gray-200 animate-rotate-360 animate-iteration-count-infinite dark:text-gray-600"
         viewBox="0 0 100 101"
         fill="none"
       >
@@ -21,7 +21,7 @@ export default function LoadingSpinner () {
           fill="#1C64F2"
         />
       </svg>
-      Loading...
+      Cargando...
     </button>
   )
 }

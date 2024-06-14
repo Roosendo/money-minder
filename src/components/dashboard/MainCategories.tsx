@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, Suspense } from 'react'
 import LoadingSpinner from '@components/LoadingSpinner.tsx'
 import { useFetchData } from '@hooks/useFetchData'
 import { createGraphic } from '@utils/create-graph'
@@ -9,8 +9,6 @@ const MainCategories = () => {
   const canvasRef = useRef(null)
   
   if (error) return null
-  if (!dataMC) return <LoadingSpinner />
-
 
   useEffect(() => {
     if (dataMC && canvasRef.current) {
@@ -23,11 +21,13 @@ const MainCategories = () => {
     }
   }, [dataMC])
 
-  return (
-    <div className="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2 lg:col-span-3">
-      <h2 className="text-lg font-semibold">Categorías Principales</h2>
-      <canvas ref={canvasRef} className="max-h-96"></canvas>
-    </div>
+  return dataMC && (
+    <Suspense fallback={<LoadingSpinner />}>
+      <div className="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2 lg:col-span-3">
+        <h2 className="text-lg font-semibold">Categorías Principales</h2>
+        <canvas ref={canvasRef} className="max-h-96"></canvas>
+      </div>
+    </Suspense>
   )
 }
 
