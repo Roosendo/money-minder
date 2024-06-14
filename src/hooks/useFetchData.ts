@@ -8,5 +8,5 @@ const fetcher = (url: string) => fetch(url).then(res => {
 export const useFetchData = <T>(url: string) => {
   const { data, error } = useSWR<T>(url, fetcher)
 
-  return { data, error, loading: !error && !data }
+  return { data, error }
 }

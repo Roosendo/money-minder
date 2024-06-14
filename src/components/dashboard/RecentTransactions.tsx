@@ -1,10 +1,12 @@
-import { Suspense } from 'react'
 import LoadingSpinner from '@components/LoadingSpinner.tsx'
 import { useFetchData } from '@hooks/useFetchData'
 import type { RecentTransactions } from '@src/types.d.ts'
 
-function RecentTransactionsComponent () {
-  const { data: dataRT } = useFetchData<RecentTransactions[]>('/api/dashboard/recent-transactions')
+function RecentTransactions () {
+  const { data: dataRT, error } = useFetchData<RecentTransactions[]>('/api/dashboard/recent-transactions')
+
+  if (error) return null
+  if (!dataRT) return <LoadingSpinner />
 
   return dataRT && (
     <div className="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2">
@@ -18,7 +20,7 @@ function RecentTransactionsComponent () {
               <th className="py-2">Monto</th>
             </tr>
           </thead>
-          <tbody id="table-body">
+          <tbody>
             {dataRT.map(({ date, category, amount }, index) => (
               <tr key={index} className="bg-gray-200 dark:bg-gray-900 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
                 <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{date}</th>
@@ -33,10 +35,4 @@ function RecentTransactionsComponent () {
   )
 }
 
-export default function RecentTransactions () {
-  return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <RecentTransactionsComponent />
-    </Suspense>
-  )
-}
+export default RecentTransactions

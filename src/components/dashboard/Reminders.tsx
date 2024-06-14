@@ -1,13 +1,15 @@
-import { Suspense } from 'react'
 import LoadingSpinner from '@components/LoadingSpinner.tsx'
 import { useFetchData } from '@hooks/useFetchData'
 import type { Reminder} from '@src/types.d.ts'
 import { createReminderElement } from '@utils/ui'
 
-function RemindersComponent () {
-  const { data: dataReminders } = useFetchData<Reminder[]>('/api/get-reminders')
+const Reminders = () => {
+  const { data: dataReminders, error } = useFetchData<Reminder[]>('/api/get-reminders')
 
-  return dataReminders && (
+  if (error) return null
+  if (!dataReminders) return <LoadingSpinner />
+
+  return (
     <div className="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4">
       <h2 className="text-lg font-semibold mb-4">Recordatorios</h2>
       <div id="reminders" className="space-y-4">
@@ -20,10 +22,4 @@ function RemindersComponent () {
   )
 }
 
-export default function Reminders () {
-  return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <RemindersComponent />
-    </Suspense>
-  )
-}
+export default Reminders

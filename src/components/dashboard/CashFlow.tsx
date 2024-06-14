@@ -1,4 +1,4 @@
-import { useEffect, useRef, Suspense } from 'react'
+import { useEffect, useRef } from 'react'
 import { createGraphicBar } from '@utils/create-graph'
 import { useFetchData } from '@hooks/useFetchData'
 import type { CashFLow } from '@src/types.d.ts'
@@ -19,9 +19,13 @@ const months: Record<string, string> = {
   '12': 'Diciembre',
 }
 
-const CashFlowComponent = () => {
-  const { data: dataCF } = useFetchData<CashFLow[]>('/api/dashboard/get-cash-flow')
+const CashFlow = () => {
+  const { data: dataCF, error } = useFetchData<CashFLow[]>('/api/dashboard/get-cash-flow')
   const canvasRef = useRef(null)
+  
+  if (error) return null
+  if (!dataCF) return <LoadingSpinner />
+
 
   useEffect(() => {
     if (dataCF && canvasRef.current) {
@@ -35,18 +39,12 @@ const CashFlowComponent = () => {
     }
   }, [dataCF])
 
-  return dataCF && (
+  return (
     <div className="bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg p-4 col-span-1 md:col-span-2 lg:col-span-3">
       <h2 className="text-lg font-semibold">Flujo de Efectivo</h2>
-      <canvas ref={canvasRef} id="cashFlowChart"></canvas>
+      <canvas ref={canvasRef}></canvas>
     </div>
   )
 }
 
-export default function CashFlow() {
-  return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <CashFlowComponent />
-    </Suspense>
-  )
-}
+export default CashFlow
