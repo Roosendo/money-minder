@@ -5,15 +5,15 @@ import { getSessionAndClient } from '@config/utils'
 // JSON -> [{"month":"01","total_ingresos":150.09,"total_egresos":35.99}]
 
 export const GET: APIRoute = async ({ request }) => {
-  const { session, client } = await getSessionAndClient(request)
-  
-  const year = new Date().getFullYear().toString()
-  const email = session?.user?.email
+	const { session, client } = await getSessionAndClient(request)
 
-  if (!email) return new Response('Unauthorized', { status: 401 })
+	const year = new Date().getFullYear().toString()
+	const email = session?.user?.email
 
-  const user = await client.execute({
-    sql: `SELECT
+	if (!email) return new Response('Unauthorized', { status: 401 })
+
+	const user = await client.execute({
+		sql: `SELECT
             month,
             SUM(total_ingresos) AS total_ingresos,
             SUM(total_egresos) AS total_egresos
@@ -49,10 +49,10 @@ export const GET: APIRoute = async ({ request }) => {
             month
           ORDER BY
             month`,
-    args: [year, email, year, email]
-  })
+		args: [year, email, year, email]
+	})
 
-  if (user.rows.length === 0) return new Response('No entries or exits found', { status: 404 })
+	if (user.rows.length === 0) return new Response('No entries or exits found', { status: 404 })
 
-  return new Response(JSON.stringify(user.rows), { status: 200 })
-} 
+	return new Response(JSON.stringify(user.rows), { status: 200 })
+}

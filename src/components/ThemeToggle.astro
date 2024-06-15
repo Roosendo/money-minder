@@ -4,19 +4,19 @@ import Sun from '@icons/Sun.astro'
 ---
 
 <div class='text-m space-x-1 text-black dark:text-white'>
-  <button>
-    <Sun id='light-theme' class='size-5 hover:scale-125 duration-300 transition-transform' />
-    <span class='sr-only'>Modo Claro</span>
-  </button>
 	<button>
-		<Moon id='dark-theme' class='size-5 hover:scale-125 duration-300 transition-transform' />
+		<Sun id='light-theme' class='size-5 transition-transform duration-300 hover:scale-125' />
+		<span class='sr-only'>Modo Claro</span>
+	</button>
+	<button>
+		<Moon id='dark-theme' class='size-5 transition-transform duration-300 hover:scale-125' />
 		<span class='sr-only'>Modo Oscuro</span>
 	</button>
 </div>
 
 <script>
 	import { $ } from '@lib/dom-selector'
-	
+
 	document.addEventListener('astro:page-load', () => {
 		const STORAGE_THEME_ITEM = 'theme'
 		const DARK_CLASS = 'dark'
@@ -33,20 +33,20 @@ import Sun from '@icons/Sun.astro'
 			}
 			return LIGHT_CLASS
 		})()
-	
+
 		if (theme === DARK_CLASS) {
 			document.documentElement.classList.add(DARK_CLASS)
 		} else {
 			document.documentElement.classList.remove(DARK_CLASS)
 		}
-	
+
 		if (theme) localStorage.setItem(STORAGE_THEME_ITEM, theme)
-	
+
 		triggerLightTheme?.addEventListener('click', () => {
 			document.documentElement.classList.remove(DARK_CLASS)
 			localStorage.setItem(STORAGE_THEME_ITEM, LIGHT_CLASS)
 		})
-	
+
 		triggerDarkTheme?.addEventListener('click', () => {
 			document.documentElement.classList.add(DARK_CLASS)
 			localStorage.setItem(STORAGE_THEME_ITEM, DARK_CLASS)

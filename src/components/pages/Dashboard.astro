@@ -1,12 +1,12 @@
 ---
-import DashboardLayout from '@layouts/Dashboard.astro'
 import MainPage from '@dashboard/MainPage.astro'
 import NotLogged from '@dashboard/NotLogged.astro'
+import DashboardLayout from '@layouts/Dashboard.astro'
 import { getSession } from 'auth-astro/server'
 
 const session = await getSession(Astro.request)
 ---
 
-<DashboardLayout title="Dashboard">
-  {session ? <MainPage /> : <NotLogged />}
+<DashboardLayout title='Dashboard'>
+	{session ? <MainPage /> : <NotLogged />}
 </DashboardLayout>

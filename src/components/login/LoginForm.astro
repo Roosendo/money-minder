@@ -1,15 +1,21 @@
 ---
-import { getSession } from 'auth-astro/server'
 import LoggedUser from '@login/LoggedUser.astro'
 import NotLoggedUser from '@login/NotLoggedUser.astro'
+import { getSession } from 'auth-astro/server'
 
 const session = await getSession(Astro.request)
 ---
 
-<section class="max-w-lg mx-auto my-12">
-    {session !== null ? (
-      <LoggedUser name={session.user?.name} email={session.user?.email} imageUrl={session.user?.image} />
-    ) : (
-      <NotLoggedUser />
-    )}
+<section class='mx-auto my-12 max-w-lg'>
+	{
+		session !== null ? (
+			<LoggedUser
+				name={session.user?.name}
+				email={session.user?.email}
+				imageUrl={session.user?.image}
+			/>
+		) : (
+			<NotLoggedUser />
+		)
+	}
 </section>

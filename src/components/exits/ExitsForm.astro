@@ -8,50 +8,50 @@ import Table from '@dashboard/Table.astro'
 <Table typeForm='gasto' />
 
 <script>
-  import { $ } from '@lib/dom-selector'
-  import { showAndHideAlert } from '@utils/alerts'
-  import { fetchData, renderData } from '@utils/fetch-render'
+	import { $ } from '@lib/dom-selector'
+	import { showAndHideAlert } from '@utils/alerts'
+	import { fetchData, renderData } from '@utils/fetch-render'
 
-  document.addEventListener('astro:page-load', async () => {
-    const $alertMessage = $('#alert-success') as HTMLDivElement
-    const $alertCategory = $('#alert-category') as HTMLDivElement
-    const $alertWarning = $('#alert-error') as HTMLDivElement
-    const $form = $('#form-gasto') as HTMLFormElement
-    const $table = $('#table-body-gasto') as HTMLTableElement
-    $table.innerHTML = ''
-    const url = 'exits'
+	document.addEventListener('astro:page-load', async () => {
+		const $alertMessage = $('#alert-success') as HTMLDivElement
+		const $alertCategory = $('#alert-category') as HTMLDivElement
+		const $alertWarning = $('#alert-error') as HTMLDivElement
+		const $form = $('#form-gasto') as HTMLFormElement
+		const $table = $('#table-body-gasto') as HTMLTableElement
+		$table.innerHTML = ''
+		const url = 'exits'
 
-    try {
-      const data = await fetchData(url)
-      renderData(data, $table)
-    } catch (error) {
-      renderData([], $table)
-    }
+		try {
+			const data = await fetchData(url)
+			renderData(data, $table)
+		} catch (error) {
+			renderData([], $table)
+		}
 
-    $form?.addEventListener('submit', async (e) => {
-      e.preventDefault()
-      const date = ($('#date') as HTMLInputElement).value
-      const amount = ($('#currency-input') as HTMLInputElement).value
-      const category = ($('#underline_select') as HTMLInputElement).value
-      const description = ($('#message') as HTMLInputElement).value
+		$form?.addEventListener('submit', async (e) => {
+			e.preventDefault()
+			const date = ($('#date') as HTMLInputElement).value
+			const amount = ($('#currency-input') as HTMLInputElement).value
+			const category = ($('#underline_select') as HTMLInputElement).value
+			const description = ($('#message') as HTMLInputElement).value
 
-      if (!category) return showAndHideAlert($alertCategory)
+			if (!category) return showAndHideAlert($alertCategory)
 
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ date, amount, category, description })
-      }
-      const response = await fetch('/api/exits', requestOptions)
+			const requestOptions = {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ date, amount, category, description })
+			}
+			const response = await fetch('/api/exits', requestOptions)
 
-      if (response.ok && $alertMessage) {
-        showAndHideAlert($alertMessage)
-        const data = await fetchData(url)
-        renderData(data, $table)
-        $form.reset()
-      } else {
-        showAndHideAlert($alertWarning)
-      }
-    })
-  })
+			if (response.ok && $alertMessage) {
+				showAndHideAlert($alertMessage)
+				const data = await fetchData(url)
+				renderData(data, $table)
+				$form.reset()
+			} else {
+				showAndHideAlert($alertWarning)
+			}
+		})
+	})
 </script>

@@ -1,8 +1,15 @@
-import type { Transaction, Summary, Saving, Reminder, CashFLow, MainCategories } from '@src/types.d.ts'
+import type {
+	Transaction,
+	Summary,
+	Saving,
+	Reminder,
+	CashFLow,
+	MainCategories
+} from '@src/types.d.ts'
 
 const requestOptions = {
-  method: 'GET',
-  headers: { 'Content-Type': 'application/json' },
+	method: 'GET',
+	headers: { 'Content-Type': 'application/json' }
 }
 
 /**
@@ -12,13 +19,13 @@ const requestOptions = {
  * @returns An object containing the fetched data entries and exits.
  */
 export const fetchCategories = async (month: string, year: string) => {
-  const responseEntries = await fetch(`/api/${month}/${year}/entries-by-category`, requestOptions)
-  const responseExits = await fetch(`/api/${month}/${year}/exits-by-category`, requestOptions)
+	const responseEntries = await fetch(`/api/${month}/${year}/entries-by-category`, requestOptions)
+	const responseExits = await fetch(`/api/${month}/${year}/exits-by-category`, requestOptions)
 
-  const dataEntries: Transaction[] = responseEntries.ok ? await responseEntries.json() : []
-  const dataExits: Transaction[] = responseExits.ok ? await responseExits.json() : []
+	const dataEntries: Transaction[] = responseEntries.ok ? await responseEntries.json() : []
+	const dataExits: Transaction[] = responseExits.ok ? await responseExits.json() : []
 
-  return { dataEntries, dataExits }
+	return { dataEntries, dataExits }
 }
 
 /**
@@ -29,14 +36,14 @@ export const fetchCategories = async (month: string, year: string) => {
  * @throws An error if the summary cannot be obtained.
  */
 export const fetchSummary = async (month: string, year: string) => {
-  const responseSummary = await fetch(`/api/${month}/${year}/financial-summary`, requestOptions)
+	const responseSummary = await fetch(`/api/${month}/${year}/financial-summary`, requestOptions)
 
-  if (!responseSummary.ok) {
-    throw new Error('No se pudo obtener el resumen financiero')
-  }
+	if (!responseSummary.ok) {
+		throw new Error('No se pudo obtener el resumen financiero')
+	}
 
-  const dataSummary: Summary = await responseSummary.json()
-  return dataSummary
+	const dataSummary: Summary = await responseSummary.json()
+	return dataSummary
 }
 
 /* functions for Savings */
@@ -47,18 +54,18 @@ export const fetchSummary = async (month: string, year: string) => {
  * @throws An error if the network response is not successful.
  */
 export async function fetchDataSavings(): Promise<Saving[]> {
-  try {
-    const response = await fetch('/api/get-savings', requestOptions)
-  
-    if (!response.ok) {
-      throw new Error('Network response was not ok')
-    }
-  
-    return response.json()
-  } catch (error) {
-    console.error(error)
-    return []
-  }
+	try {
+		const response = await fetch('/api/get-savings', requestOptions)
+
+		if (!response.ok) {
+			throw new Error('Network response was not ok')
+		}
+
+		return response.json()
+	} catch (error) {
+		console.error(error)
+		return []
+	}
 }
 
 /**
@@ -68,7 +75,7 @@ export async function fetchDataSavings(): Promise<Saving[]> {
  * @returns A promise that resolves to the response from the API.
  */
 export async function updateSaving(id: number, requestOptions: RequestInit): Promise<Response> {
-  return fetch(`/api/${id}/update-saving`, requestOptions)
+	return fetch(`/api/${id}/update-saving`, requestOptions)
 }
 
 /**
@@ -77,7 +84,7 @@ export async function updateSaving(id: number, requestOptions: RequestInit): Pro
  * @returns A promise that resolves to the response from the API.
  */
 export async function deleteSaving(id: number, requestOptions: RequestInit): Promise<Response> {
-  return fetch(`/api/${id}/delete-saving`, requestOptions)
+	return fetch(`/api/${id}/delete-saving`, requestOptions)
 }
 
 /* functions for Reminders */
@@ -88,18 +95,18 @@ export async function deleteSaving(id: number, requestOptions: RequestInit): Pro
  * @throws An error if the network response is not successful.
  */
 export const fetchDataReminders = async (): Promise<Reminder[]> => {
-  try {
-    const response = await fetch('/api/get-reminders', requestOptions)
-  
-    if (!response.ok) {
-      throw new Error('Network response was not ok')
-    }
-  
-    return response.json()
-  } catch (error) {
-    console.error(error)
-    return []
-  }
+	try {
+		const response = await fetch('/api/get-reminders', requestOptions)
+
+		if (!response.ok) {
+			throw new Error('Network response was not ok')
+		}
+
+		return response.json()
+	} catch (error) {
+		console.error(error)
+		return []
+	}
 }
 
 /**
@@ -108,8 +115,11 @@ export const fetchDataReminders = async (): Promise<Reminder[]> => {
  * @param requestOptions - The request options to use for the update.
  * @returns A promise that resolves to the response from the API.
  */
-export const updateReminder = async (id: number, requestOptions: RequestInit): Promise<Response> => {
-  return fetch(`/api/${id}/update-reminder`, requestOptions)
+export const updateReminder = async (
+	id: number,
+	requestOptions: RequestInit
+): Promise<Response> => {
+	return fetch(`/api/${id}/update-reminder`, requestOptions)
 }
 
 /**
@@ -118,33 +128,36 @@ export const updateReminder = async (id: number, requestOptions: RequestInit): P
  * @param requestOptions - The request options to use for the delete.
  * @returns A promise that resolves to the response from the API.
  */
-export const deleteReminder = async (id: number, requestOptions: RequestInit): Promise<Response> => {
-  return fetch(`/api/${id}/delete-reminder`, requestOptions)
+export const deleteReminder = async (
+	id: number,
+	requestOptions: RequestInit
+): Promise<Response> => {
+	return fetch(`/api/${id}/delete-reminder`, requestOptions)
 }
 
 export const fetchCashFlow = async (): Promise<CashFLow[]> => {
-  const response = await fetch('/api/dashboard/get-cash-flow', requestOptions)
+	const response = await fetch('/api/dashboard/get-cash-flow', requestOptions)
 
-  if (!response.ok) {
-    return []
-  }
+	if (!response.ok) {
+		return []
+	}
 
-  return response.json()
+	return response.json()
 }
 
 export const fetchMainCategories = async (): Promise<MainCategories[]> => {
-  try {
-    const response = await fetch('/api/dashboard/main-categories', requestOptions)
+	try {
+		const response = await fetch('/api/dashboard/main-categories', requestOptions)
 
-    if (!response.ok) {
-      throw new Error('La respuesta no fue exitosa')
-    }
+		if (!response.ok) {
+			throw new Error('La respuesta no fue exitosa')
+		}
 
-    const data = await response.json()
+		const data = await response.json()
 
-    return data
-  } catch (error) {
-    console.error(error)
-    return []
-  }
+		return data
+	} catch (error) {
+		console.error(error)
+		return []
+	}
 }

@@ -3,44 +3,48 @@ import { getSessionAndClient } from '@config/utils'
 import { isValidDate, isValidAmount } from '@utils/validation'
 
 interface Exit {
-  date: string
-  amount: number
-  category: string
-  description?: string
+	date: string
+	amount: number
+	category: string
+	description?: string
 }
 
 export const POST: APIRoute = async ({ request }) => {
-  const { session, client } = await getSessionAndClient(request)
+	const { session, client } = await getSessionAndClient(request)
 
-  const body = await request.json()
-  const { date, amount, category, description } = body as Exit
-  const email = session?.user?.email
-  const full_name = session?.user?.name
+	const body = await request.json()
+	const { date, amount, category, description } = body as Exit
+	const email = session?.user?.email
+	const full_name = session?.user?.name
 
-  if (!email || !full_name) return new Response('Unauthorized', { status: 401 })
-  if (!date || !amount || !category || !description) return new Response('Missing required fields', { status: 400 })
+	if (!email || !full_name) return new Response('Unauthorized', { status: 401 })
+	if (!date || !amount || !category || !description)
+		return new Response('Missing required fields', { status: 400 })
 
-  if (!isValidDate(date)) return new Response('Invalid date format', { status: 400 })
-  if (!isValidAmount(amount)) return new Response('Invalid amount', { status: 400 })
+	if (!isValidDate(date)) return new Response('Invalid date format', { status: 400 })
+	if (!isValidAmount(amount)) return new Response('Invalid amount', { status: 400 })
 
-  const user = await client.execute({
-    sql: 'SELECT * FROM users WHERE email = ?',
-    args: [email]
-  })
+	const user = await client.execute({
+		sql: 'SELECT * FROM users WHERE email = ?',
+		args: [email]
+	})
 
-  if (user.rows.length === 0) {
-    await client.execute({
-      sql: 'INSERT INTO users (email, full_name) VALUES (?, ?)',
-      args: [email, full_name]
-    })
-  }
+	if (user.rows.length === 0) {
+		await client.execute({
+			sql: 'INSERT INTO users (email, full_name) VALUES (?, ?)',
+			args: [email, full_name]
+		})
+	}
 
-  await client.execute({
-    sql: 'INSERT INTO money_exits (user_email, amount, description, category, date) VALUES (?, ?, ?, ?, ?)',
-    args: [email, amount, description, category, date]
-  })
+	await client.execute({
+		sql: 'INSERT INTO money_exits (user_email, amount, description, category, date) VALUES (?, ?, ?, ?, ?)',
+		args: [email, amount, description, category, date]
+	})
 
-  return new Response(JSON.stringify({
-    message: 'Exit created successfully',
-  }), { status: 201 })
+	return new Response(
+		JSON.stringify({
+			message: 'Exit created successfully'
+		}),
+		{ status: 201 }
+	)
 }

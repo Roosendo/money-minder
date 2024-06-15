@@ -1,113 +1,149 @@
 ---
-import Piggy from "public/Piggy.astro";
+import Piggy from 'public/Piggy.astro'
 
 const getPageState = (pathname: string) => {
-  if (pathname === '/login') return 'login'
-  return 'main'
+	if (pathname === '/login') return 'login'
+	return 'main'
 }
 
-const currentPageState = getPageState(Astro.url.pathname)  
+const currentPageState = getPageState(Astro.url.pathname)
 ---
 
-<nav class="bg-white dark:bg-gray-900 sticky w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
-  <div class="max-w-screen-xl flex flex-wrap items-center md:justify-between justify-evenly mx-auto p-4 md:gap-0 gap-2">
-  <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse" transition:name="narvbar-logo" transition:animate="initial">
-      <Piggy class="h-8 dark:text-white text-black" />
-      <span class="self-center md:text-2xl text-lg font-semibold whitespace-nowrap text-black dark:text-white">Money Minder</span>
-  </a>
-  <div class="group md:hidden flex items-center gap-2">
-    <button
-      id='dropdown-menu'
-      type='button'
-      class='ms-3 mt-2 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
-    >
-      <span class='sr-only'>Open sidebar</span>
-      <svg class='h-6 w-6' aria-hidden='true' fill='currentColor' viewBox='0 0 20 20'>
-        <path
-          clip-rule='evenodd'
-          fill-rule='evenodd'
-          d='M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z'
-        ></path>
-      </svg>
-    </button>
-  </div>
-  <div class="items-center justify-between hidden w-full md:flex md:w-auto order-1" id="navbar-sticky">
-    <ul class="flex flex-col p-4 gap-2 md:gap-0 md:p-0 mt-4 font-medium text-black dark:text-white md:items-center border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 w-full rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-      <li>
-        <a href="/#services" aria-label="services" class="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0 dark:hover:bg-gray-700 hover:text-cyan-600 md:dark:hover:bg-transparent dark:border-gray-700">Servicios</a>
-      </li>
-      <li>
-        <a href="/#about-us" aria-label="about-us" class="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0 dark:hover:bg-gray-700 hover:text-cyan-600 md:dark:hover:bg-transparent dark:border-gray-700">Sobre Nosotros</a>
-      </li>
-      <li>
-        <a href="/#terms-conds" aria-label="terms-conds" class="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0 dark:hover:bg-gray-700 hover:text-cyan-600 md:dark:hover:bg-transparent dark:border-gray-700">Términos y Condiciones</a>
-      </li>
-      <li class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-        {
-          (currentPageState !== 'login') && (  
-            <a href="/login" id="login" class="text-white bg-cyan-500 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:bg-cyan-500 dark:hover:bg-cyan-600 dark:focus:ring-blue-800">
-              Iniciar Sesión
-            </a>
-          )
-        }
-      </li>
-    </ul>
-  </div>
-  </div>
+<nav
+	class='sticky start-0 top-0 z-20 w-full border-b border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-900'
+>
+	<div
+		class='mx-auto flex max-w-screen-xl flex-wrap items-center justify-evenly gap-2 p-4 md:justify-between md:gap-0'
+	>
+		<a
+			href='/'
+			class='flex items-center space-x-3 rtl:space-x-reverse'
+			transition:name='narvbar-logo'
+			transition:animate='initial'
+		>
+			<Piggy class='h-8 text-black dark:text-white' />
+			<span
+				class='self-center whitespace-nowrap text-lg font-semibold text-black dark:text-white md:text-2xl'
+				>Money Minder</span
+			>
+		</a>
+		<div class='group flex items-center gap-2 md:hidden'>
+			<button
+				id='dropdown-menu'
+				type='button'
+				class='ms-3 mt-2 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
+			>
+				<span class='sr-only'>Open sidebar</span>
+				<svg class='h-6 w-6' aria-hidden='true' fill='currentColor' viewBox='0 0 20 20'>
+					<path
+						clip-rule='evenodd'
+						fill-rule='evenodd'
+						d='M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z'
+					></path>
+				</svg>
+			</button>
+		</div>
+		<div
+			class='order-1 hidden w-full items-center justify-between md:flex md:w-auto'
+			id='navbar-sticky'
+		>
+			<ul
+				class='mt-4 flex w-full flex-col gap-2 rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium text-black dark:border-gray-700 dark:bg-gray-800 dark:text-white md:mt-0 md:flex-row md:items-center md:gap-0 md:space-x-8 md:border-0 md:bg-white md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse'
+			>
+				<li>
+					<a
+						href='/#services'
+						aria-label='services'
+						class='block rounded px-3 py-2 hover:bg-gray-100 hover:text-cyan-600 dark:border-gray-700 dark:hover:bg-gray-700 md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent'
+						>Servicios</a
+					>
+				</li>
+				<li>
+					<a
+						href='/#about-us'
+						aria-label='about-us'
+						class='block rounded px-3 py-2 hover:bg-gray-100 hover:text-cyan-600 dark:border-gray-700 dark:hover:bg-gray-700 md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent'
+						>Sobre Nosotros</a
+					>
+				</li>
+				<li>
+					<a
+						href='/#terms-conds'
+						aria-label='terms-conds'
+						class='block rounded px-3 py-2 hover:bg-gray-100 hover:text-cyan-600 dark:border-gray-700 dark:hover:bg-gray-700 md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent'
+						>Términos y Condiciones</a
+					>
+				</li>
+				<li class='flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse'>
+					{
+						currentPageState !== 'login' && (
+							<a
+								href='/login'
+								id='login'
+								class='rounded-lg bg-cyan-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-cyan-500 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-cyan-500 dark:hover:bg-cyan-600 dark:focus:ring-blue-800'
+							>
+								Iniciar Sesión
+							</a>
+						)
+					}
+				</li>
+			</ul>
+		</div>
+	</div>
 </nav>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-    (() => {
-      let isSideBarOpen = false
-      const dropdownMenu = document.getElementById('dropdown-menu')
-      const navbar = document.getElementById('navbar-sticky')!
+	document.addEventListener('astro:page-load', () => {
+		;(() => {
+			let isSideBarOpen = false
+			const dropdownMenu = document.getElementById('dropdown-menu')
+			const navbar = document.getElementById('navbar-sticky')!
 
-      dropdownMenu?.addEventListener('click', () => {
-        navbar.classList.toggle('hidden', isSideBarOpen)
-        navbar.classList.toggle('flex', !isSideBarOpen)
-        navbar.classList.toggle('animate-slide-in-top', !isSideBarOpen)
-        navbar.classList.toggle('order-1', !isSideBarOpen)
-        isSideBarOpen = !isSideBarOpen
-      })
-    })()
+			dropdownMenu?.addEventListener('click', () => {
+				navbar.classList.toggle('hidden', isSideBarOpen)
+				navbar.classList.toggle('flex', !isSideBarOpen)
+				navbar.classList.toggle('animate-slide-in-top', !isSideBarOpen)
+				navbar.classList.toggle('order-1', !isSideBarOpen)
+				isSideBarOpen = !isSideBarOpen
+			})
+		})()
 
-    const sections = document.querySelectorAll('section')
-    const navItems = document.querySelectorAll('li a')
-  
-    const callback = (entries: any[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          navItems.forEach((item) => {
-            if (item.getAttribute('aria-label') === entry.target.id) {
-              item.classList.add('text-cyan-500')
-            } else {
-              item.classList.remove('text-cyan-500')
-            }
-          })
-        }
-      })
-    }
-  
-    const observer = new IntersectionObserver(callback, {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.3,
-    })
-  
-    sections.forEach((section) => {
-      observer.observe(section);
-    })
-  
-    // Cleanup function
-    document.onvisibilitychange = () => {
-      if (document.visibilityState === 'hidden') {
-        observer.disconnect();
-      } else {
-        sections.forEach((section) => {
-          observer.observe(section);
-        })
-      }
-    }
-  })
+		const sections = document.querySelectorAll('section')
+		const navItems = document.querySelectorAll('li a')
+
+		const callback = (entries: any[]) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					navItems.forEach((item) => {
+						if (item.getAttribute('aria-label') === entry.target.id) {
+							item.classList.add('text-cyan-500')
+						} else {
+							item.classList.remove('text-cyan-500')
+						}
+					})
+				}
+			})
+		}
+
+		const observer = new IntersectionObserver(callback, {
+			root: null,
+			rootMargin: '0px',
+			threshold: 0.3
+		})
+
+		sections.forEach((section) => {
+			observer.observe(section)
+		})
+
+		// Cleanup function
+		document.onvisibilitychange = () => {
+			if (document.visibilityState === 'hidden') {
+				observer.disconnect()
+			} else {
+				sections.forEach((section) => {
+					observer.observe(section)
+				})
+			}
+		}
+	})
 </script>

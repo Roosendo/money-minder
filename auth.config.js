@@ -6,11 +6,11 @@ export default defineConfig({
 	providers: [
 		Google({
 			clientId: import.meta.env.GOOGLE_CLIENT_ID,
-			clientSecret: import.meta.env.GOOGLE_CLIENT_SECRET,
+			clientSecret: import.meta.env.GOOGLE_CLIENT_SECRET
 		}),
 		GitHub({
 			clientId: import.meta.env.GITHUB_CLIENT_ID,
-			clientSecret: import.meta.env.GITHUB_CLIENT_SECRET,
+			clientSecret: import.meta.env.GITHUB_CLIENT_SECRET
 		})
-	],
+	]
 })

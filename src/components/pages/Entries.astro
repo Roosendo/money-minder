@@ -1,12 +1,12 @@
 ---
-import Dashboard from '@layouts/Dashboard.astro'
 import NotLogged from '@dashboard/NotLogged.astro'
 import EntriesForm from '@entries/EntriesForm.astro'
+import Dashboard from '@layouts/Dashboard.astro'
 import { getSession } from 'auth-astro/server'
 
 const session = await getSession(Astro.request)
 ---
 
 <Dashboard title='Ingresos'>
-  {session ? <EntriesForm /> : <NotLogged />}
+	{session ? <EntriesForm /> : <NotLogged />}
 </Dashboard>
