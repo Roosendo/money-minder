@@ -5,15 +5,15 @@ import { getSessionAndClient } from '@config/utils'
 // JSON -> [{"category":"Educación","total":25}]
 
 export const GET: APIRoute = async ({ request }) => {
-	const { session, client } = await getSessionAndClient(request)
+  const { session, client } = await getSessionAndClient(request)
 
-	const year = new Date().getFullYear().toString()
-	const email = session?.user?.email
+  const year = new Date().getFullYear().toString()
+  const email = session?.user?.email
 
-	if (!email) return new Response('Unauthorized', { status: 401 })
+  if (!email) return new Response('Unauthorized', { status: 401 })
 
-	const user = await client.execute({
-		sql: `SELECT category, SUM(amount) AS total
+  const user = await client.execute({
+    sql: `SELECT category, SUM(amount) AS total
           FROM (
               SELECT category, amount, date
               FROM money_entries
@@ -25,10 +25,10 @@ export const GET: APIRoute = async ({ request }) => {
           ) AS combined
           GROUP BY category
           `,
-		args: [email, year, email, year]
-	})
+    args: [email, year, email, year]
+  })
 
-	if (user.rows.length === 0) return new Response('No entries found', { status: 404 })
+  if (user.rows.length === 0) return new Response('No entries found', { status: 404 })
 
-	return new Response(JSON.stringify(user.rows), { status: 200 })
+  return new Response(JSON.stringify(user.rows), { status: 200 })
 }

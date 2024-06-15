@@ -5,15 +5,15 @@ import { getSessionAndClient } from '@config/utils'
 // JSON -> [{"date":"2024-05-22","category":"Educación","amount":25}]
 
 export const GET: APIRoute = async ({ request }) => {
-	const { session, client } = await getSessionAndClient(request)
+  const { session, client } = await getSessionAndClient(request)
 
-	const year = new Date().getFullYear().toString()
-	const email = session?.user?.email
+  const year = new Date().getFullYear().toString()
+  const email = session?.user?.email
 
-	if (!email) return new Response('Unauthorized', { status: 401 })
+  if (!email) return new Response('Unauthorized', { status: 401 })
 
-	const user = await client.execute({
-		sql: `SELECT
+  const user = await client.execute({
+    sql: `SELECT
             date,
             category,
             amount
@@ -57,10 +57,10 @@ export const GET: APIRoute = async ({ request }) => {
           ORDER BY
             date DESC
           `,
-		args: [email, year, email, year]
-	})
+    args: [email, year, email, year]
+  })
 
-	if (user.rows.length === 0) return new Response('No recent transactions found', { status: 404 })
+  if (user.rows.length === 0) return new Response('No recent transactions found', { status: 404 })
 
-	return new Response(JSON.stringify(user.rows), { status: 200 })
+  return new Response(JSON.stringify(user.rows), { status: 200 })
 }

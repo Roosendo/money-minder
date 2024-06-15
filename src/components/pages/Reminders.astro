@@ -8,5 +8,5 @@ const session = await getSession(Astro.request)
 ---
 
 <Dashboard title='Recordatorios'>
-	{session ? <RemindersForm /> : <NotLogged />}
+  {session ? <RemindersForm /> : <NotLogged />}
 </Dashboard>

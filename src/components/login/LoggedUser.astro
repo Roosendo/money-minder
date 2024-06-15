@@ -2,55 +2,55 @@
 import { Image } from 'astro:assets'
 
 interface Props {
-	name: string | null | undefined
-	email: string | null | undefined
-	imageUrl: string | null | undefined
+  name: string | null | undefined
+  email: string | null | undefined
+  imageUrl: string | null | undefined
 }
 
 const { name, email, imageUrl } = Astro.props
 ---
 
 <section
-	class='flex flex-col items-center justify-center gap-6 rounded-lg p-6 text-lg text-gray-800 shadow-lg dark:text-gray-50 dark:shadow-2xl'
+  class='flex flex-col items-center justify-center gap-6 rounded-lg p-6 text-lg text-gray-800 shadow-lg dark:text-gray-50 dark:shadow-2xl'
 >
-	<h1>¡Hola {name}!</h1>
-	<Image
-		src={imageUrl ?? ''}
-		alt={`Foto de perfil de ${name}`}
-		inferSize={true}
-		class='rounded-xl'
-	/>
-	<p>Tú correo es: {email}</p>
-	<p>
-		Si tus datos son correctos, puedes pasar al Dashboard, sino sientete libre de cambiar de cuenta
-		cerrando sesión
-	</p>
-	<button
-		id='dashboard'
-		class='w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto'
-		>Ir al Dashboard</button
-	>
-	<button
-		id='logout-g'
-		class='w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto'
-		>Cerrar</button
-	>
+  <h1>¡Hola {name}!</h1>
+  <Image
+    src={imageUrl ?? ''}
+    alt={`Foto de perfil de ${name}`}
+    inferSize={true}
+    class='rounded-xl'
+  />
+  <p>Tú correo es: {email}</p>
+  <p>
+    Si tus datos son correctos, puedes pasar al Dashboard, sino sientete libre de cambiar de cuenta
+    cerrando sesión
+  </p>
+  <button
+    id='dashboard'
+    class='w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto'
+  >Ir al Dashboard</button
+  >
+  <button
+    id='logout-g'
+    class='w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto'
+  >Cerrar</button
+  >
 </section>
 
 <script>
-	import { $ } from '@lib/dom-selector'
-	document.addEventListener('astro:page-load', async () => {
-		const { signOut } = await import('auth-astro/client')
+  import { $ } from '@lib/dom-selector'
+  document.addEventListener('astro:page-load', async () => {
+    const { signOut } = await import('auth-astro/client')
 
-		const $logoutG = $('#logout-g')
-		const $dashboard = $('#dashboard')
+    const $logoutG = $('#logout-g')
+    const $dashboard = $('#dashboard')
 
-		if ($logoutG) {
-			$logoutG.onclick = () => signOut()
-		}
+    if ($logoutG) {
+      $logoutG.onclick = () => signOut()
+    }
 
-		if ($dashboard) {
-			$dashboard.onclick = () => (window.location.href = '/dashboard')
-		}
-	})
+    if ($dashboard) {
+      $dashboard.onclick = () => (window.location.href = '/dashboard')
+    }
+  })
 </script>

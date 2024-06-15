@@ -4,52 +4,52 @@ import Sun from '@icons/Sun.astro'
 ---
 
 <div class='text-m space-x-1 text-black dark:text-white'>
-	<button>
-		<Sun id='light-theme' class='size-5 transition-transform duration-300 hover:scale-125' />
-		<span class='sr-only'>Modo Claro</span>
-	</button>
-	<button>
-		<Moon id='dark-theme' class='size-5 transition-transform duration-300 hover:scale-125' />
-		<span class='sr-only'>Modo Oscuro</span>
-	</button>
+  <button>
+    <Sun id='light-theme' class='size-5 transition-transform duration-300 hover:scale-125' />
+    <span class='sr-only'>Modo Claro</span>
+  </button>
+  <button>
+    <Moon id='dark-theme' class='size-5 transition-transform duration-300 hover:scale-125' />
+    <span class='sr-only'>Modo Oscuro</span>
+  </button>
 </div>
 
 <script>
-	import { $ } from '@lib/dom-selector'
+  import { $ } from '@lib/dom-selector'
 
-	document.addEventListener('astro:page-load', () => {
-		const STORAGE_THEME_ITEM = 'theme'
-		const DARK_CLASS = 'dark'
-		const LIGHT_CLASS = 'light'
-		const triggerLightTheme = $('#light-theme')
-		const triggerDarkTheme = $('#dark-theme')
+  document.addEventListener('astro:page-load', () => {
+    const STORAGE_THEME_ITEM = 'theme'
+    const DARK_CLASS = 'dark'
+    const LIGHT_CLASS = 'light'
+    const triggerLightTheme = $('#light-theme')
+    const triggerDarkTheme = $('#dark-theme')
 
-		const theme = (() => {
-			if (typeof localStorage !== 'undefined' && localStorage.getItem(STORAGE_THEME_ITEM)) {
-				return localStorage.getItem(STORAGE_THEME_ITEM)
-			}
-			if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-				return DARK_CLASS
-			}
-			return LIGHT_CLASS
-		})()
+    const theme = (() => {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem(STORAGE_THEME_ITEM)) {
+        return localStorage.getItem(STORAGE_THEME_ITEM)
+      }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return DARK_CLASS
+      }
+      return LIGHT_CLASS
+    })()
 
-		if (theme === DARK_CLASS) {
-			document.documentElement.classList.add(DARK_CLASS)
-		} else {
-			document.documentElement.classList.remove(DARK_CLASS)
-		}
+    if (theme === DARK_CLASS) {
+      document.documentElement.classList.add(DARK_CLASS)
+    } else {
+      document.documentElement.classList.remove(DARK_CLASS)
+    }
 
-		if (theme) localStorage.setItem(STORAGE_THEME_ITEM, theme)
+    if (theme) localStorage.setItem(STORAGE_THEME_ITEM, theme)
 
-		triggerLightTheme?.addEventListener('click', () => {
-			document.documentElement.classList.remove(DARK_CLASS)
-			localStorage.setItem(STORAGE_THEME_ITEM, LIGHT_CLASS)
-		})
+    triggerLightTheme?.addEventListener('click', () => {
+      document.documentElement.classList.remove(DARK_CLASS)
+      localStorage.setItem(STORAGE_THEME_ITEM, LIGHT_CLASS)
+    })
 
-		triggerDarkTheme?.addEventListener('click', () => {
-			document.documentElement.classList.add(DARK_CLASS)
-			localStorage.setItem(STORAGE_THEME_ITEM, DARK_CLASS)
-		})
-	})
+    triggerDarkTheme?.addEventListener('click', () => {
+      document.documentElement.classList.add(DARK_CLASS)
+      localStorage.setItem(STORAGE_THEME_ITEM, DARK_CLASS)
+    })
+  })
 </script>

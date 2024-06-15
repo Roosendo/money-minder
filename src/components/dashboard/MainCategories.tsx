@@ -5,35 +5,36 @@ import { createGraphic } from '@utils/create-graph'
 import type { MainCategories as MainCategoriesType } from '@src/types.d.ts'
 
 const MainCategories = () => {
-	const { data: dataMC, error } = useFetchData<MainCategoriesType[]>(
-		'/api/dashboard/main-categories'
-	)
-	const canvasRef = useRef(null)
+  const { data: dataMC, error } = useFetchData<MainCategoriesType[]>(
+    '/api/dashboard/main-categories'
+  )
+  const canvasRef = useRef(null)
 
-	if (error) return null
+  if (error) return null
 
-	useEffect(() => {
-		if (dataMC && canvasRef.current) {
-			const ctx = canvasRef.current as HTMLCanvasElement
-			const categories = dataMC.map((item) => item.category)
-			const totalAmounts = dataMC.map((item) => item.total)
-			const labelsToShow = dataMC.map((item) => item.category)
+  useEffect(() => {
+    if (dataMC && canvasRef.current) {
+      const ctx = canvasRef.current as HTMLCanvasElement
+      const categories = dataMC.map((item) => item.category)
+      const totalAmounts = dataMC.map((item) => item.total)
+      const labelsToShow = dataMC.map((item) => item.category)
 
-			if (ctx && labelsToShow)
-				createGraphic(ctx, categories, totalAmounts, 'Categorías principales')
-		}
-	}, [dataMC])
+      if (ctx && labelsToShow) {
+        createGraphic(ctx, categories, totalAmounts, 'Categorías principales')
+      }
+    }
+  }, [dataMC])
 
-	return (
-		dataMC && (
-			<Suspense fallback={<LoadingSpinner />}>
-				<div className='col-span-1 rounded-lg bg-gray-200 p-4 shadow-lg dark:bg-gray-900 md:col-span-2 lg:col-span-3'>
-					<h2 className='text-lg font-semibold'>Categorías Principales</h2>
-					<canvas ref={canvasRef} className='max-h-96'></canvas>
-				</div>
-			</Suspense>
-		)
-	)
+  return (
+    dataMC && (
+      <Suspense fallback={<LoadingSpinner />}>
+        <div className='col-span-1 rounded-lg bg-gray-200 p-4 shadow-lg dark:bg-gray-900 md:col-span-2 lg:col-span-3'>
+          <h2 className='text-lg font-semibold'>Categorías Principales</h2>
+          <canvas ref={canvasRef} className='max-h-96'></canvas>
+        </div>
+      </Suspense>
+    )
+  )
 }
 
 export default MainCategories

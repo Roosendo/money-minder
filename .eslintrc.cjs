@@ -1,6 +1,6 @@
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
-  extends: ['plugin:astro/recommended'],
+  extends: ['plugin:astro/recommended', 'ts-standard'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     tsconfigRootDir: __dirname,
@@ -17,7 +17,7 @@ module.exports = {
       },
       rules: {
         // override/add rules settings here, such as:
-        "astro/no-set-html-directive": "error"
+        'astro/no-set-html-directive': 'error'
       }
     }
   ]

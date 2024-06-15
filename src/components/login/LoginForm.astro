@@ -7,15 +7,15 @@ const session = await getSession(Astro.request)
 ---
 
 <section class='mx-auto my-12 max-w-lg'>
-	{
-		session !== null ? (
-			<LoggedUser
-				name={session.user?.name}
-				email={session.user?.email}
-				imageUrl={session.user?.image}
-			/>
-		) : (
-			<NotLoggedUser />
-		)
-	}
+  {
+    session !== null ? (
+      <LoggedUser
+        name={session.user?.name}
+        email={session.user?.email}
+        imageUrl={session.user?.image}
+      />
+    ) : (
+      <NotLoggedUser />
+    )
+  }
 </section>

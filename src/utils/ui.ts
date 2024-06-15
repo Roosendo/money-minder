@@ -3,81 +3,81 @@ import { $ } from '@lib/dom-selector'
 import { createGraphic } from '@utils/create-graph'
 
 export const updateMonthText = (monthText: HTMLHeadingElement, date: Date) => {
-	const monthNames = [
-		'Enero',
-		'Febrero',
-		'Marzo',
-		'Abril',
-		'Mayo',
-		'Junio',
-		'Julio',
-		'Agosto',
-		'Septiembre',
-		'Octubre',
-		'Noviembre',
-		'Diciembre'
-	]
-	const year = date.getFullYear()
-	const month = monthNames[date.getMonth()]
+  const monthNames = [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre'
+  ]
+  const year = date.getFullYear()
+  const month = monthNames[date.getMonth()]
 
-	if (monthText) monthText.textContent = `Mostrando datos de ${month} de ${year}`
+  if (monthText) monthText.textContent = `Mostrando datos de ${month} de ${year}`
 }
 
 export const updateGraphics = (
-	dataEntries: Transaction[],
-	dataExits: Transaction[],
-	$canvaIngreso: HTMLCanvasElement,
-	$canvaEgreso: HTMLCanvasElement
+  dataEntries: Transaction[],
+  dataExits: Transaction[],
+  $canvaIngreso: HTMLCanvasElement,
+  $canvaEgreso: HTMLCanvasElement
 ) => {
-	if (dataEntries.length === 0) {
-		createGraphic($canvaIngreso, ['Sin datos'], [0], 'Ingresos')
-	} else {
-		const categorysEntries = dataEntries.map((entry) => entry.category)
-		const totalsEntries = dataEntries.map((entry) => entry.total)
-		createGraphic($canvaIngreso, categorysEntries, totalsEntries, 'Ingresos')
-	}
+  if (dataEntries.length === 0) {
+    createGraphic($canvaIngreso, ['Sin datos'], [0], 'Ingresos')
+  } else {
+    const categorysEntries = dataEntries.map((entry) => entry.category)
+    const totalsEntries = dataEntries.map((entry) => entry.total)
+    createGraphic($canvaIngreso, categorysEntries, totalsEntries, 'Ingresos')
+  }
 
-	if (dataExits.length === 0) {
-		createGraphic($canvaEgreso, ['Sin datos'], [0], 'Egresos')
-	} else {
-		const categorysExits = dataExits.map((exit) => exit.category)
-		const totalsExits = dataExits.map((exit) => exit.total)
-		createGraphic($canvaEgreso, categorysExits, totalsExits, 'Gastos')
-	}
+  if (dataExits.length === 0) {
+    createGraphic($canvaEgreso, ['Sin datos'], [0], 'Egresos')
+  } else {
+    const categorysExits = dataExits.map((exit) => exit.category)
+    const totalsExits = dataExits.map((exit) => exit.total)
+    createGraphic($canvaEgreso, categorysExits, totalsExits, 'Gastos')
+  }
 }
 
 export const updateSummary = (
-	dataSummary: Summary,
-	$totalIngresos: HTMLSpanElement,
-	$totalEgresos: HTMLSpanElement,
-	$difference: HTMLSpanElement
+  dataSummary: Summary,
+  $totalIngresos: HTMLSpanElement,
+  $totalEgresos: HTMLSpanElement,
+  $difference: HTMLSpanElement
 ) => {
-	const totalEntries = dataSummary.totalEntries !== null ? dataSummary.totalEntries : 0
-	const totalExits = dataSummary.totalExits !== null ? dataSummary.totalExits : 0
-	const balance = (totalEntries - totalExits).toFixed(2)
-	$totalIngresos.textContent = `$${totalEntries.toFixed(2)}`
-	$totalEgresos.textContent = `$${totalExits.toFixed(2)}`
+  const totalEntries = dataSummary.totalEntries !== null ? dataSummary.totalEntries : 0
+  const totalExits = dataSummary.totalExits !== null ? dataSummary.totalExits : 0
+  const balance = (totalEntries - totalExits).toFixed(2)
+  $totalIngresos.textContent = `$${totalEntries.toFixed(2)}`
+  $totalEgresos.textContent = `$${totalExits.toFixed(2)}`
 
-	$difference.textContent = `$${balance.toString()}`
+  $difference.textContent = `$${balance.toString()}`
 
-	if (Number(balance) < 0) {
-		$difference.classList.remove('text-teal-600')
-		$difference.classList.add('text-rose-600')
-	} else {
-		$difference.classList.remove('text-rose-600')
-		$difference.classList.add('text-teal-600')
-	}
+  if (Number(balance) < 0) {
+    $difference.classList.remove('text-teal-600')
+    $difference.classList.add('text-rose-600')
+  } else {
+    $difference.classList.remove('text-rose-600')
+    $difference.classList.add('text-teal-600')
+  }
 }
 
 /* functions for Savings */
 
 export const createSavingGoalElement = (
-	saving: Saving,
-	showButtons: boolean = true
+  saving: Saving,
+  showButtons: boolean = true
 ): HTMLDivElement => {
-	const savingGoal = document.createElement('div')
-	const percentage = (saving.current_amount / saving.target_amount) * 100
-	savingGoal.innerHTML = `
+  const savingGoal = document.createElement('div')
+  const percentage = (saving.current_amount / saving.target_amount) * 100
+  savingGoal.innerHTML = `
     <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md relative">
       <h3 class="text-lg font-bold mt-2 text-gray-700 dark:text-gray-100">Nombre del objetivo: ${saving.name}</h3>
       <p class="text-gray-600 dark:text-gray-400">Monto objetivo: $${saving.target_amount}</p>
@@ -86,21 +86,21 @@ export const createSavingGoalElement = (
         <div class="bg-teal-500 h-2 rounded-full" style="width: ${percentage}%"></div>
       </div>
       ${
-				showButtons
-					? `
+  showButtons
+    ? `
         <button id="editButton-${saving.id}" class="absolute top-3 right-4 font-medium tracking-wide text-teal-500 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300">Editar</button>
         <button id="deleteButton-${saving.id}" class="absolute top-3 right-20 font-medium tracking-wide text-rose-500 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300">Eliminar</button>
       `
-					: ''
-			}
+    : ''
+}
     </div>
   `
-	return savingGoal
+  return savingGoal
 }
 
 export const createEditModal = (saving: Saving): HTMLDivElement => {
-	const modal = document.createElement('div')
-	modal.innerHTML = `
+  const modal = document.createElement('div')
+  modal.innerHTML = `
     <form id="edit-modal-${saving.id}" class="fixed inset-0 animate-zoom-in items-center justify-center bg-gray-900 bg-opacity-50 hidden">
       <div class="bg-white text-black p-6 rounded-lg shadow-md max-w-lg w-full">
         <h2 class="text-xl font-bold mb-4 text-center">Editar Objetivo de Ahorro</h2>
@@ -125,12 +125,12 @@ export const createEditModal = (saving: Saving): HTMLDivElement => {
       </div>
     </form>
   `
-	return modal
+  return modal
 }
 
 export const createDeleteModal = (saving: Saving): HTMLDivElement => {
-	const modal = document.createElement('div')
-	modal.innerHTML = `
+  const modal = document.createElement('div')
+  modal.innerHTML = `
     <form id="delete-modal-${saving.id}" class="fixed inset-0 animate-zoom-in items-center justify-center bg-gray-900 bg-opacity-50 hidden">
       <div class="bg-white text-black p-6 rounded-lg shadow-md max-w-lg w-full">
         <h2 class="text-xl font-bold mb-4 text-center">¿Estás seguro de eliminar este objetivo de ahorro: ${saving.name}?</h2>
@@ -139,33 +139,33 @@ export const createDeleteModal = (saving: Saving): HTMLDivElement => {
       </div>
     </form>
   `
-	return modal
+  return modal
 }
 
 type SavingOrReminder = Saving | Reminder
 
 export const openEditModal = (item: SavingOrReminder) => {
-	const $editModal = $(`#edit-modal-${item.id}`)
-	$editModal?.classList.replace('hidden', 'flex')
-	const $cancelButton = $editModal?.querySelector(`#cancel-${item.id}`)
-	$cancelButton?.addEventListener('click', () => $editModal?.classList.replace('flex', 'hidden'))
+  const $editModal = $(`#edit-modal-${item.id}`)
+  $editModal?.classList.replace('hidden', 'flex')
+  const $cancelButton = $editModal?.querySelector(`#cancel-${item.id}`)
+  $cancelButton?.addEventListener('click', () => $editModal?.classList.replace('flex', 'hidden'))
 }
 
 export const openDeleteModal = (item: SavingOrReminder) => {
-	const $deleteModal = $(`#delete-modal-${item.id}`)
-	$deleteModal?.classList.replace('hidden', 'flex')
-	const $cancelButton = $deleteModal?.querySelector(`#cancel-delete-${item.id}`)
-	$cancelButton?.addEventListener('click', () => $deleteModal?.classList.replace('flex', 'hidden'))
+  const $deleteModal = $(`#delete-modal-${item.id}`)
+  $deleteModal?.classList.replace('hidden', 'flex')
+  const $cancelButton = $deleteModal?.querySelector(`#cancel-delete-${item.id}`)
+  $cancelButton?.addEventListener('click', () => $deleteModal?.classList.replace('flex', 'hidden'))
 }
 
 /* functions for Reminders */
 
 export const createReminderElement = (
-	reminder: Reminder,
-	showButtons: boolean = true
+  reminder: Reminder,
+  showButtons: boolean = true
 ): HTMLDivElement => {
-	const reminderElement = document.createElement('div')
-	reminderElement.innerHTML = `
+  const reminderElement = document.createElement('div')
+  reminderElement.innerHTML = `
     <div class="dark:bg-gray-700 bg-gray-100 p-6 mb-6 rounded-lg shadow-md flex justify-between items-center relative">
       <div class="flex flex-col">
         <h3 class="text-lg font-bold dark:text-gray-100 text-gray-600">${reminder.title}</h3>
@@ -177,21 +177,21 @@ export const createReminderElement = (
         </p>
       </div>
       ${
-				showButtons
-					? `
+  showButtons
+    ? `
         <button id="deleteButton-${reminder.id}" class="absolute top-3 right-20 font-medium tracking-wide text-rose-500 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300">Eliminar</button>
         <button id="editButton-${reminder.id}" class="absolute top-3 right-4 font-medium tracking-wide text-teal-500 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300">Editar</button>
       `
-					: ''
-			}
+    : ''
+}
     </div>
   `
-	return reminderElement
+  return reminderElement
 }
 
 export const createEditReminderModal = (reminder: Reminder): HTMLDivElement => {
-	const modal = document.createElement('div')
-	modal.innerHTML = `
+  const modal = document.createElement('div')
+  modal.innerHTML = `
     <form id="edit-modal-${reminder.id}" class="fixed inset-0 animate-zoom-in items-center justify-center bg-gray-900 bg-opacity-50 hidden">
       <div class="bg-white text-black p-6 rounded-lg shadow-md max-w-lg w-full">
         <h2 class="text-xl font-bold mb-4 text-center">Editar Recordatorio</h2>
@@ -212,12 +212,12 @@ export const createEditReminderModal = (reminder: Reminder): HTMLDivElement => {
       </div>
     </form>
   `
-	return modal
+  return modal
 }
 
 export const createDeleteReminderModal = (reminder: Reminder): HTMLDivElement => {
-	const modal = document.createElement('div')
-	modal.innerHTML = `
+  const modal = document.createElement('div')
+  modal.innerHTML = `
     <form id="delete-modal-${reminder.id}" class="fixed inset-0 animate-zoom-in items-center justify-center bg-gray-900 bg-opacity-50 hidden">
       <div class="bg-white text-black p-6 rounded-lg shadow-md max-w-lg w-full">
         <h2 class="text-xl font-bold mb-4 text-center">¿Estás seguro de eliminar este recordatorio: ${reminder.title}?</h2>
@@ -226,5 +226,5 @@ export const createDeleteReminderModal = (reminder: Reminder): HTMLDivElement =>
       </div>
     </form>
   `
-	return modal
+  return modal
 }

@@ -3,39 +3,39 @@ import ButtonLogin from '@components/ButtonLogin.astro'
 ---
 
 <section
-	class='flex flex-col items-center justify-center gap-6 rounded-lg p-6 text-lg text-gray-800 shadow-lg dark:text-gray-50 dark:shadow-2xl'
+  class='flex flex-col items-center justify-center gap-6 rounded-lg p-6 text-lg text-gray-800 shadow-lg dark:text-gray-50 dark:shadow-2xl'
 >
-	<h1 class='text-2xl'>Iniciarás sesión con Google o GitHub</h1>
-	<article>
-		<h3 class='text-xl'>¿Qué información se compartirá?</h3>
-		<p>
-			Se compartirá tú <span>nombre</span>, <span>foto</span> y <span>correo electrónico</span>.
-		</p>
-		<hr class='mt-3 border-gray-200 dark:border-gray-700 sm:mx-auto lg:my-8' />
-	</article>
-	<article class='flex flex-col flex-wrap gap-3'>
-		<h3 class='text-xl'>¿Qué usos se le dará a mí información?</h3>
-		<p>El <span>nombre</span> se usará para saber con qué cuenta has iniciado sesión</p>
-		<p>
-			La <span>foto de perfil</span> se usará para mostrarte en la aplicación y estés seguro de la cuenta
-			con la que has iniciado sesión
-		</p>
-		<p>
-			El <span>correo electrónico</span> se usará para tener un identificador único en la aplicación,
-			ya que los correos son irrepetibles, es justo lo que queremos, los datos que ingreses de entradas
-			o salidas de dinero, se guardarán con el identificador de tu correo, así cada usuario podra ver
-			sólo sus datos correspondientes.
-		</p>
-	</article>
-	<ButtonLogin />
+  <h1 class='text-2xl'>Iniciarás sesión con Google o GitHub</h1>
+  <article>
+    <h3 class='text-xl'>¿Qué información se compartirá?</h3>
+    <p>
+      Se compartirá tú <span>nombre</span>, <span>foto</span> y <span>correo electrónico</span>.
+    </p>
+    <hr class='mt-3 border-gray-200 dark:border-gray-700 sm:mx-auto lg:my-8' />
+  </article>
+  <article class='flex flex-col flex-wrap gap-3'>
+    <h3 class='text-xl'>¿Qué usos se le dará a mí información?</h3>
+    <p>El <span>nombre</span> se usará para saber con qué cuenta has iniciado sesión</p>
+    <p>
+      La <span>foto de perfil</span> se usará para mostrarte en la aplicación y estés seguro de la cuenta
+      con la que has iniciado sesión
+    </p>
+    <p>
+      El <span>correo electrónico</span> se usará para tener un identificador único en la aplicación,
+      ya que los correos son irrepetibles, es justo lo que queremos, los datos que ingreses de entradas
+      o salidas de dinero, se guardarán con el identificador de tu correo, así cada usuario podra ver
+      sólo sus datos correspondientes.
+    </p>
+  </article>
+  <ButtonLogin />
 </section>
 
 <style>
-	h3 {
-		@apply text-cyan-500;
-	}
+  h3 {
+    @apply text-cyan-500;
+  }
 
-	span {
-		@apply italic underline;
-	}
+  span {
+    @apply italic underline;
+  }
 </style>

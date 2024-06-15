@@ -8,5 +8,5 @@ const session = await getSession(Astro.request)
 ---
 
 <DashboardLayout title='Dashboard'>
-	{session ? <MainPage /> : <NotLogged />}
+  {session ? <MainPage /> : <NotLogged />}
 </DashboardLayout>
