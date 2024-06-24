@@ -83,10 +83,11 @@ import AlertMessage from '@components/AlertMessage.astro'
     const $alertMessage = $('#alert-success') as HTMLDivElement
     const $alertWarning = $('#alert-error') as HTMLDivElement
     const $divElement = $('#savings-list') as HTMLDivElement
+    const email = $<HTMLParagraphElement>('#user-email')?.textContent?.trim()!
 
     $savingForm?.addEventListener('submit', (e) =>
       handleFormSubmit(e, $savingForm, $alertMessage, $alertWarning, $divElement)
     )
-    init($divElement)
+    init($divElement, email)
   })
 </script>

@@ -55,9 +55,11 @@ export const fetchSummary = async (month: string, year: string, email: string) =
  * @returns A promise that resolves to an array of Saving objects.
  * @throws An error if the network response is not successful.
  */
-export async function fetchDataSavings (): Promise<Saving[]> {
+export async function fetchDataSavings (
+  { email }: { email: string }
+): Promise<Saving[]> {
   try {
-    const response = await fetch('/api/get-savings', requestOptions)
+    const response = await fetch(dominio + `/api/savings/get-savings?email=${email}`, requestOptions)
 
     if (!response.ok) {
       throw new Error('Network response was not ok')
@@ -76,8 +78,8 @@ export async function fetchDataSavings (): Promise<Saving[]> {
  * @param requestOptions - The request options to use for the update.
  * @returns A promise that resolves to the response from the API.
  */
-export async function updateSaving (id: number, requestOptions: RequestInit): Promise<Response> {
-  return fetch(`/api/${id}/update-saving`, requestOptions)
+export async function updateSaving (requestOptions: RequestInit): Promise<Response> {
+  return fetch(dominio + '/api/savings/update-saving', requestOptions)
 }
 
 /**
@@ -85,8 +87,8 @@ export async function updateSaving (id: number, requestOptions: RequestInit): Pr
  * @param id - The ID of the saving to delete.
  * @returns A promise that resolves to the response from the API.
  */
-export async function deleteSaving (id: number, requestOptions: RequestInit): Promise<Response> {
-  return fetch(`/api/${id}/delete-saving`, requestOptions)
+export async function deleteSaving (id: number, requestOptions: RequestInit, email: string): Promise<Response> {
+  return fetch(dominio + `/api/savings/delete-saving?email=${email}&id=${id}`, requestOptions)
 }
 
 /* functions for Reminders */

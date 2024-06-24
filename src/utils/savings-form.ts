@@ -10,6 +10,8 @@ import {
   openDeleteModal
 } from '@utils/ui'
 
+const dominio = 'https://money-minder-api.netlify.app'
+
 export const handleFormSubmit = async (
   e: SubmitEvent,
   $savingForm: HTMLFormElement,
@@ -24,33 +26,35 @@ export const handleFormSubmit = async (
   let currentAmount: string | number = ($('#current-amount') as HTMLInputElement).value
   const startDate = ($('#start-date') as HTMLInputElement).value
   const endDate = ($('#end-date') as HTMLInputElement).value
+  const email = $<HTMLParagraphElement>('#user-email')?.textContent?.trim()!
+  const fullName = $<HTMLParagraphElement>('#user-name')?.textContent?.trim()
 
   if (!currentAmount) currentAmount = 0
 
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, targetAmount, currentAmount, startDate, endDate })
+    body: JSON.stringify({ name, targetAmount, currentAmount, startDate, endDate, email, fullName })
   }
 
-  const response = await fetch('/api/savings', requestOptions)
+  const response = await fetch(dominio + '/api/savings/new-saving', requestOptions)
 
   if (response.ok) {
     showAndHideAlert($alertMessage)
-    const data = await fetchDataSavings()
-    renderDataSavings(data, $divElement)
+    const data = await fetchDataSavings({ email })
+    renderDataSavings(data, $divElement, email)
     $savingForm.reset()
   } else {
     showAndHideAlert($alertWarning)
   }
 }
 
-export const init = async ($divElement: HTMLDivElement) => {
-  const data = await fetchDataSavings()
-  renderDataSavings(data, $divElement)
+export const init = async ($divElement: HTMLDivElement, email: string) => {
+  const data = await fetchDataSavings({ email })
+  renderDataSavings(data, $divElement, email)
 }
 
-const renderDataSavings = (data: Saving[], $divElement: HTMLDivElement) => {
+const renderDataSavings = (data: Saving[], $divElement: HTMLDivElement, email: string) => {
   $divElement.innerHTML = ''
   data.forEach((saving) => {
     const savingGoal = createSavingGoalElement(saving)
@@ -67,15 +71,15 @@ const renderDataSavings = (data: Saving[], $divElement: HTMLDivElement) => {
     $editButton?.addEventListener('click', () => openEditModal(saving))
     $deleteButton?.addEventListener('click', () => openDeleteModal(saving))
     $editModal?.addEventListener('submit', (e: Event) =>
-      handleEditFormSubmit(e, saving.id, $divElement)
+      handleEditFormSubmit(e, saving.id, $divElement, email)
     )
     $deleteModal?.addEventListener('submit', (e: Event) =>
-      handleDeleteFormSubmit(e, saving.id, $divElement)
+      handleDeleteFormSubmit(e, saving.id, $divElement, email)
     )
   })
 }
 
-const handleEditFormSubmit = async (e: Event, id: number, $divElement: HTMLDivElement) => {
+const handleEditFormSubmit = async (e: Event, id: number, $divElement: HTMLDivElement, email: string) => {
   e.preventDefault()
 
   const newSavingName = ($(`#edit-goal-name-${id}`) as HTMLInputElement).value
@@ -86,14 +90,14 @@ const handleEditFormSubmit = async (e: Event, id: number, $divElement: HTMLDivEl
   const requestOptions = {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ newSavingName, newTarget, newCurrentAmount, newEndDate })
+    body: JSON.stringify({ newSavingName, newTarget, newCurrentAmount, newEndDate, email, id })
   }
 
-  const response = await updateSaving(id, requestOptions)
+  const response = await updateSaving(requestOptions)
 
   if (response.ok) {
-    const data = await fetchDataSavings()
-    renderDataSavings(data, $divElement)
+    const data = await fetchDataSavings({ email })
+    renderDataSavings(data, $divElement, email)
     $(`#edit-modal-${id}`)?.classList.replace('flex', 'hidden')
   } else {
     const $alertWarning = $('#alert-error') as HTMLDivElement
@@ -101,7 +105,7 @@ const handleEditFormSubmit = async (e: Event, id: number, $divElement: HTMLDivEl
   }
 }
 
-const handleDeleteFormSubmit = async (e: Event, id: number, $divElement: HTMLDivElement) => {
+const handleDeleteFormSubmit = async (e: Event, id: number, $divElement: HTMLDivElement, email: string) => {
   e.preventDefault()
 
   const requestOptions = {
@@ -109,12 +113,12 @@ const handleDeleteFormSubmit = async (e: Event, id: number, $divElement: HTMLDiv
     headers: { 'Content-Type': 'application/json' }
   }
 
-  const response = await deleteSaving(id, requestOptions)
+  const response = await deleteSaving(id, requestOptions, email)
 
   if (response.ok) {
     $(`#delete-modal-${id}`)?.classList.replace('flex', 'hidden')
-    const data = await fetchDataSavings()
-    renderDataSavings(data, $divElement)
+    const data = await fetchDataSavings({ email })
+    renderDataSavings(data, $divElement, email)
   } else {
     const $alertWarning = $('#alert-error') as HTMLDivElement
     showAndHideAlert($alertWarning)
