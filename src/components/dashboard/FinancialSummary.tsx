@@ -2,10 +2,14 @@ import { Suspense } from 'react'
 import LoadingSpinner from '@components/LoadingSpinner.tsx'
 import { useFetchData } from '@hooks/useFetchData'
 import type { FinancialSummary as FinancialSummaryType } from '@src/types.d.ts'
+import { $ } from '@src/lib/dom-selector'
+
+const email = $<HTMLParagraphElement>('#user-email')?.textContent?.trim()
+const year = new Date().getFullYear()
 
 const FinancialSummary = () => {
   const { data: dataFS, error } = useFetchData<FinancialSummaryType>(
-    '/api/dashboard/financial-summary'
+    `/api/specials/financial-summary-yearly?email=${email}&year=${year}`
   )
 
   if (error) return null

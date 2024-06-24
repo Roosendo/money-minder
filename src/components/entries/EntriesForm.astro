@@ -18,11 +18,13 @@ import Table from '@dashboard/Table.astro'
     const $alertWarning = $('#alert-error') as HTMLDivElement
     const $form = $('#form-ingreso') as HTMLFormElement
     const $table = $('#table-body-ingreso') as HTMLTableElement
+    const $email = $<HTMLParagraphElement>('#user-email')?.textContent?.trim()!
     $table.innerHTML = ''
+    const dominio = 'https://money-minder-api.netlify.app'
     const url = 'entries'
 
     try {
-      const data = await fetchData(url)
+      const data = await fetchData(url, $email)
       renderData(data, $table)
     } catch (error) {
       renderData([], $table)
@@ -34,19 +36,21 @@ import Table from '@dashboard/Table.astro'
       const amount = ($('#currency-input') as HTMLInputElement).value
       const category = ($('#underline_select') as HTMLInputElement).value
       const description = ($('#message') as HTMLInputElement).value
+      const email = $<HTMLParagraphElement>('#user-email')?.textContent?.trim()!
+      const fullName = $<HTMLParagraphElement>('#user-name')?.textContent?.trim()!
 
       if (!category) return showAndHideAlert($alertCategory)
 
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ date, amount, category, description })
+        body: JSON.stringify({ date, amount, category, description, email, fullName })
       }
-      const response = await fetch('/api/entries', requestOptions)
+      const response = await fetch(dominio + '/api/entries/new-entry', requestOptions)
 
       if (response.ok && $alertMessage) {
         showAndHideAlert($alertMessage)
-        const data = await fetchData(url)
+        const data = await fetchData(url, $email)
         renderData(data, $table)
         $form.reset()
       } else {

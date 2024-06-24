@@ -2,9 +2,12 @@ import LoadingSpinner from '@components/LoadingSpinner.tsx'
 import { useFetchData } from '@hooks/useFetchData'
 import type { Reminder } from '@src/types.d.ts'
 import { createReminderElement } from '@utils/ui'
+import { $ } from '@src/lib/dom-selector'
+
+const email = $<HTMLParagraphElement>('#user-email')?.textContent?.trim()
 
 const Reminders = () => {
-  const { data: dataReminders, error } = useFetchData<Reminder[]>('/api/get-reminders')
+  const { data: dataReminders, error } = useFetchData<Reminder[]>(`/api/reminders/get-reminders?email=${email}`)
 
   if (error) return null
   if (!dataReminders) return <LoadingSpinner />

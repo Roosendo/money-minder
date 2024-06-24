@@ -18,11 +18,14 @@ import Table from '@dashboard/Table.astro'
     const $alertWarning = $('#alert-error') as HTMLDivElement
     const $form = $('#form-gasto') as HTMLFormElement
     const $table = $('#table-body-gasto') as HTMLTableElement
+    const email = $<HTMLParagraphElement>('#user-email')?.textContent?.trim()!
+    const fullName = $<HTMLParagraphElement>('#user-name')?.textContent?.trim()!
     $table.innerHTML = ''
+    const dominio = 'https://money-minder-api.netlify.app'
     const url = 'exits'
 
     try {
-      const data = await fetchData(url)
+      const data = await fetchData(url, email)
       renderData(data, $table)
     } catch (error) {
       renderData([], $table)
@@ -40,13 +43,13 @@ import Table from '@dashboard/Table.astro'
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ date, amount, category, description })
+        body: JSON.stringify({ date, amount, category, description, email, fullName })
       }
-      const response = await fetch('/api/exits', requestOptions)
+      const response = await fetch(dominio + '/api/exits/new-exit', requestOptions)
 
       if (response.ok && $alertMessage) {
         showAndHideAlert($alertMessage)
-        const data = await fetchData(url)
+        const data = await fetchData(url, email)
         renderData(data, $table)
         $form.reset()
       } else {

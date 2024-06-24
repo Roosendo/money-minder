@@ -9,15 +9,16 @@ interface Transaction {
   date: string
 }
 
-export const fetchData = async (url: string): Promise<Transaction[]> => {
+export const fetchData = async (url: string, email: string): Promise<Transaction[]> => {
   if (url !== 'entries' && url !== 'exits') {
     return []
   }
+  const dominio = 'https://money-minder-api.netlify.app'
   const requestOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
   }
-  const response = await fetch(`/api/get-${url}`, requestOptions)
+  const response = await fetch(dominio + `/api/${url}/get-${url}?email=${email}`, requestOptions)
 
   if (!response.ok) {
     throw new Error('Network response was not ok')

@@ -1,12 +1,8 @@
 ---
 import Piggy from 'public/Piggy.astro'
+import { getSession } from 'auth-astro/server'
 
-const getPageState = (pathname: string) => {
-  if (pathname === '/login') return 'login'
-  return 'main'
-}
-
-const currentPageState = getPageState(Astro.url.pathname)
+const session = await getSession(Astro.request)
 ---
 
 <nav
@@ -76,7 +72,15 @@ const currentPageState = getPageState(Astro.url.pathname)
         </li>
         <li class='flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse'>
           {
-            currentPageState !== 'login' && (
+            session ? (
+              <a
+                href='/dashboard'
+                id='dashboard'
+                class='rounded-lg bg-cyan-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-cyan-500 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-cyan-500 dark:hover:bg-cyan-600 dark:focus:ring-blue-800'
+              >
+                Ir al Dashboard
+              </a>
+            ) : (
               <a
                 href='/login'
                 id='login'
@@ -94,7 +98,7 @@ const currentPageState = getPageState(Astro.url.pathname)
 
 <script>
   document.addEventListener('astro:page-load', () => {
-    ;(() => {
+    (() => {
       let isSideBarOpen = false
       const dropdownMenu = document.getElementById('dropdown-menu')
       const navbar = document.getElementById('navbar-sticky')!

@@ -3,6 +3,7 @@ import { createGraphicBar } from '@utils/create-graph'
 import { useFetchData } from '@hooks/useFetchData'
 import type { CashFLow } from '@src/types.d.ts'
 import LoadingSpinner from '@components/LoadingSpinner.tsx'
+import { $ } from '@src/lib/dom-selector'
 
 const months: Record<string, string> = {
   '01': 'Enero',
@@ -19,8 +20,11 @@ const months: Record<string, string> = {
   '12': 'Diciembre'
 }
 
+const email = $<HTMLParagraphElement>('#user-email')?.textContent?.trim()
+const year = new Date().getFullYear()
+
 const CashFlow = () => {
-  const { data: dataCF, error } = useFetchData<CashFLow[]>('/api/dashboard/get-cash-flow')
+  const { data: dataCF, error } = useFetchData<CashFLow[]>(`/api/specials/cash-flow?email=${email}&year=${year}`)
   const canvasRef = useRef(null)
 
   if (error) return null

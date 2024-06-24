@@ -44,6 +44,7 @@
     const $totalIngresos = $('#totalIngresos') as HTMLSpanElement
     const $totalEgresos = $('#totalEgresos') as HTMLSpanElement
     const $difference = $('#difference') as HTMLSpanElement
+    const $email = $<HTMLParagraphElement>('#user-email')?.textContent?.trim()!
 
     const fetchCategoryData = async (date: Date) => {
       const yearString = date.getFullYear().toString()
@@ -51,10 +52,10 @@
       updateMonthText(monthText, date)
 
       try {
-        const { dataEntries, dataExits } = await fetchCategories(monthString, yearString)
+        const { dataEntries, dataExits } = await fetchCategories(monthString, yearString, $email)
         updateGraphics(dataEntries, dataExits, $canvaIngreso, $canvaEgreso)
 
-        const dataSummary = await fetchSummary(monthString, yearString)
+        const dataSummary = await fetchSummary(monthString, yearString, $email)
         updateSummary(dataSummary, $totalIngresos, $totalEgresos, $difference)
       } catch (error) {
         console.error('Error fetching data:', error)

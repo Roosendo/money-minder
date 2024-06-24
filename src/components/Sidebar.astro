@@ -35,9 +35,14 @@ const session = await getSession(Astro.request)
             inferSize={true}
             class='size-16 rounded-xl'
           />
-          <h3 class='m-auto text-lg font-semibold text-black dark:text-white'>
-            {session.user?.name}
-          </h3>
+          <article class='flex flex-col'>
+            <h3 id='user-name' class='m-auto text-lg font-semibold text-black dark:text-white'>
+              {session.user?.name}
+            </h3>
+            <p id='user-email' class='m-auto text-xs font-light text-black dark:text-white'>
+              {session.user?.email}
+            </p>
+          </article>
         </section>
       )
     }

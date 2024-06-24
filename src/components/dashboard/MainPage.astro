@@ -8,6 +8,8 @@ import RecentTransactions from '@dashboard/RecentTransactions.tsx'
 import Reminders from '@dashboard/Reminders.tsx'
 import Fifth from '@images/5.webp'
 import { Image } from 'astro:assets'
+import { getSession } from 'auth-astro/server'
+const session = await getSession(Astro.request)
 ---
 
 <section
@@ -34,22 +36,22 @@ import { Image } from 'astro:assets'
 <div class='container mx-auto p-4 text-black dark:text-white'>
   <div class='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
     <!-- Resumen Financiero Rápido -->
-    <FinancialSummary client:load />
+    <FinancialSummary client:only='react' />
 
     <!-- Transacciones Recientes -->
-    <RecentTransactions client:load />
+    <RecentTransactions email={session?.user?.email} client:load />
 
     <!-- Gráfico de Flujo de Efectivo -->
-    <CashFlow client:load />
+    <CashFlow client:only='react' />
 
     <!-- Categorías Principales -->
-    <MainCategories client:load />
+    <MainCategories client:only='react' />
 
     <!-- Progreso hacia Objetivos -->
-    <Goals client:load />
+    <Goals client:only='react' />
 
     <!-- Alertas y Notificaciones -->
-    <Reminders client:load />
+    <Reminders client:only='react' />
 
     <Quote client:load />
   </div>

@@ -3,9 +3,12 @@ import LoadingSpinner from '@components/LoadingSpinner.tsx'
 import { useFetchData } from '@hooks/useFetchData'
 import type { Saving } from '@src/types.d.ts'
 import { createSavingGoalElement } from '@utils/ui'
+import { $ } from '@src/lib/dom-selector'
+
+const email = $<HTMLParagraphElement>('#user-email')?.textContent?.trim()
 
 function Goals () {
-  const { data: dataGoals, error } = useFetchData<Saving[]>('/api/get-savings')
+  const { data: dataGoals, error } = useFetchData<Saving[]>(`/api/savings/get-savings?email=${email}`)
 
   if (error) return null
   if (!dataGoals) return <LoadingSpinner />

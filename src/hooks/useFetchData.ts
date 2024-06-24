@@ -1,6 +1,7 @@
 import useSWR from 'swr'
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json())
+const dominio = 'https://money-minder-api.netlify.app/'
+const fetcher = (url: string) => fetch(dominio + url).then((res) => res.json())
 
 export const useFetchData = <T>(url: string) => {
   const { data, error } = useSWR<T>(url, fetcher)

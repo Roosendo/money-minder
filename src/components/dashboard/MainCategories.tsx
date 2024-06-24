@@ -3,10 +3,14 @@ import LoadingSpinner from '@components/LoadingSpinner.tsx'
 import { useFetchData } from '@hooks/useFetchData'
 import { createGraphic } from '@utils/create-graph'
 import type { MainCategories as MainCategoriesType } from '@src/types.d.ts'
+import { $ } from '@src/lib/dom-selector'
+
+const email = $<HTMLParagraphElement>('#user-email')?.textContent?.trim()
+const year = new Date().getFullYear()
 
 const MainCategories = () => {
   const { data: dataMC, error } = useFetchData<MainCategoriesType[]>(
-    '/api/dashboard/main-categories'
+    `/api/specials/yearly-categories?email=${email}&year=${year}`
   )
   const canvasRef = useRef(null)
 

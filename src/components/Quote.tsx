@@ -9,7 +9,7 @@ interface PhraseData {
 }
 
 export default function Quote () {
-  const { data: result, error } = useFetchData<PhraseData>('/api/get-quote')
+  const { data: result, error } = useFetchData<PhraseData>('/api/phrases/daily-phrase')
 
   if (error) return null
   if (!result) <LoadingSpinner />

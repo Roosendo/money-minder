@@ -12,15 +12,17 @@ const requestOptions = {
   headers: { 'Content-Type': 'application/json' }
 }
 
+const dominio = 'https://money-minder-api.netlify.app'
+
 /**
  * Fetches the categories for a specific month and year.
  * @param month - The month for which to fetch the categories.
  * @param year - The year for which to fetch the categories.
  * @returns An object containing the fetched data entries and exits.
  */
-export const fetchCategories = async (month: string, year: string) => {
-  const responseEntries = await fetch(`/api/${month}/${year}/entries-by-category`, requestOptions)
-  const responseExits = await fetch(`/api/${month}/${year}/exits-by-category`, requestOptions)
+export const fetchCategories = async (month: string, year: string, email: string) => {
+  const responseEntries = await fetch(dominio + `/api/entries/get-entries-by-category-monthly?email=${email}&year=${year}&month=${month}`, requestOptions)
+  const responseExits = await fetch(dominio + `/api/exits/get-exits-by-category-monthly?email=${email}&year=${year}&month=${month}`, requestOptions)
 
   const dataEntries: Transaction[] = responseEntries.ok ? await responseEntries.json() : []
   const dataExits: Transaction[] = responseExits.ok ? await responseExits.json() : []
@@ -35,8 +37,8 @@ export const fetchCategories = async (month: string, year: string) => {
  * @returns The fetched financial summary.
  * @throws An error if the summary cannot be obtained.
  */
-export const fetchSummary = async (month: string, year: string) => {
-  const responseSummary = await fetch(`/api/${month}/${year}/financial-summary`, requestOptions)
+export const fetchSummary = async (month: string, year: string, email: string) => {
+  const responseSummary = await fetch(dominio + `/api/specials/financial-summary-monthly?email=${email}&year=${year}&month=${month}`, requestOptions)
 
   if (!responseSummary.ok) {
     throw new Error('No se pudo obtener el resumen financiero')

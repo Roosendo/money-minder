@@ -3,9 +3,13 @@ import LoadingSpinner from '@components/LoadingSpinner.tsx'
 import { useFetchData } from '@hooks/useFetchData'
 import type { RecentTransactions as RecentTransactionsType } from '@src/types.d.ts'
 
-function RecentTransactions () {
+const year = new Date().getFullYear()
+
+function RecentTransactions (
+  { email }: { email: string | undefined | null }
+) {
   const { data: dataRT, error } = useFetchData<RecentTransactionsType[]>(
-    '/api/dashboard/recent-transactions'
+    `/api/specials/recent-transactions?email=${email}&year=${year}`
   )
 
   if (error) return null
