@@ -79,7 +79,12 @@ const renderDataSavings = (data: Saving[], $divElement: HTMLDivElement, email: s
   })
 }
 
-const handleEditFormSubmit = async (e: Event, id: number, $divElement: HTMLDivElement, email: string) => {
+const handleEditFormSubmit = async (
+  e: Event,
+  id: number,
+  $divElement: HTMLDivElement,
+  email: string
+) => {
   e.preventDefault()
 
   const newSavingName = ($(`#edit-goal-name-${id}`) as HTMLInputElement).value
@@ -105,7 +110,12 @@ const handleEditFormSubmit = async (e: Event, id: number, $divElement: HTMLDivEl
   }
 }
 
-const handleDeleteFormSubmit = async (e: Event, id: number, $divElement: HTMLDivElement, email: string) => {
+const handleDeleteFormSubmit = async (
+  e: Event,
+  id: number,
+  $divElement: HTMLDivElement,
+  email: string
+) => {
   e.preventDefault()
 
   const requestOptions = {

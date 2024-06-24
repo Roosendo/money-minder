@@ -5,9 +5,7 @@ import type { FinancialSummary as FinancialSummaryType } from '@src/types.d.ts'
 
 const year = new Date().getFullYear()
 
-const FinancialSummary = (
-  { email }: { email: string | undefined | null }
-) => {
+const FinancialSummary = ({ email }: { email: string | undefined | null }) => {
   const { data: dataFS, error } = useFetchData<FinancialSummaryType>(
     `/api/specials/financial-summary-yearly?email=${email}&year=${year}`
   )

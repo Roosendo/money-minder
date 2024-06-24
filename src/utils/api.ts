@@ -21,8 +21,15 @@ const dominio = 'https://money-minder-api.netlify.app'
  * @returns An object containing the fetched data entries and exits.
  */
 export const fetchCategories = async (month: string, year: string, email: string) => {
-  const responseEntries = await fetch(dominio + `/api/entries/get-entries-by-category-monthly?email=${email}&year=${year}&month=${month}`, requestOptions)
-  const responseExits = await fetch(dominio + `/api/exits/get-exits-by-category-monthly?email=${email}&year=${year}&month=${month}`, requestOptions)
+  const responseEntries = await fetch(
+    dominio +
+      `/api/entries/get-entries-by-category-monthly?email=${email}&year=${year}&month=${month}`,
+    requestOptions
+  )
+  const responseExits = await fetch(
+    dominio + `/api/exits/get-exits-by-category-monthly?email=${email}&year=${year}&month=${month}`,
+    requestOptions
+  )
 
   const dataEntries: Transaction[] = responseEntries.ok ? await responseEntries.json() : []
   const dataExits: Transaction[] = responseExits.ok ? await responseExits.json() : []
@@ -38,7 +45,10 @@ export const fetchCategories = async (month: string, year: string, email: string
  * @throws An error if the summary cannot be obtained.
  */
 export const fetchSummary = async (month: string, year: string, email: string) => {
-  const responseSummary = await fetch(dominio + `/api/specials/financial-summary-monthly?email=${email}&year=${year}&month=${month}`, requestOptions)
+  const responseSummary = await fetch(
+    dominio + `/api/specials/financial-summary-monthly?email=${email}&year=${year}&month=${month}`,
+    requestOptions
+  )
 
   if (!responseSummary.ok) {
     throw new Error('No se pudo obtener el resumen financiero')
@@ -55,11 +65,12 @@ export const fetchSummary = async (month: string, year: string, email: string) =
  * @returns A promise that resolves to an array of Saving objects.
  * @throws An error if the network response is not successful.
  */
-export async function fetchDataSavings (
-  { email }: { email: string }
-): Promise<Saving[]> {
+export async function fetchDataSavings ({ email }: { email: string }): Promise<Saving[]> {
   try {
-    const response = await fetch(dominio + `/api/savings/get-savings?email=${email}`, requestOptions)
+    const response = await fetch(
+      dominio + `/api/savings/get-savings?email=${email}`,
+      requestOptions
+    )
 
     if (!response.ok) {
       throw new Error('Network response was not ok')
@@ -87,7 +98,11 @@ export async function updateSaving (requestOptions: RequestInit): Promise<Respon
  * @param id - The ID of the saving to delete.
  * @returns A promise that resolves to the response from the API.
  */
-export async function deleteSaving (id: number, requestOptions: RequestInit, email: string): Promise<Response> {
+export async function deleteSaving (
+  id: number,
+  requestOptions: RequestInit,
+  email: string
+): Promise<Response> {
   return fetch(dominio + `/api/savings/delete-saving?email=${email}&id=${id}`, requestOptions)
 }
 
@@ -98,11 +113,12 @@ export async function deleteSaving (id: number, requestOptions: RequestInit, ema
  * @returns A promise that resolves to an array of Reminder objects.
  * @throws An error if the network response is not successful.
  */
-export const fetchDataReminders = async (
-  { email }: { email: string }
-): Promise<Reminder[]> => {
+export const fetchDataReminders = async ({ email }: { email: string }): Promise<Reminder[]> => {
   try {
-    const response = await fetch(dominio + `/api/reminders/get-reminders?email=${email}`, requestOptions)
+    const response = await fetch(
+      dominio + `/api/reminders/get-reminders?email=${email}`,
+      requestOptions
+    )
 
     if (!response.ok) {
       throw new Error('Network response was not ok')
@@ -121,9 +137,7 @@ export const fetchDataReminders = async (
  * @param requestOptions - The request options to use for the update.
  * @returns A promise that resolves to the response from the API.
  */
-export const updateReminder = async (
-  requestOptions: RequestInit
-): Promise<Response> => {
+export const updateReminder = async (requestOptions: RequestInit): Promise<Response> => {
   return fetch(dominio + '/api/reminders/update-reminder', requestOptions)
 }
 

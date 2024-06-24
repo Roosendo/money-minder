@@ -21,10 +21,10 @@ const months: Record<string, string> = {
 
 const year = new Date().getFullYear()
 
-const CashFlow = (
-  { email }: { email: string | undefined | null }
-) => {
-  const { data: dataCF, error } = useFetchData<CashFLow[]>(`/api/specials/cash-flow?email=${email}&year=${year}`)
+const CashFlow = ({ email }: { email: string | undefined | null }) => {
+  const { data: dataCF, error } = useFetchData<CashFLow[]>(
+    `/api/specials/cash-flow?email=${email}&year=${year}`
+  )
   const canvasRef = useRef(null)
 
   if (error) return null

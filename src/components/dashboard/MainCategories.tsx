@@ -5,9 +5,7 @@ import { createGraphic } from '@utils/create-graph'
 import type { MainCategories as MainCategoriesType } from '@src/types.d.ts'
 const year = new Date().getFullYear()
 
-const MainCategories = (
-  { email }: { email: string | undefined | null }
-) => {
+const MainCategories = ({ email }: { email: string | undefined | null }) => {
   const { data: dataMC, error } = useFetchData<MainCategoriesType[]>(
     `/api/specials/yearly-categories?email=${email}&year=${year}`
   )
@@ -30,13 +28,15 @@ const MainCategories = (
 
   if (dataMC && dataMC.length === 0) return null
 
-  return dataMC && (
-    <Suspense fallback={<LoadingSpinner />}>
-      <div className='col-span-1 rounded-lg bg-gray-200 p-4 shadow-lg dark:bg-gray-900 md:col-span-2 lg:col-span-3'>
-        <h2 className='text-lg font-semibold'>Categorías Principales</h2>
-        <canvas ref={canvasRef} className='max-h-96'></canvas>
-      </div>
-    </Suspense>
+  return (
+    dataMC && (
+      <Suspense fallback={<LoadingSpinner />}>
+        <div className='col-span-1 rounded-lg bg-gray-200 p-4 shadow-lg dark:bg-gray-900 md:col-span-2 lg:col-span-3'>
+          <h2 className='text-lg font-semibold'>Categorías Principales</h2>
+          <canvas ref={canvasRef} className='max-h-96'></canvas>
+        </div>
+      </Suspense>
+    )
   )
 }
 
