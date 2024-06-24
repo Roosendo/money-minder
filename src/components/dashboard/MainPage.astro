@@ -10,6 +10,7 @@ import Fifth from '@images/5.webp'
 import { Image } from 'astro:assets'
 import { getSession } from 'auth-astro/server'
 const session = await getSession(Astro.request)
+const email = session?.user?.email
 ---
 
 <section
@@ -36,22 +37,22 @@ const session = await getSession(Astro.request)
 <div class='container mx-auto p-4 text-black dark:text-white'>
   <div class='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
     <!-- Resumen Financiero Rápido -->
-    <FinancialSummary client:only='react' />
+    <FinancialSummary email={email} client:load />
 
     <!-- Transacciones Recientes -->
-    <RecentTransactions email={session?.user?.email} client:load />
+    <RecentTransactions email={email} client:load />
 
     <!-- Gráfico de Flujo de Efectivo -->
-    <CashFlow client:only='react' />
+    <CashFlow email={email} client:load />
 
     <!-- Categorías Principales -->
-    <MainCategories client:only='react' />
+    <MainCategories email={email} client:load />
 
     <!-- Progreso hacia Objetivos -->
-    <Goals client:only='react' />
+    <Goals email={email} client:load />
 
     <!-- Alertas y Notificaciones -->
-    <Reminders client:only='react' />
+    <Reminders email={email} client:load />
 
     <Quote client:load />
   </div>
