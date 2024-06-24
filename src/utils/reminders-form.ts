@@ -9,6 +9,7 @@ import {
   createDeleteReminderModal,
   openDeleteModal
 } from '@utils/ui'
+const dominio = 'https://money-minder-api.netlify.app'
 
 export const handleFormSubmit = async (
   e: SubmitEvent,
@@ -22,18 +23,20 @@ export const handleFormSubmit = async (
   const title = ($('#reminder-title') as HTMLInputElement).value
   const description = ($('#reminder-description') as HTMLInputElement).value
   const reminderDate = ($('#reminder-date') as HTMLInputElement).value
+  const email = $<HTMLParagraphElement>('#user-email')?.textContent?.trim()!
+  const fullName = $<HTMLParagraphElement>('#user-name')?.textContent?.trim()
 
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title, description, reminderDate })
+    body: JSON.stringify({ title, description, reminderDate, email, fullName })
   }
 
-  const response = await fetch('/api/reminders', requestOptions)
+  const response = await fetch(dominio + '/api/reminders/new-reminder', requestOptions)
 
   if (response.ok) {
     showAndHideAlert($alertMessage)
-    const data = await fetchDataReminders()
+    const data = await fetchDataReminders({ email })
     renderDataReminders(data, $divElement)
     $reminderForm.reset()
   } else {
@@ -41,8 +44,8 @@ export const handleFormSubmit = async (
   }
 }
 
-export const init = async ($divElement: HTMLDivElement) => {
-  const data = await fetchDataReminders()
+export const init = async ($divElement: HTMLDivElement, email: string) => {
+  const data = await fetchDataReminders({ email })
   renderDataReminders(data, $divElement)
 }
 
@@ -75,17 +78,18 @@ const handleEditFormSubmit = async (e: Event, reminderId: number, $divElement: H
   const newTitle = ($(`#edit-title-${reminderId}`) as HTMLInputElement).value
   const newDescription = ($(`#edit-description-${reminderId}`) as HTMLInputElement).value
   const newDate = ($(`#edit-reminder-date-${reminderId}`) as HTMLInputElement).value
+  const email = $<HTMLParagraphElement>('#user-email')?.textContent?.trim()!
 
   const requestOptions = {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ newTitle, newDescription, newDate })
+    body: JSON.stringify({ newTitle, newDescription, newDate, email, id: reminderId })
   }
 
-  const response = await updateReminder(reminderId, requestOptions)
+  const response = await updateReminder(requestOptions)
 
   if (response.ok) {
-    const data = await fetchDataReminders()
+    const data = await fetchDataReminders({ email })
     renderDataReminders(data, $divElement)
     $(`#edit-modal-${reminderId}`)?.classList.replace('flex', 'hidden')
   } else {
@@ -104,12 +108,13 @@ const handleDeleteFormSubmit = async (
   const requestOptions = {
     method: 'DELETE'
   }
+  const email = $<HTMLParagraphElement>('#user-email')?.textContent?.trim()!
 
-  const response = await deleteReminder(reminderId, requestOptions)
+  const response = await deleteReminder(reminderId, requestOptions, email)
 
   if (response.ok) {
     $(`#delete-modal-${reminderId}`)?.classList.replace('flex', 'hidden')
-    const data = await fetchDataReminders()
+    const data = await fetchDataReminders({ email })
     renderDataReminders(data, $divElement)
   } else {
     const $alertWarning = $('#alert-error') as HTMLDivElement

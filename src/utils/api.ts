@@ -98,9 +98,11 @@ export async function deleteSaving (id: number, requestOptions: RequestInit, ema
  * @returns A promise that resolves to an array of Reminder objects.
  * @throws An error if the network response is not successful.
  */
-export const fetchDataReminders = async (): Promise<Reminder[]> => {
+export const fetchDataReminders = async (
+  { email }: { email: string }
+): Promise<Reminder[]> => {
   try {
-    const response = await fetch('/api/get-reminders', requestOptions)
+    const response = await fetch(dominio + `/api/reminders/get-reminders?email=${email}`, requestOptions)
 
     if (!response.ok) {
       throw new Error('Network response was not ok')
@@ -120,10 +122,9 @@ export const fetchDataReminders = async (): Promise<Reminder[]> => {
  * @returns A promise that resolves to the response from the API.
  */
 export const updateReminder = async (
-  id: number,
   requestOptions: RequestInit
 ): Promise<Response> => {
-  return fetch(`/api/${id}/update-reminder`, requestOptions)
+  return fetch(dominio + '/api/reminders/update-reminder', requestOptions)
 }
 
 /**
@@ -134,9 +135,10 @@ export const updateReminder = async (
  */
 export const deleteReminder = async (
   id: number,
-  requestOptions: RequestInit
+  requestOptions: RequestInit,
+  email: string
 ): Promise<Response> => {
-  return fetch(`/api/${id}/delete-reminder`, requestOptions)
+  return fetch(dominio + `/api/reminders/delete-reminder?email=${email}&id=${id}`, requestOptions)
 }
 
 export const fetchCashFlow = async (): Promise<CashFLow[]> => {
