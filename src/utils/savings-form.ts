@@ -22,12 +22,12 @@ export const handleFormSubmit = async (
   e.preventDefault()
 
   const name = ($('#goal-name') as HTMLInputElement).value
-  const targetAmount = ($('#target-amount') as HTMLInputElement).value
-  let currentAmount: string | number = ($('#current-amount') as HTMLInputElement).value
+  const targetAmount = +($('#target-amount') as HTMLInputElement).value
+  let currentAmount = +($('#current-amount') as HTMLInputElement).value
   const startDate = ($('#start-date') as HTMLInputElement).value
   const endDate = ($('#end-date') as HTMLInputElement).value
   const email = $<HTMLParagraphElement>('#user-email')?.textContent?.trim()!
-  const fullName = $<HTMLParagraphElement>('#user-name')?.textContent?.trim()
+  const fullName = $<HTMLParagraphElement>('#user-name')?.textContent?.trim()!
 
   if (!currentAmount) currentAmount = 0
 

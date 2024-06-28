@@ -14,11 +14,7 @@ export const fetchData = async (url: string, email: string): Promise<Transaction
     return []
   }
   const dominio = 'https://money-minder-api.vercel.app'
-  const requestOptions = {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' }
-  }
-  const response = await fetch(dominio + `/api/${url}/get-${url}?email=${email}`, requestOptions)
+  const response = await fetch(dominio + `/api/${url}/get-${url}?email=${email}`)
 
   if (!response.ok) {
     throw new Error('Network response was not ok')

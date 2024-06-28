@@ -23,12 +23,10 @@ const dominio = 'https://money-minder-api.vercel.app'
 export const fetchCategories = async (month: string, year: string, email: string) => {
   const responseEntries = await fetch(
     dominio +
-      `/api/entries/get-entries-by-category-monthly?email=${email}&year=${year}&month=${month}`,
-    requestOptions
+      `/api/entries/get-entries-by-category-monthly?email=${email}&year=${year}&month=${month}`
   )
   const responseExits = await fetch(
-    dominio + `/api/exits/get-exits-by-category-monthly?email=${email}&year=${year}&month=${month}`,
-    requestOptions
+    dominio + `/api/exits/get-exits-by-category-monthly?email=${email}&year=${year}&month=${month}`
   )
 
   const dataEntries: Transaction[] = responseEntries.ok ? await responseEntries.json() : []
@@ -46,8 +44,7 @@ export const fetchCategories = async (month: string, year: string, email: string
  */
 export const fetchSummary = async (month: string, year: string, email: string) => {
   const responseSummary = await fetch(
-    dominio + `/api/specials/financial-summary-monthly?email=${email}&year=${year}&month=${month}`,
-    requestOptions
+    dominio + `/api/specials/financial-summary-monthly?email=${email}&year=${year}&month=${month}`
   )
 
   if (!responseSummary.ok) {
@@ -68,8 +65,7 @@ export const fetchSummary = async (month: string, year: string, email: string) =
 export async function fetchDataSavings ({ email }: { email: string }): Promise<Saving[]> {
   try {
     const response = await fetch(
-      dominio + `/api/savings/get-savings?email=${email}`,
-      requestOptions
+      dominio + `/api/savings/get-savings?email=${email}`
     )
 
     if (!response.ok) {
@@ -116,8 +112,7 @@ export async function deleteSaving (
 export const fetchDataReminders = async ({ email }: { email: string }): Promise<Reminder[]> => {
   try {
     const response = await fetch(
-      dominio + `/api/reminders/get-reminders?email=${email}`,
-      requestOptions
+      dominio + `/api/reminders/get-reminders?email=${email}`
     )
 
     if (!response.ok) {

@@ -34,7 +34,7 @@ import Table from '@dashboard/Table.astro'
     $form?.addEventListener('submit', async (e) => {
       e.preventDefault()
       const date = ($('#date') as HTMLInputElement).value
-      const amount = ($('#currency-input') as HTMLInputElement).value
+      const amount = +($('#currency-input') as HTMLInputElement).value
       const category = ($('#underline_select') as HTMLInputElement).value
       const description = ($('#message') as HTMLInputElement).value
 
