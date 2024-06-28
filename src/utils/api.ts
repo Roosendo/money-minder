@@ -12,7 +12,7 @@ const requestOptions = {
   headers: { 'Content-Type': 'application/json' }
 }
 
-const dominio = 'https://money-minder-api.netlify.app'
+const dominio = 'https://money-minder-api.vercel.app'
 
 /**
  * Fetches the categories for a specific month and year.

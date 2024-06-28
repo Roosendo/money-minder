@@ -20,7 +20,7 @@ import Table from '@dashboard/Table.astro'
     const $table = $('#table-body-ingreso') as HTMLTableElement
     const $email = $<HTMLParagraphElement>('#user-email')?.textContent?.trim()!
     $table.innerHTML = ''
-    const dominio = 'https://money-minder-api.netlify.app'
+    const dominio = 'https://money-minder-api.vercel.app'
     const url = 'entries'
 
     try {

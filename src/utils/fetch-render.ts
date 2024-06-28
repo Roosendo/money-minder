@@ -13,7 +13,7 @@ export const fetchData = async (url: string, email: string): Promise<Transaction
   if (url !== 'entries' && url !== 'exits') {
     return []
   }
-  const dominio = 'https://money-minder-api.netlify.app'
+  const dominio = 'https://money-minder-api.vercel.app'
   const requestOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }

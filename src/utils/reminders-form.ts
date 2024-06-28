@@ -9,7 +9,7 @@ import {
   createDeleteReminderModal,
   openDeleteModal
 } from '@utils/ui'
-const dominio = 'https://money-minder-api.netlify.app'
+const dominio = 'https://money-minder-api.vercel.app'
 
 export const handleFormSubmit = async (
   e: SubmitEvent,
