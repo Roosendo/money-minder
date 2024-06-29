@@ -88,8 +88,8 @@ const handleEditFormSubmit = async (
   e.preventDefault()
 
   const newSavingName = ($(`#edit-goal-name-${id}`) as HTMLInputElement).value
-  const newTarget = ($(`#edit-target-amount-${id}`) as HTMLInputElement).value
-  const newCurrentAmount = ($(`#edit-current-amount-${id}`) as HTMLInputElement).value
+  const newTarget = +($(`#edit-target-amount-${id}`) as HTMLInputElement).value
+  const newCurrentAmount = +($(`#edit-current-amount-${id}`) as HTMLInputElement).value
   const newEndDate = ($(`#edit-end-date-${id}`) as HTMLInputElement).value
 
   const requestOptions = {
