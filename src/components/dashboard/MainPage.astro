@@ -8,9 +8,9 @@ import RecentTransactions from '@dashboard/RecentTransactions.tsx'
 import Reminders from '@dashboard/Reminders.tsx'
 import Fifth from '@images/5.webp'
 import { Image } from 'astro:assets'
-import { getSession } from 'auth-astro/server'
-const session = await getSession(Astro.request)
-const email = session?.user?.email
+const userCookie = Astro.cookies.get('user')
+const user = userCookie ? JSON.parse(decodeURIComponent(userCookie?.value)) : null
+const email = user?.email
 ---
 
 <section

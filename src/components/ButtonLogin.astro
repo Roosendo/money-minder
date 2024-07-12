@@ -24,16 +24,27 @@ import Google from '@icons/Google.astro'
   import { $ } from '@lib/dom-selector'
 
   document.addEventListener('astro:page-load', async () => {
-    const { signIn } = await import('auth-astro/client')
     const $loginButton = $('#login-g')
-    const $loginButtonGH = $('#login-gh')
+    // const $loginButtonGH = $('#login-gh')
 
     if ($loginButton) {
-      $loginButton.onclick = () => signIn('google')
+      $loginButton.onclick = () => {
+        window.location.href = 'https://money-minder-api.vercel.app/api/google'
+      }
     }
+  })
+</script>
 
-    if ($loginButtonGH) {
-      $loginButtonGH.onclick = () => signIn('github')
+<script>
+  document.addEventListener('astro:page-load', async () => {
+    const params = new URLSearchParams(window.location.search)
+    const user = params.get('user')
+
+    if (user) {
+      const userData = JSON.parse(decodeURIComponent(user))
+      localStorage.setItem('user', JSON.stringify(userData))
+      document.cookie = `user=${encodeURIComponent(JSON.stringify(userData.user))}; path=/;`
+      window.location.href = '/login'
     }
   })
 </script>

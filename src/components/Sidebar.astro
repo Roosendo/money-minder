@@ -1,9 +1,11 @@
 ---
 import { Image } from 'astro:assets'
-import { getSession } from 'auth-astro/server'
 import ThemeToggle from './ThemeToggle.astro'
 
-const session = await getSession(Astro.request)
+const pageURL = Astro.url.pathname
+
+const userCookie = Astro.cookies.get('user')
+const user = userCookie ? JSON.parse(decodeURIComponent(userCookie?.value)) : null
 ---
 
 <button
@@ -27,20 +29,20 @@ const session = await getSession(Astro.request)
 >
   <div class='h-full overflow-y-auto bg-gray-50 px-3 py-4 dark:bg-gray-800'>
     {
-      session && (
+      user && (
         <section class='mb-10 flex flex-row gap-3'>
           <Image
-            src={session.user?.image ?? ''}
-            alt={`Foto de perfil de ${session.user?.name}`}
+            src={user?.picture ?? ''}
+            alt={`Foto de perfil de ${user?.firstName} ${user?.lastName}`}
             inferSize={true}
             class='size-16 rounded-xl'
           />
           <article class='flex flex-col'>
             <h3 id='user-name' class='m-auto text-lg font-semibold text-black dark:text-white'>
-              {session.user?.name}
+              {`${user?.firstName} ${user?.lastName}`}
             </h3>
             <p id='user-email' class='m-auto text-xs font-light text-black dark:text-white'>
-              {session.user?.email}
+              {user?.email}
             </p>
           </article>
         </section>
@@ -185,7 +187,7 @@ const session = await getSession(Astro.request)
         </a>
       </li>
       {
-        session && (
+        user && (
           <li>
             <button
               id='logout'
@@ -216,17 +218,22 @@ const session = await getSession(Astro.request)
     </ul>
     <!-- Cambiar Idioma -->
   </div>
+  <span class='sr-only' id='pageURL'>{pageURL}</span>
 </aside>
 
 <script>
   import { $ } from '@lib/dom-selector'
-  import { signOut } from 'auth-astro/client'
+
   document.addEventListener('astro:page-load', async () => {
     let isSidebarOpen = false
     const $logout = $('#logout')
+    const pageURL = $('#pageURL')?.textContent!
 
     if ($logout) {
-      $logout.onclick = () => signOut()
+      $logout.onclick = () => {
+        document.cookie = 'user=; path=/; expires=Thu, 11 Sep 2002 00:00:00 UTC;'
+        window.location.href = pageURL
+      }
     }
 
     document.getElementById('separator-sidebar')?.addEventListener('click', () => {

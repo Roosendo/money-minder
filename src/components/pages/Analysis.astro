@@ -2,11 +2,11 @@
 import AnalysisMain from '@analysis/AnalysisMain.astro'
 import NotLogged from '@dashboard/NotLogged.astro'
 import Dashboard from '@layouts/Dashboard.astro'
-import { getSession } from 'auth-astro/server'
 
-const session = await getSession(Astro.request)
+const userCookie = Astro.cookies.get('user')
+const user = userCookie ? JSON.parse(decodeURIComponent(userCookie?.value)) : null
 ---
 
 <Dashboard title='Análisis'>
-  {session ? <AnalysisMain /> : <NotLogged />}
+  {user ? <AnalysisMain /> : <NotLogged />}
 </Dashboard>

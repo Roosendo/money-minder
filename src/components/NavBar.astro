@@ -1,8 +1,8 @@
 ---
 import Piggy from 'public/Piggy.astro'
-import { getSession } from 'auth-astro/server'
 
-const session = await getSession(Astro.request)
+const userCookie = Astro.cookies.get('user')
+const user = userCookie ? JSON.parse(decodeURIComponent(userCookie?.value)) : null
 ---
 
 <nav
@@ -72,7 +72,7 @@ const session = await getSession(Astro.request)
         </li>
         <li class='flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse'>
           {
-            session ? (
+            user ? (
               <a
                 href='/dashboard'
                 id='dashboard'

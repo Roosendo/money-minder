@@ -1,18 +1,18 @@
 ---
 import LoggedUser from '@login/LoggedUser.astro'
 import NotLoggedUser from '@login/NotLoggedUser.astro'
-import { getSession } from 'auth-astro/server'
 
-const session = await getSession(Astro.request)
+const userCookie = Astro.cookies.get('user')
+const user = userCookie ? JSON.parse(decodeURIComponent(userCookie?.value)) : null
 ---
 
 <section class='mx-auto my-12 max-w-lg'>
   {
-    session !== null ? (
+    user !== null ? (
       <LoggedUser
-        name={session.user?.name}
-        email={session.user?.email}
-        imageUrl={session.user?.image}
+        name={`${user?.firstName} ${user?.lastName}`}
+        email={user?.email}
+        imageUrl={user?.picture}
       />
     ) : (
       <NotLoggedUser />
