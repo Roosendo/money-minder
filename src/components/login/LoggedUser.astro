@@ -8,6 +8,7 @@ interface Props {
 }
 
 const { name, email, imageUrl } = Astro.props
+const pageURL = Astro.url.pathname
 ---
 
 <section
@@ -35,18 +36,21 @@ const { name, email, imageUrl } = Astro.props
     class='w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto'
   >Cerrar</button
   >
+  <span class='sr-only' id='pageURL'>{pageURL}</span>
 </section>
 
 <script>
   import { $ } from '@lib/dom-selector'
   document.addEventListener('astro:page-load', async () => {
-    const { signOut } = await import('auth-astro/client')
-
     const $logoutG = $('#logout-g')
     const $dashboard = $('#dashboard')
+    const pageURL = $('#pageURL')?.textContent!
 
     if ($logoutG) {
-      $logoutG.onclick = () => signOut()
+      $logoutG.onclick = () => {
+        document.cookie = 'user=; path=/; expires=Thu, 11 Sep 2002 00:00:00 UTC;'
+        window.location.href = pageURL
+      }
     }
 
     if ($dashboard) {
