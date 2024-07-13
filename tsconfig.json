@@ -1,64 +1,32 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
-  "extends": "astro/tsconfigs/strictest",
+  "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@src/*": [
-        "./src/*"
-      ],
-      "@layouts/*": [
-        "./src/layouts/*"
-      ],
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@pages/*": [
-        "./src/components/pages/*"
-      ],
-      "@images/*": [
-        "./src/images/*"
-      ],
-      "@login/*": [
-        "./src/components/login/*"
-      ],
-      "@utils/*": [
-        "./src/utils/*"
-      ],
-      "@icons/*": [
-        "./src/assets/icons/*"
-      ],
-      "@lib/*": [
-        "./src/lib/*"
-      ],
-      "@dashboard/*": [
-        "./src/components/dashboard/*"
-      ],
-      "@entries/*": [
-        "./src/components/entries/*"
-      ],
-      "@exits/*": [
-        "./src/components/exits/*"
-      ],
-      "@analysis/*": [
-        "./src/components/analysis/*"
-      ],
-      "@config/*": [
-        "./src/config/*"
-      ],
-      "@savings/*": [
-        "./src/components/savings/*"
-      ],
-      "@reminders/*": [
-        "./src/components/reminders/*"
-      ],
-      "@api/*": [
-        "./src/pages/api/*"
-      ],
-      "@hooks/*": [
-        "./src/hooks/*"
-      ],
-    },
-    "jsx": "react-jsx",
-    "jsxImportSource": "react"
+    "outDir": "./dist/out-tsc",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "lib": [
+      "ES2022",
+      "dom"
+    ]
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   }
 }
