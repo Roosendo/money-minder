@@ -25,11 +25,17 @@ import Google from '@icons/Google.astro'
 
   document.addEventListener('astro:page-load', async () => {
     const $loginButton = $('#login-g')
-    // const $loginButtonGH = $('#login-gh')
+    const $loginButtonGH = $('#login-gh')
 
     if ($loginButton) {
       $loginButton.onclick = () => {
         window.location.href = 'https://money-minder-api.vercel.app/api/google'
+      }
+    }
+
+    if ($loginButtonGH) {
+      $loginButtonGH.onclick = () => {
+        window.location.href = 'https://money-minder-api.vercel.app/api/github'
       }
     }
   })
