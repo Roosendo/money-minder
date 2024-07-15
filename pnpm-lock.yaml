@@ -38,6 +38,9 @@ importers:
       '@angular/ssr':
         specifier: ^18.1.0
         version: 18.1.0(@angular/common@18.1.0(@angular/core@18.1.0(rxjs@7.8.1)(zone.js@0.14.7))(rxjs@7.8.1))(@angular/core@18.1.0(rxjs@7.8.1)(zone.js@0.14.7))
+      '@midudev/tailwind-animations':
+        specifier: 0.0.7
+        version: 0.0.7(tailwindcss@3.4.4)
       autoprefixer:
         specifier: 10.4.19
         version: 10.4.19(postcss@8.4.39)
@@ -1278,6 +1281,11 @@ packages:
     resolution: {integrity: sha512-CO3MFV8gUx16NU/CyyuumAKblESwvoGVA2XhQKZ976OTOxaTbb8F8D3f0iiZ4MYqsN74jIrFuCmXpPnpjbhfOQ==}
     cpu: [x64]
     os: [win32]
+
+  '@midudev/tailwind-animations@0.0.7':
+    resolution: {integrity: sha512-K897X4NvM3tV2/R7aCjl6gJ6msWSTqQtcAwb5VX5D5+m/Mo650mEFoeODwqzaePYNro5BTGyXXFQw/kiHBZlUA==}
+    peerDependencies:
+      tailwindcss: ^3.0.0
 
   '@msgpackr-extract/msgpackr-extract-darwin-arm64@3.0.3':
     resolution: {integrity: sha512-QZHtlVgbAdy2zAqNA9Gu1UpIuI8Xvsd1v8ic6B2pZmeFnFcMWiPLfWXh7TVw4eGEZ/C9TH281KwhVoeQUKbyjw==}
@@ -6996,6 +7004,10 @@ snapshots:
   '@lmdb/lmdb-win32-x64@3.0.12':
     optional: true
 
+  '@midudev/tailwind-animations@0.0.7(tailwindcss@3.4.4)':
+    dependencies:
+      tailwindcss: 3.4.4
+
   '@msgpackr-extract/msgpackr-extract-darwin-arm64@3.0.3':
     optional: true
 
@@ -8610,7 +8622,7 @@ snapshots:
     dependencies:
       eslint: 8.57.0
 
-  eslint-config-standard@12.0.0(eslint-plugin-import@2.29.1(@typescript-eslint/parser@1.13.0(eslint@5.16.0))(eslint@5.16.0))(eslint-plugin-node@9.2.0(eslint@8.57.0))(eslint-plugin-promise@4.3.1)(eslint-plugin-standard@4.1.0(eslint@5.16.0))(eslint@5.16.0):
+  eslint-config-standard@12.0.0(eslint-plugin-import@2.29.1(@typescript-eslint/parser@1.13.0(eslint@5.16.0))(eslint@5.16.0))(eslint-plugin-node@9.2.0(eslint@5.16.0))(eslint-plugin-promise@4.3.1)(eslint-plugin-standard@4.1.0(eslint@5.16.0))(eslint@5.16.0):
     dependencies:
       eslint: 5.16.0
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.16.0(eslint@8.57.0)(typescript@5.5.2))(eslint@8.57.0)
@@ -8624,7 +8636,7 @@ snapshots:
       '@typescript-eslint/parser': 1.13.0(eslint@5.16.0)
       ajv: 6.12.6
       eslint: 5.16.0
-      eslint-config-standard: 12.0.0(eslint-plugin-import@2.29.1(@typescript-eslint/parser@1.13.0(eslint@5.16.0))(eslint@5.16.0))(eslint-plugin-node@9.2.0(eslint@8.57.0))(eslint-plugin-promise@4.3.1)(eslint-plugin-standard@4.1.0(eslint@5.16.0))(eslint@5.16.0)
+      eslint-config-standard: 12.0.0(eslint-plugin-import@2.29.1(@typescript-eslint/parser@1.13.0(eslint@5.16.0))(eslint@5.16.0))(eslint-plugin-node@9.2.0(eslint@5.16.0))(eslint-plugin-promise@4.3.1)(eslint-plugin-standard@4.1.0(eslint@5.16.0))(eslint@5.16.0)
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.16.0(eslint@8.57.0)(typescript@5.5.2))(eslint@8.57.0)
       eslint-plugin-node: 9.2.0(eslint@5.16.0)
       eslint-plugin-promise: 4.3.1
