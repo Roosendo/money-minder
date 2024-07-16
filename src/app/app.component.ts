@@ -1,8 +1,8 @@
 import { Component } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
 
-import { NavBarModule } from './navbar/navbar.module'
-import { FooterModule } from './footer/footer.module'
+import { NavBarModule } from './core/navbar/navbar.module'
+import { FooterModule } from './core/footer/footer.module'
 import { HomeModule } from './home/home.module'
 
 @Component({
