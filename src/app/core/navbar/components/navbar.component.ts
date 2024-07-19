@@ -1,16 +1,23 @@
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core'
+import { Component, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core'
 import { isPlatformBrowser } from '@angular/common'
+import { RouterLink } from '@angular/router'
 
 @Component({
   selector: 'app-navbar',
-  templateUrl: './navbar.component.html'
+  standalone: true,
+  templateUrl: './navbar.component.html',
+  imports: [RouterLink]
 })
 export class NavBarComponent implements OnInit, OnDestroy {
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  private platformId
 
   private isSideBarOpen = false
   private navbar: HTMLElement | null = null
   private observer: IntersectionObserver | null = null
+
+  constructor() {
+    this.platformId = inject(PLATFORM_ID)
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {

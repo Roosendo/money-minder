@@ -8,6 +8,7 @@
 body { min-height: 100dvh; }
 html {
   font-family: 'Saira Variable', sans-serif;
+  scroll-behavior: smooth;
 }
 input, button, textarea, select { font: inherit; }
 h1, h2, h3, h4, h5, h6 { text-wrap: balance; }

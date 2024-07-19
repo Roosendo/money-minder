@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core'
+import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core'
 import { isPlatformBrowser } from '@angular/common'
 
 @Component({
@@ -9,8 +9,11 @@ export class ThemeToggleComponent implements OnInit {
   private readonly STORAGE_THEME_ITEM = 'theme'
   private readonly DARK_CLASS = 'dark'
   private readonly LIGHT_CLASS = 'light'
+  private platformId
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor() {
+    this.platformId = inject(PLATFORM_ID)
+  }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) this.setTheme()
