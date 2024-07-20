@@ -1,5 +1,8 @@
-import { Component } from '@angular/core'
+import { Component, inject, OnInit } from '@angular/core'
+import { Title } from '@angular/platform-browser'
+
 import { BtnLoginComponent } from '../../btn-login'
+import { AuthCacheService } from '../../auth-cache.service'
 
 @Component({
   standalone: true,
@@ -7,4 +10,13 @@ import { BtnLoginComponent } from '../../btn-login'
   selector: 'app-login',
   templateUrl: './login.component.html'
 })
-export class LoginComponent {}
+export class LoginComponent implements OnInit {
+  private authCacheService = inject(AuthCacheService)
+  private titleService = inject(Title)
+
+  isLogged = this.authCacheService.isAuthenticated()
+
+  ngOnInit() {
+    this.titleService.setTitle('Login | Money Minder')
+  }
+}

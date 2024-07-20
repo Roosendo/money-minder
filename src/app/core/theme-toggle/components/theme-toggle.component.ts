@@ -3,7 +3,8 @@ import { isPlatformBrowser } from '@angular/common'
 
 @Component({
   selector: 'app-theme-toggle',
-  templateUrl: './theme-toggle.component.html'
+  templateUrl: './theme-toggle.component.html',
+  standalone: true
 })
 export class ThemeToggleComponent implements OnInit {
   private readonly STORAGE_THEME_ITEM = 'theme'

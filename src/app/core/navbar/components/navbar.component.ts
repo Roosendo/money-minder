@@ -1,6 +1,7 @@
 import { Component, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core'
 import { isPlatformBrowser } from '@angular/common'
 import { RouterLink } from '@angular/router'
+import { AuthCacheService } from '../../../auth-cache.service'
 
 @Component({
   selector: 'app-navbar',
@@ -9,14 +10,17 @@ import { RouterLink } from '@angular/router'
   imports: [RouterLink]
 })
 export class NavBarComponent implements OnInit, OnDestroy {
+  private readonly authCacheService = inject(AuthCacheService)
   private platformId
 
   private isSideBarOpen = false
   private navbar: HTMLElement | null = null
   private observer: IntersectionObserver | null = null
+  isLogged: boolean
 
   constructor() {
     this.platformId = inject(PLATFORM_ID)
+    this.isLogged = this.authCacheService.isAuthenticated()
   }
 
   ngOnInit() {

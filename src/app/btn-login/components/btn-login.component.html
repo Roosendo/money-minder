@@ -1,31 +1,33 @@
-@if (user) {
+@if (isLogged) {
   <section
-    class="flex flex-col items-center justify-center gap-6 rounded-lg p-6 text-lg text-gray-800 shadow-lg dark:text-gray-50 dark:shadow-2xl"
+    class="flex flex-col items-center justify-center gap-4 rounded-lg p-6 text-lg text-gray-800 shadow-lg dark:text-gray-50 dark:shadow-2xl"
   >
-    <h1>¡Hola {{ user.firstName }}!</h1>
+    <h1>¡Hola {{ user?.firstName }}!</h1>
     <img
-      ngSrc="{{ user.picture }}"
-      [alt]="user.firstName"
-      height="300"
-      width="300"
-      class="rounded-xl"
+      ngSrc="{{ user?.picture }}"
+      [alt]="user?.firstName"
+      height="100"
+      width="100"
+      class="rounded"
     />
-    <p>Tú correo es: {{ user.email }}</p>
+    <p>Tú correo es: {{ user?.email }}</p>
     <p>
       Si tus datos son correctos, puedes pasar al Dashboard, sino sientete libre
       de cambiar de cuenta cerrando sesión
     </p>
-    <button
+    <a
+      routerLink="/dashboard"
       id="dashboard"
       class="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
     >
       Ir al Dashboard
-    </button>
+    </a>
     <button
+      (click)="logout()"
       id="logout-g"
-      class="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
+      class="text-blue-600 hover:text-white border border-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-600 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
     >
-      Cerrar
+      Cerrar sesión
     </button>
     <!-- todo: fix pageurl -->
     <span class="sr-only" id="pageURL">pageURL</span>
