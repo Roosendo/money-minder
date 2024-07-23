@@ -20,7 +20,7 @@
               scope='row'
               class='whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white'
             >
-              {{ rc.date }}
+              {{ rc.date | date:'shortDate' }}
             </th>
             <td class='px-4 py-3 text-center'>{{ rc.category }}</td>
             <td class='px-4 py-3'>${{ rc.amount }}</td>

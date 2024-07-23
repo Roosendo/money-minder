@@ -22,7 +22,7 @@ export class BtnLoginComponent implements OnInit {
   }
 
   redirectTo(provider: string): void {
-    const url = `http://localhost:7373/api/${provider}`
+    const url = `https://money-minder-api.vercel.app/api/${provider}`
     window.location.href = url
   }
 

@@ -41,7 +41,7 @@ export class AuthCacheService {
       userData,
       this.expireDate,
       '/',
-      'localhost',
+      'vercel.app',
       true,
       'Strict'
     )

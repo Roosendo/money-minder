@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core'
-import { ApiCallsService } from '../../../../services';
-import { AsyncPipe } from '@angular/common';
+import { ApiCallsService } from '../../../../services'
+import { AsyncPipe, DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-recent-transactions',
   standalone: true,
   templateUrl: './rc.component.html',
-  imports: [AsyncPipe]
+  imports: [AsyncPipe, DatePipe]
 })
 export class RecentTransactionsComponent {
   private readonly apiCalls = inject(ApiCallsService)
