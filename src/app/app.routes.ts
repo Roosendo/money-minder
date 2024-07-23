@@ -1,8 +1,9 @@
 import { Routes } from '@angular/router'
 
-import { MainComponent, DashboardComponent } from './layouts'
+import { MainComponent, DashboardLayoutComponent } from './layouts'
 import { HomeComponent } from './home'
 import { LoginComponent } from './login'
+import { DashboardComponent } from './dashboard/dashboard'
 
 export const routes: Routes = [
   {
@@ -15,9 +16,9 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    component: DashboardLayoutComponent,
     children: [
-      // { path: '' }
+      { path: '', component: DashboardComponent }
     ]
   }
 ]

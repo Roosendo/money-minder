@@ -12,4 +12,4 @@ import { NgOptimizedImage } from '@angular/common'
   `,
   imports: [RouterOutlet, SidebarComponent, NgOptimizedImage]
 })
-export class DashboardComponent {}
+export class DashboardLayoutComponent {}

@@ -2,7 +2,7 @@
   (click)="toggleSidebar()"
   id='separator-sidebar'
   type='button'
-  class='fixed top-2 z-10 ms-3 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 transition-transform hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700'
+  class='fixed top-2 z-10 ms-3 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 transition-transform hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600'
 >
   <span class='sr-only'>Open sidebar</span>
   <svg class='h-6 w-6' aria-hidden='true' fill='currentColor' viewBox='0 0 20 20'>
@@ -41,7 +41,7 @@
     <ul class='mb-10 space-y-2 font-medium'>
       <li>
         <a
-          href='/dashboard'
+          routerLink='/dashboard'
           class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
         >
           <svg
@@ -59,7 +59,7 @@
       </li>
       <li>
         <a
-          href='/entries'
+          routerLink='/entries'
           class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
         >
           <svg
@@ -82,7 +82,7 @@
       </li>
       <li>
         <a
-          href='/exits'
+          routerLink='/exits'
           class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
         >
           <svg
@@ -100,7 +100,7 @@
       </li>
       <li>
         <a
-          href='/analysis'
+          routerLink='/analysis'
           class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
         >
           <svg
@@ -122,7 +122,7 @@
       </li>
       <li>
         <a
-          href='/savings'
+          routerLink='/savings'
           class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
         >
           <svg
@@ -139,7 +139,7 @@
       </li>
       <li>
         <a
-          href='/reminders'
+          routerLink='/reminders'
           class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
         >
           <svg
@@ -156,9 +156,38 @@
       </li>
     </ul>
     <ul class='space-y-2 pt-4 font-medium'>
+      @if (user) {
+        <li>
+          <button
+            (click)="logOut()"
+            id='logout'
+            class='group flex items-center rounded-lg p-2 text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
+          >
+            <svg
+              class='size-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'
+              aria-hidden='true'
+              fill='none'
+              viewBox='0 0 18 16'
+            >
+              <path
+                stroke='currentColor'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                stroke-width='2'
+                d='M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3'
+              />
+            </svg>
+            <span class='ms-3'>Cerrar Sesión</span>
+          </button>
+        </li>
+      } @else {
+        <li class='mt-3 flex flex-col gap-3'>
+          <app-btn-login />
+        </li>
+      }
       <li>
         <a
-          href='/'
+          routerLink='/'
           class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
         >
           <svg
@@ -176,36 +205,10 @@
           <span class='ms-3 flex-1 whitespace-nowrap'>Inicio</span>
         </a>
       </li>
-        @if (user) {
-          <li>
-            <button
-              id='logout'
-              class='group flex items-center rounded-lg p-2 text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
-            >
-              <svg
-                class='size-5 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'
-                aria-hidden='true'
-                fill='none'
-                viewBox='0 0 18 16'
-              >
-                <path
-                  stroke='currentColor'
-                  stroke-linecap='round'
-                  stroke-linejoin='round'
-                  stroke-width='2'
-                  d='M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3'
-                />
-              </svg>
-              <span class='ms-3'>Cerrar Sesión</span>
-            </button>
-          </li>
-        }
       <li class='mt-3 flex flex-col gap-3'>
         <app-theme-toggle />
       </li>
     </ul>
     <!-- Cambiar Idioma -->
   </div>
-  <!-- todo: fix pageUrl -->
-  <span class='sr-only' id='pageURL'>pageURL</span>
 </aside>

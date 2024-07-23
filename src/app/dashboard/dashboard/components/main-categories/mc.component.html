@@ -1,0 +1,5 @@
+@let dataMC = mainCategories$ | async;
+
+@if (dataMC) {
+  <app-pie-chart [dataMC]="dataMC" />
+}

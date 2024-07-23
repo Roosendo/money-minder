@@ -1,14 +1,16 @@
 import { Component, inject } from '@angular/core'
-
-import { AuthCacheService, User } from '../../../auth-cache.service'
 import { NgOptimizedImage } from '@angular/common'
-import { ThemeToggleComponent } from '../../../core/theme-toggle'
+import { RouterLink } from '@angular/router'
+
+import { AuthCacheService, User } from '../../../services'
+import { ThemeToggleComponent } from '../../../core'
+import { BtnLoginComponent } from '../../../btn-login'
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
   templateUrl: './sidebar.component.html',
-  imports: [NgOptimizedImage, ThemeToggleComponent]
+  imports: [NgOptimizedImage, RouterLink, ThemeToggleComponent, BtnLoginComponent]
 })
 export class SidebarComponent {
   private readonly authCacheService = inject(AuthCacheService)
@@ -26,5 +28,10 @@ export class SidebarComponent {
     separator.classList.toggle('translate-x-64', !this.isSidebarOpen)
 
     this.isSidebarOpen = !this.isSidebarOpen
+  }
+
+  logOut() {
+    this.authCacheService.clearUser()
+    document.location.reload()
   }
 }

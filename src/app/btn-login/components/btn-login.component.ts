@@ -1,7 +1,7 @@
 import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core'
 import { NgOptimizedImage } from '@angular/common'
 import { isPlatformBrowser } from '@angular/common'
-import { AuthCacheService, User } from '../../auth-cache.service'
+import { AuthCacheService, User } from '../../services/auth-cache.service'
 import { RouterLink } from '@angular/router'
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core'
 import { isPlatformBrowser } from '@angular/common'
 import { RouterLink } from '@angular/router'
-import { AuthCacheService } from '../../../auth-cache.service'
+import { AuthCacheService } from '../../../services/auth-cache.service'
 
 @Component({
   selector: 'app-navbar',

@@ -1,0 +1,26 @@
+@let balance = balance$ | async;
+
+@if (financialSummary$ | async; as fs) {
+  <section class='grid grid-cols-1 md:grid-cols-3 gap-4'>
+    <div class='rounded-lg bg-gray-200 p-4 shadow-lg dark:bg-gray-900'>
+      <h2 class='text-lg'>Balance Total</h2>
+      <p id='balance' class='text-2xl font-semibold'>
+        ${{ balance }}
+      </p>
+    </div>
+
+    <div class='rounded-lg bg-gray-200 p-4 shadow-lg dark:bg-gray-900'>
+      <h2 class='text-lg'>Total Ingresos</h2>
+      <p id='entries' class='text-2xl font-semibold'>
+        ${{ fs.totalEntries }}
+      </p>
+    </div>
+
+    <div class='rounded-lg bg-gray-200 p-4 shadow-lg dark:bg-gray-900'>
+      <h2 class='text-lg'>Total Gastos</h2>
+      <p id='exits' class='text-2xl font-semibold'>
+        ${{ fs.totalExits }}
+      </p>
+    </div>
+  </section>
+}
