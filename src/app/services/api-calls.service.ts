@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http'
 import { inject, Injectable } from '@angular/core'
 import { map, Observable } from 'rxjs'
 
-import { CashFLow, FinancialSummary, FSClean, MainCategories, Quote, RecentTransactions, Reminder, Saving } from '../models'
+import { CashFLow, FinancialSummary, FSClean, MainCategories, Quote, RecentTransactions, Reminder, Saving, Transaction } from '../models'
 import { financialSummaryAdapter } from '../adapters'
-import { AuthCacheService } from './auth-cache.service'
+import { AuthCacheService } from '.'
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +56,12 @@ export class ApiCallsService {
   getQuote(): Observable<Quote> {
     const url = `${this.API_URL}/phrases/daily-phrase`
     return this.http.get<Quote>(url)
+      .pipe(map((result) => result))
+  }
+
+  getLastEntries(): Observable<Transaction[]> {
+    const url = `${this.API_URL}/entries/get-entries?email=${this.email}`
+    return this.http.get<Transaction[]>(url)
       .pipe(map((result) => result))
   }
 }

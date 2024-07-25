@@ -1,5 +1,5 @@
 import { NgOptimizedImage, AsyncPipe } from '@angular/common'
-import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core'
+import { Component, inject, OnInit } from '@angular/core'
 import { Title } from '@angular/platform-browser'
 
 import { AuthCacheService } from '../../../services'
@@ -25,8 +25,7 @@ import { FinancialSummaryComponent } from './financial-summary'
     GoalComponent,
     RemindersComponent,
     QuoteComponent
-  ],
-  encapsulation: ViewEncapsulation.None
+  ]
 })
 export class DashboardComponent implements OnInit {
   private readonly authCache = inject(AuthCacheService)

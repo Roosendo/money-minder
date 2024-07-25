@@ -45,3 +45,12 @@ export interface Quote {
   movie: string
   character: string
 }
+
+export interface Transaction {
+  entry_id: number
+  user_email: string
+  amount: number
+  description: string
+  category: string
+  date: string
+}

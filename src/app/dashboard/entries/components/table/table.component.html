@@ -1,0 +1,42 @@
+@let lastEntries = lastEntries$ | async;
+
+<div class="relative m-auto mb-6 max-w-xl overflow-x-auto rounded-lg shadow-md">
+  <table class="min-w-full text-left text-sm text-gray-500 dark:text-gray-400">
+    <thead
+      class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400"
+    >
+      <tr>
+        <th scope="col" class="px-4 py-3">Monto</th>
+        <th scope="col" class="px-4 py-3">Categoría</th>
+        <th scope="col" class="px-4 py-3">Descripción</th>
+        <th scope="col" class="px-4 py-3">Fecha</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (lastEntry of lastEntries; track lastEntry.entry_id) {
+        <tr
+          class="bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+        >
+          <th
+            scope="row"
+            class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          >
+            ${{ lastEntry.amount }}
+          </th>
+          <td class="px-4 py-3">{{ lastEntry.category }}</td>
+          <td class="px-4 py-3">{{ lastEntry.description }}</td>
+          <td class="px-4 py-3">{{ lastEntry.date | date: "shortDate" }}</td>
+        </tr>
+      } @empty {
+        <tr class="bg-white dark:bg-gray-800">
+          <td
+            class="px-4 py-3 text-center font-medium text-gray-900 dark:text-white"
+            colspan="4"
+          >
+            Sin registros
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

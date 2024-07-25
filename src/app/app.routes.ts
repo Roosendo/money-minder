@@ -1,9 +1,20 @@
-import { Routes } from '@angular/router'
+import { Routes, CanActivateChild } from '@angular/router'
 
 import { MainComponent, DashboardLayoutComponent } from './layouts'
 import { HomeComponent } from './home'
 import { LoginComponent } from './login'
 import { DashboardComponent } from './dashboard/dashboard'
+import { EntriesComponent } from './dashboard/entries'
+import { Injectable } from '@angular/core'
+
+@Injectable({
+  providedIn: 'root'
+})
+class DashboardGuard implements CanActivateChild {
+  canActivateChild() {
+    return true
+  }
+}
 
 export const routes: Routes = [
   {
@@ -15,10 +26,12 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'dashboard',
+    path: '',
     component: DashboardLayoutComponent,
+    canActivateChild: [DashboardGuard],
     children: [
-      { path: '', component: DashboardComponent }
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'entries', component: EntriesComponent }
     ]
   }
 ]
