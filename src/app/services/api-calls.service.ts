@@ -64,4 +64,10 @@ export class ApiCallsService {
     return this.http.get<Transaction[]>(url)
       .pipe(map((result) => result))
   }
+
+  getLastExits(): Observable<Transaction[]> {
+    const url = `${this.API_URL}/exits/get-exits?email=${this.email}`
+    return this.http.get<Transaction[]>(url)
+      .pipe(map((result) => result))
+  }
 }

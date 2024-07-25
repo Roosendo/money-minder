@@ -21,5 +21,4 @@ export class EntriesComponent implements OnInit {
   onFormSubmitted() {
     this.triggerUpdate = !this.triggerUpdate
   }
-
 }

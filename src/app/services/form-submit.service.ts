@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { catchError, Observable, throwError } from 'rxjs'
 
 import { AuthCacheService } from '.'
-import { NewEntry } from '../models'
+import { NewEntry, NewExit } from '../models'
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +38,15 @@ export class FormSubmitService {
     const url = `${this.API_URL}/entries/new-entry`
     const { email, fullName } = this
     return this.http.post(url, JSON.stringify({ email, fullName, ...formNewEntry }), this.requestOptions)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
+  exitSubmit(formNewExit: NewExit) {
+    const url = `${this.API_URL}/exits/new-exit`
+    const { email, fullName } = this
+    return this.http.post(url, JSON.stringify({ email, fullName, ...formNewExit }), this.requestOptions)
       .pipe(
         catchError(this.handleError)
       )

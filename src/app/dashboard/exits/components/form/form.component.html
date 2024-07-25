@@ -2,7 +2,7 @@
   (submit)="onSubmit()"
   class="mx-auto mb-8 mt-6 max-w-md rounded-md p-6 text-gray-900 shadow-lg shadow-gray-800 dark:text-white dark:shadow-gray-500"
 >
-  <h1 class="mb-6 text-center text-2xl uppercase">registro de ingresos</h1>
+  <h1 class="mb-6 text-center text-2xl uppercase">registro de egresos</h1>
   <div class="mb-5">
     <label for="date" class="mb-2 block text-sm font-medium"
       >Fecha del monto:</label
@@ -17,7 +17,7 @@
   </div>
   <div class="mb-5">
     <label for="currency-input" class="mb-2 block text-sm font-medium"
-      >Monto del Ingreso:</label
+      >Monto del Egreso:</label
     >
     <div class="flex">
       <div class="relative w-full">
@@ -83,25 +83,23 @@
       class="block w-full appearance-none border-0 border-b-2 border-gray-200 bg-transparent px-0 py-2.5 text-sm text-gray-500 focus:border-gray-200 focus:outline-none focus:ring-0 dark:border-gray-700 dark:text-gray-400"
     >
       <option value="" selected>Elige una categoría...</option>
-      <option value="Ingreso Laboral">Ingreso Laboral</option>
-      <option value="Ingreso de Negocios">Ingreso de Negocios</option>
-      <option value="Ingreso Familiar">Ingreso Familiar</option>
-      <option value="Ingreso de Inversiones">Ingreso de Inversiones</option>
-      <option value="Ingreso de Propiedades">Ingreso de Propiedades</option>
-      <option value="Ingreso por Trabajos Independientes">
-        Ingreso por Trabajos Independientes
-      </option>
-      <option value="Ingreso por Subsidios o Becas">
-        Ingreso por Subsidios o Becas
-      </option>
-      <option value="Ingreso por Prestaciones">Ingreso por Prestaciones</option>
-      <option value="Ingreso de Pensión">Ingreso de Pensión</option>
-      <option value="Ingresos Adicionales">Ingresos Adicionales</option>
+      <option value="Vivienda">Vivienda</option>
+      <option value="Alimentación">Alimentación</option>
+      <option value="Transporte">Transporte</option>
+      <option value="Salud">Salud</option>
+      <option value="Entretenimiento">Entretenimiento</option>
+      <option value="Educación">Educación</option>
+      <option value="Ropa y Accesorios">Ropa y Accesorios</option>
+      <option value="Cuidado Personal">Cuidado Personal</option>
+      <option value="Donaciones o Caridad">Donaciones o Caridad</option>
+      <option value="Impuestos">Impuestos</option>
+      <option value="Seguros">Seguros</option>
+      <option value="Finanzas Personales">Finanzas Personal</option>
     </select>
   </div>
   <div class="mx-auto mb-5 max-w-sm">
     <label for="message" class="mb-2 block text-sm font-medium"
-      >Descripción del Ingreso:</label
+      >Descripción del Egreso:</label
     >
     <textarea
       [(ngModel)]="formData.description"
@@ -116,11 +114,11 @@
     type="submit"
     class="mb-4 rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700"
   >
-    Registrar Ingreso
+    Registrar Egreso
   </button>
   @if (am_success) {
     <app-alert-message
-      [alertMessage]="'Ingreso registrado 😁'"
+      [alertMessage]="'Egreso registrado 😁'"
       [typeAlert]="'success'"
     />
   }
@@ -132,7 +130,7 @@
   }
   @if (am_warning) {
     <app-alert-message
-      [alertMessage]="'Error al registrar el ingreso 😔'"
+      [alertMessage]="'Error al registrar el egreso 😔'"
       [typeAlert]="'warning'"
     />
   }

@@ -1,4 +1,4 @@
-export interface NewEntry {
+interface BaseTransaction {
   email?: string
   date: string
   amount: number
@@ -6,3 +6,6 @@ export interface NewEntry {
   description?: string
   fullname?: string
 }
+
+export interface NewEntry extends BaseTransaction {}
+export interface NewExit extends BaseTransaction {}

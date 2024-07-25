@@ -9,9 +9,9 @@ import { FormSubmitService } from '../../../../services'
   selector: 'app-form',
   templateUrl: './form.component.html',
   standalone: true,
-  imports: [AlertMessageComponent, FormsModule]
+  imports: [FormsModule, AlertMessageComponent],
 })
-export class FormEntriesComponent {
+export class FormComponent {
   @Output()
   formSubmitted = new EventEmitter<void>()
 
@@ -39,7 +39,7 @@ export class FormEntriesComponent {
       return
     }
 
-    this.formSubmit.entrySubmit(this.formData).subscribe({
+    this.formSubmit.exitSubmit(this.formData).subscribe({
       next: () => {
         this.am_success = true
         timer(3500).subscribe(() => {

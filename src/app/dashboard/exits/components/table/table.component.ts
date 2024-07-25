@@ -15,11 +15,11 @@ export class TableComponent implements OnChanges {
 
   private readonly apiCalls = inject(ApiCallsService)
 
-  lastEntries$ = this.apiCalls.getLastEntries()
+  lastExits$ = this.apiCalls.getLastExits()
 
   ngOnChanges() {
     if (this.triggerUpdate) {
-      this.lastEntries$ = this.apiCalls.getLastEntries()
+      this.lastExits$ = this.apiCalls.getLastExits()
     }
   }
 }
