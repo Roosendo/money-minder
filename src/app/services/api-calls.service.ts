@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { inject, Injectable } from '@angular/core'
 import { map, Observable } from 'rxjs'
 
-import { CashFLow, FinancialSummary, FSClean, MainCategories, Quote, RecentTransactions, Reminder, Saving, Transaction } from '../models'
+import { CashFLow, FinancialSummary, FSClean, TransactionChart, Quote, RecentTransactions, Reminder, Saving, Summary, Transaction } from '../models'
 import { financialSummaryAdapter } from '../adapters'
 import { AuthCacheService } from '.'
 
@@ -35,9 +35,9 @@ export class ApiCallsService {
       .pipe(map((result) => result))
   }
 
-  getMainCategories(): Observable<MainCategories[]> {
+  getMainCategories(): Observable<TransactionChart[]> {
     const url = `${this.API_URL}/specials/yearly-categories?email=${this.email}&year=${this.year}`
-    return this.http.get<MainCategories[]>(url)
+    return this.http.get<TransactionChart[]>(url)
       .pipe(map((result) => result))
   }
 
@@ -68,6 +68,24 @@ export class ApiCallsService {
   getLastExits(): Observable<Transaction[]> {
     const url = `${this.API_URL}/exits/get-exits?email=${this.email}`
     return this.http.get<Transaction[]>(url)
+      .pipe(map((result) => result))
+  }
+
+  getAnalysisSummary(year: number, month: string): Observable<Summary> {
+    const url = `${this.API_URL}/specials/financial-summary-monthly?email=${this.email}&year=${year}&month=${month}`
+    return this.http.get<Summary>(url)
+      .pipe(map((result) => result))
+  }
+
+  getMonthlyEntries(year: number, month: string): Observable<TransactionChart[]> {
+    const url = `${this.API_URL}/entries/get-entries-by-category-monthly?email=${this.email}&year=${year}&month=${month}`;
+    return this.http.get<TransactionChart[]>(url)
+      .pipe(map((result) => result))
+  }
+
+  getMonthlyExits(year: number, month: string): Observable<TransactionChart[]> {
+    const url = `${this.API_URL}/exits/get-exits-by-category-monthly?email=${this.email}&year=${year}&month=${month}`;
+    return this.http.get<TransactionChart[]>(url)
       .pipe(map((result) => result))
   }
 }

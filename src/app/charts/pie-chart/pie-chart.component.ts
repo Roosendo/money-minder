@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, AfterViewInit } from '@angular/core'
 import { BaseChartDirective } from 'ng2-charts'
-import { MainCategories } from '../../models'
+import { TransactionChart } from '../../models'
 import { Chart, registerables } from 'chart.js'
 import { createGraphic } from '../utils'
 
@@ -12,7 +12,8 @@ import { createGraphic } from '../utils'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PieChartComponent implements AfterViewInit {
-  dataMC = input.required<MainCategories[]>()
+  dataTC = input.required<TransactionChart[]>()
+  text = input.required<string>()
   private ctx!: CanvasRenderingContext2D | null
   private canvas!: HTMLCanvasElement
 
@@ -25,15 +26,15 @@ export class PieChartComponent implements AfterViewInit {
   }
 
   initializeChart() {
-    if (this.dataMC()) {
+    if (this.dataTC()) {
       this.canvas = document.querySelector('#pieChart') as HTMLCanvasElement
       this.ctx = this.canvas.getContext('2d')
-      const categories = this.dataMC().map((item) => item.category)
-      const totalAmounts = this.dataMC().map((item) => item.total)
-      const labelsToShow = this.dataMC().map((item) => item.category)
+      const categories = this.dataTC().map((item) => item.category)
+      const totalAmounts = this.dataTC().map((item) => item.total)
 
-      if (this.ctx && labelsToShow)
-        createGraphic(this.ctx, categories, totalAmounts, 'Categorías principales')
+      if (this.ctx) {
+        createGraphic(this.ctx, categories, totalAmounts, this.text())
+      }
     }
   }
 }

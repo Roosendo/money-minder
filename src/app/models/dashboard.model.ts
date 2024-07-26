@@ -20,7 +20,7 @@ export interface CashFLow {
   total_egresos: number
 }
 
-export interface MainCategories {
+export interface TransactionChart {
   category: string
   total: number
 }
@@ -53,4 +53,9 @@ export interface Transaction {
   description: string
   category: string
   date: string
+}
+
+export interface Summary {
+  totalEntries: number
+  totalExits: number
 }
