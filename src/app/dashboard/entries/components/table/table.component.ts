@@ -4,12 +4,12 @@ import { AsyncPipe, CommonModule, DatePipe } from '@angular/common'
 import { ApiCallsService } from '../../../../services'
 
 @Component({
-  selector: 'app-table',
+  selector: 'app-table-entries',
   templateUrl: './table.component.html',
   standalone: true,
   imports: [AsyncPipe, CommonModule, DatePipe]
 })
-export class TableComponent implements OnChanges {
+export class EntriesTableComponent implements OnChanges {
   @Input()
   triggerUpdate = false
 

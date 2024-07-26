@@ -1,5 +1,5 @@
 @let dataMC = mainCategories$ | async;
 
 @if (dataMC) {
-  <app-pie-chart [dataTC]="dataMC" [text]="'Categorías Principales'" />
+  <app-pie-chart [dataTC]="dataMC" [text]="'Categorías Principales'" [chartId]="'main_categories'" />
 }

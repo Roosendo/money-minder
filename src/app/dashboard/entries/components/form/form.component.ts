@@ -11,7 +11,7 @@ import { FormSubmitService } from '../../../../services'
   standalone: true,
   imports: [AlertMessageComponent, FormsModule]
 })
-export class FormEntriesComponent {
+export class EntriesFormComponent {
   @Output()
   formSubmitted = new EventEmitter<void>()
 

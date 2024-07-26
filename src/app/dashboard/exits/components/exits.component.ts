@@ -1,14 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core'
 import { Title } from '@angular/platform-browser'
 
-import { FormComponent } from './form'
-import { TableComponent } from './table'
+import { ExitsFormComponent } from './form'
+import { ExitsTableComponent } from './table'
 
 @Component({
   selector: 'app-exits',
   templateUrl: './exits.component.html',
   standalone: true,
-  imports: [FormComponent, TableComponent]
+  imports: [ExitsFormComponent, ExitsTableComponent]
 })
 export class ExitsComponent implements OnInit {
   private readonly titleService = inject(Title)

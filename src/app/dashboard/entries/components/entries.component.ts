@@ -1,14 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core'
 import { Title } from '@angular/platform-browser'
 
-import { FormEntriesComponent } from './form'
-import { TableComponent } from './table/table.component'
+import { EntriesFormComponent } from './form'
+import { EntriesTableComponent } from './table'
 
 @Component({
   selector: 'app-entries',
   templateUrl: './entries.component.html',
   standalone: true,
-  imports: [FormEntriesComponent, TableComponent]
+  imports: [EntriesFormComponent, EntriesTableComponent]
 })
 export class EntriesComponent implements OnInit {
   private readonly titleService = inject(Title)

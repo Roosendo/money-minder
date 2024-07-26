@@ -4,6 +4,8 @@ import { Title } from '@angular/platform-browser'
 
 import { ApiCallsService } from '../../../services'
 import { PieChartComponent } from '../../../charts'
+import { Observable } from 'rxjs'
+import { Summary, TransactionChart } from '../../../models'
 
 @Component({
   selector: 'app-analysis',
@@ -19,12 +21,13 @@ export class AnalysisComponent implements OnInit {
   currentMonthNumber = new Date().getMonth() + 1
   currentYear = new Date().getFullYear()
   currentDate = new Date().toISOString().substring(0, 7)
-  summary$ = this.apiCalls.getAnalysisSummary(this.currentYear, this.currentMonthNumber.toString().padStart(2, '0'))
-  monthlyEntries$ = this.apiCalls.getMonthlyEntries(this.currentYear, this.currentMonthNumber.toString().padStart(2, '0'))
-  monthlyExits$ = this.apiCalls.getMonthlyExits(this.currentYear, this.currentMonthNumber.toString().padStart(2, '0'))
+  summary$!: Observable<Summary>
+  monthlyEntries$!: Observable<TransactionChart[]>
+  monthlyExits$!: Observable<TransactionChart[]>
 
   ngOnInit() {
     this.titleService.setTitle('Analysis | Money Minder')
+    this.getData()
   }
 
   onMonthChange(event: Event) {
@@ -35,7 +38,10 @@ export class AnalysisComponent implements OnInit {
     this.currentMonthNumber = month
     this.currentMonth = new Date(year, month - 1).toLocaleString('default', { month: 'long' })
 
-    // getting again
+    this.getData()
+  }
+
+  private getData() {
     this.summary$ = this.apiCalls.getAnalysisSummary(this.currentYear, this.currentMonthNumber.toString().padStart(2, '0'))
     this.monthlyEntries$ = this.apiCalls.getMonthlyEntries(this.currentYear, this.currentMonthNumber.toString().padStart(2, '0'))
     this.monthlyExits$ = this.apiCalls.getMonthlyExits(this.currentYear, this.currentMonthNumber.toString().padStart(2, '0'))

@@ -25,12 +25,12 @@
   >
     <div class="flex-1">
       @if (monthlyEntries) {
-        <app-pie-chart [dataTC]="monthlyEntries" [text]="'Ingresos'" />
+        <app-pie-chart [dataTC]="monthlyEntries" [text]="'Ingresos'" [chartId]="'Ingresos'" />
       }
     </div>
     <div class="flex-1">
       @if (monthlyExits) {
-        <app-pie-chart [dataTC]="monthlyExits" [text]="'Egresos'" />
+        <app-pie-chart [dataTC]="monthlyExits" [text]="'Egresos'" [chartId]="'Egresos'" />
       }
     </div>
   </div>
