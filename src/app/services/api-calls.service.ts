@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { inject, Injectable } from '@angular/core'
 import { map, Observable } from 'rxjs'
 
-import { CashFLow, FinancialSummary, FSClean, TransactionChart, Quote, RecentTransactions, Reminder, Saving, Summary, Transaction } from '../models'
+import { CashFLow, FinancialSummary, FSClean, TransactionChart, Quote, RecentTransactions, Reminder, Saving, Summary, EntryTransaction, ExitTransaction } from '../models'
 import { financialSummaryAdapter } from '../adapters'
 import { AuthCacheService } from '.'
 
@@ -59,15 +59,15 @@ export class ApiCallsService {
       .pipe(map((result) => result))
   }
 
-  getLastEntries(): Observable<Transaction[]> {
+  getLastEntries(): Observable<EntryTransaction[]> {
     const url = `${this.API_URL}/entries/get-entries?email=${this.email}`
-    return this.http.get<Transaction[]>(url)
+    return this.http.get<EntryTransaction[]>(url)
       .pipe(map((result) => result))
   }
 
-  getLastExits(): Observable<Transaction[]> {
+  getLastExits(): Observable<ExitTransaction[]> {
     const url = `${this.API_URL}/exits/get-exits?email=${this.email}`
-    return this.http.get<Transaction[]>(url)
+    return this.http.get<ExitTransaction[]>(url)
       .pipe(map((result) => result))
   }
 

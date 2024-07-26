@@ -47,12 +47,19 @@ export interface Quote {
 }
 
 export interface Transaction {
-  entry_id: number
   user_email: string
   amount: number
   description: string
   category: string
   date: string
+}
+
+export interface EntryTransaction extends Transaction {
+  entry_id: number
+}
+
+export interface ExitTransaction extends Transaction {
+  exit_id: number
 }
 
 export interface Summary {
