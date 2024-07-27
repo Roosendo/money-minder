@@ -1,12 +1,12 @@
 @let goals = goals$ | async;
 
-<div class="rounded-lg bg-gray-200 p-4 shadow-lg dark:bg-gray-900">
-  <h2 class="mb-4 text-lg font-semibold">Progreso hacia Objetivos</h2>
-  <div id="goals" class="space-y-4">
-    @if (goals) {
+@if (goals) {
+  <div class="rounded-lg bg-gray-200 p-4 shadow-lg dark:bg-gray-900">
+    <h2 class="mb-4 text-lg font-semibold">Progreso hacia Objetivos</h2>
+    <div id="goals" class="space-y-4">
       @for (goal of goals; track goal.id) {
         @let percentage = (goal.current_amount / goal.target_amount) * 100;
-        @let style = 'width: ' + percentage + '%';
+        @let style = "width: " + percentage + "%";
         <div
           class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md relative"
         >
@@ -26,6 +26,6 @@
           </div>
         </div>
       }
-    }
+    </div>
   </div>
-</div>
+}

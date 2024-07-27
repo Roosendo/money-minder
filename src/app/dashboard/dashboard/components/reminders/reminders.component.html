@@ -1,9 +1,9 @@
 @let reminders = reminders$ | async;
 
-<div class="rounded-lg bg-gray-200 p-4 shadow-lg dark:bg-gray-900">
-  <h2 class="mb-4 text-lg font-semibold">Recordatorios</h2>
-  <div id="reminders" class="space-y-4">
-    @if (reminders) {
+@if (reminders) {
+  <div class="rounded-lg bg-gray-200 p-4 shadow-lg dark:bg-gray-900">
+    <h2 class="mb-4 text-lg font-semibold">Recordatorios</h2>
+    <div id="reminders" class="space-y-4">
       @for (reminder of reminders; track reminder.id) {
         <div
           class="dark:bg-gray-700 bg-gray-100 p-6 mb-6 rounded-lg shadow-md flex justify-between items-center relative"
@@ -16,11 +16,11 @@
               {{ reminder.description }}
             </p>
             <p class="dark:text-gray-400 text-gray-600 uppercase">
-              {{ reminder.reminder_date | date:"short" }}
+              {{ reminder.reminder_date | date: "short" }}
             </p>
           </div>
         </div>
       }
-    }
+    </div>
   </div>
-</div>
+}

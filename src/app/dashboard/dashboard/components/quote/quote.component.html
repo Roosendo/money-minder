@@ -1,12 +1,14 @@
 @let quote = quote$ | async;
 
-<div class='flex items-center justify-center p-4'>
-  <div class='max-w-lg rounded-lg bg-gray-200 p-6 shadow-lg dark:bg-gray-900'>
-    <p class='mb-4 text-2xl text-gray-900 dark:text-gray-200'>
-      &ldquo;{{ quote?.phrase }}&rdquo;
-    </p>
-    <p class='text-right text-lg font-semibold text-gray-700 dark:text-gray-100'>
-      &mdash; {{ quote?.character }} en {{ quote?.movie }}
-    </p>
+@if (quote) {
+  <div class='flex items-center justify-center p-4'>
+    <div class='max-w-lg rounded-lg bg-gray-200 p-6 shadow-lg dark:bg-gray-900'>
+      <p class='mb-4 text-2xl text-gray-900 dark:text-gray-200'>
+        &ldquo;{{ quote?.phrase }}&rdquo;
+      </p>
+      <p class='text-right text-lg font-semibold text-gray-700 dark:text-gray-100'>
+        &mdash; {{ quote?.character }} en {{ quote?.movie }}
+      </p>
+    </div>
   </div>
-</div>
+}
