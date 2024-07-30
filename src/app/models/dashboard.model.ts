@@ -33,6 +33,19 @@ export interface Saving {
   end_date: string
 }
 
+export interface EditSaving {
+  id: number
+  newSavingName: string
+  newTarget: number
+  newCurrentAmount: number
+  newEndDate: string
+}
+
+export interface DeleteSaving {
+  email: string
+  id: number
+}
+
 export interface Reminder {
   id: number
   title: string

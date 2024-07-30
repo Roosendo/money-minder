@@ -1,0 +1,23 @@
+<form
+  (submit)="onDelete()"
+  class="fixed inset-0 animate-zoom-in items-center justify-center bg-gray-900 bg-opacity-50 flex"
+>
+  <div class="bg-white text-black p-6 rounded-lg shadow-md max-w-lg w-full">
+    <h2 class="text-xl font-bold mb-4 text-center">
+      ¿Estás seguro de eliminar este objetivo de ahorro: {{ saving().name }}?
+    </h2>
+    <button
+      type="submit"
+      class="w-full bg-rose-500 text-white font-semibold p-2 rounded-md hover:bg-rose-600"
+    >
+      Eliminar
+    </button>
+    <button
+      (click)="onCloseModal()"
+      type="button"
+      class="w-full mt-2 border border-gray-500 text-gray-500 font-semibold p-2 rounded-md hover:bg-gray-600 hover:text-white"
+    >
+      Cancelar
+    </button>
+  </div>
+</form>

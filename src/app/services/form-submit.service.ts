@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { catchError, Observable, throwError } from 'rxjs'
 
 import { AuthCacheService } from '.'
-import { NewEntry, NewExit } from '../models'
+import { EditSaving, NewEntry, NewExit, NewSaving } from '../models'
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +47,32 @@ export class FormSubmitService {
     const url = `${this.API_URL}/exits/new-exit`
     const { email, fullName } = this
     return this.http.post(url, JSON.stringify({ email, fullName, ...formNewExit }), this.requestOptions)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
+  savingSubmit(formNewSaving: NewSaving) {
+    const url = `${this.API_URL}/savings/new-saving`
+    const { email, fullName } = this
+    return this.http.post(url, JSON.stringify({ email, fullName, ...formNewSaving }), this.requestOptions)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
+  editSaving(formEditSaving: EditSaving) {
+    const url = `${this.API_URL}/savings/update-saving`
+    const { email } = this
+    return this.http.patch(url, JSON.stringify({ ...formEditSaving, email }), this.requestOptions)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
+  deleteSaving(id: number) {
+    const url = `${this.API_URL}/savings/delete-saving?id=${id}&email=${this.email}`
+    return this.http.delete(url, this.requestOptions)
       .pipe(
         catchError(this.handleError)
       )

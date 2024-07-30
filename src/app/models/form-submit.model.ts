@@ -9,3 +9,13 @@ interface BaseTransaction {
 
 export interface NewEntry extends BaseTransaction {}
 export interface NewExit extends BaseTransaction {}
+
+export interface NewSaving {
+  email?: string
+  endDate: string
+  name: string
+  fullName?: string
+  startDate: string
+  targetAmount: number
+  currentAmount: number
+}
