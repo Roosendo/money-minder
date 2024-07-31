@@ -1,0 +1,48 @@
+<section
+  class='mx-auto my-6 flex h-[80dvh] w-[80dvw] flex-col items-center justify-center rounded-3xl px-4'
+>
+  <img
+    ngSrc='assets/images/5.webp'
+    priority="true"
+    width="770"
+    height="400"
+    alt='Main banner from Money Minder'
+    class='md:object-fit absolute h-[80dvh] w-[80dvw] rounded-3xl object-cover opacity-30 dark:opacity-20'
+  />
+  <div class='flex flex-col gap-3'>
+    <h1 class='text-center text-4xl font-bold mix-blend-difference md:text-8xl'>
+      Bienvenido a Money Minder
+    </h1>
+    <p
+      class='font-medium m-auto w-2/3 text-center text-base mix-blend-difference md:w-1/2 md:text-xl'
+    >
+      Explora las opciones disponibles para personalizar tu experiencia y aprovechar al máximo
+      nuestros servicios.
+    </p>
+  </div>
+</section>
+
+<div class='container mx-auto p-4 text-black dark:text-white'>
+  <div class='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
+    <!-- Resumen Financiero Rápido -->
+    <app-financial-summary class="col-span-1 md:col-span-3" />
+
+    <!-- Transacciones Recientes -->
+    <app-recent-transactions class="col-span-1 md:col-span-2" />
+
+    <!-- Gráfico de Flujo de Efectivo -->
+    <app-cash-flow class="col-span-1 md:col-span-2 lg:col-span-3" />
+
+    <!-- Categorías Principales -->
+    <app-main-categories class="col-span-1 md:col-span-2 lg:col-span-3" />
+
+    <!-- Progreso hacia Objetivos -->
+    <app-goal />
+
+    <!-- Alertas y Notificaciones -->
+    <app-reminders />
+
+    <!-- Quote of the day -->
+    <app-quote />
+  </div>
+</div>

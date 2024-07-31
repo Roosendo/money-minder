@@ -1,0 +1,107 @@
+@let reminders = reminders$ | async;
+
+<form
+  (submit)="onNewReminderSubmit()"
+  id="reminder-form"
+  class="mx-auto mt-6 max-w-lg space-y-4 rounded-lg border border-gray-50 bg-gray-200 p-6 text-gray-700 shadow-md dark:bg-gray-800 dark:text-gray-200"
+>
+  <h1 class="mb-4 text-center text-xl font-bold">Agregar nuevo Recordatorio</h1>
+  <div>
+    <label for="reminder-title" class="block font-medium"
+      >Título del recordatorio</label
+    >
+    <input
+      [(ngModel)]="formReminder.title"
+      name="title"
+      type="text"
+      id="reminder-title"
+      placeholder="Título del recordatorio"
+      required
+      class="mt-1 w-full rounded-md border border-gray-50 bg-gray-100 p-2 text-gray-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-600"
+    />
+  </div>
+  <div>
+    <label for="reminder-description" class="block font-medium"
+      >Descripción</label
+    >
+    <textarea
+      [(ngModel)]="formReminder.description"
+      name="description"
+      id="reminder-description"
+      placeholder="Descripción"
+      rows="4"
+      class="mt-1 w-full resize-none rounded-md border border-gray-50 bg-gray-100 p-2 text-gray-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-600"
+    ></textarea>
+  </div>
+  <div>
+    <label for="reminder-date" class="block font-medium">Fecha y hora</label>
+    <input
+      [(ngModel)]="formReminder.reminderDate"
+      name="reminderDate"
+      type="datetime-local"
+      id="reminder-date"
+      required
+      class="mt-1 w-full rounded-md border border-gray-50 bg-gray-100 p-2 text-gray-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-600"
+    />
+  </div>
+  <button
+    type="submit"
+    class="mb-4 rounded-md w-full transition-colors bg-teal-500 p-2 font-semibold text-white hover:bg-teal-600"
+  >
+    Agregar Recordatorio
+  </button>
+  @if (amSuccess) {
+    <app-alert-message
+      [typeAlert]="'success'"
+      [alertMessage]="'Recordatorio registrado 😁'"
+    />
+  }
+  @if (amWarning) {
+    <app-alert-message
+      [typeAlert]="'warning'"
+      [alertMessage]="'Error al registrar el recordatorio 😔'"
+    />
+  }
+</form>
+<!-- Contenedor principal de la lista de recordatorios -->
+@if (reminders) {
+  <div id="reminders-list" class="mx-auto mt-6 max-w-lg space-y-4">
+    @for (reminder of reminders; track reminder.id) {
+      <div
+        class="dark:bg-gray-800 bg-gray-100 p-6 mb-6 rounded-lg shadow-md flex justify-between items-center relative"
+      >
+        <div class="flex flex-col">
+          <h3 class="text-lg font-bold dark:text-gray-100 text-gray-600">
+            {{ reminder.title }}
+          </h3>
+          <p class="dark:text-gray-400 text-gray-600">
+            {{ reminder.description }}
+          </p>
+          <p class="dark:text-gray-400 text-gray-600 uppercase">
+            {{ reminder.reminder_date | date: "short" }}
+          </p>
+        </div>
+        <button
+          (click)="openReminderEdit(reminder)"
+          id="deleteButton"
+          class="absolute top-3 right-20 p-2 rounded transition-colors font-medium tracking-wide text-rose-500 hover:bg-rose-300 hover:text-gray-900 dark:hover:bg-gray-200 dark:text-rose-400 dark:hover:text-gray-900"
+        >
+          Eliminar
+        </button>
+        <button
+          (click)="openReminderEdit(reminder)"
+          id="editButton"
+          class="absolute top-3 right-4 p-2 rounded transition-colors font-medium tracking-wide text-teal-500 hover:bg-teal-300 hover:text-gray-900 dark:hover:bg-gray-200 dark:text-teal-400 dark:hover:text-gray-900"
+        >
+          Editar
+        </button>
+      </div>
+    }
+    @if (isReminderEditOpen) {
+      <app-reminder-edit [reminder]="selectedReminder!" (closeModal)="onCloseModal()" (save)="onSave($event)" />
+    }
+    @if (isReminderDeleteOpen) {
+      <app-reminder-delete [reminder]="selectedReminder!" (close)="closeReminderDelete()" (delete)="onDelete($event)" />
+    }
+  </div>
+}

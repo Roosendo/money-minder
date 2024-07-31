@@ -1,0 +1,48 @@
+@let summary = summary$ | async;
+@let balance = ((summary?.totalEntries ?? 0) - (summary?.totalExits ?? 0)).toFixed(2);
+@let monthlyEntries = monthlyEntries$ | async;
+@let monthlyExits = monthlyExits$ | async;
+
+<div
+  class="m-auto mt-6 w-full max-w-3xl rounded-lg bg-gray-100 dark:bg-gray-600 p-6 text-gray-900 dark:text-gray-50 shadow-md"
+>
+  <h2 id="month-text" class="mb-4 text-center text-xl font-semibold">
+    Mostrando datos de {{ currentMonth }} {{ currentYear }}
+  </h2>
+
+  <div class="mb-4 flex justify-center">
+    <input
+      id="month-input"
+      type="month"
+      class="w-auto rounded-lg border border-gray-300 p-2 text-center text-white"
+      [value]="currentDate"
+      (change)="onMonthChange($event)"
+    />
+  </div>
+
+  <div
+    class="mx-auto mt-4 flex h-auto w-2/3 flex-col space-y-4 sm:w-full sm:flex-row md:space-x-4 md:space-y-0"
+  >
+    <div class="flex-1">
+      @if (monthlyEntries) {
+        <app-pie-chart [dataTC]="monthlyEntries" [text]="'Ingresos'" [chartId]="'Ingresos'" />
+      }
+    </div>
+    <div class="flex-1">
+      @if (monthlyExits) {
+        <app-pie-chart [dataTC]="monthlyExits" [text]="'Egresos'" [chartId]="'Egresos'" />
+      }
+    </div>
+  </div>
+
+  <div class="m-auto mt-6 flex w-2/3 flex-col text-center md:w-1/2">
+    <h3>Total de Ingresos: <span id="totalIngresos">{{ summary?.totalEntries ?? 0 }}</span></h3>
+    <h3 class="border-b border-gray-400">
+      - Total de Gastos: <span id="totalEgresos">{{ summary?.totalExits ?? 0}}</span>
+    </h3>
+    <h3>Saldo / Diferencia: <span id="difference" class="font-semibold" [ngClass]="{
+      'text-teal-600 dark:text-teal-300': +balance >= 0,
+      'text-rose-600 dark:text-rose-300': +balance < 0
+    }">{{ balance }}</span></h3>
+  </div>
+</div>

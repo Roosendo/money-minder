@@ -1,0 +1,87 @@
+<form
+  (submit)="onSave()"
+  class="fixed inset-0 animate-zoom-in items-center justify-center bg-gray-900 bg-opacity-50 flex"
+>
+  <div class="bg-white text-black p-6 rounded-lg shadow-md max-w-lg w-full">
+    <h2 class="text-xl font-bold mb-4 text-center">
+      Editar Objetivo de Ahorro
+    </h2>
+    <div class="mb-4">
+      <label
+        for="edit-goal-name"
+        id="label-edit-goal-name"
+        class="block font-semibold mb-2"
+        >Nombre actual</label
+      >
+      <input
+        [(ngModel)]="formEdit.newSavingName"
+        name="name"
+        type="text"
+        id="edit-goal-name"
+        class="block p-2.5 w-full z-20 ps-10 text-sm text-gray-900 bg-gray-50 rounded-lg border-e-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+        placeholder="PlayStation 5"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        for="edit-target-amount"
+        class="block text-gray-700 font-semibold mb-2"
+        >Monto objetivo actual</label
+      >
+      <input
+        [(ngModel)]="formEdit.newTarget"
+        name="target_amount"
+        type="number"
+        id="edit-target-amount"
+        class="block p-2.5 w-full z-20 ps-10 text-sm text-gray-900 bg-gray-50 rounded-lg border-e-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+        step="0.01"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        for="edit-current-amount"
+        class="block text-gray-700 font-semibold mb-2"
+        >Monto actual</label
+      >
+      <input
+        [(ngModel)]="formEdit.newCurrentAmount"
+        name="current_amount"
+        type="number"
+        id="edit-current-amount"
+        class="block p-2.5 w-full z-20 ps-10 text-sm text-gray-900 bg-gray-50 rounded-lg border-e-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+        step="0.01"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        for="edit-end-date"
+        class="block text-gray-700 font-semibold mb-2"
+        >Fecha de fin</label
+      >
+      <input
+        [(ngModel)]="formEdit.newEndDate"
+        name="end_date"
+        type="date"
+        id="edit-end-date"
+        class="w-full p-2 border text-white border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+        required
+      />
+    </div>
+    <button
+      type="submit"
+      id="saveChanges"
+      class="w-full bg-teal-500 text-white font-semibold p-2 rounded-md hover:bg-teal-600"
+    >
+      Guardar Cambios
+    </button>
+    <button
+      (click)="onCloseModal()"
+      type="button"
+      id="cancel"
+      class="w-full mt-2 border border-gray-500 text-gray-500 font-semibold p-2 rounded-md hover:bg-gray-600 hover:text-white"
+    >
+      Cancelar
+    </button>
+  </div>
+</form>

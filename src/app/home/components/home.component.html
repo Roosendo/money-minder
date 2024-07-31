@@ -1,0 +1,253 @@
+<main
+  class='m-auto my-10 flex h-auto w-[90dvw] flex-col gap-3 rounded bg-gray-200 p-5 dark:bg-black/70 md:h-[80dvh] md:w-[80dvw] md:flex-row'
+>
+  <section class='m-auto flex-1 text-black dark:text-white'>
+    <h1 class='text-5xl'>¡Bienvenido a Money Minder!</h1>
+    <p class='text-4xl'>Dónde puedes monitorear tus finanzas, de una forma rápida y segura.</p>
+  </section>
+  <section class='m-auto flex-1'>
+    <div class='flex flex-col gap-6 text-xl'>
+      <a
+        routerLink='/login'
+        class='rounded bg-cyan-500 p-4 text-center hover:animate-tilt hover:bg-cyan-500/90'
+      >¡Inicia sesión!</a
+      >
+      <a href='#services' class='rounded bg-transparent transition-colors outline outline-cyan-500 text-center text-cyan-500 p-4 hover:animate-tilt hover:bg-cyan-500 hover:text-inherit'
+      >¿Más información?</a
+      >
+    </div>
+  </section>
+</main>
+
+<section class='flex w-full flex-col p-6 text-black shadow-xl dark:text-white md:flex-row'>
+  <div class='m-auto grid w-2/3 grid-cols-2 gap-6 p-4 md:w-1/3'>
+     <img ngSrc="assets/images/1.webp" width="512" height="512" alt="Finanzas">
+     <img ngSrc="assets/images/2.webp" width="512" height="512" alt="Billetera">
+     <img ngSrc="assets/images/3.webp" width="512" height="512" alt="Moneda">
+     <img ngSrc="assets/images/4.webp" width="512" height="512" alt="Reloj">
+  </div>
+  <div class='m-auto flex flex-1 flex-col gap-6 p-6'>
+    <article>
+      <h2 class='text-4xl text-cyan-500'>¡Simplifica Tu Vida Financiera!</h2>
+      <p class='text-lg'>
+        Sostenemos la convicción de que gestionar tus finanzas no solo es viable, ¡sino también
+        emocionante! Queremos ser tu compañero de confianza mientras avanzas hacia una salud
+        financiera mejor y logras ahorros significativos.
+      </p>
+    </article>
+    <article>
+      <h2 class='text-4xl text-cyan-500'>
+        Únete a Nosotros en el Camino hacia la Libertad Financiera
+      </h2>
+      <p class='text-lg'>
+        ¡Empecemos juntos este emocionante viaje hacia el control financiero y el ahorro! Regístrate
+        gratis y descubre el poder de Money Minder.
+      </p>
+    </article>
+    <a
+      href='/#services'
+      class='w-auto rounded bg-cyan-500 p-2 text-center text-lg hover:animate-tilt hover:bg-cyan-500/90 md:w-1/3'
+    >Conoce más...</a
+    >
+  </div>
+</section>
+
+<section
+  id='services'
+  class='flex w-full flex-col gap-6 p-6 text-black shadow-xl dark:text-white md:flex-row'
+>
+  <div class='m-auto flex flex-col gap-6 p-6 md:w-1/3'>
+    <h2 class='text-center text-2xl'>Empieza a gozar de nuestros servicios.</h2>
+    <svg
+          class='text-black dark:text-white m-auto size-44 md:size-80'
+          width='24'
+          height='24'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='2'
+          stroke-linecap='round'
+          stroke-linejoin='round'
+        >
+          <path stroke='none' d='M0 0h24v24H0z' fill='none'></path><path d='M15 11v.01'></path><path
+            d='M16 3l0 3.803a6.019 6.019 0 0 1 2.658 3.197h1.341a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-1.342a6.008 6.008 0 0 1 -1.658 2.473v2.027a1.5 1.5 0 0 1 -3 0v-.583a6.04 6.04 0 0 1 -1 .083h-4a6.04 6.04 0 0 1 -1 -.083v.583a1.5 1.5 0 0 1 -3 0v-2l0 -.027a6 6 0 0 1 4 -10.473h2.5l4.5 -3z'
+          ></path>
+        </svg>
+    <p>
+      Nos comprometemos a ofrecerte una experiencia financiera completa y centrada en tus
+      necesidades. ¡Comienza hoy mismo y da el primer paso hacia una mejor salud financiera!
+    </p>
+    <a
+      routerLink='/login'
+      id='button-register'
+      class='rounded-lg bg-cyan-500 px-4 py-2 text-center text-lg font-medium text-white hover:animate-tilt hover:bg-cyan-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-cyan-500 dark:hover:bg-cyan-600 dark:focus:ring-blue-800'
+    >
+      ¡Inicia Sesión Ahora!
+    </a>
+  </div>
+  <article
+    class='flex flex-1 flex-col gap-6 md:w-2/3 [&_h3]:text-2xl [&_h3]:font-bold [&_h3]:text-cyan-600 [&_p]:text-wrap [&_p]:text-lg'>
+    <h1 class='dont-bold text-4xl'>Nuestros Servicios</h1>
+    <p>
+      Estamos aquí para hacer que el manejo de tus finanzas sea más sencillo, efectivo y, lo más
+      importante, ¡para ayudarte a alcanzar tus metas financieras! Descubre lo que nuestra
+      aplicación tiene para ofrecer:
+    </p>
+    <div>
+      <h3>1. Registro de Ingresos y Gastos:</h3>
+      <p>
+        Registra fácilmente tus ingresos y gastos mensuales de manera detallada. Categorizalos para
+        obtener una visión clara de tus hábitos de gasto.
+      </p>
+    </div>
+    <div>
+      <h3>2. Análisis Financiero Personalizado:</h3>
+      <p>Comparativas mensuales para seguir tu progreso y tomar decisiones informadas.</p>
+    </div>
+    <div>
+      <h3>3. Consejos Financieros Personalizados:</h3>
+      <p>Recibe consejos automáticos basados en tus patrones de gasto y metas de ahorro.</p>
+    </div>
+    <div>
+      <h3>4. Seguridad y Privacidad Garantizadas:</h3>
+      <p>
+        Implementamos capas de seguridad robustas para proteger tu información financiera. Tu
+        privacidad es nuestra prioridad, con prácticas estrictas de gestión de datos.
+      </p>
+    </div>
+    <div>
+      <h3>5. Historial y Reportes Detallados:</h3>
+      <p>Accede a un historial detallado de todos tus movimientos anteriores.</p>
+    </div>
+    <div>
+      <h3>6. Soporte Amigable y Accesible:</h3>
+      <p>Nuestro equipo de soporte está aquí para ayudarte en cada paso del camino.</p>
+    </div>
+  </article>
+</section>
+
+<section
+  id='about-us'
+  class='flex w-full flex-col gap-6 p-6 text-lg text-black shadow-xl dark:text-white md:flex-row'
+>
+  <article class='flex flex-1 flex-col gap-6 md:w-2/3'>
+    <h1 class='text-4xl text-cyan-600'>¡Bienvenido a Money Minder!</h1>
+    <h3 class='text-2xl'>¡Simplifica tu vida financiera!</h3>
+    <p>
+      Queremos cambiar la forma en que el mundo maneja su dinero. ¿Cuántas veces te has preguntado a
+      dónde se fue tu salario?, ¿O si estás haciendo las mejores elecciones financieras? Nosotros
+      también lo hemos hecho, y es por eso que creamos Money Minder.
+    </p>
+    <img ngSrc="assets/images/5.webp" width="512" height="512" alt="Imagen principal">
+    <h3 class='text-2xl font-bold text-cyan-600'>Nuestra historia</h3>
+    <p>
+      Creemos que la gestión financiera no debería ser una tarea complicada, sino una herramienta
+      que empodere a las personas para tomar el control de sus finanzas y alcanzar sus metas.
+      Nuestra historia comenzó con un equipo apasionado por simplificar la forma en que las personas
+      manejan su dinero.
+    </p>
+    <h3 class='text-xl font-bold text-cyan-600'>Valores que nos guian</h3>
+    <p>
+      En Money Minder, nos regimos por valores que definen nuestra cultura y cómo interactuamos con
+      nuestros usuarios:
+    </p>
+    <div>
+      <p>
+        <span class='text-cyan-600'>- Transparencia:</span> Creemos en la apertura y honestidad en todas
+        nuestras interacciones.
+      </p>
+      <p>
+        <span class='text-cyan-600'>- Compromiso:</span> Estamos comprometidos a brindar la mejor experiencia
+        posible a nuestros usuarios.
+      </p>
+      <p>
+        <span class='text-cyan-600'>- Innovación:</span> Buscamos constantemente formas de mejorar y
+        simplificar la gestión financiera.
+      </p>
+      <p>
+        <span class='text-cyan-600'>- Sostenibilidad:</span> No solo te ayudaremos a ahorrar y gestionar
+        gastos, sino que también se podran fomentar decisiones financieras que apoyan prácticas sostenibles.
+      </p>
+    </div>
+    <p>
+      Somos más que una aplicación de seguimiento de gastos. Somos tu socio financiero personal, tu
+      guía para un futuro financiero más seguro.
+    </p>
+  </article>
+  <article class='flex flex-col gap-4 text-lg md:w-1/3'>
+    <div>
+      <h2 class='font-bold text-cyan-600'>Misión</h2>
+      <p>
+        Facilitar la gestión financiera personal, fomentar hábitos financieros saludables y ayudar a
+        nuestros usuarios a alcanzar sus objetivos económicos.
+      </p>
+    </div>
+    <div>
+      <h2 class='font-bold text-cyan-600'>Visión</h2>
+      <p>
+        Ser la plataforma líder que transforma la relación de las personas con su dinero, brindando
+        libertad y confianza financiera.
+      </p>
+    </div>
+    <a
+      routerLink='/login'
+      class='rounded bg-cyan-500 p-4 text-center hover:animate-tilt hover:bg-cyan-500/90'
+    >¡Inicia Sesión Ahora!</a
+    >
+  </article>
+</section>
+
+<section
+  id='terms-conds'
+  class='m-auto my-10 flex h-auto w-[90dvw] flex-col gap-3 rounded bg-gray-200 p-5 text-lg text-black dark:bg-black/70 dark:text-white md:w-[80dvw] md:flex-row'
+>
+  <article class='flex flex-col gap-4 [&_span]:font-bold [&_span]:text-cyan-600'>
+    <h3 class='text-center text-4xl font-bold text-cyan-600'>
+      Términos y Condiciones en Money Minder
+    </h3>
+    <p class='text-xl'>
+      Bienvenido a Money Minder, tu compañero en la gestión financiera personal. Al acceder y
+      utilizar nuestros servicios, aceptas los siguientes términos y condiciones que rigen la
+      relación entre tú y Money Minder. Te instamos a leer detenidamente estos términos, ya que
+      establecen las normas y responsabilidades fundamentales que rigen tu experiencia con nuestra
+      plataforma.
+    </p>
+    <p>
+      <span>1. Uso Responsable:</span> Te comprometes a utilizar Money Minder de manera responsable y
+      conforme a todas las leyes y regulaciones aplicables. Nos reservamos el derecho de suspender o
+      cerrar tu cuenta en caso de violación de estos términos o de comportamientos que consideremos inapropiados.
+    </p>
+    <p>
+      <span>2. Privacidad y Seguridad:</span> Valoramos tu privacidad y seguridad. Nuestra Política de
+      Privacidad detalla cómo recopilamos, utilizamos y protegemos tu información personal. Al utilizar
+      Money Minder, aceptas nuestras prácticas de privacidad y seguridad.
+    </p>
+    <p>
+      <span>3. Responsabilidades del Usuario:</span> Eres responsable de la veracidad y exactitud de
+      la información proporcionada. Mantén la confidencialidad de tus credenciales de inicio de sesión
+      y notifícanos de inmediato sobre cualquier actividad no autorizada en tu cuenta.
+    </p>
+    <p>
+      <span>4. Actualizaciones y Cambios:</span> Money Minder se reserva el derecho de realizar cambios
+      en la plataforma, incluyendo características, términos y tarifas. Te notificaremos sobre cambios
+      significativos y tu uso continuado del servicio constituirá la aceptación de dichos cambios.
+    </p>
+    <p>
+      <span>5. Propiedad Intelectual:</span> Todo el contenido y la propiedad intelectual en Money Minder
+      son propiedad exclusiva de la empresa. No tienes permiso para utilizar, copiar o reproducir dicho
+      contenido sin nuestro consentimiento.
+    </p>
+    <p>
+      <span>6. Limitación de Responsabilidad:</span> Money Minder proporciona la plataforma "tal cual".
+      No garantizamos la exactitud, fiabilidad o disponibilidad continua de los servicios. No nos hacemos
+      responsables de pérdidas o daños directos, indirectos, incidentales, especiales o consecuentes.
+    </p>
+    <p>
+      <span>7. Legislación Aplicable:</span> Estos términos se rigen por las leyes del lugar de incorporación
+      de Money Minder. Cualquier disputa se resolverá a través de medios legales apropiados, como la
+      mediación o el arbitraje. Te alentamos a que revises estos términos regularmente, ya que pueden
+      cambiar con el tiempo. Si no estás de acuerdo con alguno de los términos, te instamos a dejar de
+      utilizar nuestros servicios.
+    </p>
+  </article>
+</section>
