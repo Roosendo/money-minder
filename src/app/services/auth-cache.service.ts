@@ -41,7 +41,7 @@ export class AuthCacheService {
       userData,
       this.expireDate,
       '/',
-      'vercel.app',
+      'money-minder-xi.vercel.app',
       true,
       'Strict'
     )
