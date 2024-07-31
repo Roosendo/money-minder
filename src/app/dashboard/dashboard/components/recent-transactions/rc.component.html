@@ -1,11 +1,11 @@
 @let rcs = transactions$ | async;
 
 @if (rcs) {
-  <div class='col-span-1 rounded-lg bg-gray-200 p-4 shadow-lg dark:bg-gray-900 md:col-span-2'>
+  <div class='col-span-1 rounded-lg bg-gray-100 p-4 shadow-lg dark:bg-gray-800 md:col-span-2'>
     <h2 class='text-lg font-bold'>Transacciones Recientes</h2>
     <div class='overflow-x-auto'>
-      <table class='min-w-full'>
-        <thead>
+      <table class='min-w-full rounded'>
+        <thead class="bg-gray-300 dark:bg-gray-700">
           <tr>
             <th class='py-2'>Fecha</th>
             <th class='py-2'>Categoría</th>
@@ -15,7 +15,7 @@
         <tbody>
           @for (rc of rcs; track rc.date) {
             <tr
-              class='bg-gray-200 hover:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 dark:hover:bg-gray-700'
+              class='bg-gray-200 hover:bg-gray-300 dark:border-gray-800 dark:bg-gray-600 dark:hover:bg-gray-500'
             >
               <th
                 scope='row'

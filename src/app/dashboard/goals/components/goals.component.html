@@ -2,7 +2,7 @@
 
 <form
   (submit)="onNewSavingSubmit()"
-  class="mx-auto mt-6 max-w-md rounded-lg bg-gray-200 p-6 text-gray-700 shadow-md dark:bg-gray-900 dark:text-gray-200"
+  class="mx-auto mt-6 max-w-md rounded-lg bg-gray-100 p-6 text-gray-700 border border-gray-800 dark:border-gray-100 dark:bg-gray-800 dark:text-gray-200"
 >
   <h2 class="mb-4 text-center text-xl font-bold">
     Agregar Nuevo Objetivo de Ahorro
@@ -59,7 +59,7 @@
       name="startDate"
       type="date"
       id="start-date"
-      class="w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
+      class="mt-1 w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-gray-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-600"
       placeholder="Fecha de inicio"
     />
   </div>
@@ -70,7 +70,7 @@
       name="endDate"
       type="date"
       id="end-date"
-      class="w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
+      class="mt-1 w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-gray-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-600"
       placeholder="Fecha de fin"
     />
   </div>
@@ -99,16 +99,16 @@
       @let percentage = (saving.current_amount / saving.target_amount) * 100;
       @let style = "width: " + percentage + "%";
       <div
-        class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md relative"
+        class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-md relative"
       >
         <h3 class="text-lg font-bold mt-2 text-gray-700 dark:text-gray-100">
-          Nombre del objetivo: {{ saving.name }}
+          {{ saving.name }}
         </h3>
         <p class="text-gray-600 dark:text-gray-400">
-          Monto objetivo: {{ saving.target_amount }}
+          Monto objetivo: ${{ saving.target_amount }}
         </p>
         <p class="text-gray-600 dark:text-gray-400">
-          Monto actual: {{ saving.current_amount }}
+          Monto actual: ${{ saving.current_amount }}
         </p>
         <div
           class="w-full bg-gray-200 dark:bg-gray-50 rounded-full h-2 mt-2 mb-3"
@@ -117,13 +117,13 @@
         </div>
         <button
           (click)="openEditModal(saving)"
-          class="absolute top-3 right-4 font-medium tracking-wide text-teal-500 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300"
+          class="absolute top-3 right-4 p-2 rounded transition-colors font-medium tracking-wide text-teal-500 hover:bg-teal-300 hover:text-gray-900 dark:hover:bg-gray-200 dark:text-teal-400 dark:hover:text-gray-900"
         >
           Editar
         </button>
         <button
           (click)="openDeleteModal(saving)"
-          class="absolute top-3 right-20 font-medium tracking-wide text-rose-500 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300"
+          class="absolute top-3 right-20 p-2 rounded transition-colors font-medium tracking-wide text-rose-500 hover:bg-rose-300 hover:text-gray-900 dark:hover:bg-gray-200 dark:text-rose-400 dark:hover:text-gray-900"
         >
           Eliminar
         </button>
