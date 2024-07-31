@@ -53,6 +53,19 @@ export interface Reminder {
   reminder_date: string
 }
 
+export interface NewReminder {
+  title: string
+  description: string
+  reminderDate: string
+}
+
+export interface EditReminder {
+  id: number
+  newTitle: string
+  newDescription: string
+  newDate: string
+}
+
 export interface Quote {
   phrase: string
   movie: string

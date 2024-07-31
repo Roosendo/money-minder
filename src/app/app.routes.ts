@@ -9,6 +9,7 @@ import { EntriesComponent } from './dashboard/entries'
 import { ExitsComponent } from './dashboard/exits'
 import { AnalysisComponent } from './dashboard/analysis'
 import { GoalsComponent } from './dashboard/goals'
+import { RemindersComponent } from './dashboard/reminders'
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,8 @@ export const routes: Routes = [
       { path: 'entries', component: EntriesComponent },
       { path: 'exits', component: ExitsComponent },
       { path: 'analysis', component: AnalysisComponent },
-      { path: 'savings', component: GoalsComponent }
+      { path: 'savings', component: GoalsComponent },
+      { path: 'reminders', component: RemindersComponent }
     ]
   }
 ]

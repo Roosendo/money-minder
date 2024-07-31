@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, } from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, } from '@angular/core'
 import { AsyncPipe } from '@angular/common'
 import { FormsModule } from '@angular/forms'
+import { Title } from '@angular/platform-browser'
 
 import { AlertMessageComponent } from '../../../core'
 import { ApiCallsService, FormSubmitService } from '../../../services'
@@ -16,7 +17,7 @@ import { timer } from 'rxjs'
   imports: [AlertMessageComponent, FormsModule, AsyncPipe, GoalModalEditComponent, GoalModalDeleteComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GoalsComponent {
+export class GoalsComponent implements OnInit {
   formData = {
     name: '',
     targetAmount: 0,
@@ -32,7 +33,12 @@ export class GoalsComponent {
   private readonly apiCalls = inject(ApiCallsService)
   private readonly formSubmit = inject(FormSubmitService)
   private readonly cdr = inject(ChangeDetectorRef)
+  private readonly title = inject(Title)
   savings$ = this.apiCalls.getSavings()
+
+  ngOnInit(): void {
+    this.title.setTitle('Savings | Money Minder')
+  }
 
   onNewSavingSubmit() {
     this.formSubmit.savingSubmit(this.formData).subscribe({

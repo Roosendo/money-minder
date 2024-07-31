@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { catchError, Observable, throwError } from 'rxjs'
 
 import { AuthCacheService } from '.'
-import { EditSaving, NewEntry, NewExit, NewSaving } from '../models'
+import { EditReminder, EditSaving, NewEntry, NewExit, NewReminder, NewSaving } from '../models'
 
 @Injectable({
   providedIn: 'root'
@@ -72,6 +72,32 @@ export class FormSubmitService {
 
   deleteSaving(id: number) {
     const url = `${this.API_URL}/savings/delete-saving?id=${id}&email=${this.email}`
+    return this.http.delete(url, this.requestOptions)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
+  reminderSubmit(formNewReminder: NewReminder) {
+    const url = `${this.API_URL}/reminders/new-reminder`
+    const { email, fullName } = this
+    return this.http.post(url, JSON.stringify({ ...formNewReminder, email, fullName }), this.requestOptions)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
+  editReminder(formEditReminder: EditReminder) {
+    const url = `${this.API_URL}/reminders/update-reminder`
+    const { email } = this
+    return this.http.patch(url, JSON.stringify({ ...formEditReminder, email}), this.requestOptions)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
+  deleteReminder(id: number) {
+    const url = `${this.API_URL}/reminders/delete-reminder?id=${id}&email=${this.email}`
     return this.http.delete(url, this.requestOptions)
       .pipe(
         catchError(this.handleError)
