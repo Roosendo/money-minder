@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   isLogged = this.authCacheService.isAuthenticated()
 
-  ngOnInit() {
+  ngOnInit () {
     this.titleService.setTitle('Login | Money Minder')
   }
 }

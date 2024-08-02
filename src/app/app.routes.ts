@@ -15,7 +15,7 @@ import { RemindersComponent } from './dashboard/reminders'
   providedIn: 'root'
 })
 class DashboardGuard implements CanActivateChild {
-  canActivateChild() {
+  canActivateChild () {
     return true
   }
 }

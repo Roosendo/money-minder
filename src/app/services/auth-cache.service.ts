@@ -21,20 +21,20 @@ export class AuthCacheService {
   private readonly USER_COOKIE_NAME = 'user-data-mm'
   private user: UserApi | null = null
 
-  constructor() {
+  constructor () {
     this.loadUserFromCookies()
   }
 
-  private loadUserFromCookies() {
+  private loadUserFromCookies () {
     const userData = this.cookieService.get(this.USER_COOKIE_NAME)
     if (userData) this.user = JSON.parse(decodeURIComponent(userData))
   }
 
-  getUser() {
+  getUser () {
     return this.user?.user
   }
 
-  setUser(user: UserApi) {
+  setUser (user: UserApi) {
     const userData = encodeURIComponent(JSON.stringify(user))
     this.cookieService.set(
       this.USER_COOKIE_NAME,
@@ -48,12 +48,12 @@ export class AuthCacheService {
     this.user = user
   }
 
-  clearUser() {
+  clearUser () {
     this.cookieService.delete(this.USER_COOKIE_NAME)
     this.user = null
   }
 
-  isAuthenticated() {
+  isAuthenticated () {
     return this.user !== null
   }
 }

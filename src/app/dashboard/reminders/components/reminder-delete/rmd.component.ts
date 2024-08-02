@@ -14,11 +14,11 @@ export class ReminderDeleteComponent {
   delete = output<number>()
   close = output<void>()
 
-  onDelete() {
+  onDelete () {
     this.delete.emit(this.reminder().id)
   }
 
-  onClose() {
+  onClose () {
     this.close.emit()
   }
 }

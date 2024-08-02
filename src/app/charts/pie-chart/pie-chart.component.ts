@@ -8,7 +8,7 @@ import { createGraphic } from '../utils'
   selector: 'app-pie-chart',
   standalone: true,
   imports: [BaseChartDirective],
-  templateUrl: './pie-chart.component.html',
+  templateUrl: './pie-chart.component.html'
 })
 export class PieChartComponent implements AfterViewChecked, OnDestroy {
   dataTC = input.required<TransactionChart[]>()
@@ -24,11 +24,11 @@ export class PieChartComponent implements AfterViewChecked, OnDestroy {
     this.initializeChart()
   }
 
-  ngOnDestroy() {
+  ngOnDestroy () {
     this.destroyChart()
   }
 
-  initializeChart() {
+  initializeChart () {
     if (this.chartInstance) {
       this.chartInstance.destroy()
     }
@@ -43,7 +43,7 @@ export class PieChartComponent implements AfterViewChecked, OnDestroy {
     }
   }
 
-  destroyChart() {
+  destroyChart () {
     if (this.chartInstance) {
       this.chartInstance.destroy()
       this.chartInstance = undefined

@@ -11,13 +11,13 @@ import { ApiCallsService } from '../../../../services'
 })
 export class ExitsTableComponent implements OnChanges {
   @Input()
-  triggerUpdate = false
+    triggerUpdate = false
 
   private readonly apiCalls = inject(ApiCallsService)
 
   lastExits$ = this.apiCalls.getLastExits()
 
-  ngOnChanges() {
+  ngOnChanges () {
     if (this.triggerUpdate) {
       this.lastExits$ = this.apiCalls.getLastExits()
     }

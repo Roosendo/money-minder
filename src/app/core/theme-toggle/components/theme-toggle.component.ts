@@ -12,15 +12,15 @@ export class ThemeToggleComponent implements OnInit {
   private readonly LIGHT_CLASS = 'light'
   private platformId
 
-  constructor() {
+  constructor () {
     this.platformId = inject(PLATFORM_ID)
   }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     if (isPlatformBrowser(this.platformId)) this.setTheme()
   }
 
-  private setTheme(): void {
+  private setTheme (): void {
     const triggerLightTheme = document.getElementById('light-theme')
     const triggerDarkTheme = document.getElementById('dark-theme')
 

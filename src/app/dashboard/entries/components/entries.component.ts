@@ -14,11 +14,11 @@ export class EntriesComponent implements OnInit {
   private readonly titleService = inject(Title)
   triggerUpdate = false
 
-  ngOnInit() {
+  ngOnInit () {
     this.titleService.setTitle('Entries | Money Minder')
   }
 
-  onFormSubmitted() {
+  onFormSubmitted () {
     this.triggerUpdate = !this.triggerUpdate
   }
 }

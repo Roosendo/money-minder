@@ -14,11 +14,11 @@ export class GoalModalDeleteComponent {
   @Output() delete = new EventEmitter<number>()
   @Output() closeModal = new EventEmitter<void>()
 
-  onDelete() {
+  onDelete () {
     this.delete.emit(this.saving().id)
   }
 
-  onCloseModal() {
+  onCloseModal () {
     this.closeModal.emit()
   }
 }

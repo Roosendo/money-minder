@@ -19,7 +19,7 @@ export class SidebarComponent {
   user: User | undefined = this.authCacheService.getUser()
   isSidebarOpen = false
 
-  toggleSidebar() {
+  toggleSidebar () {
     const sidebar = document.getElementById('sidebar')!
     const separator = document.getElementById('separator-sidebar')!
 
@@ -30,7 +30,7 @@ export class SidebarComponent {
     this.isSidebarOpen = !this.isSidebarOpen
   }
 
-  logOut() {
+  logOut () {
     this.authCacheService.clearUser()
     document.location.reload()
   }

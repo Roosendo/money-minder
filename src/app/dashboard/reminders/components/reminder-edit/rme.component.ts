@@ -19,7 +19,7 @@ export class ReminderEditComponent implements OnInit {
   closeModal = output<void>()
   save = output<EditReminder>()
 
-  ngOnInit() {
+  ngOnInit () {
     this.reminderEdit = {
       newDescription: this.reminder().description,
       newDate: this.reminder().reminder_date,
@@ -28,11 +28,11 @@ export class ReminderEditComponent implements OnInit {
     }
   }
 
-  onSave() {
+  onSave () {
     this.save.emit(this.reminderEdit)
   }
 
-  onCloseModal() {
+  onCloseModal () {
     this.closeModal.emit()
   }
 }

@@ -1,7 +1,6 @@
-import { Component, inject } from '@angular/core'
+import { Component, inject, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ApiCallsService } from '../../../../services'
 import { AsyncPipe, DatePipe } from '@angular/common'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 @Component({
   selector: 'app-reminders',

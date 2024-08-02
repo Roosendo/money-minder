@@ -49,8 +49,7 @@ export class BarChartComponent implements AfterViewInit {
 
       this.canvas = document.querySelector('#barChart') as HTMLCanvasElement
       this.ctx = this.canvas.getContext('2d')
-      if (this.ctx)
-        createGraphicBar(this.ctx, labelsToShow, ingresosMensuales, egresosMensuales, saldoMensual)
+      if (this.ctx) { createGraphicBar(this.ctx, labelsToShow, ingresosMensuales, egresosMensuales, saldoMensual) }
     }
   }
 }

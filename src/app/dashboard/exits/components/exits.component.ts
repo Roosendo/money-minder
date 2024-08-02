@@ -14,11 +14,11 @@ export class ExitsComponent implements OnInit {
   private readonly titleService = inject(Title)
   triggerUpdate = false
 
-  ngOnInit() {
+  ngOnInit () {
     this.titleService.setTitle('Exits | Money Minder')
   }
 
-  onFormSubmitted() {
+  onFormSubmitted () {
     this.triggerUpdate = !this.triggerUpdate
   }
 }

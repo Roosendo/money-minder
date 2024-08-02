@@ -17,9 +17,9 @@ export class FormSubmitService {
     headers: { 'Content-Type': 'application/json' }
   }
 
-  constructor(private http: HttpClient) {}
+  constructor (private http: HttpClient) {}
 
-  private handleError(error: HttpErrorResponse): Observable<never> {
+  private handleError (error: HttpErrorResponse): Observable<never> {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message)
@@ -34,7 +34,7 @@ export class FormSubmitService {
     return throwError(() => new Error('Something bad happened; please try again later.'))
   }
 
-  entrySubmit(formNewEntry: NewEntry) {
+  entrySubmit (formNewEntry: NewEntry) {
     const url = `${this.API_URL}/entries/new-entry`
     const { email, fullName } = this
     return this.http.post(url, JSON.stringify({ email, fullName, ...formNewEntry }), this.requestOptions)
@@ -43,7 +43,7 @@ export class FormSubmitService {
       )
   }
 
-  exitSubmit(formNewExit: NewExit) {
+  exitSubmit (formNewExit: NewExit) {
     const url = `${this.API_URL}/exits/new-exit`
     const { email, fullName } = this
     return this.http.post(url, JSON.stringify({ email, fullName, ...formNewExit }), this.requestOptions)
@@ -52,7 +52,7 @@ export class FormSubmitService {
       )
   }
 
-  savingSubmit(formNewSaving: NewSaving) {
+  savingSubmit (formNewSaving: NewSaving) {
     const url = `${this.API_URL}/savings/new-saving`
     const { email, fullName } = this
     return this.http.post(url, JSON.stringify({ email, fullName, ...formNewSaving }), this.requestOptions)
@@ -61,7 +61,7 @@ export class FormSubmitService {
       )
   }
 
-  editSaving(formEditSaving: EditSaving) {
+  editSaving (formEditSaving: EditSaving) {
     const url = `${this.API_URL}/savings/update-saving`
     const { email } = this
     return this.http.patch(url, JSON.stringify({ ...formEditSaving, email }), this.requestOptions)
@@ -70,7 +70,7 @@ export class FormSubmitService {
       )
   }
 
-  deleteSaving(id: number) {
+  deleteSaving (id: number) {
     const url = `${this.API_URL}/savings/delete-saving?id=${id}&email=${this.email}`
     return this.http.delete(url, this.requestOptions)
       .pipe(
@@ -78,7 +78,7 @@ export class FormSubmitService {
       )
   }
 
-  reminderSubmit(formNewReminder: NewReminder) {
+  reminderSubmit (formNewReminder: NewReminder) {
     const url = `${this.API_URL}/reminders/new-reminder`
     const { email, fullName } = this
     return this.http.post(url, JSON.stringify({ ...formNewReminder, email, fullName }), this.requestOptions)
@@ -87,16 +87,16 @@ export class FormSubmitService {
       )
   }
 
-  editReminder(formEditReminder: EditReminder) {
+  editReminder (formEditReminder: EditReminder) {
     const url = `${this.API_URL}/reminders/update-reminder`
     const { email } = this
-    return this.http.patch(url, JSON.stringify({ ...formEditReminder, email}), this.requestOptions)
+    return this.http.patch(url, JSON.stringify({ ...formEditReminder, email }), this.requestOptions)
       .pipe(
         catchError(this.handleError)
       )
   }
 
-  deleteReminder(id: number) {
+  deleteReminder (id: number) {
     const url = `${this.API_URL}/reminders/delete-reminder?id=${id}&email=${this.email}`
     return this.http.delete(url, this.requestOptions)
       .pipe(

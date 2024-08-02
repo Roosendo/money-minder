@@ -18,12 +18,12 @@ export class NavBarComponent implements OnInit, OnDestroy {
   private observer: IntersectionObserver | null = null
   isLogged: boolean
 
-  constructor() {
+  constructor () {
     this.platformId = inject(PLATFORM_ID)
     this.isLogged = this.authCacheService.isAuthenticated()
   }
 
-  ngOnInit() {
+  ngOnInit () {
     if (isPlatformBrowser(this.platformId)) {
       this.navbar = document.querySelector('#navbar-sticky')
 
@@ -66,13 +66,13 @@ export class NavBarComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy () {
     if (isPlatformBrowser(this.platformId)) {
       this.observer?.disconnect()
     }
   }
 
-  animateSidebar() {
+  animateSidebar () {
     if (isPlatformBrowser(this.platformId) && this.navbar) {
       this.navbar.classList.toggle('hidden', this.isSideBarOpen)
       this.navbar.classList.toggle('flex', !this.isSideBarOpen)

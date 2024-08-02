@@ -33,11 +33,11 @@ export class RemindersComponent implements OnInit {
     title: ''
   }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.title.setTitle('Reminders | Money Minder')
   }
 
-  onNewReminderSubmit() {
+  onNewReminderSubmit () {
     this.formSubmit.reminderSubmit(this.formReminder).subscribe({
       next: () => {
         this.amSuccess = true
@@ -63,27 +63,27 @@ export class RemindersComponent implements OnInit {
     })
   }
 
-  onCloseModal() {
+  onCloseModal () {
     this.isReminderEditOpen = false
     this.selectedReminder = null
   }
 
-  openReminderEdit(reminder: Reminder) {
+  openReminderEdit (reminder: Reminder) {
     this.selectedReminder = reminder
     this.isReminderDeleteOpen = true
   }
 
-  openReminderDelete(reminder: Reminder) {
+  openReminderDelete (reminder: Reminder) {
     this.selectedReminder = reminder
     this.isReminderDeleteOpen = true
   }
 
-  closeReminderDelete() {
+  closeReminderDelete () {
     this.isReminderDeleteOpen = false
     this.selectedReminder = null
   }
 
-  onDelete(id: number) {
+  onDelete (id: number) {
     this.formSubmit.deleteReminder(id).subscribe({
       next: () => {
         this.closeReminderDelete()
@@ -96,7 +96,7 @@ export class RemindersComponent implements OnInit {
     })
   }
 
-  onSave(editReminder: EditReminder) {
+  onSave (editReminder: EditReminder) {
     this.formSubmit.editReminder(editReminder).subscribe({
       next: () => {
         this.onCloseModal()

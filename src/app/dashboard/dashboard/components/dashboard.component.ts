@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
   user = this.authCache.getUser()
   private readonly titleService = inject(Title)
 
-  ngOnInit() {
+  ngOnInit () {
     this.titleService.setTitle('Dashboard | Money Minder')
   }
 }

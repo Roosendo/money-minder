@@ -13,7 +13,7 @@ import { FormSubmitService } from '../../../../services'
 })
 export class EntriesFormComponent {
   @Output()
-  formSubmitted = new EventEmitter<void>()
+    formSubmitted = new EventEmitter<void>()
 
   private readonly formSubmit = inject(FormSubmitService)
   private readonly cdr = inject(ChangeDetectorRef)
@@ -28,7 +28,7 @@ export class EntriesFormComponent {
     description: ''
   }
 
-  onSubmit() {
+  onSubmit () {
     if (!this.formData.category) {
       this.am_category = true
       timer(3500).subscribe(() => {

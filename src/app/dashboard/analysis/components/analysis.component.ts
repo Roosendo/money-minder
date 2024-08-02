@@ -25,12 +25,12 @@ export class AnalysisComponent implements OnInit {
   monthlyEntries$!: Observable<TransactionChart[]>
   monthlyExits$!: Observable<TransactionChart[]>
 
-  ngOnInit() {
+  ngOnInit () {
     this.titleService.setTitle('Analysis | Money Minder')
     this.getData()
   }
 
-  onMonthChange(event: Event) {
+  onMonthChange (event: Event) {
     const input = event.target as HTMLInputElement
     this.currentDate = input.value
     const [ year, month ] = this.currentDate.split('-').map(Number)
@@ -41,7 +41,7 @@ export class AnalysisComponent implements OnInit {
     this.getData()
   }
 
-  private getData() {
+  private getData () {
     this.summary$ = this.apiCalls.getAnalysisSummary(this.currentYear, this.currentMonthNumber.toString().padStart(2, '0'))
     this.monthlyEntries$ = this.apiCalls.getMonthlyEntries(this.currentYear, this.currentMonthNumber.toString().padStart(2, '0'))
     this.monthlyExits$ = this.apiCalls.getMonthlyExits(this.currentYear, this.currentMonthNumber.toString().padStart(2, '0'))

@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router'
 export class HomeComponent implements OnInit {
   private titleService = inject(Title)
 
-  ngOnInit() {
+  ngOnInit () {
     this.titleService.setTitle('Money Minder')
   }
 }

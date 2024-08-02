@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, } from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core'
 import { AsyncPipe } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { Title } from '@angular/platform-browser'
@@ -36,11 +36,11 @@ export class GoalsComponent implements OnInit {
   private readonly title = inject(Title)
   savings$ = this.apiCalls.getSavings()
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.title.setTitle('Savings | Money Minder')
   }
 
-  onNewSavingSubmit() {
+  onNewSavingSubmit () {
     this.formSubmit.savingSubmit(this.formData).subscribe({
       next: () => {
         this.amSuccess = true
@@ -70,27 +70,27 @@ export class GoalsComponent implements OnInit {
     })
   }
 
-  openEditModal(saving: Saving) {
+  openEditModal (saving: Saving) {
     this.isModalEditOpen = true
     this.selectedSaving = saving
   }
 
-  closeEditModal() {
+  closeEditModal () {
     this.isModalEditOpen = false
     this.selectedSaving = null
   }
 
-  openDeleteModal(saving: Saving) {
+  openDeleteModal (saving: Saving) {
     this.isModalDeleteOpen = true
     this.selectedSaving = saving
   }
 
-  closeDeleteModal() {
+  closeDeleteModal () {
     this.isModalDeleteOpen = false
     this.selectedSaving = null
   }
 
-  editSaving(saving: EditSaving) {
+  editSaving (saving: EditSaving) {
     this.formSubmit.editSaving(saving).subscribe({
       next: () => {
         this.closeEditModal()
@@ -103,7 +103,7 @@ export class GoalsComponent implements OnInit {
     })
   }
 
-  deleteSaving(id: number) {
+  deleteSaving (id: number) {
     this.formSubmit.deleteSaving(id).subscribe({
       next: () => {
         this.closeDeleteModal()
