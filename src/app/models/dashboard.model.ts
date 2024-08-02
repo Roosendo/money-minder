@@ -72,7 +72,7 @@ export interface Quote {
   character: string
 }
 
-export interface Transaction {
+export interface ApiTransaction {
   user_email: string
   amount: number
   description: string
@@ -80,12 +80,16 @@ export interface Transaction {
   date: string
 }
 
-export interface EntryTransaction extends Transaction {
+export interface EntryTransaction extends ApiTransaction {
   entry_id: number
 }
 
-export interface ExitTransaction extends Transaction {
+export interface ExitTransaction extends ApiTransaction {
   exit_id: number
+}
+
+export interface Transaction extends ApiTransaction {
+  id: number
 }
 
 export interface Summary {

@@ -1,2 +1,2 @@
-<app-form (formSubmitted)="onFormSubmitted()" />
-<app-table-exits [triggerUpdate]="triggerUpdate" />
+<app-form [type]="'exits'" (formSubmitted)="onFormSubmitted()" />
+<app-table [triggerUpdate]="triggerUpdate" [type]="'exits'" />

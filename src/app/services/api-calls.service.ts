@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http'
 import { inject, Injectable } from '@angular/core'
 import { map, Observable } from 'rxjs'
 
-import { CashFLow, FinancialSummary, FSClean, TransactionChart, Quote, RecentTransactions, Reminder, Saving, Summary, EntryTransaction, ExitTransaction } from '../models'
-import { financialSummaryAdapter } from '../adapters'
+import { CashFLow, FinancialSummary, FSClean, TransactionChart, Quote, RecentTransactions, Reminder, Saving, Summary, EntryTransaction, ExitTransaction, Transaction } from '../models'
+import { financialSummaryAdapter, transformArrayTransactions } from '../adapters'
 import { AuthCacheService } from '.'
 
 @Injectable({
@@ -59,16 +59,16 @@ export class ApiCallsService {
       .pipe(map((result) => result))
   }
 
-  getLastEntries (): Observable<EntryTransaction[]> {
+  getLastEntries (): Observable<Transaction[]> {
     const url = `${this.API_URL}/entries/get-entries?email=${this.email}`
     return this.http.get<EntryTransaction[]>(url)
-      .pipe(map((result) => result))
+      .pipe(map((result) => transformArrayTransactions(result)))
   }
 
-  getLastExits (): Observable<ExitTransaction[]> {
+  getLastExits (): Observable<Transaction[]> {
     const url = `${this.API_URL}/exits/get-exits?email=${this.email}`
     return this.http.get<ExitTransaction[]>(url)
-      .pipe(map((result) => result))
+      .pipe(map((result) => transformArrayTransactions(result)))
   }
 
   getAnalysisSummary (year: number, month: string): Observable<Summary> {
