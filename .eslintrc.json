@@ -10,7 +10,7 @@
       ],
       "extends": [
         "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
+        "ts-standard",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
@@ -30,7 +30,8 @@
             "prefix": "app",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@typescript-eslint/no-useless-constructor": "off"
       }
     },
     {
