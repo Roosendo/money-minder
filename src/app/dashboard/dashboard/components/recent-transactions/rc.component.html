@@ -13,7 +13,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (rc of rcs; track rc.date) {
+          @for (rc of rcs; track id; let id = $index) {
             <tr
               class='bg-gray-200 hover:bg-gray-300 dark:border-gray-800 dark:bg-gray-600 dark:hover:bg-gray-500'
             >

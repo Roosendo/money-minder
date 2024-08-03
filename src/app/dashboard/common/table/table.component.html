@@ -6,10 +6,10 @@
       class="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-gray-800 dark:text-gray-400"
     >
       <tr>
-        <th scope="col" class="px-4 py-3">Monto</th>
-        <th scope="col" class="px-4 py-3">Categoría</th>
-        <th scope="col" class="px-4 py-3">Descripción</th>
-        <th scope="col" class="px-4 py-3">Fecha</th>
+        <th scope="col" class="md:px-4 md:py-3 px-2 py-1">Monto</th>
+        <th scope="col" class="md:px-4 md:py-3 px-2 py-1">Categoría</th>
+        <th scope="col" class="md:px-4 md:py-3 px-2 py-1">Descripción</th>
+        <th scope="col" class="md:px-4 md:py-3 px-2 py-1">Fecha</th>
       </tr>
     </thead>
     <tbody>
@@ -19,18 +19,18 @@
         >
           <th
             scope="row"
-            class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+            class="md:px-4 md:py-3 px-2 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white"
           >
             ${{ lastData.amount }}
           </th>
-          <td class="px-4 py-3">{{ lastData.category }}</td>
-          <td class="px-4 py-3">{{ lastData.description }}</td>
-          <td class="px-4 py-3">{{ lastData.date | date: "shortDate" }}</td>
+          <td class="md:px-4 md:py-3 px-2 py-1">{{ lastData.category }}</td>
+          <td class="md:px-4 md:py-3 px-2 py-1">{{ lastData.description }}</td>
+          <td class="md:px-4 md:py-3 px-2 py-1">{{ lastData.date | date: "shortDate" }}</td>
         </tr>
       } @empty {
         <tr class="bg-white dark:bg-gray-800">
           <td
-            class="px-4 py-3 text-center font-medium text-gray-900 dark:text-white"
+            class="md:px-4 md:py-3 px-2 py-1 text-center font-medium text-gray-900 dark:text-white"
             colspan="4"
           >
             Sin registros
