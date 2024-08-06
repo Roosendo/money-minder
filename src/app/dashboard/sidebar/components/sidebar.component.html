@@ -38,10 +38,13 @@
           </article>
         </section>
       }
-    <ul class='mb-10 space-y-2 font-medium'>
+    <ul class='mb-10 space-y-2 font-medium [&_li_a]:transition-colors'>
       <li>
         <a
           routerLink='/dashboard'
+          [ngClass]="{
+            'border border-teal-500 hover:!bg-teal-500': getCurrentRoute() === '/dashboard'
+          }"
           class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
         >
           <svg
@@ -60,6 +63,9 @@
       <li>
         <a
           routerLink='/entries'
+          [ngClass]="{
+            'border border-teal-500 hover:!bg-teal-500': getCurrentRoute() === '/entries'
+          }"
           class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
         >
           <svg
@@ -83,6 +89,9 @@
       <li>
         <a
           routerLink='/exits'
+          [ngClass]="{
+            'border border-teal-500 hover:!bg-teal-500': getCurrentRoute() === '/exits'
+          }"
           class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
         >
           <svg
@@ -101,6 +110,9 @@
       <li>
         <a
           routerLink='/analysis'
+          [ngClass]="{
+            'border border-teal-500 hover:!bg-teal-500': getCurrentRoute() === '/analysis'
+          }"
           class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
         >
           <svg
@@ -123,6 +135,9 @@
       <li>
         <a
           routerLink='/savings'
+          [ngClass]="{
+            'border border-teal-500 hover:!bg-teal-500': getCurrentRoute() === '/savings'
+          }"
           class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
         >
           <svg
@@ -140,6 +155,9 @@
       <li>
         <a
           routerLink='/reminders'
+          [ngClass]="{
+            'border border-teal-500 hover:!bg-teal-500': getCurrentRoute() === '/reminders'
+          }"
           class='group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'
         >
           <svg

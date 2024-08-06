@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core'
-import { NgOptimizedImage } from '@angular/common'
-import { RouterLink } from '@angular/router'
+import { CommonModule, NgOptimizedImage } from '@angular/common'
+import { RouterLink, Router } from '@angular/router'
 
 import { AuthCacheService, User } from '../../../services'
 import { ThemeToggleComponent } from '../../../core'
@@ -10,10 +10,11 @@ import { BtnLoginComponent } from '../../../btn-login'
   selector: 'app-sidebar',
   standalone: true,
   templateUrl: './sidebar.component.html',
-  imports: [NgOptimizedImage, RouterLink, ThemeToggleComponent, BtnLoginComponent]
+  imports: [NgOptimizedImage, RouterLink, ThemeToggleComponent, BtnLoginComponent, CommonModule]
 })
 export class SidebarComponent {
   private readonly authCacheService = inject(AuthCacheService)
+  private readonly router = inject(Router)
 
   isLogged = this.authCacheService.isAuthenticated()
   user: User | undefined = this.authCacheService.getUser()
@@ -33,5 +34,9 @@ export class SidebarComponent {
   logOut () {
     this.authCacheService.clearUser()
     document.location.reload()
+  }
+
+  getCurrentRoute () {
+    return this.router.url
   }
 }
