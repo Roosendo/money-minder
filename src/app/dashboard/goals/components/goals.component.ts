@@ -115,4 +115,9 @@ export class GoalsComponent implements OnInit {
       }
     })
   }
+
+  calculateProgress (saving: Saving): number {
+    const progress = Math.round((saving.current_amount / saving.target_amount) * 100)
+    return progress > 100 ? 100 : progress
+  }
 }
