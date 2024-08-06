@@ -77,12 +77,7 @@
         placeholder="Fecha de fin"
       />
     </div>
-    <button
-      type="submit"
-      class="mb-4 w-full rounded-md bg-teal-500 p-2 font-semibold text-white hover:bg-teal-600"
-    >
-      Agregar Objetivo
-    </button>
+    <app-submit-bttn [text]="'Agregar Objetivo'" />
     @if (amSuccess) {
       <app-alert-message
         [alertMessage]="'Ahorro registrado 😁'"

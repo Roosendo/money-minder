@@ -3,7 +3,7 @@ import { AsyncPipe } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { Title } from '@angular/platform-browser'
 
-import { AlertMessageComponent } from '../../../core'
+import { AlertMessageComponent, SubmitBttnComponent } from '../../../core'
 import { ApiCallsService, FormSubmitService } from '../../../services'
 import { GoalModalEditComponent } from './goal-modal-edit/gme.component'
 import { EditSaving, Saving } from '../../../models'
@@ -14,7 +14,7 @@ import { timer } from 'rxjs'
   selector: 'app-goals',
   templateUrl: './goals.component.html',
   standalone: true,
-  imports: [AlertMessageComponent, FormsModule, AsyncPipe, GoalModalEditComponent, GoalModalDeleteComponent],
+  imports: [AlertMessageComponent, FormsModule, AsyncPipe, GoalModalEditComponent, GoalModalDeleteComponent, SubmitBttnComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GoalsComponent implements OnInit {

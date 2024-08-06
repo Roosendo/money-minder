@@ -2,14 +2,14 @@ import { ChangeDetectionStrategy, Component, output, inject, ChangeDetectorRef, 
 import { FormsModule } from '@angular/forms'
 import { timer } from 'rxjs'
 import { FormSubmitService } from '../../../services'
-import { AlertMessageComponent } from '../../../core'
+import { AlertMessageComponent, SubmitBttnComponent } from '../../../core'
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, AlertMessageComponent]
+  imports: [FormsModule, AlertMessageComponent, SubmitBttnComponent]
 })
 export class FormComponent {
   formSubmitted = output<void>()

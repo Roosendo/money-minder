@@ -2,12 +2,14 @@ import { Component, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core
 import { isPlatformBrowser } from '@angular/common'
 import { RouterLink } from '@angular/router'
 import { AuthCacheService } from '../../../services/auth-cache.service'
+import { NavigationBttnComponent } from '../../navigation-bttn/navigation-bttn.component'
+import { LoginBttnComponent } from '../../login-bttn/login-bttn.component'
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   templateUrl: './navbar.component.html',
-  imports: [RouterLink]
+  imports: [RouterLink, NavigationBttnComponent, LoginBttnComponent]
 })
 export class NavBarComponent implements OnInit, OnDestroy {
   private readonly authCacheService = inject(AuthCacheService)

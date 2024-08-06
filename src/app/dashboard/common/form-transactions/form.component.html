@@ -130,12 +130,7 @@
       placeholder="Deja tu descripción..."
     ></textarea>
   </div>
-  <button
-    type="submit"
-    class="mb-4 rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700"
-  >
-    Registrar Egreso
-  </button>
+  <app-submit-bttn [text]="'Registrar ' + typeOf " />
   @if (am_success) {
     <app-alert-message
       [alertMessage]="typeOf + ' registrado 😁'"

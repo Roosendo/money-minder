@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core'
 import { Title } from '@angular/platform-browser'
-import { AlertMessageComponent } from '../../../core'
+import { AlertMessageComponent, SubmitBttnComponent } from '../../../core'
 import { FormsModule } from '@angular/forms'
 import { ApiCallsService, FormSubmitService } from '../../../services'
 import { AsyncPipe, DatePipe } from '@angular/common'
@@ -14,7 +14,7 @@ import { ReminderDeleteComponent } from './reminder-delete/rmd.component'
   templateUrl: './reminder.component.html',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AlertMessageComponent, FormsModule, AsyncPipe, DatePipe, ReminderEditComponent, ReminderDeleteComponent]
+  imports: [AlertMessageComponent, FormsModule, AsyncPipe, DatePipe, ReminderEditComponent, ReminderDeleteComponent, SubmitBttnComponent]
 })
 export class RemindersComponent implements OnInit {
   private readonly title = inject(Title)

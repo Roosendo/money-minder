@@ -36,7 +36,7 @@
         class="mt-1 w-full resize-none rounded-md border border-gray-300 bg-gray-50 p-2 text-gray-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-600"
       ></textarea>
     </div>
-    <div>
+    <div class="mb-4">
       <label for="reminder-date" class="block font-medium">Fecha y hora</label>
       <input
         [(ngModel)]="formReminder.reminderDate"
@@ -47,12 +47,7 @@
         class="mt-1 w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-gray-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-600"
       />
     </div>
-    <button
-      type="submit"
-      class="mb-4 rounded-md w-full transition-colors bg-teal-500 p-2 font-semibold text-white hover:bg-teal-600"
-    >
-      Agregar Recordatorio
-    </button>
+    <app-submit-bttn [text]="'Agregar Recordatorio'" />
     @if (amSuccess) {
       <app-alert-message
         [typeAlert]="'success'"
