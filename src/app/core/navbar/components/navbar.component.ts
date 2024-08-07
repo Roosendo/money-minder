@@ -32,6 +32,11 @@ export class NavBarComponent implements OnInit, OnDestroy {
       const sections = document.querySelectorAll('section')
       const navItems = document.querySelectorAll('li a')
 
+      if (sections.length === 0 || navItems.length === 0) {
+        console.error('No se encontraron secciones o elementos de navegación para observar.')
+        return
+      }
+
       const callback = (entries: IntersectionObserverEntry[]) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {

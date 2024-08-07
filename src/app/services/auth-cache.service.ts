@@ -1,15 +1,15 @@
 import { inject, Injectable } from '@angular/core'
 import { CookieService } from 'ngx-cookie-service'
 
-interface UserApi {
-  user: User
-}
-
 export interface User {
   email: string
   firstName: string
   lastName: string
   picture: string
+}
+
+interface UserApi {
+  user: User
 }
 
 @Injectable({
@@ -49,7 +49,13 @@ export class AuthCacheService {
   }
 
   clearUser () {
-    this.cookieService.delete(this.USER_COOKIE_NAME)
+    this.cookieService.delete(
+      this.USER_COOKIE_NAME,
+      '/',
+      'money-minder-xi.vercel.app',
+      true,
+      'Strict'
+    )
     this.user = null
   }
 
