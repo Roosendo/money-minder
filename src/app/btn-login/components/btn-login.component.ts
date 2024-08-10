@@ -47,7 +47,6 @@ export class BtnLoginComponent implements OnInit {
   private readCookie () {
     this.authCache.getUser()
     this.user = this.authCache.getUser()
-    console.log(this.user)
   }
 
   logout (): void {

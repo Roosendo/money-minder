@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core'
 import { Title } from '@angular/platform-browser'
-import { AlertMessageComponent, SubmitBttnComponent } from '../../../core'
+import { AlertMessageComponent, NotLoggedComponent, SubmitBttnComponent } from '../../../core'
 import { FormsModule } from '@angular/forms'
-import { ApiCallsService, FormSubmitService } from '../../../services'
+import { ApiCallsService, AuthCacheService, FormSubmitService } from '../../../services'
 import { AsyncPipe, DatePipe } from '@angular/common'
 import { ReminderEditComponent } from './reminder-edit/rme.component'
 import { EditReminder, Reminder } from '../../../models'
@@ -14,13 +14,24 @@ import { ReminderDeleteComponent } from './reminder-delete/rmd.component'
   templateUrl: './reminder.component.html',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AlertMessageComponent, FormsModule, AsyncPipe, DatePipe, ReminderEditComponent, ReminderDeleteComponent, SubmitBttnComponent]
+  imports: [
+    AlertMessageComponent,
+    FormsModule,
+    AsyncPipe,
+    DatePipe,
+    ReminderEditComponent,
+    ReminderDeleteComponent,
+    SubmitBttnComponent,
+    NotLoggedComponent
+  ]
 })
 export class RemindersComponent implements OnInit {
   private readonly title = inject(Title)
   private readonly apiCalls = inject(ApiCallsService)
   private readonly formSubmit = inject(FormSubmitService)
   private readonly cdr = inject(ChangeDetectorRef)
+  private readonly authCache = inject(AuthCacheService)
+  isLogged = this.authCache.isAuthenticated()
   selectedReminder: Reminder | null = null
   isReminderEditOpen = false
   isReminderDeleteOpen = false

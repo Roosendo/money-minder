@@ -3,8 +3,8 @@ import { AsyncPipe } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { Title } from '@angular/platform-browser'
 
-import { AlertMessageComponent, SubmitBttnComponent } from '../../../core'
-import { ApiCallsService, FormSubmitService } from '../../../services'
+import { AlertMessageComponent, NotLoggedComponent, SubmitBttnComponent } from '../../../core'
+import { ApiCallsService, AuthCacheService, FormSubmitService } from '../../../services'
 import { GoalModalEditComponent } from './goal-modal-edit/gme.component'
 import { EditSaving, Saving } from '../../../models'
 import { GoalModalDeleteComponent } from './goal-modal-delete/gmd.component'
@@ -14,7 +14,14 @@ import { timer } from 'rxjs'
   selector: 'app-goals',
   templateUrl: './goals.component.html',
   standalone: true,
-  imports: [AlertMessageComponent, FormsModule, AsyncPipe, GoalModalEditComponent, GoalModalDeleteComponent, SubmitBttnComponent],
+  imports: [
+    AlertMessageComponent,
+    FormsModule, AsyncPipe,
+    GoalModalEditComponent,
+    GoalModalDeleteComponent,
+    SubmitBttnComponent,
+    NotLoggedComponent
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GoalsComponent implements OnInit {
@@ -34,6 +41,8 @@ export class GoalsComponent implements OnInit {
   private readonly formSubmit = inject(FormSubmitService)
   private readonly cdr = inject(ChangeDetectorRef)
   private readonly title = inject(Title)
+  private readonly authCache = inject(AuthCacheService)
+  isLogged = this.authCache.isAuthenticated()
   savings$ = this.apiCalls.getSavings()
 
   ngOnInit (): void {

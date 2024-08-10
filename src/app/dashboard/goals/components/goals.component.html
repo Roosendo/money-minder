@@ -1,145 +1,149 @@
 @let savings = savings$ | async;
 
-<main class="min-h-screen p-4">
-  <form
-    (submit)="onNewSavingSubmit()"
-    class="mx-auto mt-6 max-w-md rounded-lg bg-gray-100 p-6 text-gray-700 border border-gray-800 dark:border-gray-100 dark:bg-gray-800 dark:text-gray-200"
-  >
-    <h2 class="mb-4 text-center text-xl font-bold">
-      Agregar Nuevo Objetivo de Ahorro
-    </h2>
-    <div class="mb-4">
-      <label for="goal-name" class="mb-2 block font-semibold"
-        >Nombre del objetivo</label
-      >
-      <input
-        [(ngModel)]="formData.name"
-        name="name"
-        type="text"
-        id="goal-name"
-        class="z-20 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:border-e-gray-700 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500"
-        placeholder="PlayStation 5"
-        required
-      />
-    </div>
-    <div class="mb-4">
-      <label for="target-amount" class="mb-2 block font-semibold"
-        >Monto objetivo</label
-      >
-      <input
-        [(ngModel)]="formData.targetAmount"
-        name="targetAmount"
-        type="number"
-        id="target-amount"
-        class="z-20 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:border-e-gray-700 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500"
-        placeholder="3.99"
-        required
-        step="0.01"
-      />
-    </div>
-    <div class="mb-4">
-      <label for="current-amount" class="mb-2 block font-semibold"
-        >Monto actual (Por defecto es $0)</label
-      >
-      <input
-        [(ngModel)]="formData.currentAmount"
-        name="currentAmount"
-        type="number"
-        id="current-amount"
-        class="z-20 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:border-e-gray-700 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500"
-        placeholder="3.99"
-        step="0.01"
-      />
-    </div>
-    <div class="mb-4">
-      <label for="start-date" class="mb-2 block font-semibold"
-        >Fecha de inicio</label
-      >
-      <input
-        [(ngModel)]="formData.startDate"
-        name="startDate"
-        type="date"
-        id="start-date"
-        class="mt-1 w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-gray-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-600"
-        placeholder="Fecha de inicio"
-      />
-    </div>
-    <div class="mb-4">
-      <label for="end-date" class="mb-2 block font-semibold"
-        >Fecha de fin</label
-      >
-      <input
-        [(ngModel)]="formData.endDate"
-        name="endDate"
-        type="date"
-        id="end-date"
-        class="mt-1 w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-gray-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-600"
-        placeholder="Fecha de fin"
-      />
-    </div>
-    <app-submit-bttn [text]="'Agregar Objetivo'" />
-    @if (amSuccess) {
-      <app-alert-message
-        [alertMessage]="'Ahorro registrado 😁'"
-        [typeAlert]="'success'"
-      />
-    }
-    @if (amWarning) {
-      <app-alert-message
-        [alertMessage]="'Error al registrar el ahorro 😔'"
-        [typeAlert]="'warning'"
-      />
-    }
-  </form>
-  @if (savings) {
-    <div id="savings-list" class="mx-auto my-6 max-w-lg space-y-4">
-      @for (saving of savings; track saving.id) {
-        @let style = "width: " + calculateProgress(saving) + "%";
-        <div
-          class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-md relative"
+@if (isLogged) {
+  <main class="min-h-screen p-4">
+    <form
+      (submit)="onNewSavingSubmit()"
+      class="mx-auto mt-6 max-w-md rounded-lg bg-gray-100 p-6 text-gray-700 border border-gray-800 dark:border-gray-100 dark:bg-gray-800 dark:text-gray-200"
+    >
+      <h2 class="mb-4 text-center text-xl font-bold">
+        Agregar Nuevo Objetivo de Ahorro
+      </h2>
+      <div class="mb-4">
+        <label for="goal-name" class="mb-2 block font-semibold"
+          >Nombre del objetivo</label
         >
-          <h3 class="text-lg font-bold mt-2 text-gray-700 dark:text-gray-100">
-            {{ saving.name }}
-          </h3>
-          <p class="text-gray-600 dark:text-gray-400">
-            Monto objetivo: ${{ saving.target_amount }}
-          </p>
-          <p class="text-gray-600 dark:text-gray-400">
-            Monto actual: ${{ saving.current_amount }}
-          </p>
+        <input
+          [(ngModel)]="formData.name"
+          name="name"
+          type="text"
+          id="goal-name"
+          class="z-20 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:border-e-gray-700 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500"
+          placeholder="PlayStation 5"
+          required
+        />
+      </div>
+      <div class="mb-4">
+        <label for="target-amount" class="mb-2 block font-semibold"
+          >Monto objetivo</label
+        >
+        <input
+          [(ngModel)]="formData.targetAmount"
+          name="targetAmount"
+          type="number"
+          id="target-amount"
+          class="z-20 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:border-e-gray-700 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500"
+          placeholder="3.99"
+          required
+          step="0.01"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="current-amount" class="mb-2 block font-semibold"
+          >Monto actual (Por defecto es $0)</label
+        >
+        <input
+          [(ngModel)]="formData.currentAmount"
+          name="currentAmount"
+          type="number"
+          id="current-amount"
+          class="z-20 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:border-e-gray-700 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500"
+          placeholder="3.99"
+          step="0.01"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="start-date" class="mb-2 block font-semibold"
+          >Fecha de inicio</label
+        >
+        <input
+          [(ngModel)]="formData.startDate"
+          name="startDate"
+          type="date"
+          id="start-date"
+          class="mt-1 w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-gray-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-600"
+          placeholder="Fecha de inicio"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="end-date" class="mb-2 block font-semibold"
+          >Fecha de fin</label
+        >
+        <input
+          [(ngModel)]="formData.endDate"
+          name="endDate"
+          type="date"
+          id="end-date"
+          class="mt-1 w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-gray-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-600"
+          placeholder="Fecha de fin"
+        />
+      </div>
+      <app-submit-bttn [text]="'Agregar Objetivo'" />
+      @if (amSuccess) {
+        <app-alert-message
+          [alertMessage]="'Ahorro registrado 😁'"
+          [typeAlert]="'success'"
+        />
+      }
+      @if (amWarning) {
+        <app-alert-message
+          [alertMessage]="'Error al registrar el ahorro 😔'"
+          [typeAlert]="'warning'"
+        />
+      }
+    </form>
+    @if (savings) {
+      <div id="savings-list" class="mx-auto my-6 max-w-lg space-y-4">
+        @for (saving of savings; track saving.id) {
+          @let style = "width: " + calculateProgress(saving) + "%";
           <div
-            class="w-full bg-gray-200 dark:bg-gray-50 rounded-full h-2 mt-2 mb-3"
+            class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-md relative"
           >
-            <div class="bg-teal-500 h-2 rounded-full" [style]="style"></div>
+            <h3 class="text-lg font-bold mt-2 text-gray-700 dark:text-gray-100">
+              {{ saving.name }}
+            </h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              Monto objetivo: ${{ saving.target_amount }}
+            </p>
+            <p class="text-gray-600 dark:text-gray-400">
+              Monto actual: ${{ saving.current_amount }}
+            </p>
+            <div
+              class="w-full bg-gray-200 dark:bg-gray-50 rounded-full h-2 mt-2 mb-3"
+            >
+              <div class="bg-teal-500 h-2 rounded-full" [style]="style"></div>
+            </div>
+            <button
+              (click)="openEditModal(saving)"
+              class="absolute top-3 right-4 p-2 rounded transition-colors font-medium tracking-wide text-teal-500 hover:bg-teal-300 hover:text-gray-900 dark:hover:bg-gray-200 dark:text-teal-400 dark:hover:text-gray-900"
+            >
+              Editar
+            </button>
+            <button
+              (click)="openDeleteModal(saving)"
+              class="absolute top-3 right-20 p-2 rounded transition-colors font-medium tracking-wide text-rose-500 hover:bg-rose-300 hover:text-gray-900 dark:hover:bg-gray-200 dark:text-rose-400 dark:hover:text-gray-900"
+            >
+              Eliminar
+            </button>
           </div>
-          <button
-            (click)="openEditModal(saving)"
-            class="absolute top-3 right-4 p-2 rounded transition-colors font-medium tracking-wide text-teal-500 hover:bg-teal-300 hover:text-gray-900 dark:hover:bg-gray-200 dark:text-teal-400 dark:hover:text-gray-900"
-          >
-            Editar
-          </button>
-          <button
-            (click)="openDeleteModal(saving)"
-            class="absolute top-3 right-20 p-2 rounded transition-colors font-medium tracking-wide text-rose-500 hover:bg-rose-300 hover:text-gray-900 dark:hover:bg-gray-200 dark:text-rose-400 dark:hover:text-gray-900"
-          >
-            Eliminar
-          </button>
-        </div>
-      }
-      @if (isModalEditOpen) {
-        <app-goal-modal-edit
-          [goal]="selectedSaving!"
-          (closeModal)="closeEditModal()"
-          (save)="editSaving($event)"
-        />
-      }
-      @if (isModalDeleteOpen) {
-        <app-goal-modal-delete
-          [saving]="selectedSaving!"
-          (closeModal)="closeDeleteModal()"
-          (delete)="deleteSaving($event)"
-        />
-      }
-    </div>
-  }
-</main>
+        }
+        @if (isModalEditOpen) {
+          <app-goal-modal-edit
+            [goal]="selectedSaving!"
+            (closeModal)="closeEditModal()"
+            (save)="editSaving($event)"
+          />
+        }
+        @if (isModalDeleteOpen) {
+          <app-goal-modal-delete
+            [saving]="selectedSaving!"
+            (closeModal)="closeDeleteModal()"
+            (delete)="deleteSaving($event)"
+          />
+        }
+      </div>
+    }
+  </main>
+} @else {
+  <app-not-logged />
+}

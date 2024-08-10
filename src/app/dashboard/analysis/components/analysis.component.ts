@@ -2,21 +2,25 @@ import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/cor
 import { AsyncPipe, CommonModule } from '@angular/common'
 import { Title } from '@angular/platform-browser'
 
-import { ApiCallsService } from '../../../services'
+import { ApiCallsService, AuthCacheService } from '../../../services'
 import { PieChartComponent } from '../../../charts'
 import { Observable } from 'rxjs'
 import { Summary, TransactionChart } from '../../../models'
+import { NotLoggedComponent } from '../../../core'
 
 @Component({
   selector: 'app-analysis',
   standalone: true,
-  imports: [AsyncPipe, CommonModule, PieChartComponent],
+  imports: [AsyncPipe, CommonModule, PieChartComponent, NotLoggedComponent],
   templateUrl: './analysis.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AnalysisComponent implements OnInit {
   private readonly titleService = inject(Title)
   private readonly apiCalls = inject(ApiCallsService)
+  private readonly authCache = inject(AuthCacheService)
+  isLogged = this.authCache.isAuthenticated()
+
   currentMonth = new Date().toLocaleString('default', { month: 'long' })
   currentMonthNumber = new Date().getMonth() + 1
   currentYear = new Date().getFullYear()

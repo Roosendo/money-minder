@@ -1,4 +1,8 @@
-<main class="min-h-screen p-4">
-  <app-form [type]="'entries'" (formSubmitted)="onFormSubmitted()" />
-  <app-table [triggerUpdate]="triggerUpdate" [type]="'entries'" />
-</main>
+@if (isLogged) {
+  <main class="min-h-screen p-4">
+    <app-form [type]="'entries'" (formSubmitted)="onFormSubmitted()" />
+    <app-table [triggerUpdate]="triggerUpdate" [type]="'entries'" />
+  </main>
+} @else {
+  <app-not-logged />
+}
