@@ -30,10 +30,18 @@ export class AuthCacheService {
     if (userData) this.user = JSON.parse(decodeURIComponent(userData))
   }
 
-  getUser () {
+  /**
+   * Retrieves the user object.
+   * @returns The user object if available, otherwise undefined.
+   */
+  getUser (): User | undefined {
     return this.user?.user
   }
 
+  /**
+   * Sets the user data and stores it in a cookie.
+   * @param user - The user object to be stored.
+   */
   setUser (user: UserApi) {
     const userData = encodeURIComponent(JSON.stringify(user))
     this.cookieService.set(
@@ -48,6 +56,9 @@ export class AuthCacheService {
     this.user = user
   }
 
+  /**
+   * Clears the user information from the cache.
+   */
   clearUser () {
     this.cookieService.delete(
       this.USER_COOKIE_NAME,
@@ -59,7 +70,11 @@ export class AuthCacheService {
     this.user = null
   }
 
-  isAuthenticated () {
+  /**
+   * Checks if the user is authenticated.
+   * @returns {boolean} Returns true if the user is authenticated, otherwise false.
+   */
+  isAuthenticated (): boolean {
     return this.user !== null
   }
 }
