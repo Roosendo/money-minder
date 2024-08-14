@@ -3,12 +3,13 @@ import { NgOptimizedImage, isPlatformBrowser } from '@angular/common'
 
 import { AuthCacheService, User } from '../../services/auth-cache.service'
 import { RouterLink } from '@angular/router'
+import { LoginBttnComponent, NavigationBttnComponent } from '../../core'
 
 @Component({
   selector: 'app-btn-login',
   standalone: true,
   templateUrl: './btn-login.component.html',
-  imports: [NgOptimizedImage, RouterLink]
+  imports: [NgOptimizedImage, RouterLink, NavigationBttnComponent, LoginBttnComponent]
 })
 export class BtnLoginComponent implements OnInit {
   private platformId = inject(PLATFORM_ID)
