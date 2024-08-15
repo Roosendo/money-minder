@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit {
   private readonly authCache = inject(AuthCacheService)
 
   user = this.authCache.getUser()
+  isAuth = this.authCache.isAuthenticated()
   private readonly titleService = inject(Title)
 
   ngOnInit () {

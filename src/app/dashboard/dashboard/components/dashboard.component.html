@@ -24,23 +24,25 @@
 
 <div class='container mx-auto p-4 text-black dark:text-white'>
   <div class='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
-    <!-- Resumen Financiero Rápido -->
-    <app-financial-summary class="col-span-1 md:col-span-3" />
+    @if (isAuth) {
+      <!-- Resumen Financiero Rápido -->
+      <app-financial-summary class="col-span-1 md:col-span-3" />
 
-    <!-- Transacciones Recientes -->
-    <app-recent-transactions class="col-span-1 md:col-span-2" />
+      <!-- Transacciones Recientes -->
+      <app-recent-transactions class="col-span-1 md:col-span-2" />
 
-    <!-- Gráfico de Flujo de Efectivo -->
-    <app-cash-flow class="col-span-1 md:col-span-2 lg:col-span-3" />
+      <!-- Gráfico de Flujo de Efectivo -->
+      <app-cash-flow class="col-span-1 md:col-span-2 lg:col-span-3" />
 
-    <!-- Categorías Principales -->
-    <app-main-categories class="col-span-1 md:col-span-2 lg:col-span-3" />
+      <!-- Categorías Principales -->
+      <app-main-categories class="col-span-1 md:col-span-2 lg:col-span-3" />
 
-    <!-- Progreso hacia Objetivos -->
-    <app-goal />
+      <!-- Progreso hacia Objetivos -->
+      <app-goal />
 
-    <!-- Alertas y Notificaciones -->
-    <app-reminders />
+      <!-- Alertas y Notificaciones -->
+      <app-reminders />
+    }
 
     <!-- Quote of the day -->
     <app-quote />

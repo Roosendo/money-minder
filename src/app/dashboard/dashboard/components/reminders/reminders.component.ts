@@ -1,4 +1,4 @@
-import { Component, inject, NO_ERRORS_SCHEMA } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { ApiCallsService } from '../../../../services'
 import { AsyncPipe, DatePipe } from '@angular/common'
 
@@ -6,8 +6,7 @@ import { AsyncPipe, DatePipe } from '@angular/common'
   selector: 'app-reminders',
   standalone: true,
   templateUrl: './reminders.component.html',
-  imports: [AsyncPipe, DatePipe],
-  schemas: [NO_ERRORS_SCHEMA]
+  imports: [AsyncPipe, DatePipe]
 })
 export class RemindersComponent {
   private readonly apiCallsService = inject(ApiCallsService)

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core'
 import { Title } from '@angular/platform-browser'
 import { NgOptimizedImage } from '@angular/common'
 import { RouterLink } from '@angular/router'
@@ -8,9 +8,10 @@ import { LoginBttnComponent, NavigationBttnComponent } from '../../core'
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.component.html',
-  imports: [NgOptimizedImage, RouterLink, LoginBttnComponent, NavigationBttnComponent]
+  imports: [NgOptimizedImage, RouterLink, LoginBttnComponent, NavigationBttnComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeComponent implements OnInit {
+export default class HomeComponent implements OnInit {
   private titleService = inject(Title)
 
   ngOnInit () {
