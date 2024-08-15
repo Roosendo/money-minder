@@ -1,6 +1,6 @@
 @let goals = goals$ | async;
 
-@if (goals) {
+@if (goals && goals.length > 0) {
   <div class="rounded-lg bg-gray-100 p-4 shadow-lg dark:bg-gray-800">
     <h2 class="mb-4 text-lg font-semibold">Progreso hacia Objetivos</h2>
     <div id="goals" class="space-y-4">
