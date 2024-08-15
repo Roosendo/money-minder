@@ -15,8 +15,8 @@ export class FormComponent {
   formSubmitted = output<void>()
   type = input.required<'entries' | 'exits'>()
 
-  private readonly formSubmit = inject(FormSubmitService)
-  private readonly cdr = inject(ChangeDetectorRef)
+  private readonly formSubmit
+  private readonly cdr
 
   am_success = false
   am_category = false
@@ -27,6 +27,11 @@ export class FormComponent {
     amount: 0,
     category: '',
     description: ''
+  }
+
+  constructor () {
+    this.formSubmit = inject(FormSubmitService)
+    this.cdr = inject(ChangeDetectorRef)
   }
 
   private submitEntriesForm () {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
-import { SidebarComponent } from '../../dashboard/sidebar'
+import { SidebarComponent } from '../dashboard/sidebar'
 import { NgOptimizedImage } from '@angular/common'
 
 @Component({
@@ -12,4 +12,4 @@ import { NgOptimizedImage } from '@angular/common'
   `,
   imports: [RouterOutlet, SidebarComponent, NgOptimizedImage]
 })
-export class DashboardLayoutComponent {}
+export class DashboardLayoutComponent { }

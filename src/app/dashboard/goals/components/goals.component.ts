@@ -24,7 +24,7 @@ import { timer } from 'rxjs'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GoalsComponent implements OnInit {
+export default class GoalsComponent implements OnInit {
   formData = {
     name: '',
     targetAmount: 0,
@@ -37,13 +37,23 @@ export class GoalsComponent implements OnInit {
   selectedSaving: Saving | null = null
   amSuccess = false
   amWarning = false
-  private readonly apiCalls = inject(ApiCallsService)
-  private readonly formSubmit = inject(FormSubmitService)
-  private readonly cdr = inject(ChangeDetectorRef)
-  private readonly title = inject(Title)
-  private readonly authCache = inject(AuthCacheService)
-  isLogged = this.authCache.isAuthenticated()
-  savings$ = this.apiCalls.getSavings()
+  private readonly apiCalls
+  private readonly formSubmit
+  private readonly cdr
+  private readonly title
+  private readonly authCache
+  isLogged: boolean
+  savings$
+
+  constructor () {
+    this.apiCalls = inject(ApiCallsService)
+    this.formSubmit = inject(FormSubmitService)
+    this.cdr = inject(ChangeDetectorRef)
+    this.title = inject(Title)
+    this.authCache = inject(AuthCacheService)
+    this.isLogged = this.authCache.isAuthenticated()
+    this.savings$ = this.apiCalls.getSavings()
+  }
 
   ngOnInit (): void {
     this.title.setTitle('Savings | Money Minder')

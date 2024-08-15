@@ -11,7 +11,13 @@ import { ApiCallsService } from '../../../../services'
   imports: [AsyncPipe]
 })
 export class FinancialSummaryComponent {
-  private readonly apiCalls = inject(ApiCallsService)
-  financialSummary$: Observable<FSClean> = this.apiCalls.getFinancialSummary()
-  balance$ = this.financialSummary$.pipe(map((data) => (data.totalEntries - data.totalExits).toFixed(2)))
+  private readonly apiCalls
+  financialSummary$: Observable<FSClean>
+  balance$: Observable<string>
+
+  constructor () {
+    this.apiCalls = inject(ApiCallsService)
+    this.financialSummary$ = this.apiCalls.getFinancialSummary()
+    this.balance$ = this.financialSummary$.pipe(map((data) => (data.totalEntries - data.totalExits).toFixed(2)))
+  }
 }

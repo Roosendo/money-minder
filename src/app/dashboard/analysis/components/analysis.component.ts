@@ -15,11 +15,11 @@ import { NotLoggedComponent } from '../../../core'
   templateUrl: './analysis.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AnalysisComponent implements OnInit {
-  private readonly titleService = inject(Title)
-  private readonly apiCalls = inject(ApiCallsService)
-  private readonly authCache = inject(AuthCacheService)
-  isLogged = this.authCache.isAuthenticated()
+export default class AnalysisComponent implements OnInit {
+  private readonly titleService
+  private readonly apiCalls
+  private readonly authCache
+  isLogged: boolean
 
   currentMonth = new Date().toLocaleString('default', { month: 'long' })
   currentMonthNumber = new Date().getMonth() + 1
@@ -28,6 +28,13 @@ export class AnalysisComponent implements OnInit {
   summary$!: Observable<Summary>
   monthlyEntries$!: Observable<TransactionChart[]>
   monthlyExits$!: Observable<TransactionChart[]>
+
+  constructor () {
+    this.titleService = inject(Title)
+    this.apiCalls = inject(ApiCallsService)
+    this.authCache = inject(AuthCacheService)
+    this.isLogged = this.authCache.isAuthenticated()
+  }
 
   ngOnInit () {
     this.titleService.setTitle('Analysis | Money Minder')

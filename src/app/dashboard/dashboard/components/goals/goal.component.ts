@@ -9,6 +9,11 @@ import { AsyncPipe } from '@angular/common'
   imports: [AsyncPipe]
 })
 export class GoalComponent {
-  private readonly apiCalls = inject(ApiCallsService)
-  goals$ = this.apiCalls.getSavings()
+  private readonly apiCalls
+  goals$
+
+  constructor () {
+    this.apiCalls = inject(ApiCallsService)
+    this.goals$ = this.apiCalls.getSavings()
+  }
 }

@@ -12,13 +12,15 @@ import { LoginBttnComponent, NavigationBttnComponent } from '../../core'
   imports: [NgOptimizedImage, RouterLink, NavigationBttnComponent, LoginBttnComponent]
 })
 export class BtnLoginComponent implements OnInit {
-  private platformId = inject(PLATFORM_ID)
-  private authCache = inject(AuthCacheService)
+  private platformId
+  private authCache
 
   user: User | undefined = undefined
   isLogged: boolean
 
   constructor () {
+    this.authCache = inject(AuthCacheService)
+    this.platformId = inject(PLATFORM_ID)
     this.isLogged = this.authCache.isAuthenticated()
   }
 

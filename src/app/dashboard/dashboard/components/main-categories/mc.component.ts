@@ -11,6 +11,11 @@ import { ApiCallsService } from '../../../../services'
   imports: [PieChartComponent, AsyncPipe]
 })
 export class MainCategoriesComponent {
-  private readonly apiCalls = inject(ApiCallsService)
-  mainCategories$ = this.apiCalls.getMainCategories()
+  private readonly apiCalls
+  mainCategories$
+
+  constructor () {
+    this.apiCalls = inject(ApiCallsService)
+    this.mainCategories$ = this.apiCalls.getMainCategories()
+  }
 }

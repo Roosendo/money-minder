@@ -9,6 +9,11 @@ import { AsyncPipe, DatePipe } from '@angular/common'
   imports: [AsyncPipe, DatePipe]
 })
 export class RemindersComponent {
-  private readonly apiCallsService = inject(ApiCallsService)
-  reminders$ = this.apiCallsService.getReminders()
+  private readonly apiCallsService
+  reminders$
+
+  constructor () {
+    this.apiCallsService = inject(ApiCallsService)
+    this.reminders$ = this.apiCallsService.getReminders()
+  }
 }

@@ -13,11 +13,20 @@ import { BtnLoginComponent } from '../../../btn-login'
   imports: [NgOptimizedImage, RouterLink, ThemeToggleComponent, BtnLoginComponent, CommonModule]
 })
 export class SidebarComponent {
-  private readonly authCacheService = inject(AuthCacheService)
-  private readonly router = inject(Router)
+  private readonly authCacheService
+  private readonly router
 
-  isLogged = this.authCacheService.isAuthenticated()
-  user: User | undefined = this.authCacheService.getUser()
+  isLogged: boolean
+  user: User | undefined
+
+  constructor () {
+    this.authCacheService = inject(AuthCacheService)
+    this.router = inject(Router)
+
+    this.isLogged = this.authCacheService.isAuthenticated()
+    this.user = this.authCacheService.getUser()
+  }
+
   isSidebarOpen = false
 
   toggleSidebar () {

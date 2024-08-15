@@ -9,6 +9,11 @@ import { ApiCallsService } from '../../../../services'
   imports: [AsyncPipe]
 })
 export class QuoteComponent {
-  private readonly apiCalls = inject(ApiCallsService)
-  quote$ = this.apiCalls.getQuote()
+  private readonly apiCalls
+  quote$
+
+  constructor () {
+    this.apiCalls = inject(ApiCallsService)
+    this.quote$ = this.apiCalls.getQuote()
+  }
 }

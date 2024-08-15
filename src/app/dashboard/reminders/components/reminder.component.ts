@@ -25,23 +25,33 @@ import { ReminderDeleteComponent } from './reminder-delete/rmd.component'
     NotLoggedComponent
   ]
 })
-export class RemindersComponent implements OnInit {
-  private readonly title = inject(Title)
-  private readonly apiCalls = inject(ApiCallsService)
-  private readonly formSubmit = inject(FormSubmitService)
-  private readonly cdr = inject(ChangeDetectorRef)
-  private readonly authCache = inject(AuthCacheService)
-  isLogged = this.authCache.isAuthenticated()
+export default class RemindersComponent implements OnInit {
+  private readonly title
+  private readonly apiCalls
+  private readonly formSubmit
+  private readonly cdr
+  private readonly authCache
+  isLogged: boolean
   selectedReminder: Reminder | null = null
   isReminderEditOpen = false
   isReminderDeleteOpen = false
-  reminders$ = this.apiCalls.getReminders()
+  reminders$
   amSuccess = false
   amWarning = false
   formReminder = {
     description: '',
     reminderDate: '',
     title: ''
+  }
+
+  constructor () {
+    this.title = inject(Title)
+    this.apiCalls = inject(ApiCallsService)
+    this.formSubmit = inject(FormSubmitService)
+    this.cdr = inject(ChangeDetectorRef)
+    this.authCache = inject(AuthCacheService)
+    this.isLogged = this.authCache.isAuthenticated()
+    this.reminders$ = this.apiCalls.getReminders()
   }
 
   ngOnInit (): void {

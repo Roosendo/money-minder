@@ -27,12 +27,19 @@ import { FinancialSummaryComponent } from './financial-summary'
     QuoteComponent
   ]
 })
-export class DashboardComponent implements OnInit {
-  private readonly authCache = inject(AuthCacheService)
+export default class DashboardComponent implements OnInit {
+  private readonly authCache
+  private readonly titleService
+  user
+  isAuth
 
-  user = this.authCache.getUser()
-  isAuth = this.authCache.isAuthenticated()
-  private readonly titleService = inject(Title)
+  constructor () {
+    this.authCache = inject(AuthCacheService)
+    this.titleService = inject(Title)
+
+    this.user = this.authCache.getUser()
+    this.isAuth = this.authCache.isAuthenticated()
+  }
 
   ngOnInit () {
     this.titleService.setTitle('Dashboard | Money Minder')

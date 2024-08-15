@@ -12,11 +12,17 @@ import { AuthCacheService } from '../../../services'
   imports: [FormComponent, TableComponent, NotLoggedComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EntriesComponent implements OnInit {
-  private readonly titleService = inject(Title)
-  private readonly authCache = inject(AuthCacheService)
-  isLogged = this.authCache.isAuthenticated()
+export default class EntriesComponent implements OnInit {
+  private readonly titleService
+  private readonly authCache
+  isLogged: boolean
   triggerUpdate = false
+
+  constructor () {
+    this.titleService = inject(Title)
+    this.authCache = inject(AuthCacheService)
+    this.isLogged = this.authCache.isAuthenticated()
+  }
 
   ngOnInit () {
     this.titleService.setTitle('Entries | Money Minder')

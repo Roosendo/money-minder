@@ -10,11 +10,16 @@ import { AuthCacheService } from '../../services/auth-cache.service'
   selector: 'app-login',
   templateUrl: './login.component.html'
 })
-export class LoginComponent implements OnInit {
-  private authCacheService = inject(AuthCacheService)
-  private titleService = inject(Title)
+export default class LoginComponent implements OnInit {
+  private authCacheService
+  private titleService
+  isLogged
 
-  isLogged = this.authCacheService.isAuthenticated()
+  constructor () {
+    this.authCacheService = inject(AuthCacheService)
+    this.titleService = inject(Title)
+    this.isLogged = this.authCacheService.isAuthenticated()
+  }
 
   ngOnInit () {
     this.titleService.setTitle('Login | Money Minder')

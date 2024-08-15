@@ -11,8 +11,12 @@ import { LoginBttnComponent, NavigationBttnComponent } from '../../core'
   imports: [NgOptimizedImage, RouterLink, LoginBttnComponent, NavigationBttnComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class HomeComponent implements OnInit {
-  private titleService = inject(Title)
+export class HomeComponent implements OnInit {
+  private titleService
+
+  constructor () {
+    this.titleService = inject(Title)
+  }
 
   ngOnInit () {
     this.titleService.setTitle('Money Minder')

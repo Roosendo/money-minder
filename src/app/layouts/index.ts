@@ -1,1 +1,2 @@
-export * from './components'
+export * from './Main.component'
+export * from './Dashboard.component'

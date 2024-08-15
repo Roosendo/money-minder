@@ -14,9 +14,13 @@ export class TableComponent implements OnInit, OnChanges {
   triggerUpdate = input.required<boolean>()
   type = input.required<'entries' | 'exits'>()
 
-  private readonly apiCalls = inject(ApiCallsService)
+  private readonly apiCalls
 
   dataTransactions$!: Observable<Transaction[]>
+
+  constructor () {
+    this.apiCalls = inject(ApiCallsService)
+  }
 
   ngOnInit (): void {
     this.dataTransactions$ = this.getDataTransactions()

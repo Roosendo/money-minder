@@ -12,7 +12,11 @@ export class NavigationBttnComponent implements OnInit {
   text = input.required<string>()
   navigateTo = input.required<string>()
   fragment = input<string>()
-  private activatedRoute = inject(ActivatedRoute)
+  private activatedRoute
+
+  constructor () {
+    this.activatedRoute = inject(ActivatedRoute)
+  }
 
   ngOnInit (): void {
     this.activatedRoute.fragment.subscribe((fragment: string | null) => {

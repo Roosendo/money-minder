@@ -2,14 +2,7 @@ import { Routes, CanActivateChild } from '@angular/router'
 import { Injectable } from '@angular/core'
 
 import { MainComponent, DashboardLayoutComponent } from './layouts'
-// import { HomeComponent } from './home'
-import { LoginComponent } from './login'
-import { DashboardComponent } from './dashboard/dashboard'
-import { EntriesComponent } from './dashboard/entries'
-import { ExitsComponent } from './dashboard/exits'
-import { AnalysisComponent } from './dashboard/analysis'
-import { GoalsComponent } from './dashboard/goals'
-import { RemindersComponent } from './dashboard/reminders'
+import { HomeComponent } from './home'
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +18,8 @@ export const routes: Routes = [
     path: '',
     component: MainComponent,
     children: [
-      { path: '', loadChildren: () => import('./home/components/home.component') },
-      { path: 'login', component: LoginComponent }
+      { path: '', component: HomeComponent },
+      { path: 'login', loadComponent: () => import('./login/components/login.component') }
     ]
   },
   {
@@ -34,12 +27,12 @@ export const routes: Routes = [
     component: DashboardLayoutComponent,
     canActivateChild: [DashboardGuard],
     children: [
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'entries', component: EntriesComponent },
-      { path: 'exits', component: ExitsComponent },
-      { path: 'analysis', component: AnalysisComponent },
-      { path: 'savings', component: GoalsComponent },
-      { path: 'reminders', component: RemindersComponent }
+      { path: 'dashboard', loadComponent: () => import('./dashboard/dashboard/components/dashboard.component') },
+      { path: 'entries', loadComponent: () => import('./dashboard/entries/components/entries.component') },
+      { path: 'exits', loadComponent: () => import('./dashboard/exits/components/exits.component') },
+      { path: 'analysis', loadComponent: () => import('./dashboard/analysis/components/analysis.component') },
+      { path: 'savings', loadComponent: () => import('./dashboard/goals/components/goals.component') },
+      { path: 'reminders', loadComponent: () => import('./dashboard/reminders/components/reminder.component') }
     ]
   }
 ]

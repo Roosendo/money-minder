@@ -9,6 +9,11 @@ import { AsyncPipe, DatePipe } from '@angular/common'
   imports: [AsyncPipe, DatePipe]
 })
 export class RecentTransactionsComponent {
-  private readonly apiCalls = inject(ApiCallsService)
-  transactions$ = this.apiCalls.getRecentTransactions()
+  private readonly apiCalls
+  transactions$
+
+  constructor () {
+    this.apiCalls = inject(ApiCallsService)
+    this.transactions$ = this.apiCalls.getRecentTransactions()
+  }
 }
