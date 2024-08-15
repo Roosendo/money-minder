@@ -2,7 +2,7 @@ import { Routes, CanActivateChild } from '@angular/router'
 import { Injectable } from '@angular/core'
 
 import { MainComponent, DashboardLayoutComponent } from './layouts'
-import { HomeComponent } from './home'
+// import { HomeComponent } from './home'
 import { LoginComponent } from './login'
 import { DashboardComponent } from './dashboard/dashboard'
 import { EntriesComponent } from './dashboard/entries'
@@ -25,7 +25,7 @@ export const routes: Routes = [
     path: '',
     component: MainComponent,
     children: [
-      { path: '', component: HomeComponent },
+      { path: '', loadChildren: () => import('./home/components/home.component') },
       { path: 'login', component: LoginComponent }
     ]
   },
