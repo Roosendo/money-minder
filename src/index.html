@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <title>Money Minder</title>
@@ -9,6 +9,35 @@
   <style>
     :root {
       color-scheme: light dark;
+    }
+
+    body {
+      --sb-track-color: transparent;
+      --sb-thumb-color: #14b8a6;
+      --sb-size: 8px;
+    }
+
+    body::-webkit-scrollbar {
+      width: var(--sb-size);
+    }
+
+    body::-webkit-scrollbar-track {
+      background: var(--sb-track-color);
+      border-radius: 4px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background: var(--sb-thumb-color);
+      border-radius: 4px;
+      border: 2px solid var(--sb-thumb-color);
+
+    }
+
+    @supports not selector(::-webkit-scrollbar) {
+      body {
+        scrollbar-color: var(--sb-thumb-color)
+                        var(--sb-track-color);
+      }
     }
   </style>
 </head>
