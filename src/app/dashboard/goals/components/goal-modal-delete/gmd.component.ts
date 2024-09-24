@@ -1,6 +1,6 @@
 import { Component, input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core'
 import { FormsModule } from '@angular/forms'
-import { Saving } from '../../../../models'
+import type { Saving } from '@app/models'
 
 @Component({
   selector: 'app-goal-modal-delete',

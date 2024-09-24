@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { ThemeToggleComponent } from '../../theme-toggle'
+import { ThemeToggleComponent } from '@app/core/theme-toggle'
 
 @Component({
   selector: 'app-footer',

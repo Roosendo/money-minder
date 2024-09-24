@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
-import { ApiCallsService } from '../../../../services'
+import { ApiCallsService } from '@app/services'
 import { AsyncPipe } from '@angular/common'
 
 @Component({

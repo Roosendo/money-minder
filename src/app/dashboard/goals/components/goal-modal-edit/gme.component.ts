@@ -1,5 +1,5 @@
 import { Component, input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core'
-import { EditSaving, Saving } from '../../../../models'
+import type { EditSaving, Saving } from '@app/models'
 import { FormsModule } from '@angular/forms'
 
 @Component({

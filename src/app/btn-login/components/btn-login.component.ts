@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit, PLATFORM_ID, inject } from '@angular/core'
 import { NgOptimizedImage, isPlatformBrowser } from '@angular/common'
 
-import { AuthCacheService, User } from '../../services/auth-cache.service'
+import { AuthCacheService, User } from '@app/services/auth-cache.service'
 import { RouterLink } from '@angular/router'
-import { LoginBttnComponent, NavigationBttnComponent } from '../../core'
+import { LoginBttnComponent, NavigationBttnComponent } from '@app/core'
 
 @Component({
   selector: 'app-btn-login',

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core'
-import { Reminder } from '../../../../models'
+import type { Reminder } from '@app/models'
 import { FormsModule } from '@angular/forms'
 
 @Component({

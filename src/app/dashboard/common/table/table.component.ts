@@ -1,7 +1,7 @@
 import { AsyncPipe, CommonModule, DatePipe } from '@angular/common'
 import { ChangeDetectionStrategy, Component, inject, input, OnChanges, OnInit } from '@angular/core'
-import { ApiCallsService } from '../../../services'
-import { Transaction } from '../../../models'
+import { ApiCallsService } from '@app/services'
+import { Transaction } from '@app/models'
 import { Observable } from 'rxjs'
 
 @Component({

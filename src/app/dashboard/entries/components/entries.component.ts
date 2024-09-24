@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core'
 import { Title } from '@angular/platform-browser'
 
-import { TableComponent, FormComponent } from '../../common'
-import { NotLoggedComponent } from '../../../core'
-import { AuthCacheService } from '../../../services'
+import { TableComponent, FormComponent } from '@app/dashboard/common'
+import { NotLoggedComponent } from '@app/core'
+import { AuthCacheService } from '@app/services'
 
 @Component({
   selector: 'app-entries',

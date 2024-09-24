@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { AsyncPipe } from '@angular/common'
 
-import { PieChartComponent } from '../../../../charts'
-import { ApiCallsService } from '../../../../services'
+import { PieChartComponent } from '@app/charts'
+import { ApiCallsService } from '@app/services'
 
 @Component({
   selector: 'app-main-categories',

@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, output, inject, ChangeDetectorRef, input } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { timer } from 'rxjs'
-import { FormSubmitService } from '../../../services'
-import { AlertMessageComponent, SubmitBttnComponent } from '../../../core'
+import { FormSubmitService } from '@app/services'
+import { AlertMessageComponent, SubmitBttnComponent } from '@app/core'
 
 @Component({
   selector: 'app-form',

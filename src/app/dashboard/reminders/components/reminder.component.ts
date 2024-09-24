@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core'
 import { Title } from '@angular/platform-browser'
-import { AlertMessageComponent, NotLoggedComponent, SubmitBttnComponent } from '../../../core'
 import { FormsModule } from '@angular/forms'
-import { ApiCallsService, AuthCacheService, FormSubmitService } from '../../../services'
 import { AsyncPipe, DatePipe } from '@angular/common'
-import { ReminderEditComponent } from './reminder-edit/rme.component'
-import { EditReminder, Reminder } from '../../../models'
 import { timer } from 'rxjs'
-import { ReminderDeleteComponent } from './reminder-delete/rmd.component'
+import { AlertMessageComponent, NotLoggedComponent, SubmitBttnComponent } from '@app/core'
+import { ApiCallsService, AuthCacheService, FormSubmitService } from '@app/services'
+import { ReminderEditComponent } from './reminder-edit'
+import { EditReminder, Reminder } from '@app/models'
+import { ReminderDeleteComponent } from './reminder-delete'
 
 @Component({
   selector: 'app-reminder',

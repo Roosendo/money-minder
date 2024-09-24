@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, AfterViewInit } from '@angular/core'
 import { BaseChartDirective } from 'ng2-charts'
-import { CashFLow } from '../../models'
+import { CashFLow } from '@app/models'
 import { Chart, registerables } from 'chart.js'
 import { createGraphicBar } from '../utils'
 

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { AsyncPipe } from '@angular/common'
-import { ApiCallsService } from '../../../../services'
+import { ApiCallsService } from '@app/services'
 
 @Component({
   selector: 'app-quote',

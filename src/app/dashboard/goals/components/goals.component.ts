@@ -3,11 +3,11 @@ import { AsyncPipe } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { Title } from '@angular/platform-browser'
 
-import { AlertMessageComponent, NotLoggedComponent, SubmitBttnComponent } from '../../../core'
-import { ApiCallsService, AuthCacheService, FormSubmitService } from '../../../services'
-import { GoalModalEditComponent } from './goal-modal-edit/gme.component'
-import { EditSaving, Saving } from '../../../models'
-import { GoalModalDeleteComponent } from './goal-modal-delete/gmd.component'
+import { AlertMessageComponent, NotLoggedComponent, SubmitBttnComponent } from '@app/core'
+import { ApiCallsService, AuthCacheService, FormSubmitService } from '@app/services'
+import { GoalModalEditComponent } from './goal-modal-edit'
+import { EditSaving, Saving } from '@app/models'
+import { GoalModalDeleteComponent } from './goal-modal-delete'
 import { timer } from 'rxjs'
 
 @Component({

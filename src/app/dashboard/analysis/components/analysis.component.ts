@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/cor
 import { AsyncPipe, CommonModule } from '@angular/common'
 import { Title } from '@angular/platform-browser'
 
-import { ApiCallsService, AuthCacheService } from '../../../services'
-import { PieChartComponent } from '../../../charts'
+import { ApiCallsService, AuthCacheService } from '@app/services'
+import { PieChartComponent } from '@app/charts'
 import { Observable } from 'rxjs'
-import { Summary, TransactionChart } from '../../../models'
-import { NotLoggedComponent } from '../../../core'
+import { Summary, TransactionChart } from '@app/models'
+import { NotLoggedComponent } from '@app/core'
 
 @Component({
   selector: 'app-analysis',

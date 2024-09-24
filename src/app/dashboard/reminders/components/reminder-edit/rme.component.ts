@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, OnInit, output } from '@angular/core'
-import { EditReminder, Reminder } from '../../../../models'
+import { EditReminder, Reminder } from '@app/models'
 import { FormsModule } from '@angular/forms'
 
 @Component({

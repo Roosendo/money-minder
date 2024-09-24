@@ -1,6 +1,6 @@
 import { Component, input, OnDestroy, AfterViewChecked, ChangeDetectionStrategy } from '@angular/core'
 import { BaseChartDirective } from 'ng2-charts'
-import { TransactionChart } from '../../models'
+import { TransactionChart } from '@app/models'
 import { Chart, registerables } from 'chart.js'
 import { createGraphic } from '../utils'
 

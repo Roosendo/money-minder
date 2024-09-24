@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core'
 import { RouterLink } from '@angular/router'
-import { AuthCacheService } from '../../../services/auth-cache.service'
-import { NavigationBttnComponent } from '../../navigation-bttn/navigation-bttn.component'
-import { LoginBttnComponent } from '../../login-bttn/login-bttn.component'
+import { AuthCacheService } from '@app/services/auth-cache.service'
+import { NavigationBttnComponent } from '@app/core/navigation-bttn'
+import { LoginBttnComponent } from '@app/core/login-bttn'
 import { isPlatformBrowser } from '@angular/common'
 
 @Component({

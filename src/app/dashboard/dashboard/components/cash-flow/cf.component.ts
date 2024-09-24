@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { AsyncPipe } from '@angular/common'
 
-import { BarChartComponent } from '../../../../charts'
-import { ApiCallsService } from '../../../../services'
+import { BarChartComponent } from '@app/charts'
+import { ApiCallsService } from '@app/services'
 
 @Component({
   selector: 'app-cash-flow',

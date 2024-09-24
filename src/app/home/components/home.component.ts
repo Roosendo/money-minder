@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { Title } from '@angular/platform-browser'
 import { NgOptimizedImage } from '@angular/common'
 import { RouterLink } from '@angular/router'
-import { LoginBttnComponent, NavigationBttnComponent } from '../../core'
+import { LoginBttnComponent, NavigationBttnComponent } from '@app/core'
 
 @Component({
   selector: 'app-home',
