@@ -26,7 +26,7 @@
       class="mx-auto mt-4 flex h-auto w-2/3 flex-col space-y-4 sm:w-full sm:flex-row md:space-x-4 md:space-y-0"
     >
       <div class="flex-1">
-        @if (monthlyEntries) {
+        @if (monthlyEntries && monthlyEntries.length > 0) {
           <app-pie-chart
             [dataTC]="monthlyEntries"
             [text]="'Ingresos'"
@@ -35,7 +35,7 @@
         }
       </div>
       <div class="flex-1">
-        @if (monthlyExits) {
+        @if (monthlyExits && monthlyExits.length > 0) {
           <app-pie-chart
             [dataTC]="monthlyExits"
             [text]="'Egresos'"

@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { AsyncPipe } from '@angular/common'
 import { Observable, map } from 'rxjs'
-import { FSClean } from '../../../../models'
-import { ApiCallsService } from '../../../../services'
+import { FSClean } from '@app/models'
+import { ApiCallsService } from '@app/services'
 
 @Component({
   selector: 'app-financial-summary',

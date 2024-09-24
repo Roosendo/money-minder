@@ -1,6 +1,7 @@
 @let balance = balance$ | async;
+@let fs = financialSummary$ | async;
 
-@if (financialSummary$ | async; as fs) {
+@if (fs?.totalEntries && fs?.totalExits) {
   <section class='grid grid-cols-1 md:grid-cols-3 gap-4'>
     <div class='rounded-lg bg-gray-100 p-4 shadow-lg dark:bg-gray-800'>
       <h2 class='text-lg'>Balance Total</h2>
@@ -12,14 +13,14 @@
     <div class='rounded-lg bg-gray-100 p-4 shadow-lg dark:bg-gray-800'>
       <h2 class='text-lg'>Total Ingresos</h2>
       <p id='entries' class='text-2xl font-semibold'>
-        ${{ fs.totalEntries }}
+        ${{ fs?.totalEntries }}
       </p>
     </div>
 
     <div class='rounded-lg bg-gray-100 p-4 shadow-lg dark:bg-gray-800'>
       <h2 class='text-lg'>Total Gastos</h2>
       <p id='exits' class='text-2xl font-semibold'>
-        ${{ fs.totalExits }}
+        ${{ fs?.totalExits }}
       </p>
     </div>
   </section>
