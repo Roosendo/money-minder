@@ -1,4 +1,4 @@
-import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit, PLATFORM_ID, inject } from '@angular/core'
 import { NgOptimizedImage, isPlatformBrowser } from '@angular/common'
 
 import { AuthCacheService, User } from '../../services/auth-cache.service'
@@ -9,7 +9,8 @@ import { LoginBttnComponent, NavigationBttnComponent } from '../../core'
   selector: 'app-btn-login',
   standalone: true,
   templateUrl: './btn-login.component.html',
-  imports: [NgOptimizedImage, RouterLink, NavigationBttnComponent, LoginBttnComponent]
+  imports: [NgOptimizedImage, RouterLink, NavigationBttnComponent, LoginBttnComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BtnLoginComponent implements OnInit {
   private platformId

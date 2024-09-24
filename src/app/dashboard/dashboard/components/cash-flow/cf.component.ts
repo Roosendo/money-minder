@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { AsyncPipe } from '@angular/common'
 
 import { BarChartComponent } from '../../../../charts'
@@ -8,7 +8,8 @@ import { ApiCallsService } from '../../../../services'
   selector: 'app-cash-flow',
   standalone: true,
   templateUrl: './cf.component.html',
-  imports: [BarChartComponent, AsyncPipe]
+  imports: [BarChartComponent, AsyncPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CashFlowComponent {
   private readonly apiCalls

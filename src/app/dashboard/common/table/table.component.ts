@@ -1,5 +1,5 @@
 import { AsyncPipe, CommonModule, DatePipe } from '@angular/common'
-import { Component, inject, input, OnChanges, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject, input, OnChanges, OnInit } from '@angular/core'
 import { ApiCallsService } from '../../../services'
 import { Transaction } from '../../../models'
 import { Observable } from 'rxjs'
@@ -8,7 +8,8 @@ import { Observable } from 'rxjs'
   selector: 'app-table',
   templateUrl: './table.component.html',
   standalone: true,
-  imports: [AsyncPipe, CommonModule, DatePipe]
+  imports: [AsyncPipe, CommonModule, DatePipe],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent implements OnInit, OnChanges {
   triggerUpdate = input.required<boolean>()

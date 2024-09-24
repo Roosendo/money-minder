@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { AsyncPipe } from '@angular/common'
 
 import { PieChartComponent } from '../../../../charts'
@@ -8,7 +8,8 @@ import { ApiCallsService } from '../../../../services'
   selector: 'app-main-categories',
   standalone: true,
   templateUrl: './mc.component.html',
-  imports: [PieChartComponent, AsyncPipe]
+  imports: [PieChartComponent, AsyncPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainCategoriesComponent {
   private readonly apiCalls

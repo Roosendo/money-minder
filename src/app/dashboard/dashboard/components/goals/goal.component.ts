@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { ApiCallsService } from '../../../../services'
 import { AsyncPipe } from '@angular/common'
 
@@ -6,7 +6,8 @@ import { AsyncPipe } from '@angular/common'
   selector: 'app-goal',
   standalone: true,
   templateUrl: './goal.component.html',
-  imports: [AsyncPipe]
+  imports: [AsyncPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GoalComponent {
   private readonly apiCalls

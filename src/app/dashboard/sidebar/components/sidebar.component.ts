@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { CommonModule, NgOptimizedImage } from '@angular/common'
 import { RouterLink, Router } from '@angular/router'
 
@@ -10,7 +10,8 @@ import { BtnLoginComponent } from '../../../btn-login'
   selector: 'app-sidebar',
   standalone: true,
   templateUrl: './sidebar.component.html',
-  imports: [NgOptimizedImage, RouterLink, ThemeToggleComponent, BtnLoginComponent, CommonModule]
+  imports: [NgOptimizedImage, RouterLink, ThemeToggleComponent, BtnLoginComponent, CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent {
   private readonly authCacheService

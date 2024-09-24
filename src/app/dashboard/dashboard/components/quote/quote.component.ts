@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { AsyncPipe } from '@angular/common'
 import { ApiCallsService } from '../../../../services'
 
@@ -6,7 +6,8 @@ import { ApiCallsService } from '../../../../services'
   selector: 'app-quote',
   templateUrl: './quote.component.html',
   standalone: true,
-  imports: [AsyncPipe]
+  imports: [AsyncPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuoteComponent {
   private readonly apiCalls

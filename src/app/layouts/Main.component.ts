@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
 import { NgOptimizedImage } from '@angular/common'
 
@@ -13,6 +13,7 @@ import { FooterComponent } from '../core/footer'
     <router-outlet />
     <app-footer />
   `,
-  imports: [NavBarComponent, RouterOutlet, FooterComponent, NgOptimizedImage]
+  imports: [NavBarComponent, RouterOutlet, FooterComponent, NgOptimizedImage],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainComponent { }

@@ -25,6 +25,7 @@
     "@angular/ssr": "^18.2.3",
     "@fontsource-variable/saira": "5.0.30",
     "@midudev/tailwind-animations": "0.1.0",
+    "@ngrx/signals": "^18.0.2",
     "autoprefixer": "10.4.20",
     "chart.js": "^4.4.4",
     "express": "^4.19.2",

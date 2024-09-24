@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { ApiCallsService } from '../../../../services'
 import { AsyncPipe, DatePipe } from '@angular/common'
 
@@ -6,7 +6,8 @@ import { AsyncPipe, DatePipe } from '@angular/common'
   selector: 'app-recent-transactions',
   standalone: true,
   templateUrl: './rc.component.html',
-  imports: [AsyncPipe, DatePipe]
+  imports: [AsyncPipe, DatePipe],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecentTransactionsComponent {
   private readonly apiCalls

@@ -11,6 +11,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideExperimentalZonelessChangeDetection(),
     provideHttpClient(withFetch()),
-    provideRouter(routes, withComponentInputBinding()), provideCharts(withDefaultRegisterables())
+    provideRouter(routes, withComponentInputBinding()),
+    provideCharts(withDefaultRegisterables())
   ]
 }
