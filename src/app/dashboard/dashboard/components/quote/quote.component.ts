@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { AsyncPipe } from '@angular/common'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { ApiCallsService } from '@app/services'
 
 @Component({
@@ -13,7 +13,7 @@ export class QuoteComponent {
   private readonly apiCalls
   quote$
 
-  constructor () {
+  constructor() {
     this.apiCalls = inject(ApiCallsService)
     this.quote$ = this.apiCalls.getQuote()
   }

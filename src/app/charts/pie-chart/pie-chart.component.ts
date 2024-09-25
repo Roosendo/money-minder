@@ -1,7 +1,13 @@
-import { Component, input, OnDestroy, AfterViewChecked, ChangeDetectionStrategy } from '@angular/core'
-import { BaseChartDirective } from 'ng2-charts'
-import { TransactionChart } from '@app/models'
+import {
+  type AfterViewChecked,
+  ChangeDetectionStrategy,
+  Component,
+  type OnDestroy,
+  input
+} from '@angular/core'
+import type { TransactionChart } from '@app/models'
 import { Chart, registerables } from 'chart.js'
+import { BaseChartDirective } from 'ng2-charts'
 import { createGraphic } from '../utils'
 
 @Component({
@@ -17,34 +23,41 @@ export class PieChartComponent implements AfterViewChecked, OnDestroy {
   chartId = input.required<string>()
   private chartInstance: Chart<'pie', number[], string> | undefined
 
-  constructor () {
+  constructor() {
     Chart.register(...registerables)
   }
 
-  ngAfterViewChecked () {
+  ngAfterViewChecked() {
     this.initializeChart()
   }
 
-  ngOnDestroy () {
+  ngOnDestroy() {
     this.destroyChart()
   }
 
-  initializeChart () {
+  initializeChart() {
     if (this.chartInstance) {
       this.chartInstance.destroy()
     }
 
-    const canvas = document.querySelector(`#${this.chartId()}`) as HTMLCanvasElement
+    const canvas = document.querySelector(
+      `#${this.chartId()}`
+    ) as HTMLCanvasElement
     const ctx = canvas.getContext('2d')
 
     if (ctx && this.dataTC()) {
       const categories = this.dataTC().map((item) => item.category)
       const totalAmounts = this.dataTC().map((item) => item.total)
-      this.chartInstance = createGraphic(ctx, categories, totalAmounts, this.text())
+      this.chartInstance = createGraphic(
+        ctx,
+        categories,
+        totalAmounts,
+        this.text()
+      )
     }
   }
 
-  destroyChart () {
+  destroyChart() {
     if (this.chartInstance) {
       this.chartInstance.destroy()
       this.chartInstance = undefined

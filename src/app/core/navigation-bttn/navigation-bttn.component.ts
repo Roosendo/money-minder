@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject, input, OnInit } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  type OnInit,
+  inject,
+  input
+} from '@angular/core'
 import { ActivatedRoute, RouterLink } from '@angular/router'
 
 @Component({
@@ -14,17 +20,18 @@ export class NavigationBttnComponent implements OnInit {
   fragment = input<string>()
   private activatedRoute
 
-  constructor () {
+  constructor() {
     this.activatedRoute = inject(ActivatedRoute)
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.activatedRoute.fragment.subscribe((fragment: string | null) => {
       if (fragment) this.jumpToSection(fragment)
     })
   }
 
-  jumpToSection (section: string | null) {
-    if (section) document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' })
+  jumpToSection(section: string | null) {
+    if (section)
+      document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' })
   }
 }

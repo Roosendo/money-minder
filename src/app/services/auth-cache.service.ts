@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { CookieService } from 'ngx-cookie-service'
 
 export interface User {
@@ -21,11 +21,11 @@ export class AuthCacheService {
   private readonly USER_COOKIE_NAME = 'user-data-mm'
   private user: UserApi | null = null
 
-  constructor () {
+  constructor() {
     this.loadUserFromCookies()
   }
 
-  private loadUserFromCookies () {
+  private loadUserFromCookies() {
     const userData = this.cookieService.get(this.USER_COOKIE_NAME)
     if (userData) this.user = JSON.parse(decodeURIComponent(userData))
   }
@@ -34,7 +34,7 @@ export class AuthCacheService {
    * Retrieves the user object.
    * @returns The user object if available, otherwise undefined.
    */
-  getUser (): User | undefined {
+  getUser(): User | undefined {
     return this.user?.user
   }
 
@@ -42,7 +42,7 @@ export class AuthCacheService {
    * Sets the user data and stores it in a cookie.
    * @param user - The user object to be stored.
    */
-  setUser (user: UserApi) {
+  setUser(user: UserApi) {
     const userData = encodeURIComponent(JSON.stringify(user))
     this.cookieService.set(
       this.USER_COOKIE_NAME,
@@ -59,7 +59,7 @@ export class AuthCacheService {
   /**
    * Clears the user information from the cache.
    */
-  clearUser () {
+  clearUser() {
     this.cookieService.delete(
       this.USER_COOKIE_NAME,
       '/',
@@ -74,7 +74,7 @@ export class AuthCacheService {
    * Checks if the user is authenticated.
    * @returns {boolean} Returns true if the user is authenticated, otherwise false.
    */
-  isAuthenticated (): boolean {
+  isAuthenticated(): boolean {
     return this.user !== null
   }
 }

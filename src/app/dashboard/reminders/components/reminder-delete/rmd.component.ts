@@ -1,6 +1,11 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core'
-import type { Reminder } from '@app/models'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output
+} from '@angular/core'
 import { FormsModule } from '@angular/forms'
+import type { Reminder } from '@app/models'
 
 @Component({
   selector: 'app-reminder-delete',
@@ -14,11 +19,11 @@ export class ReminderDeleteComponent {
   delete = output<number>()
   close = output<void>()
 
-  onDelete () {
+  onDelete() {
     this.delete.emit(this.reminder().id)
   }
 
-  onClose () {
+  onClose() {
     this.close.emit()
   }
 }

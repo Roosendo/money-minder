@@ -1,7 +1,12 @@
-import { ChangeDetectionStrategy, Component, input, AfterViewInit } from '@angular/core'
-import { BaseChartDirective } from 'ng2-charts'
-import { CashFLow } from '@app/models'
+import {
+  type AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  input
+} from '@angular/core'
+import type { CashFLow } from '@app/models'
 import { Chart, registerables } from 'chart.js'
+import { BaseChartDirective } from 'ng2-charts'
 import { createGraphicBar } from '../utils'
 
 @Component({
@@ -30,26 +35,36 @@ export class BarChartComponent implements AfterViewInit {
     '12': 'Diciembre'
   }
 
-  constructor () {
+  constructor() {
     Chart.register(...registerables)
   }
 
-  ngAfterViewInit () {
+  ngAfterViewInit() {
     this.initializeChart()
   }
 
-  initializeChart () {
+  initializeChart() {
     if (this.dataCF()) {
       const ingresosMensuales = this.dataCF().map((cf) => cf.total_ingresos)
       const egresosMensuales = this.dataCF().map((cf) => cf.total_egresos)
       const saldoMensual = ingresosMensuales.map(
         (ingreso, index) => ingreso - egresosMensuales[index]
       )
-      const labelsToShow = this.dataCF().map((item) => this.months[item.month] || item.month)
+      const labelsToShow = this.dataCF().map(
+        (item) => this.months[item.month] || item.month
+      )
 
       this.canvas = document.querySelector('#barChart') as HTMLCanvasElement
       this.ctx = this.canvas.getContext('2d')
-      if (this.ctx) { createGraphicBar(this.ctx, labelsToShow, ingresosMensuales, egresosMensuales, saldoMensual) }
+      if (this.ctx) {
+        createGraphicBar(
+          this.ctx,
+          labelsToShow,
+          ingresosMensuales,
+          egresosMensuales,
+          saldoMensual
+        )
+      }
     }
   }
 }

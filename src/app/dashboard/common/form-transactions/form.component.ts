@@ -1,8 +1,15 @@
-import { ChangeDetectionStrategy, Component, output, inject, ChangeDetectorRef, input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  input,
+  output
+} from '@angular/core'
 import { FormsModule } from '@angular/forms'
-import { timer } from 'rxjs'
-import { FormSubmitService } from '@app/services'
 import { AlertMessageComponent, SubmitBttnComponent } from '@app/core'
+import { FormSubmitService } from '@app/services'
+import { timer } from 'rxjs'
 
 @Component({
   selector: 'app-form',
@@ -29,12 +36,12 @@ export class FormComponent {
     description: ''
   }
 
-  constructor () {
+  constructor() {
     this.formSubmit = inject(FormSubmitService)
     this.cdr = inject(ChangeDetectorRef)
   }
 
-  private submitEntriesForm () {
+  private submitEntriesForm() {
     this.formSubmit.entrySubmit(this.formData).subscribe({
       next: () => {
         this.am_success = true
@@ -56,7 +63,7 @@ export class FormComponent {
     })
   }
 
-  private submitExitsForm () {
+  private submitExitsForm() {
     this.formSubmit.exitSubmit(this.formData).subscribe({
       next: () => {
         this.am_success = true
@@ -78,7 +85,7 @@ export class FormComponent {
     })
   }
 
-  onSubmit () {
+  onSubmit() {
     if (!this.formData.category) {
       this.am_category = true
       timer(3500).subscribe(() => {

@@ -16,14 +16,16 @@
   "organizeImports": { "enabled": true },
   "linter": {
     "enabled": true,
-    "rules": { "recommended": false },
-    "ignore": ["projects/**/*", "tsconfig.app.json", ""]
+    "rules": {
+      "recommended": true
+    },
+    "ignore": ["projects/**/*", "tsconfig.app.json"]
   },
   "javascript": {
     "formatter": {
       "jsxQuoteStyle": "single",
       "quoteProperties": "asNeeded",
-      "trailingCommas": "all",
+      "trailingCommas": "none",
       "semicolons": "asNeeded",
       "arrowParentheses": "always",
       "bracketSameLine": false,

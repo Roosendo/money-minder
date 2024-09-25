@@ -1,8 +1,15 @@
 import { AsyncPipe, CommonModule, DatePipe } from '@angular/common'
-import { ChangeDetectionStrategy, Component, inject, input, OnChanges, OnInit } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  type OnChanges,
+  type OnInit,
+  inject,
+  input
+} from '@angular/core'
+import type { Transaction } from '@app/models'
 import { ApiCallsService } from '@app/services'
-import { Transaction } from '@app/models'
-import { Observable } from 'rxjs'
+import type { Observable } from 'rxjs'
 
 @Component({
   selector: 'app-table',
@@ -19,21 +26,23 @@ export class TableComponent implements OnInit, OnChanges {
 
   dataTransactions$!: Observable<Transaction[]>
 
-  constructor () {
+  constructor() {
     this.apiCalls = inject(ApiCallsService)
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.dataTransactions$ = this.getDataTransactions()
   }
 
-  ngOnChanges () {
+  ngOnChanges() {
     if (this.triggerUpdate()) {
       this.dataTransactions$ = this.getDataTransactions()
     }
   }
 
-  private getDataTransactions () {
-    return this.type() === 'entries' ? this.apiCalls.getLastEntries() : this.apiCalls.getLastExits()
+  private getDataTransactions() {
+    return this.type() === 'entries'
+      ? this.apiCalls.getLastEntries()
+      : this.apiCalls.getLastExits()
   }
 }

@@ -1,4 +1,10 @@
-import { Component, input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+  input
+} from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import type { Saving } from '@app/models'
 
@@ -14,11 +20,11 @@ export class GoalModalDeleteComponent {
   @Output() delete = new EventEmitter<number>()
   @Output() closeModal = new EventEmitter<void>()
 
-  onDelete () {
+  onDelete() {
     this.delete.emit(this.saving().id)
   }
 
-  onCloseModal () {
+  onCloseModal() {
     this.closeModal.emit()
   }
 }

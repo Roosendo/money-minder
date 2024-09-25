@@ -1,4 +1,10 @@
-import { EntryTransaction, ExitTransaction, FinancialSummary, FSClean, Transaction } from '../models'
+import type {
+  EntryTransaction,
+  ExitTransaction,
+  FSClean,
+  FinancialSummary,
+  Transaction
+} from '../models'
 
 /**
  * Converts a FinancialSummary object to an FSClean object.
@@ -19,9 +25,12 @@ export const financialSummaryAdapter = (data: FinancialSummary): FSClean => {
  * @param data - The array of EntryTransaction or ExitTransaction objects to be transformed.
  * @returns The transformed array of Transaction objects.
  */
-export const transformArrayTransactions = (data: (EntryTransaction | ExitTransaction)[]): Transaction[] => {
-  return data.map(item => {
-    const id = (item as EntryTransaction).entry_id || (item as ExitTransaction).exit_id
+export const transformArrayTransactions = (
+  data: (EntryTransaction | ExitTransaction)[]
+): Transaction[] => {
+  return data.map((item) => {
+    const id =
+      (item as EntryTransaction).entry_id || (item as ExitTransaction).exit_id
     return { ...item, id }
   })
 }

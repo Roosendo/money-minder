@@ -1,15 +1,20 @@
-import { NgOptimizedImage, AsyncPipe } from '@angular/common'
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core'
+import { AsyncPipe, NgOptimizedImage } from '@angular/common'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject
+} from '@angular/core'
 import { Title } from '@angular/platform-browser'
 
 import { AuthCacheService } from '../../../services'
-import { RecentTransactionsComponent } from './recent-transactions'
 import { CashFlowComponent } from './cash-flow'
-import { MainCategoriesComponent } from './main-categories'
-import { GoalComponent } from './goals'
-import { RemindersComponent } from './reminders'
-import { QuoteComponent } from './quote'
 import { FinancialSummaryComponent } from './financial-summary'
+import { GoalComponent } from './goals'
+import { MainCategoriesComponent } from './main-categories'
+import { QuoteComponent } from './quote'
+import { RecentTransactionsComponent } from './recent-transactions'
+import { RemindersComponent } from './reminders'
 
 @Component({
   selector: 'app-dashboard',
@@ -34,7 +39,7 @@ export default class DashboardComponent implements OnInit {
   user
   isAuth
 
-  constructor () {
+  constructor() {
     this.authCache = inject(AuthCacheService)
     this.titleService = inject(Title)
 
@@ -42,7 +47,7 @@ export default class DashboardComponent implements OnInit {
     this.isAuth = this.authCache.isAuthenticated()
   }
 
-  ngOnInit () {
+  ngOnInit() {
     this.titleService.setTitle('Dashboard | Money Minder')
   }
 }

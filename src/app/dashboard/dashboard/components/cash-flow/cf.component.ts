@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { AsyncPipe } from '@angular/common'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 
 import { BarChartComponent } from '@app/charts'
 import { ApiCallsService } from '@app/services'
@@ -15,7 +15,7 @@ export class CashFlowComponent {
   private readonly apiCalls
   cashFlow$
 
-  constructor () {
+  constructor() {
     this.apiCalls = inject(ApiCallsService)
     this.cashFlow$ = this.apiCalls.getCashFlow()
   }

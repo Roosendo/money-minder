@@ -1,8 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  type OnInit,
+  inject
+} from '@angular/core'
 import { Title } from '@angular/platform-browser'
 
-import { TableComponent, FormComponent } from '@app/dashboard/common'
 import { NotLoggedComponent } from '@app/core'
+import { FormComponent, TableComponent } from '@app/dashboard/common'
 import { AuthCacheService } from '@app/services'
 
 @Component({
@@ -18,17 +23,17 @@ export default class EntriesComponent implements OnInit {
   isLogged: boolean
   triggerUpdate = false
 
-  constructor () {
+  constructor() {
     this.titleService = inject(Title)
     this.authCache = inject(AuthCacheService)
     this.isLogged = this.authCache.isAuthenticated()
   }
 
-  ngOnInit () {
+  ngOnInit() {
     this.titleService.setTitle('Entries | Money Minder')
   }
 
-  onFormSubmitted () {
+  onFormSubmitted() {
     this.triggerUpdate = !this.triggerUpdate
   }
 }

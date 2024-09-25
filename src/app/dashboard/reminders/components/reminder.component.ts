@@ -1,13 +1,27 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core'
-import { Title } from '@angular/platform-browser'
-import { FormsModule } from '@angular/forms'
 import { AsyncPipe, DatePipe } from '@angular/common'
-import { timer } from 'rxjs'
-import { AlertMessageComponent, NotLoggedComponent, SubmitBttnComponent } from '@app/core'
-import { ApiCallsService, AuthCacheService, FormSubmitService } from '@app/services'
-import { ReminderEditComponent } from './reminder-edit'
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  inject
+} from '@angular/core'
+import { FormsModule } from '@angular/forms'
+import { Title } from '@angular/platform-browser'
+import {
+  AlertMessageComponent,
+  NotLoggedComponent,
+  SubmitBttnComponent
+} from '@app/core'
 import { EditReminder, Reminder } from '@app/models'
+import {
+  ApiCallsService,
+  AuthCacheService,
+  FormSubmitService
+} from '@app/services'
+import { timer } from 'rxjs'
 import { ReminderDeleteComponent } from './reminder-delete'
+import { ReminderEditComponent } from './reminder-edit'
 
 @Component({
   selector: 'app-reminder',
@@ -44,7 +58,7 @@ export default class RemindersComponent implements OnInit {
     title: ''
   }
 
-  constructor () {
+  constructor() {
     this.title = inject(Title)
     this.apiCalls = inject(ApiCallsService)
     this.formSubmit = inject(FormSubmitService)
@@ -54,11 +68,11 @@ export default class RemindersComponent implements OnInit {
     this.reminders$ = this.apiCalls.getReminders()
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.title.setTitle('Reminders | Money Minder')
   }
 
-  onNewReminderSubmit () {
+  onNewReminderSubmit() {
     this.formSubmit.reminderSubmit(this.formReminder).subscribe({
       next: () => {
         this.amSuccess = true
@@ -84,27 +98,27 @@ export default class RemindersComponent implements OnInit {
     })
   }
 
-  onCloseModal () {
+  onCloseModal() {
     this.isReminderEditOpen = false
     this.selectedReminder = null
   }
 
-  openReminderEdit (reminder: Reminder) {
+  openReminderEdit(reminder: Reminder) {
     this.selectedReminder = reminder
     this.isReminderDeleteOpen = true
   }
 
-  openReminderDelete (reminder: Reminder) {
+  openReminderDelete(reminder: Reminder) {
     this.selectedReminder = reminder
     this.isReminderDeleteOpen = true
   }
 
-  closeReminderDelete () {
+  closeReminderDelete() {
     this.isReminderDeleteOpen = false
     this.selectedReminder = null
   }
 
-  onDelete (id: number) {
+  onDelete(id: number) {
     this.formSubmit.deleteReminder(id).subscribe({
       next: () => {
         this.closeReminderDelete()
@@ -117,7 +131,7 @@ export default class RemindersComponent implements OnInit {
     })
   }
 
-  onSave (editReminder: EditReminder) {
+  onSave(editReminder: EditReminder) {
     this.formSubmit.editReminder(editReminder).subscribe({
       next: () => {
         this.onCloseModal()

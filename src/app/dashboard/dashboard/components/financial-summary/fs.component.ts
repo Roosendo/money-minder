@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { AsyncPipe } from '@angular/common'
-import { Observable, map } from 'rxjs'
-import { FSClean } from '@app/models'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
+import type { FSClean } from '@app/models'
 import { ApiCallsService } from '@app/services'
+import { type Observable, map } from 'rxjs'
 
 @Component({
   selector: 'app-financial-summary',
@@ -16,9 +16,11 @@ export class FinancialSummaryComponent {
   financialSummary$: Observable<FSClean>
   balance$: Observable<string>
 
-  constructor () {
+  constructor() {
     this.apiCalls = inject(ApiCallsService)
     this.financialSummary$ = this.apiCalls.getFinancialSummary()
-    this.balance$ = this.financialSummary$.pipe(map((data) => (data.totalEntries - data.totalExits).toFixed(2)))
+    this.balance$ = this.financialSummary$.pipe(
+      map((data) => (data.totalEntries - data.totalExits).toFixed(2))
+    )
   }
 }

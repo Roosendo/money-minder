@@ -1,6 +1,13 @@
-import { Component, input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core'
-import type { EditSaving, Saving } from '@app/models'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  type OnInit,
+  Output,
+  input
+} from '@angular/core'
 import { FormsModule } from '@angular/forms'
+import type { EditSaving, Saving } from '@app/models'
 
 @Component({
   selector: 'app-goal-modal-edit',
@@ -21,7 +28,7 @@ export class GoalModalEditComponent implements OnInit {
     newEndDate: ''
   }
 
-  ngOnInit () {
+  ngOnInit() {
     this.formEdit = {
       newSavingName: this.goal().name,
       newTarget: this.goal().target_amount,
@@ -31,11 +38,11 @@ export class GoalModalEditComponent implements OnInit {
     }
   }
 
-  onSave () {
+  onSave() {
     this.save.emit(this.formEdit)
   }
 
-  onCloseModal () {
+  onCloseModal() {
     this.closeModal.emit()
   }
 }

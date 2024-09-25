@@ -1,15 +1,26 @@
-import { ChangeDetectionStrategy, Component, OnInit, PLATFORM_ID, inject } from '@angular/core'
 import { NgOptimizedImage, isPlatformBrowser } from '@angular/common'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  type OnInit,
+  PLATFORM_ID,
+  inject
+} from '@angular/core'
 
-import { AuthCacheService, User } from '@app/services/auth-cache.service'
 import { RouterLink } from '@angular/router'
 import { LoginBttnComponent, NavigationBttnComponent } from '@app/core'
+import { AuthCacheService, type User } from '@app/services/auth-cache.service'
 
 @Component({
   selector: 'app-btn-login',
   standalone: true,
   templateUrl: './btn-login.component.html',
-  imports: [NgOptimizedImage, RouterLink, NavigationBttnComponent, LoginBttnComponent],
+  imports: [
+    NgOptimizedImage,
+    RouterLink,
+    NavigationBttnComponent,
+    LoginBttnComponent
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BtnLoginComponent implements OnInit {
@@ -19,25 +30,25 @@ export class BtnLoginComponent implements OnInit {
   user: User | undefined = undefined
   isLogged: boolean
 
-  constructor () {
+  constructor() {
     this.authCache = inject(AuthCacheService)
     this.platformId = inject(PLATFORM_ID)
     this.isLogged = this.authCache.isAuthenticated()
   }
 
-  redirectTo (provider: string): void {
+  redirectTo(provider: string): void {
     const url = `https://money-minder-api.vercel.app/api/${provider}`
     window.location.href = url
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.setCookie()
       this.readCookie()
     }
   }
 
-  private setCookie () {
+  private setCookie() {
     const params = new URLSearchParams(window.location.search)
     const userParams = params.get('user')
 
@@ -48,12 +59,12 @@ export class BtnLoginComponent implements OnInit {
     }
   }
 
-  private readCookie () {
+  private readCookie() {
     this.authCache.getUser()
     this.user = this.authCache.getUser()
   }
 
-  logout (): void {
+  logout(): void {
     this.authCache.clearUser()
     window.location.href = '/login'
   }

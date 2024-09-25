@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  type OnInit,
+  inject
+} from '@angular/core'
 import { Title } from '@angular/platform-browser'
 
 import { BtnLoginComponent } from '@app/btn-login'
@@ -16,13 +21,13 @@ export default class LoginComponent implements OnInit {
   private titleService
   isLogged
 
-  constructor () {
+  constructor() {
     this.authCacheService = inject(AuthCacheService)
     this.titleService = inject(Title)
     this.isLogged = this.authCacheService.isAuthenticated()
   }
 
-  ngOnInit () {
+  ngOnInit() {
     this.titleService.setTitle('Login | Money Minder')
   }
 }

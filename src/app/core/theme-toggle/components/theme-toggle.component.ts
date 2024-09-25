@@ -1,5 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit, PLATFORM_ID, inject } from '@angular/core'
 import { isPlatformBrowser } from '@angular/common'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  type OnInit,
+  PLATFORM_ID,
+  inject
+} from '@angular/core'
 
 @Component({
   selector: 'app-theme-toggle',
@@ -13,20 +19,23 @@ export class ThemeToggleComponent implements OnInit {
   private readonly LIGHT_CLASS = 'light'
   private platformId
 
-  constructor () {
+  constructor() {
     this.platformId = inject(PLATFORM_ID)
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) this.setTheme()
   }
 
-  private setTheme (): void {
+  private setTheme(): void {
     const triggerLightTheme = document.getElementById('light-theme')
     const triggerDarkTheme = document.getElementById('dark-theme')
 
     const theme = (() => {
-      if (typeof localStorage !== 'undefined' && localStorage.getItem(this.STORAGE_THEME_ITEM)) {
+      if (
+        typeof localStorage !== 'undefined' &&
+        localStorage.getItem(this.STORAGE_THEME_ITEM)
+      ) {
         return localStorage.getItem(this.STORAGE_THEME_ITEM)
       }
       if (window.matchMedia('(prefers-color-scheme: dark)').matches) {

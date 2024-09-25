@@ -1,14 +1,28 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core'
 import { AsyncPipe } from '@angular/common'
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  type OnInit,
+  inject
+} from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { Title } from '@angular/platform-browser'
 
-import { AlertMessageComponent, NotLoggedComponent, SubmitBttnComponent } from '@app/core'
-import { ApiCallsService, AuthCacheService, FormSubmitService } from '@app/services'
-import { GoalModalEditComponent } from './goal-modal-edit'
-import { EditSaving, Saving } from '@app/models'
-import { GoalModalDeleteComponent } from './goal-modal-delete'
+import {
+  AlertMessageComponent,
+  NotLoggedComponent,
+  SubmitBttnComponent
+} from '@app/core'
+import type { EditSaving, Saving } from '@app/models'
+import {
+  ApiCallsService,
+  AuthCacheService,
+  FormSubmitService
+} from '@app/services'
 import { timer } from 'rxjs'
+import { GoalModalDeleteComponent } from './goal-modal-delete'
+import { GoalModalEditComponent } from './goal-modal-edit'
 
 @Component({
   selector: 'app-goals',
@@ -16,7 +30,8 @@ import { timer } from 'rxjs'
   standalone: true,
   imports: [
     AlertMessageComponent,
-    FormsModule, AsyncPipe,
+    FormsModule,
+    AsyncPipe,
     GoalModalEditComponent,
     GoalModalDeleteComponent,
     SubmitBttnComponent,
@@ -45,7 +60,7 @@ export default class GoalsComponent implements OnInit {
   isLogged: boolean
   savings$
 
-  constructor () {
+  constructor() {
     this.apiCalls = inject(ApiCallsService)
     this.formSubmit = inject(FormSubmitService)
     this.cdr = inject(ChangeDetectorRef)
@@ -55,11 +70,11 @@ export default class GoalsComponent implements OnInit {
     this.savings$ = this.apiCalls.getSavings()
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.title.setTitle('Savings | Money Minder')
   }
 
-  onNewSavingSubmit () {
+  onNewSavingSubmit() {
     this.formSubmit.savingSubmit(this.formData).subscribe({
       next: () => {
         this.amSuccess = true
@@ -89,27 +104,27 @@ export default class GoalsComponent implements OnInit {
     })
   }
 
-  openEditModal (saving: Saving) {
+  openEditModal(saving: Saving) {
     this.isModalEditOpen = true
     this.selectedSaving = saving
   }
 
-  closeEditModal () {
+  closeEditModal() {
     this.isModalEditOpen = false
     this.selectedSaving = null
   }
 
-  openDeleteModal (saving: Saving) {
+  openDeleteModal(saving: Saving) {
     this.isModalDeleteOpen = true
     this.selectedSaving = saving
   }
 
-  closeDeleteModal () {
+  closeDeleteModal() {
     this.isModalDeleteOpen = false
     this.selectedSaving = null
   }
 
-  editSaving (saving: EditSaving) {
+  editSaving(saving: EditSaving) {
     this.formSubmit.editSaving(saving).subscribe({
       next: () => {
         this.closeEditModal()
@@ -122,7 +137,7 @@ export default class GoalsComponent implements OnInit {
     })
   }
 
-  deleteSaving (id: number) {
+  deleteSaving(id: number) {
     this.formSubmit.deleteSaving(id).subscribe({
       next: () => {
         this.closeDeleteModal()
@@ -135,8 +150,10 @@ export default class GoalsComponent implements OnInit {
     })
   }
 
-  calculateProgress (saving: Saving): number {
-    const progress = Math.round((saving.current_amount / saving.target_amount) * 100)
+  calculateProgress(saving: Saving): number {
+    const progress = Math.round(
+      (saving.current_amount / saving.target_amount) * 100
+    )
     return progress > 100 ? 100 : progress
   }
 }

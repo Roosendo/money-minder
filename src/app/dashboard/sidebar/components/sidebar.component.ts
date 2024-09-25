@@ -1,16 +1,22 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { CommonModule, NgOptimizedImage } from '@angular/common'
-import { RouterLink, Router } from '@angular/router'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
+import { Router, RouterLink } from '@angular/router'
 
-import { AuthCacheService, User } from '@app/services'
-import { ThemeToggleComponent } from '@app/core'
 import { BtnLoginComponent } from '@app/btn-login'
+import { ThemeToggleComponent } from '@app/core'
+import { AuthCacheService, type User } from '@app/services'
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
   templateUrl: './sidebar.component.html',
-  imports: [NgOptimizedImage, RouterLink, ThemeToggleComponent, BtnLoginComponent, CommonModule],
+  imports: [
+    NgOptimizedImage,
+    RouterLink,
+    ThemeToggleComponent,
+    BtnLoginComponent,
+    CommonModule
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent {
@@ -20,7 +26,7 @@ export class SidebarComponent {
   isLogged: boolean
   user: User | undefined
 
-  constructor () {
+  constructor() {
     this.authCacheService = inject(AuthCacheService)
     this.router = inject(Router)
 
@@ -30,23 +36,23 @@ export class SidebarComponent {
 
   isSidebarOpen = false
 
-  toggleSidebar () {
-    const sidebar = document.getElementById('sidebar')!
-    const separator = document.getElementById('separator-sidebar')!
+  toggleSidebar() {
+    const sidebar = document.getElementById('sidebar')
+    const separator = document.getElementById('separator-sidebar')
 
-    sidebar.classList.toggle('-translate-x-full', this.isSidebarOpen)
-    sidebar.classList.toggle('shadow-2xl', !this.isSidebarOpen)
-    separator.classList.toggle('translate-x-64', !this.isSidebarOpen)
+    sidebar?.classList.toggle('-translate-x-full', this.isSidebarOpen)
+    sidebar?.classList.toggle('shadow-2xl', !this.isSidebarOpen)
+    separator?.classList.toggle('translate-x-64', !this.isSidebarOpen)
 
     this.isSidebarOpen = !this.isSidebarOpen
   }
 
-  logOut () {
+  logOut() {
     this.authCacheService.clearUser()
     document.location.reload()
   }
 
-  getCurrentRoute () {
+  getCurrentRoute() {
     return this.router.url
   }
 }

@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { AsyncPipe } from '@angular/common'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 
 import { PieChartComponent } from '@app/charts'
 import { ApiCallsService } from '@app/services'
@@ -15,7 +15,7 @@ export class MainCategoriesComponent {
   private readonly apiCalls
   mainCategories$
 
-  constructor () {
+  constructor() {
     this.apiCalls = inject(ApiCallsService)
     this.mainCategories$ = this.apiCalls.getMainCategories()
   }

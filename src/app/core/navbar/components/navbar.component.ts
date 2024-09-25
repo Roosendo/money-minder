@@ -1,9 +1,16 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core'
-import { RouterLink } from '@angular/router'
-import { AuthCacheService } from '@app/services/auth-cache.service'
-import { NavigationBttnComponent } from '@app/core/navigation-bttn'
-import { LoginBttnComponent } from '@app/core/login-bttn'
 import { isPlatformBrowser } from '@angular/common'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  type OnDestroy,
+  type OnInit,
+  PLATFORM_ID,
+  inject
+} from '@angular/core'
+import { RouterLink } from '@angular/router'
+import { LoginBttnComponent } from '@app/core/login-bttn'
+import { NavigationBttnComponent } from '@app/core/navigation-bttn'
+import { AuthCacheService } from '@app/services/auth-cache.service'
 
 @Component({
   selector: 'app-navbar',
@@ -21,13 +28,13 @@ export class NavBarComponent implements OnInit, OnDestroy {
   private platformId
   isLogged: boolean
 
-  constructor () {
+  constructor() {
     this.authCacheService = inject(AuthCacheService)
     this.isLogged = this.authCacheService.isAuthenticated()
     this.platformId = inject(PLATFORM_ID)
   }
 
-  ngOnInit () {
+  ngOnInit() {
     if (!isPlatformBrowser(this.platformId)) return
 
     this.navbar = document.querySelector('#navbar-sticky')
@@ -36,22 +43,24 @@ export class NavBarComponent implements OnInit, OnDestroy {
     const navItems = document.querySelectorAll('li a')
 
     if (sections.length === 0 || navItems.length === 0) {
-      console.warn('No se encontraron secciones o elementos de navegación para observar.')
+      console.warn(
+        'No se encontraron secciones o elementos de navegación para observar.'
+      )
       return
     }
 
     const callback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
+      for (const entry of entries) {
         if (entry.isIntersecting) {
-          navItems.forEach((navItem) => {
-            if (navItem.getAttribute('aria-label') === entry.target.id) {
-              navItem.classList.add('text-cyan-500')
-            } else {
-              navItem.classList.remove('text-cyan-500')
-            }
-          })
+          for (const navItem of Array.from(navItems)) {
+        if (navItem.getAttribute('aria-label') === entry.target.id) {
+          navItem.classList.add('text-cyan-500')
+        } else {
+          navItem.classList.remove('text-cyan-500')
         }
-      })
+          }
+        }
+      }
     }
 
     this.observer = new IntersectionObserver(callback, {
@@ -60,26 +69,26 @@ export class NavBarComponent implements OnInit, OnDestroy {
       threshold: 0.3
     })
 
-    sections.forEach((section) => {
-      this.observer?.observe(section)
-    })
+    for(const section of Array.from(sections)) {
+      this.observer.observe(section)
+    }
 
     document.onvisibilitychange = () => {
       if (document.visibilityState === 'hidden') {
         this.observer?.disconnect()
       } else {
-        sections.forEach((section) => {
+        for (const section of Array.from(sections)) {
           this.observer?.observe(section)
-        })
+        }
       }
     }
   }
 
-  ngOnDestroy () {
+  ngOnDestroy() {
     this.observer?.disconnect()
   }
 
-  animateSidebar () {
+  animateSidebar() {
     if (this.navbar) {
       this.navbar.classList.toggle('hidden', this.isSideBarOpen)
       this.navbar.classList.toggle('flex', !this.isSideBarOpen)

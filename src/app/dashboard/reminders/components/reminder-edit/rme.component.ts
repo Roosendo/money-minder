@@ -1,6 +1,12 @@
-import { ChangeDetectionStrategy, Component, input, OnInit, output } from '@angular/core'
-import { EditReminder, Reminder } from '@app/models'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  type OnInit,
+  input,
+  output
+} from '@angular/core'
 import { FormsModule } from '@angular/forms'
+import type { EditReminder, Reminder } from '@app/models'
 
 @Component({
   selector: 'app-reminder-edit',
@@ -20,7 +26,7 @@ export class ReminderEditComponent implements OnInit {
   closeModal = output<void>()
   save = output<EditReminder>()
 
-  ngOnInit () {
+  ngOnInit() {
     this.reminderEdit = {
       newDescription: this.reminder().description,
       newDate: this.reminder().reminder_date,
@@ -29,11 +35,11 @@ export class ReminderEditComponent implements OnInit {
     }
   }
 
-  onSave () {
+  onSave() {
     this.save.emit(this.reminderEdit)
   }
 
-  onCloseModal () {
+  onCloseModal() {
     this.closeModal.emit()
   }
 }

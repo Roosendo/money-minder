@@ -1,6 +1,6 @@
+import { AsyncPipe, DatePipe } from '@angular/common'
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { ApiCallsService } from '@app/services'
-import { AsyncPipe, DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-recent-transactions',
@@ -13,7 +13,7 @@ export class RecentTransactionsComponent {
   private readonly apiCalls
   transactions$
 
-  constructor () {
+  constructor() {
     this.apiCalls = inject(ApiCallsService)
     this.transactions$ = this.apiCalls.getRecentTransactions()
   }

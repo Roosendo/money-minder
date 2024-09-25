@@ -1,6 +1,6 @@
+import { AsyncPipe } from '@angular/common'
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { ApiCallsService } from '@app/services'
-import { AsyncPipe } from '@angular/common'
 
 @Component({
   selector: 'app-goal',
@@ -13,7 +13,7 @@ export class GoalComponent {
   private readonly apiCalls
   goals$
 
-  constructor () {
+  constructor() {
     this.apiCalls = inject(ApiCallsService)
     this.goals$ = this.apiCalls.getSavings()
   }
