@@ -8,8 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:money-minder": "node dist/money-minder/server/server.mjs",
-    "lint": "ng lint",
-    "lint:fix": "eslint --fix \"src/**/*.ts\""
+    "format": "pnpm biome format --write ./src",
+    "lint": "pnpm biome lint --write ./src",
+    "check": "pnpm biome check --write ./src"
   },
   "private": true,
   "dependencies": {
