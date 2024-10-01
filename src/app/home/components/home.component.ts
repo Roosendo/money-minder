@@ -8,6 +8,7 @@ import {
 import { Title } from '@angular/platform-browser'
 import { RouterLink } from '@angular/router'
 import { LoginBttnComponent, NavigationBttnComponent } from '@app/core'
+import content from '../content.json'
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,9 @@ import { LoginBttnComponent, NavigationBttnComponent } from '@app/core'
 })
 export class HomeComponent implements OnInit {
   private titleService
+  sections = content.sections
+  services = content.services
+  termsConds = content.termsConds
 
   constructor() {
     this.titleService = inject(Title)

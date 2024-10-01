@@ -1,0 +1,92 @@
+{
+  "sections": {
+    "hero": {
+      "imgs": [
+        {
+          "src": "assets/images/1.webp",
+          "alt": "Finanzas"
+        },
+        {
+          "src": "assets/images/2.webp",
+          "alt": "Billetera"
+        },
+        {
+          "src": "assets/images/3.webp",
+          "alt": "Moneda"
+        },
+        {
+          "src": "assets/images/4.webp",
+          "alt": "Reloj"
+        }
+      ],
+      "articles": [
+        {
+          "title": "¡Simplifica Tu Vida Financiera!",
+          "text": "Sostenemos la convicción de que gestionar tus finanzas no solo es viable, ¡sino también emocionante! Queremos ser tu compañero de confianza mientras avanzas hacia una salud financiera mejor y logras ahorros significativos."
+        },
+        {
+          "title": "Únete a Nosotros en el Camino hacia la Libertad Financiera",
+          "text": "¡Empecemos juntos este emocionante viaje hacia el control financiero y el ahorro! Regístrate gratis y descubre el poder de Money Minder."
+        }
+      ]
+    }
+  },
+  "services": {
+    "descriptions": [
+      {
+        "title": "Registro de Ingresos y Gastos",
+        "text": "Registra fácilmente tus ingresos y gastos mensuales de manera detallada. Categorizalos para obtener una visión clara de tus hábitos de gasto."
+      },
+      {
+        "title": "Análisis Financiero Personalizado",
+        "text": "Comparativas mensuales para seguir tu progreso y tomar decisiones informadas."
+      },
+      {
+        "title": "Consejos Financieros Personalizados",
+        "text": "Recibe consejos automáticos basados en tus patrones de gasto y metas de ahorro."
+      },
+      {
+        "title": "Seguridad y Privacidad Garantizadas",
+        "text": "Implementamos capas de seguridad robustas para proteger tu información financiera. Tu privacidad es nuestra prioridad, con prácticas estrictas de gestión de datos."
+      },
+      {
+        "title": "Historial y Reportes Detallados",
+        "text": "Accede a un historial detallado de todos tus movimientos anteriores."
+      },
+      {
+        "title": "Soporte Amigable y Accesible",
+        "text": "Nuestro equipo de soporte está aquí para ayudarte en cada paso del camino."
+      }
+    ]
+  },
+  "termsConds": [
+    {
+      "title": "Uso Responsable",
+      "text": "Te comprometes a utilizar Money Minder de manera responsable y conforme a todas las leyes y regulaciones aplicables. Nos reservamos el derecho de suspender o cerrar tu cuenta en caso de violación de estos términos o de comportamientos que consideremos inapropiados."
+    },
+    {
+      "title": "Privacidad y Seguridad",
+      "text": "Valoramos tu privacidad y seguridad. Nuestra Política de Privacidad detalla cómo recopilamos, utilizamos y protegemos tu información personal. Al utilizar Money Minder, aceptas nuestras prácticas de privacidad y seguridad."
+    },
+    {
+      "title": "Responsabilidades del Usuario",
+      "text": "Eres responsable de la veracidad y exactitud de la información proporcionada. Mantén la confidencialidad de tus credenciales de inicio de sesión y notifícanos de inmediato sobre cualquier actividad no autorizada en tu cuenta."
+    },
+    {
+      "title": "Actualizaciones y Cambios",
+      "text": "Money Minder se reserva el derecho de realizar cambios en la plataforma, incluyendo características, términos y tarifas. Te notificaremos sobre cambios significativos y tu uso continuado del servicio constituirá la aceptación de dichos cambios."
+    },
+    {
+      "title": "Propiedad Intelectual",
+      "text": "Todo el contenido y la propiedad intelectual en Money Minder son propiedad exclusiva de la empresa. No tienes permiso para utilizar, copiar o reproducir dicho contenido sin nuestro consentimiento."
+    },
+    {
+      "title": "Limitación de Responsabilidad",
+      "text": "Money Minder proporciona la plataforma \"tal cual\". No garantizamos la exactitud, fiabilidad o disponibilidad continua de los servicios. No nos hacemos responsables de pérdidas o daños directos, indirectos, incidentales, especiales o consecuentes."
+    },
+    {
+      "title": "Legislación Aplicable",
+      "text": "Estos términos se rigen por las leyes del lugar de incorporación de Money Minder. Cualquier disputa se resolverá a través de medios legales apropiados, como la mediación o el arbitraje. Te alentamos a que revises estos términos regularmente, ya que pueden cambiar con el tiempo. Si no estás de acuerdo con alguno de los términos, te instamos a dejar de utilizar nuestros servicios."
+    }
+  ]
+}
