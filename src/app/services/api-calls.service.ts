@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
-import { type Observable, map } from 'rxjs'
+import { type Observable, catchError, map, throwError } from 'rxjs'
 
 import { AuthCacheService } from '.'
 import {
@@ -32,7 +32,7 @@ export class ApiCallsService {
   private email = this.authCacheService.getUser()?.email
   private http
 
-  constructor () {
+  constructor() {
     this.http = inject(HttpClient)
   }
 
@@ -44,7 +44,13 @@ export class ApiCallsService {
     const url = `${this.API_URL}/specials/financial-summary-yearly?email=${this.email}&year=${this.year}`
     return this.http
       .get<FinancialSummary>(url)
-      .pipe(map((result) => financialSummaryAdapter(result)))
+      .pipe(
+        map((result) => financialSummaryAdapter(result)),
+        catchError((error) => {
+          console.error('Error fetching Financial Summary', error)
+          return throwError(() => new Error('Error fetching Financial Summary'))
+        })
+      )
   }
 
   /**
@@ -55,7 +61,13 @@ export class ApiCallsService {
     const url = `${this.API_URL}/specials/recent-transactions?email=${this.email}&year=${this.year}`
     return this.http
       .get<RecentTransactions[]>(url)
-      .pipe(map((result) => result))
+      .pipe(
+        map((result) => result),
+        catchError((error) => {
+          console.error('Error fetching Recent Transactions', error)
+          return throwError(() => new Error('Error fetching Recent Transactions'))
+        })
+      )
   }
 
   /**
@@ -64,7 +76,14 @@ export class ApiCallsService {
    */
   getCashFlow(): Observable<CashFLow[]> {
     const url = `${this.API_URL}/specials/cash-flow?email=${this.email}&year=${this.year}`
-    return this.http.get<CashFLow[]>(url).pipe(map((result) => result))
+    return this.http.get<CashFLow[]>(url)
+      .pipe(
+        map((result) => result),
+        catchError((error) => {
+          console.error('Error fetching Cash Flow', error)
+          return throwError(() => new Error('Error fetching Cash Flow'))
+        })
+      )
   }
 
   /**
@@ -73,7 +92,14 @@ export class ApiCallsService {
    */
   getMainCategories(): Observable<TransactionChart[]> {
     const url = `${this.API_URL}/specials/yearly-categories?email=${this.email}&year=${this.year}`
-    return this.http.get<TransactionChart[]>(url).pipe(map((result) => result))
+    return this.http.get<TransactionChart[]>(url)
+      .pipe(
+        map((result) => result),
+        catchError((error) => {
+          console.error('Error fetching Main Categories', error)
+          return throwError(() => new Error('Error fetching Main Categories'))
+        })
+      )
   }
 
   /**
@@ -82,7 +108,14 @@ export class ApiCallsService {
    */
   getSavings(): Observable<Saving[]> {
     const url = `${this.API_URL}/savings/get-savings?email=${this.email}`
-    return this.http.get<Saving[]>(url).pipe(map((result) => result))
+    return this.http.get<Saving[]>(url)
+      .pipe(
+        map((result) => result),
+        catchError((error) => {
+          console.error('Error fetching Savings', error)
+          return throwError(() => new Error('Error fetching Savings'))
+        })
+      )
   }
 
   /**
@@ -91,7 +124,14 @@ export class ApiCallsService {
    */
   getReminders(): Observable<Reminder[]> {
     const url = `${this.API_URL}/reminders/get-reminders?email=${this.email}`
-    return this.http.get<Reminder[]>(url).pipe(map((result) => result))
+    return this.http.get<Reminder[]>(url)
+      .pipe(
+        map((result) => result),
+        catchError((error) => {
+          console.error('Error fetching Reminders', error)
+          return throwError(() => new Error('Error fetching Reminders'))
+        })
+      )
   }
 
   /**
@@ -100,7 +140,14 @@ export class ApiCallsService {
    */
   getQuote(): Observable<Quote> {
     const url = `${this.API_URL}/phrases/daily-phrase`
-    return this.http.get<Quote>(url).pipe(map((result) => result))
+    return this.http.get<Quote>(url)
+      .pipe(
+        map((result) => result),
+        catchError((error) => {
+          console.error('Error fetching Quote', error)
+          return throwError(() => new Error('Error fetching Quote'))
+        })
+      )
   }
 
   /**
@@ -111,7 +158,13 @@ export class ApiCallsService {
     const url = `${this.API_URL}/entries/get-entries?email=${this.email}`
     return this.http
       .get<EntryTransaction[]>(url)
-      .pipe(map((result) => transformArrayTransactions(result)))
+      .pipe(
+        map((result) => transformArrayTransactions(result)),
+        catchError((error) => {
+          console.error('Error fetching Last Entries', error)
+          return throwError(() => new Error('Error fetching Last Entries'))
+        })
+      )
   }
 
   /**
@@ -122,7 +175,13 @@ export class ApiCallsService {
     const url = `${this.API_URL}/exits/get-exits?email=${this.email}`
     return this.http
       .get<ExitTransaction[]>(url)
-      .pipe(map((result) => transformArrayTransactions(result)))
+      .pipe(
+        map((result) => transformArrayTransactions(result)),
+        catchError((error) => {
+          console.error('Error fetching Last Exits', error)
+          return throwError(() => new Error('Error fetching Last Exits'))
+        })
+      )
   }
 
   /**
@@ -134,7 +193,14 @@ export class ApiCallsService {
    */
   getAnalysisSummary(year: number, month: string): Observable<Summary> {
     const url = `${this.API_URL}/specials/financial-summary-monthly?email=${this.email}&year=${year}&month=${month}`
-    return this.http.get<Summary>(url).pipe(map((result) => result))
+    return this.http.get<Summary>(url)
+      .pipe(
+        map((result) => result),
+        catchError((error) => {
+          console.error('Error fetching Analysis Summary', error)
+          return throwError(() => new Error('Error fetching Analysis Summary'))
+        })
+      )
   }
 
   /**
@@ -148,7 +214,14 @@ export class ApiCallsService {
     month: string
   ): Observable<TransactionChart[]> {
     const url = `${this.API_URL}/entries/get-entries-by-category-monthly?email=${this.email}&year=${year}&month=${month}`
-    return this.http.get<TransactionChart[]>(url).pipe(map((result) => result))
+    return this.http.get<TransactionChart[]>(url)
+      .pipe(
+        map((result) => result),
+        catchError((error) => {
+          console.error('Error fetching Monthly Entries', error)
+          return throwError(() => new Error('Error fetching Monthly Entries'))
+        })
+      )
   }
 
   /**
@@ -160,6 +233,13 @@ export class ApiCallsService {
    */
   getMonthlyExits(year: number, month: string): Observable<TransactionChart[]> {
     const url = `${this.API_URL}/exits/get-exits-by-category-monthly?email=${this.email}&year=${year}&month=${month}`
-    return this.http.get<TransactionChart[]>(url).pipe(map((result) => result))
+    return this.http.get<TransactionChart[]>(url)
+      .pipe(
+        map((result) => result),
+        catchError((error) => {
+          console.error('Error fetching Monthly Exits', error)
+          return throwError(() => new Error('Error fetching Monthly Exits'))
+        })
+      )
   }
 }
