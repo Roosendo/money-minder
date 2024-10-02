@@ -86,34 +86,14 @@
     >
     @if (typeOf === 'Egreso') {
       <option value="" selected>Elige una categoría...</option>
-      <option value="Vivienda">Vivienda</option>
-      <option value="Alimentación">Alimentación</option>
-      <option value="Transporte">Transporte</option>
-      <option value="Salud">Salud</option>
-      <option value="Entretenimiento">Entretenimiento</option>
-      <option value="Educación">Educación</option>
-      <option value="Ropa y Accesorios">Ropa y Accesorios</option>
-      <option value="Cuidado Personal">Cuidado Personal</option>
-      <option value="Donaciones o Caridad">Donaciones o Caridad</option>
-      <option value="Impuestos">Impuestos</option>
-      <option value="Seguros">Seguros</option>
-      <option value="Finanzas Personales">Finanzas Personal</option>
+      @for (categorie of categories.Egreso; track $index) {
+        <option value="{{ categorie }}" selected>{{ categorie }}</option>
+      }
     } @else {
       <option value="" selected>Elige una categoría...</option>
-      <option value="Ingreso Laboral">Ingreso Laboral</option>
-      <option value="Ingreso de Negocios">Ingreso de Negocios</option>
-      <option value="Ingreso Familiar">Ingreso Familiar</option>
-      <option value="Ingreso de Inversiones">Ingreso de Inversiones</option>
-      <option value="Ingreso de Propiedades">Ingreso de Propiedades</option>
-      <option value="Ingreso por Trabajos Independientes">
-        Ingreso por Trabajos Independientes
-      </option>
-      <option value="Ingreso por Subsidios o Becas">
-        Ingreso por Subsidios o Becas
-      </option>
-      <option value="Ingreso por Prestaciones">Ingreso por Prestaciones</option>
-      <option value="Ingreso de Pensión">Ingreso de Pensión</option>
-      <option value="Ingresos Adicionales">Ingresos Adicionales</option>
+      @for (categorie of categories.Ingreso; track $index) {
+        <option value="{{ categorie }}" selected>{{ categorie }}</option>
+      }
     }
     </select>
   </div>

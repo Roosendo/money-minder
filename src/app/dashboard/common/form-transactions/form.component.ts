@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms'
 import { AlertMessageComponent, SubmitBttnComponent } from '@app/core'
 import { FormSubmitService } from '@app/services'
 import { timer } from 'rxjs'
+import categoriesJson from './categories.json'
 
 @Component({
   selector: 'app-form',
@@ -21,6 +22,7 @@ import { timer } from 'rxjs'
 export class FormComponent {
   formSubmitted = output<void>()
   type = input.required<'entries' | 'exits'>()
+  categories = categoriesJson
 
   private readonly formSubmit
   private readonly cdr

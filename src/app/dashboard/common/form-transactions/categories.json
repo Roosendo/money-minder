@@ -1,0 +1,28 @@
+{
+  "Egreso": [
+    "Vivienda",
+    "Alimentación",
+    "Transporte",
+    "Salud",
+    "Entretenimiento",
+    "Educación",
+    "Ropa y Accesorios",
+    "Cuidado Personal",
+    "Donaciones o Caridad",
+    "Impuestos",
+    "Seguros",
+    "Finanzas Personales"
+  ],
+  "Ingreso": [
+    "Ingreso Laboral",
+    "Ingreso de Negocios",
+    "Ingreso Familiar",
+    "Ingreso de Inversiones",
+    "Ingreso de Propiedades",
+    "Ingreso por Trabajos Independientes",
+    "Ingreso por Subsidios o Becas",
+    "Ingreso por Prestaciones",
+    "Ingreso de Pensión",
+    "Ingresos Adicionales"
+  ]
+}
