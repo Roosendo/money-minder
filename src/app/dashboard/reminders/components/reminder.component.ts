@@ -3,7 +3,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnInit,
+  type OnInit,
   inject
 } from '@angular/core'
 import { FormsModule } from '@angular/forms'
@@ -13,7 +13,7 @@ import {
   NotLoggedComponent,
   SubmitBttnComponent
 } from '@app/core'
-import { EditReminder, Reminder } from '@app/models'
+import type { EditReminder, Reminder } from '@app/models'
 import {
   ApiCallsService,
   AuthCacheService,
