@@ -1,20 +1,10 @@
 <a
   [routerLink]="fragment() ? '' : navigateTo()"
   [fragment]="fragment()"
-  class="relative inline-flex items-center justify-start px-6 py-3 overflow-hidden font-medium transition-all bg-teal-500 rounded-xl group"
+  class="px-5 py-2.5 relative rounded group overflow-hidden font-medium bg-teal-50 text-teal-600 inline-block"
 >
   <span
-    class="absolute top-0 right-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out bg-teal-700 rounded group-hover:-mr-4 group-hover:-mt-4"
-  >
-    <span
-      class="absolute top-0 right-0 w-5 h-5 rotate-45 translate-x-1/2 -translate-y-1/2 bg-gray-100"
-    ></span>
-  </span>
-  <span
-    class="absolute bottom-0 left-0 w-full h-full transition-all duration-500 ease-in-out delay-200 -translate-x-full translate-y-full bg-teal-600 rounded-2xl group-hover:mb-12 group-hover:translate-x-0"
+    class="absolute top-0 left-0 flex w-full h-0 mb-0 transition-all duration-200 ease-out transform translate-y-0 bg-teal-600 group-hover:h-full opacity-90"
   ></span>
-  <span
-    class="relative w-full text-left text-gray-100 transition-colors duration-200 ease-in-out group-hover:text-gray-100"
-    >{{ text() }}</span
-  >
+  <span class="relative group-hover:text-teal-50">{{ text() }}</span>
 </a>
