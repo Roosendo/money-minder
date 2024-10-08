@@ -1,7 +1,7 @@
 <main
   class="m-auto my-10 flex h-auto w-[90dvw] flex-col gap-3 rounded bg-gray-200 p-5 dark:bg-gray-800 md:h-[80dvh] md:w-[80dvw] md:flex-row"
 >
-  <section class="m-auto flex-1 text-black dark:text-white">
+  <section class="m-auto flex-1 text-black dark:text-white prose prose-invert">
     <h1 class="text-5xl text-teal-500">¡Bienvenido a Money Minder!</h1>
     <p class="text-4xl">
       Dónde puedes monitorear tus finanzas, de una forma rápida y segura.
@@ -29,7 +29,7 @@
   </div>
   <div class="m-auto flex flex-1 flex-col gap-6 p-6">
     @for (article of sections.hero.articles; track $index) {
-      <article>
+      <article class="prose-invert">
         <h2 class="text-4xl text-teal-500">{{ article.title }}</h2>
         <p class="text-lg">{{ article.text }}</p>
       </article>
@@ -46,7 +46,7 @@
   id="services"
   class="flex w-full flex-col gap-6 p-6 text-black shadow-xl dark:text-white md:flex-row"
 >
-  <div class="m-auto flex flex-col gap-6 p-6 md:w-1/3">
+  <div class="m-auto flex flex-col gap-6 p-6 md:w-1/3 prose prose-invert">
     <h2 class="text-center text-2xl">Empieza a gozar de nuestros servicios.</h2>
     <svg
       class="text-black dark:text-white m-auto size-44 md:size-80"
@@ -82,7 +82,7 @@
       financieras! Descubre lo que nuestra aplicación tiene para ofrecer:
     </p>
     @for (description of services.descriptions; track $index) {
-      <div>
+      <div class="prose prose-invert">
         <h3>{{ $index + 1 }}. {{ description.title }}:</h3>
         <p>{{ description.text }}</p>
       </div>
@@ -94,7 +94,7 @@
   id="about-us"
   class="flex w-full flex-col gap-6 p-6 text-lg text-black shadow-xl dark:text-white md:flex-row"
 >
-  <article class="flex flex-1 flex-col gap-6 md:w-2/3">
+  <article class="flex flex-1 flex-col gap-6 md:w-2/3 prose prose-invert">
     <h1 class="text-4xl text-teal-500">¡Bienvenido a Money Minder!</h1>
     <h3 class="text-2xl">¡Simplifica tu vida financiera!</h3>
     <p>
@@ -145,7 +145,7 @@
       financiero personal, tu guía para un futuro financiero más seguro.
     </p>
   </article>
-  <article class="flex flex-col gap-4 text-lg md:w-1/3">
+  <article class="flex flex-col gap-4 text-lg md:w-1/3 prose prose-invert">
     <div>
       <h2 class="font-bold text-teal-500">Misión</h2>
       <p>
@@ -175,7 +175,7 @@
     <h3 class="text-center text-4xl font-bold text-teal-500">
       Términos y Condiciones en Money Minder
     </h3>
-    <p class="text-xl">
+    <p class="text-xl prose prose-invert">
       Bienvenido a Money Minder, tu compañero en la gestión financiera personal.
       Al acceder y utilizar nuestros servicios, aceptas los siguientes términos
       y condiciones que rigen la relación entre tú y Money Minder. Te instamos a
@@ -184,7 +184,7 @@
       plataforma.
     </p>
     @for (termCord of termsConds; track $index) {
-      <p>
+      <p class="prose prose-invert prose-lg">
         <span>{{ $index + 1 }}. {{ termCord.title }}:</span> {{ termCord.text }}
       </p>
     }
