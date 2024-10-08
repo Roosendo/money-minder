@@ -44,9 +44,18 @@ importers:
       '@midudev/tailwind-animations':
         specifier: 0.1.0
         version: 0.1.0(tailwindcss@3.4.10)
+      '@ngrx/effects':
+        specifier: 18.1.0
+        version: 18.1.0(@angular/core@18.2.3(rxjs@7.8.1)(zone.js@0.14.10))(@ngrx/store@18.1.0(@angular/core@18.2.3(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(rxjs@7.8.1)
       '@ngrx/signals':
         specifier: ^18.0.2
         version: 18.0.2(@angular/core@18.2.3(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1)
+      '@ngrx/store':
+        specifier: 18.1.0
+        version: 18.1.0(@angular/core@18.2.3(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1)
+      '@ngrx/store-devtools':
+        specifier: 18.1.0
+        version: 18.1.0(@angular/core@18.2.3(rxjs@7.8.1)(zone.js@0.14.10))(@ngrx/store@18.1.0(@angular/core@18.2.3(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(rxjs@7.8.1)
       autoprefixer:
         specifier: 10.4.20
         version: 10.4.20(postcss@8.4.45)
@@ -1574,6 +1583,13 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@ngrx/effects@18.1.0':
+    resolution: {integrity: sha512-Z52ZDv2gf15ukrpcpj6sB76WWEkvo8+dGZvSnpWRMWkysD7owdDTZOc+lcEflmtUzI4aMPn2TmrJG6ZTjvixGw==}
+    peerDependencies:
+      '@angular/core': ^18.0.0
+      '@ngrx/store': 18.1.0
+      rxjs: ^6.5.3 || ^7.5.0
+
   '@ngrx/signals@18.0.2':
     resolution: {integrity: sha512-FXmcY2cmkbhZtg9k8Ntq69SyelGmmb6fWtdButH4T8GGFH0o3f1FZTR829j4ynphy8SzuDhD/pzrnpWcV481oQ==}
     peerDependencies:
@@ -1582,6 +1598,19 @@ packages:
     peerDependenciesMeta:
       rxjs:
         optional: true
+
+  '@ngrx/store-devtools@18.1.0':
+    resolution: {integrity: sha512-46oTChtdiJCgONwJ6SuKmVlAMe7fKnlRE1puSMyYh5O45ZuKOE6j4VFQQhIyecoce21eO/zmH3CxuBDJaoD4OQ==}
+    peerDependencies:
+      '@angular/core': ^18.0.0
+      '@ngrx/store': 18.1.0
+      rxjs: ^6.5.3 || ^7.5.0
+
+  '@ngrx/store@18.1.0':
+    resolution: {integrity: sha512-ijxAzJMOb3LeiegpJNNaL8BkcxNg2DVgd/NTiGCJNI7vVUEvtlSRPSWDDYY3Z9Q5oVyqJG9CP0IN/o5FGAGyAw==}
+    peerDependencies:
+      '@angular/core': ^18.0.0
+      rxjs: ^6.5.3 || ^7.5.0
 
   '@ngtools/webpack@18.2.3':
     resolution: {integrity: sha512-DDuBHcu23qckt43SexBJaPEIeMc/HKaFOidILZM9D4gU4C9VroMActdR218dvQ802QfL0S46t5Ykz8ENprIfjA==}
@@ -2772,6 +2801,7 @@ packages:
   eslint@8.57.0:
     resolution: {integrity: sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@9.6.1:
@@ -6555,12 +6585,32 @@ snapshots:
   '@msgpackr-extract/msgpackr-extract-win32-x64@3.0.3':
     optional: true
 
+  '@ngrx/effects@18.1.0(@angular/core@18.2.3(rxjs@7.8.1)(zone.js@0.14.10))(@ngrx/store@18.1.0(@angular/core@18.2.3(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(rxjs@7.8.1)':
+    dependencies:
+      '@angular/core': 18.2.3(rxjs@7.8.1)(zone.js@0.14.10)
+      '@ngrx/store': 18.1.0(@angular/core@18.2.3(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1)
+      rxjs: 7.8.1
+      tslib: 2.7.0
+
   '@ngrx/signals@18.0.2(@angular/core@18.2.3(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1)':
     dependencies:
       '@angular/core': 18.2.3(rxjs@7.8.1)(zone.js@0.14.10)
       tslib: 2.7.0
     optionalDependencies:
       rxjs: 7.8.1
+
+  '@ngrx/store-devtools@18.1.0(@angular/core@18.2.3(rxjs@7.8.1)(zone.js@0.14.10))(@ngrx/store@18.1.0(@angular/core@18.2.3(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(rxjs@7.8.1)':
+    dependencies:
+      '@angular/core': 18.2.3(rxjs@7.8.1)(zone.js@0.14.10)
+      '@ngrx/store': 18.1.0(@angular/core@18.2.3(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1)
+      rxjs: 7.8.1
+      tslib: 2.7.0
+
+  '@ngrx/store@18.1.0(@angular/core@18.2.3(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1)':
+    dependencies:
+      '@angular/core': 18.2.3(rxjs@7.8.1)(zone.js@0.14.10)
+      rxjs: 7.8.1
+      tslib: 2.7.0
 
   '@ngtools/webpack@18.2.3(@angular/compiler-cli@18.2.3(@angular/compiler@18.2.3(@angular/core@18.2.3(rxjs@7.8.1)(zone.js@0.14.10)))(typescript@5.5.4))(typescript@5.5.4)(webpack@5.94.0(esbuild@0.23.0))':
     dependencies:
