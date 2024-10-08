@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common'
+import { AsyncPipe, CurrencyPipe } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -35,7 +35,8 @@ import { GoalModalEditComponent } from './goal-modal-edit'
     GoalModalEditComponent,
     GoalModalDeleteComponent,
     SubmitBttnComponent,
-    NotLoggedComponent
+    NotLoggedComponent,
+    CurrencyPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

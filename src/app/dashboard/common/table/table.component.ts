@@ -1,4 +1,4 @@
-import { AsyncPipe, CommonModule, DatePipe } from '@angular/common'
+import { AsyncPipe, CommonModule, CurrencyPipe, DatePipe } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -15,7 +15,7 @@ import type { Observable } from 'rxjs'
   selector: 'app-table',
   templateUrl: './table.component.html',
   standalone: true,
-  imports: [AsyncPipe, CommonModule, DatePipe],
+  imports: [AsyncPipe, CommonModule, DatePipe, CurrencyPipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent implements OnInit, OnChanges {

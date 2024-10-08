@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common'
+import { AsyncPipe, CurrencyPipe } from '@angular/common'
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import type { FSClean } from '@app/models'
 import { ApiCallsService } from '@app/services'
@@ -8,7 +8,7 @@ import { type Observable, map } from 'rxjs'
   selector: 'app-financial-summary',
   templateUrl: './fs.component.html',
   standalone: true,
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, CurrencyPipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FinancialSummaryComponent {

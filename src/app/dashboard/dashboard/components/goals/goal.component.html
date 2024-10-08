@@ -14,10 +14,10 @@
             Nombre del objetivo: {{ goal.name }}
           </h3>
           <p class="text-gray-600 dark:text-gray-400">
-            Monto objetivo: {{ goal.target_amount }}
+            Monto objetivo: {{ goal.target_amount | currency:'USD':'symbol' }}
           </p>
           <p class="text-gray-600 dark:text-gray-400">
-            Monto actual: {{ goal.current_amount }}
+            Monto actual: {{ goal.current_amount | currency:'USD':'symbol' }}
           </p>
           <div
             class="w-full bg-gray-200 dark:bg-gray-50 rounded-full h-2 mt-2 mb-3"

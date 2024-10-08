@@ -1,4 +1,4 @@
-import { AsyncPipe, CommonModule } from '@angular/common'
+import { AsyncPipe, CommonModule, CurrencyPipe } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -16,7 +16,7 @@ import type { Observable } from 'rxjs'
 @Component({
   selector: 'app-analysis',
   standalone: true,
-  imports: [AsyncPipe, CommonModule, PieChartComponent, NotLoggedComponent],
+  imports: [AsyncPipe, CommonModule, PieChartComponent, NotLoggedComponent, CurrencyPipe],
   templateUrl: './analysis.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

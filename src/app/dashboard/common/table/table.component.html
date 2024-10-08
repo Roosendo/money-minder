@@ -21,7 +21,7 @@
             scope="row"
             class="md:px-4 md:py-3 px-2 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white"
           >
-            ${{ lastData.amount }}
+            {{ lastData.amount | currency:'USD':'symbol' }}
           </th>
           <td class="md:px-4 md:py-3 px-2 py-1">{{ lastData.category }}</td>
           <td class="md:px-4 md:py-3 px-2 py-1">{{ lastData.description }}</td>

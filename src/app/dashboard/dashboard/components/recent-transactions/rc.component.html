@@ -24,7 +24,7 @@
                 {{ rc.date | date:'shortDate' }}
               </th>
               <td class='px-4 py-3 text-center'>{{ rc.category }}</td>
-              <td class='px-4 py-3'>${{ rc.amount }}</td>
+              <td class='px-4 py-3'>{{ rc.amount | currency:'USD':'symbol' }}</td>
             </tr>
           }
         </tbody>
