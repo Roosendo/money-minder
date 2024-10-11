@@ -1,6 +1,6 @@
 export interface FinancialSummary {
-  totalEntries: number | null
-  totalExits: number | null
+  totalEntries: number
+  totalExits: number
 }
 
 export interface FSClean {

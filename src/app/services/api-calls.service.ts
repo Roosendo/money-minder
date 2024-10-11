@@ -11,7 +11,6 @@ import type {
   CashFLow,
   EntryTransaction,
   ExitTransaction,
-  FSClean,
   FinancialSummary,
   Quote,
   RecentTransactions,
@@ -40,7 +39,7 @@ export class ApiCallsService {
    * Retrieves the financial summary for a specific year.
    * @returns An Observable that emits the financial summary data.
    */
-  getFinancialSummary(): Observable<FSClean> {
+  getFinancialSummary(): Observable<FinancialSummary> {
     const url = `${this.API_URL}/specials/financial-summary-yearly?email=${this.email}&year=${this.year}`
     return this.http
       .get<FinancialSummary>(url)

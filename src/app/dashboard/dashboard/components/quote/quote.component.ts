@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common'
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
-import { ApiCallsService } from '@app/services'
+import { QuoteStore } from '@app/store'
 
 @Component({
   selector: 'app-quote',
@@ -10,11 +10,6 @@ import { ApiCallsService } from '@app/services'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuoteComponent {
-  private readonly apiCalls
-  quote$
-
-  constructor() {
-    this.apiCalls = inject(ApiCallsService)
-    this.quote$ = this.apiCalls.getQuote()
-  }
+  private readonly store = inject(QuoteStore)
+  quote = this.store.quote
 }
