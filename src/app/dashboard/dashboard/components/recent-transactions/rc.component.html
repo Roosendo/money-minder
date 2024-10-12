@@ -1,4 +1,4 @@
-@if (recentTransactions && recentTransactions.length) {
+@if (recentTransactions().length) {
   <div class='rounded-lg bg-gray-100 p-4 shadow-lg dark:bg-gray-800'>
     <h2 class='text-lg font-bold'>Transacciones Recientes</h2>
     <div class='overflow-x-auto'>
@@ -11,7 +11,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (rc of recentTransactions; track $index) {
+          @for (rc of recentTransactions(); track $index) {
             <tr
               class='bg-gray-200 hover:bg-gray-300 dark:border-gray-800 dark:bg-gray-600 dark:hover:bg-gray-500'
             >
@@ -19,7 +19,7 @@
                 scope='row'
                 class='whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white'
               >
-                {{ rc.date | date:'shortDate' }}
+                {{ rc.date | date:'d/MM/y' }}
               </th>
               <td class='px-4 py-3 text-center'>{{ rc.category }}</td>
               <td class='px-4 py-3'>{{ rc.amount | currency:'USD':'symbol' }}</td>

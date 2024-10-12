@@ -1,4 +1,4 @@
-import { inject, InjectionToken } from '@angular/core'
+import { InjectionToken, inject } from '@angular/core'
 import type { FinancialSummary } from '@app/models'
 import { ApiCallsService } from '@app/services'
 import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals'
@@ -41,6 +41,7 @@ export const FinancialSummaryStore = signalStore(
         patchState(store, { financialSummary })
       } catch (error) {
         console.error('Error fetching financial summary:', error)
+        patchState(store, { financialSummary: { totalEntries: 0, totalExits: 0 } })
       }
     }
   })

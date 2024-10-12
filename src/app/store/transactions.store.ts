@@ -38,8 +38,11 @@ export const TransactionsStore = signalStore(
   withHooks({
     async onInit(store, apiCallsService = inject(ApiCallsService)) {
       try {
+        console.log(store.recentTransactions())
         const recentTransactions = await lastValueFrom(apiCallsService.getRecentTransactions())
+        console.log(recentTransactions)
         patchState(store, { recentTransactions })
+        console.log(store.recentTransactions())
       } catch (error) {
         console.error('Error fetching recent transactions:', error)
         patchState(store, { recentTransactions: [] })
