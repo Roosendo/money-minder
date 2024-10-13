@@ -1,5 +1,3 @@
-@let dataCf = cashFlow$ | async;
-
-@if (dataCf && dataCf.length > 0) {
-  <app-bar-chart [dataCF]="dataCf" />
+@if (cashFlow().length) {
+  <app-bar-chart [dataCF]="cashFlow()" />
 }

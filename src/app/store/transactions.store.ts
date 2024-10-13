@@ -1,4 +1,4 @@
-import { inject, InjectionToken } from '@angular/core'
+import { InjectionToken, inject } from '@angular/core'
 import type { RecentTransactions } from '@app/models'
 import { ApiCallsService } from '@app/services'
 import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals'
@@ -32,17 +32,18 @@ export const TransactionsStore = signalStore(
     },
 
     addRecentTransaction(transaction: RecentTransactions): void {
-      patchState(store, { recentTransactions: [ transaction, ...store.recentTransactions() ] })
+      const updatedTransactions = [transaction, ...store.recentTransactions()]
+      if (updatedTransactions.length > 8) {
+        updatedTransactions.pop()
+      }
+      patchState(store, { recentTransactions: updatedTransactions })
     }
   })),
   withHooks({
     async onInit(store, apiCallsService = inject(ApiCallsService)) {
       try {
-        console.log(store.recentTransactions())
         const recentTransactions = await lastValueFrom(apiCallsService.getRecentTransactions())
-        console.log(recentTransactions)
         patchState(store, { recentTransactions })
-        console.log(store.recentTransactions())
       } catch (error) {
         console.error('Error fetching recent transactions:', error)
         patchState(store, { recentTransactions: [] })
