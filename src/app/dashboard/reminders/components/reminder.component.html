@@ -49,13 +49,13 @@
         />
       </div>
       <app-submit-bttn [text]="'Agregar Recordatorio'" />
-      @if (amSuccess) {
+      @if (amSuccess()) {
         <app-alert-message
           [typeAlert]="'success'"
           [alertMessage]="'Recordatorio registrado 😁'"
         />
       }
-      @if (amWarning) {
+      @if (amWarning()) {
         <app-alert-message
           [typeAlert]="'warning'"
           [alertMessage]="'Error al registrar el recordatorio 😔'"
@@ -96,14 +96,14 @@
             </button>
           </div>
         }
-        @if (isReminderEditOpen) {
+        @if (isReminderEditOpen()) {
           <app-reminder-edit
             [reminder]="selectedReminder!"
             (closeModal)="onCloseModal()"
             (save)="onSave($event)"
           />
         }
-        @if (isReminderDeleteOpen) {
+        @if (isReminderDeleteOpen()) {
           <app-reminder-delete
             [reminder]="selectedReminder!"
             (close)="closeReminderDelete()"

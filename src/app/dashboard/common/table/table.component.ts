@@ -2,7 +2,6 @@ import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
-  type OnChanges,
   type OnInit,
   type Signal,
   inject,
@@ -19,7 +18,6 @@ import { TransactionsStore } from '@app/store'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent implements OnInit {
-  triggerUpdate = input.required<boolean>()
   type = input.required<'entries' | 'exits'>()
 
   readonly store = inject(TransactionsStore)

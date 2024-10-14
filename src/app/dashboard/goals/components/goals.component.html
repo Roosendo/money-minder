@@ -77,13 +77,13 @@
         />
       </div>
       <app-submit-bttn [text]="'Agregar Objetivo'" />
-      @if (amSuccess) {
+      @if (amSuccess()) {
         <app-alert-message
           [alertMessage]="'Ahorro registrado 😁'"
           [typeAlert]="'success'"
         />
       }
-      @if (amWarning) {
+      @if (amWarning()) {
         <app-alert-message
           [alertMessage]="'Error al registrar el ahorro 😔'"
           [typeAlert]="'warning'"
@@ -125,14 +125,14 @@
             </button>
           </div>
         }
-        @if (isModalEditOpen) {
+        @if (isModalEditOpen()) {
           <app-goal-modal-edit
             [goal]="selectedSaving!"
             (closeModal)="closeEditModal()"
             (save)="editSaving($event)"
           />
         }
-        @if (isModalDeleteOpen) {
+        @if (isModalDeleteOpen()) {
           <app-goal-modal-delete
             [saving]="selectedSaving!"
             (closeModal)="closeDeleteModal()"

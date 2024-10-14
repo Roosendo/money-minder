@@ -111,19 +111,19 @@
     ></textarea>
   </div>
   <app-submit-bttn [text]="'Registrar ' + typeOf " />
-  @if (am_success) {
+  @if (am_success()) {
     <app-alert-message
       [alertMessage]="typeOf + ' registrado 😁'"
       [typeAlert]="'success'"
     />
   }
-  @if (am_category) {
+  @if (am_category()) {
     <app-alert-message
       [alertMessage]="'Selecciona una categoría'"
       [typeAlert]="'warning'"
     />
   }
-  @if (am_warning) {
+  @if (am_warning()) {
     <app-alert-message
       [alertMessage]="'Error al registrar el ' + typeOf + ' 😔'"
       [typeAlert]="'warning'"

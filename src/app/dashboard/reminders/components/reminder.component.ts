@@ -4,7 +4,8 @@ import {
   ChangeDetectorRef,
   Component,
   type OnInit,
-  inject
+  inject,
+  signal
 } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { Title } from '@angular/platform-browser'
@@ -46,11 +47,11 @@ export default class RemindersComponent implements OnInit {
   readonly store = inject(RemindersStore)
   isLogged: boolean
   selectedReminder: Reminder | null = null
-  isReminderEditOpen = false
-  isReminderDeleteOpen = false
+  isReminderEditOpen = signal<boolean>(false)
+  isReminderDeleteOpen = signal<boolean>(false)
   reminders = this.store.reminders
-  amSuccess = false
-  amWarning = false
+  amSuccess = signal<boolean>(false)
+  amWarning = signal<boolean>(false)
   formReminder = {
     description: '',
     reminderDate: '',
@@ -72,7 +73,7 @@ export default class RemindersComponent implements OnInit {
   onNewReminderSubmit() {
     this.formSubmit.reminderSubmit(this.formReminder).subscribe({
       next: () => {
-        this.amSuccess = true
+        this.amSuccess.set(true)
         this.store.addReminder({
           description: this.formReminder.description,
           id: 0,
@@ -81,7 +82,7 @@ export default class RemindersComponent implements OnInit {
         })
         this.cdr.detectChanges()
         timer(3500).subscribe(() => {
-          this.amSuccess = false
+          this.amSuccess.set(false)
           this.cdr.detectChanges()
         })
         this.formReminder = {
@@ -91,9 +92,9 @@ export default class RemindersComponent implements OnInit {
         }
       },
       error: () => {
-        this.amWarning = true
+        this.amWarning.set(true)
         timer(3500).subscribe(() => {
-          this.amWarning = false
+          this.amWarning.set(false)
           this.cdr.detectChanges()
         })
       }
@@ -101,22 +102,22 @@ export default class RemindersComponent implements OnInit {
   }
 
   onCloseModal() {
-    this.isReminderEditOpen = false
+    this.isReminderEditOpen.set(false)
     this.selectedReminder = null
   }
 
   openReminderEdit(reminder: Reminder) {
     this.selectedReminder = reminder
-    this.isReminderEditOpen = true
+    this.isReminderEditOpen.set(true)
   }
 
   openReminderDelete(reminder: Reminder) {
     this.selectedReminder = reminder
-    this.isReminderDeleteOpen = true
+    this.isReminderDeleteOpen.set(true)
   }
 
   closeReminderDelete() {
-    this.isReminderDeleteOpen = false
+    this.isReminderDeleteOpen.set(false)
     this.selectedReminder = null
   }
 

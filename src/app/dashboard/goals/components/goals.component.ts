@@ -4,7 +4,8 @@ import {
   ChangeDetectorRef,
   Component,
   type OnInit,
-  inject
+  inject,
+  signal
 } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { Title } from '@angular/platform-browser'
@@ -47,11 +48,11 @@ export default class GoalsComponent implements OnInit {
     startDate: '',
     endDate: ''
   }
-  isModalEditOpen = false
-  isModalDeleteOpen = false
+  isModalEditOpen = signal<boolean>(false)
+  isModalDeleteOpen = signal<boolean>(false)
   selectedSaving: Saving | null = null
-  amSuccess = false
-  amWarning = false
+  amSuccess = signal<boolean>(false)
+  amWarning = signal<boolean>(false)
   private readonly formSubmit
   private readonly cdr
   private readonly title
@@ -75,7 +76,7 @@ export default class GoalsComponent implements OnInit {
   onNewSavingSubmit() {
     this.formSubmit.savingSubmit(this.formData).subscribe({
       next: () => {
-        this.amSuccess = true
+        this.amSuccess.set(true)
         this.store.addSaving({
           id: Math.floor(Math.random() * 1000000),
           name: this.formData.name,
@@ -85,7 +86,7 @@ export default class GoalsComponent implements OnInit {
         })
         this.cdr.detectChanges()
         timer(3500).subscribe(() => {
-          this.amSuccess = false
+          this.amSuccess.set(false)
           this.cdr.detectChanges()
         })
         this.formData = {
@@ -97,11 +98,11 @@ export default class GoalsComponent implements OnInit {
         }
       },
       error: () => {
-        this.amWarning = true
+        this.amWarning.set(true)
         console.log('Error submitting new saving')
         this.cdr.detectChanges()
         timer(3500).subscribe(() => {
-          this.amWarning = false
+          this.amWarning.set(false)
           this.cdr.detectChanges()
         })
       }
@@ -109,22 +110,22 @@ export default class GoalsComponent implements OnInit {
   }
 
   openEditModal(saving: Saving) {
-    this.isModalEditOpen = true
+    this.isModalEditOpen.set(true)
     this.selectedSaving = saving
   }
 
   closeEditModal() {
-    this.isModalEditOpen = false
+    this.isModalEditOpen.set(false)
     this.selectedSaving = null
   }
 
   openDeleteModal(saving: Saving) {
-    this.isModalDeleteOpen = true
+    this.isModalDeleteOpen.set(true)
     this.selectedSaving = saving
   }
 
   closeDeleteModal() {
-    this.isModalDeleteOpen = false
+    this.isModalDeleteOpen.set(false)
     this.selectedSaving = null
   }
 

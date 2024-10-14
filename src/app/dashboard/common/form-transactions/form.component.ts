@@ -4,7 +4,8 @@ import {
   Component,
   inject,
   input,
-  output
+  output,
+  signal
 } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { AlertMessageComponent, SubmitBttnComponent } from '@app/core'
@@ -30,9 +31,9 @@ export class FormComponent {
   readonly store = inject(TransactionsStore)
   private readonly authCache = inject(AuthCacheService)
 
-  am_success = false
-  am_category = false
-  am_warning = false
+  am_success = signal<boolean>(false)
+  am_category = signal<boolean>(false)
+  am_warning = signal<boolean>(false)
 
   formData = {
     date: '',
@@ -51,9 +52,9 @@ export class FormComponent {
   private submitEntriesForm() {
     this.formSubmit.entrySubmit(this.formData).subscribe({
       next: () => {
-        this.am_success = true
+        this.am_success.set(true)
         timer(3500).subscribe(() => {
-          this.am_success = false
+          this.am_success.set(false)
           this.cdr.detectChanges()
         })
 
@@ -62,9 +63,9 @@ export class FormComponent {
         this.formSubmitted.emit()
       },
       error: () => {
-        this.am_warning = true
+        this.am_warning.set(true)
         timer(3500).subscribe(() => {
-          this.am_warning = false
+          this.am_warning.set(false)
           this.cdr.detectChanges()
         })
       }
@@ -74,9 +75,9 @@ export class FormComponent {
   private submitExitsForm() {
     this.formSubmit.exitSubmit(this.formData).subscribe({
       next: () => {
-        this.am_success = true
+        this.am_success.set(true)
         timer(3500).subscribe(() => {
-          this.am_success = false
+          this.am_success.set(false)
           this.cdr.detectChanges()
         })
 
@@ -85,9 +86,9 @@ export class FormComponent {
         this.formSubmitted.emit()
       },
       error: () => {
-        this.am_warning = true
+        this.am_warning.set(true)
         timer(3500).subscribe(() => {
-          this.am_warning = false
+          this.am_warning.set(false)
           this.cdr.detectChanges()
         })
       }
@@ -96,9 +97,9 @@ export class FormComponent {
 
   onSubmit() {
     if (!this.formData.category) {
-      this.am_category = true
+      this.am_category.set(true)
       timer(3500).subscribe(() => {
-        this.am_category = false
+        this.am_category.set(false)
         this.cdr.detectChanges()
       })
 
