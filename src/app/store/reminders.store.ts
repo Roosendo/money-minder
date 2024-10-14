@@ -35,6 +35,12 @@ export const RemindersStore = signalStore(
       patchState(store, { reminders: [ reminder, ...store.reminders() ] })
     },
 
+    editReminder(reminder: Reminder): void {
+      patchState(store, {
+        reminders: store.reminders().map(r => r.id === reminder.id ? { ...r, ...reminder } : r)
+      })
+    },
+
     removeReminder(id: number): void {
       patchState(store, { reminders: store.reminders().filter(reminder => reminder.id !== id) })
     }

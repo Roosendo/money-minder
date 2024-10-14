@@ -1,5 +1,3 @@
-@let savings = savings$ | async;
-
 @if (isLogged) {
   <main class="min-h-screen p-4">
     <form
@@ -92,9 +90,9 @@
         />
       }
     </form>
-    @if (savings) {
+    @if (savings().length) {
       <div id="savings-list" class="mx-auto my-6 max-w-lg space-y-4">
-        @for (saving of savings; track saving.id) {
+        @for (saving of savings(); track saving.id) {
           @let style = "width: " + calculateProgress(saving) + "%";
           <div
             class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-md relative"

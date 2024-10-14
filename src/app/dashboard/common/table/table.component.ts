@@ -1,48 +1,38 @@
-import { AsyncPipe, CommonModule, CurrencyPipe, DatePipe } from '@angular/common'
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
   type OnChanges,
   type OnInit,
+  type Signal,
   inject,
   input
 } from '@angular/core'
 import type { Transaction } from '@app/models'
-import { ApiCallsService } from '@app/services'
-import type { Observable } from 'rxjs'
+import { TransactionsStore } from '@app/store'
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   standalone: true,
-  imports: [AsyncPipe, CommonModule, DatePipe, CurrencyPipe],
+  imports: [CommonModule, DatePipe, CurrencyPipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableComponent implements OnInit, OnChanges {
+export class TableComponent implements OnInit {
   triggerUpdate = input.required<boolean>()
   type = input.required<'entries' | 'exits'>()
 
-  private readonly apiCalls
+  readonly store = inject(TransactionsStore)
 
-  dataTransactions$!: Observable<Transaction[]>
-
-  constructor() {
-    this.apiCalls = inject(ApiCallsService)
-  }
+  dataTransactions!: Signal<Transaction[]>
 
   ngOnInit(): void {
-    this.dataTransactions$ = this.getDataTransactions()
-  }
-
-  ngOnChanges() {
-    if (this.triggerUpdate()) {
-      this.dataTransactions$ = this.getDataTransactions()
-    }
+    this.dataTransactions = this.getDataTransactions()
   }
 
   private getDataTransactions() {
     return this.type() === 'entries'
-      ? this.apiCalls.getLastEntries()
-      : this.apiCalls.getLastExits()
+      ? this.store.entries
+      : this.store.exits
   }
 }

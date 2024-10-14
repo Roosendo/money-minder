@@ -1,5 +1,3 @@
-@let reminders = reminders$ | async;
-
 @if (isLogged) {
   <main class="min-h-screen p-4">
     <form
@@ -65,9 +63,9 @@
       }
     </form>
     <!-- Contenedor principal de la lista de recordatorios -->
-    @if (reminders) {
+    @if (reminders().length) {
       <div id="reminders-list" class="mx-auto mt-6 max-w-lg space-y-4">
-        @for (reminder of reminders; track reminder.id) {
+        @for (reminder of reminders(); track reminder.id) {
           <div
             class="dark:bg-gray-800 bg-gray-100 p-6 mb-6 rounded-lg shadow-md flex justify-between items-center relative"
           >
@@ -79,11 +77,11 @@
                 {{ reminder.description }}
               </p>
               <p class="dark:text-gray-400 text-gray-600 uppercase">
-                {{ reminder.reminder_date | date: "short" }}
+                {{ reminder.reminder_date | date: "d/MM/y 'a las' hh:mm a" }}
               </p>
             </div>
             <button
-              (click)="openReminderEdit(reminder)"
+              (click)="openReminderDelete(reminder)"
               id="deleteButton"
               class="absolute top-3 right-20 p-2 rounded transition-colors font-medium tracking-wide text-rose-500 hover:bg-rose-300 hover:text-gray-900 dark:hover:bg-gray-200 dark:text-rose-400 dark:hover:text-gray-900"
             >

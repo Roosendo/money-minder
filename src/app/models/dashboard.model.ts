@@ -74,7 +74,7 @@ export interface Quote {
 }
 
 export interface ApiTransaction {
-  user_email: string
+  user_email?: string
   amount: number
   description: string
   category: string

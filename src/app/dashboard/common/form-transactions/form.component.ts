@@ -8,9 +8,10 @@ import {
 } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { AlertMessageComponent, SubmitBttnComponent } from '@app/core'
-import { FormSubmitService } from '@app/services'
+import { AuthCacheService, FormSubmitService } from '@app/services'
 import { timer } from 'rxjs'
 import categoriesJson from './categories.json'
+import { TransactionsStore } from '@app/store'
 
 @Component({
   selector: 'app-form',
@@ -26,6 +27,8 @@ export class FormComponent {
 
   private readonly formSubmit
   private readonly cdr
+  readonly store = inject(TransactionsStore)
+  private readonly authCache = inject(AuthCacheService)
 
   am_success = false
   am_category = false
@@ -35,7 +38,9 @@ export class FormComponent {
     date: '',
     amount: 0,
     category: '',
-    description: ''
+    description: '',
+    id: Math.floor(Math.random() * 1000000),
+    user_email: this.authCache.getUser()?.email
   }
 
   constructor() {
@@ -52,7 +57,8 @@ export class FormComponent {
           this.cdr.detectChanges()
         })
 
-        this.formData = { date: '', amount: 0, category: '', description: '' }
+        this.store.addEntry(this.formData)
+        this.formData = { date: '', amount: 0, category: '', description: '', id: Math.floor(Math.random() * 1000000), user_email: this.authCache.getUser()?.email }
         this.formSubmitted.emit()
       },
       error: () => {
@@ -74,7 +80,8 @@ export class FormComponent {
           this.cdr.detectChanges()
         })
 
-        this.formData = { date: '', amount: 0, category: '', description: '' }
+        this.store.addExit(this.formData)
+        this.formData = { date: '', amount: 0, category: '', description: '', id: Math.floor(Math.random() * 1000000), user_email: this.authCache.getUser()?.email }
         this.formSubmitted.emit()
       },
       error: () => {

@@ -1,4 +1,4 @@
-import { AsyncPipe, CurrencyPipe } from '@angular/common'
+import { CurrencyPipe } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -16,13 +16,13 @@ import {
 } from '@app/core'
 import type { EditSaving, Saving } from '@app/models'
 import {
-  ApiCallsService,
   AuthCacheService,
   FormSubmitService
 } from '@app/services'
 import { timer } from 'rxjs'
 import { GoalModalDeleteComponent } from './goal-modal-delete'
 import { GoalModalEditComponent } from './goal-modal-edit'
+import { SavingsStore } from '@app/store'
 
 @Component({
   selector: 'app-goals',
@@ -31,7 +31,6 @@ import { GoalModalEditComponent } from './goal-modal-edit'
   imports: [
     AlertMessageComponent,
     FormsModule,
-    AsyncPipe,
     GoalModalEditComponent,
     GoalModalDeleteComponent,
     SubmitBttnComponent,
@@ -53,22 +52,20 @@ export default class GoalsComponent implements OnInit {
   selectedSaving: Saving | null = null
   amSuccess = false
   amWarning = false
-  private readonly apiCalls
   private readonly formSubmit
   private readonly cdr
   private readonly title
   private readonly authCache
   isLogged: boolean
-  savings$
+  readonly store = inject(SavingsStore)
+  savings = this.store.savings
 
   constructor() {
-    this.apiCalls = inject(ApiCallsService)
     this.formSubmit = inject(FormSubmitService)
     this.cdr = inject(ChangeDetectorRef)
     this.title = inject(Title)
     this.authCache = inject(AuthCacheService)
     this.isLogged = this.authCache.isAuthenticated()
-    this.savings$ = this.apiCalls.getSavings()
   }
 
   ngOnInit(): void {
@@ -79,7 +76,13 @@ export default class GoalsComponent implements OnInit {
     this.formSubmit.savingSubmit(this.formData).subscribe({
       next: () => {
         this.amSuccess = true
-        this.savings$ = this.apiCalls.getSavings()
+        this.store.addSaving({
+          id: Math.floor(Math.random() * 1000000),
+          name: this.formData.name,
+          target_amount: this.formData.targetAmount,
+          current_amount: this.formData.currentAmount,
+          end_date: this.formData.endDate
+        })
         this.cdr.detectChanges()
         timer(3500).subscribe(() => {
           this.amSuccess = false
@@ -129,7 +132,13 @@ export default class GoalsComponent implements OnInit {
     this.formSubmit.editSaving(saving).subscribe({
       next: () => {
         this.closeEditModal()
-        this.savings$ = this.apiCalls.getSavings()
+        this.store.editSaving({
+          id: saving.id,
+          name: saving.newSavingName,
+          target_amount: saving.newTarget,
+          current_amount: saving.newCurrentAmount,
+          end_date: saving.newEndDate
+        })
         this.cdr.detectChanges()
       },
       error: () => {
@@ -142,7 +151,7 @@ export default class GoalsComponent implements OnInit {
     this.formSubmit.deleteSaving(id).subscribe({
       next: () => {
         this.closeDeleteModal()
-        this.savings$ = this.apiCalls.getSavings()
+        this.store.removeSaving(id)
         this.cdr.detectChanges()
       },
       error: () => {

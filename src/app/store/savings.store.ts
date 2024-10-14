@@ -35,6 +35,12 @@ export const SavingsStore = signalStore(
       patchState(store, { savings: [ saving, ...store.savings() ] })
     },
 
+    editSaving(saving: Saving): void {
+      patchState(store, {
+        savings: store.savings().map(s => s.id === saving.id ? { ...s, ...saving } : s)
+      })
+    },
+
     removeSaving(id: number): void {
       patchState(store, { savings: store.savings().filter(saving => saving.id !== id) })
     }
