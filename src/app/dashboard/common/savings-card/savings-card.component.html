@@ -1,0 +1,16 @@
+@let style = "width: " + calculateProgress(saving()) + "%";
+<div class="bg-gray-200 dark:bg-gray-700 p-6 mb-3 rounded-lg shadow-md relative">
+  <h3 class="text-lg font-bold mt-2 text-gray-700 dark:text-gray-100">
+    {{ saving().name }}
+  </h3>
+  <p class="text-gray-600 dark:text-gray-400">
+    Monto objetivo: {{ saving().target_amount| currency : "USD" : "symbol" }}
+  </p>
+  <p class="text-gray-600 dark:text-gray-400">
+    Monto actual: {{ saving().current_amount| currency : "USD" : "symbol" }}
+  </p>
+  <div class="w-full bg-gray-200 dark:bg-gray-50 rounded-full h-2 mt-2 mb-3">
+    <div class="bg-teal-500 h-2 rounded-full" [style]="style"></div>
+  </div>
+  <ng-content />
+</div>

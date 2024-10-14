@@ -93,24 +93,9 @@
     @if (savings().length) {
       <div id="savings-list" class="mx-auto my-6 max-w-lg space-y-4">
         @for (saving of savings(); track saving.id) {
-          @let style = "width: " + calculateProgress(saving) + "%";
-          <div
-            class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-md relative"
+          <app-savings-card
+            [saving]="saving"
           >
-            <h3 class="text-lg font-bold mt-2 text-gray-700 dark:text-gray-100">
-              {{ saving.name }}
-            </h3>
-            <p class="text-gray-600 dark:text-gray-400">
-              Monto objetivo: {{ saving.target_amount | currency:'USD':'symbol' }}
-            </p>
-            <p class="text-gray-600 dark:text-gray-400">
-              Monto actual: {{ saving.current_amount | currency:'USD':'symbol' }}
-            </p>
-            <div
-              class="w-full bg-gray-200 dark:bg-gray-50 rounded-full h-2 mt-2 mb-3"
-            >
-              <div class="bg-teal-500 h-2 rounded-full" [style]="style"></div>
-            </div>
             <button
               (click)="openEditModal(saving)"
               class="absolute top-3 right-4 p-2 rounded transition-colors font-medium tracking-wide text-teal-500 hover:bg-teal-300 hover:text-gray-900 dark:hover:bg-gray-200 dark:text-teal-400 dark:hover:text-gray-900"
@@ -123,7 +108,7 @@
             >
               Eliminar
             </button>
-          </div>
+          </app-savings-card>
         }
         @if (isModalEditOpen()) {
           <app-goal-modal-edit

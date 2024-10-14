@@ -1,7 +1,7 @@
 @if (isLogged) {
   <main class="min-h-screen p-4">
     <app-form [type]="'exits'" (formSubmitted)="onFormSubmitted()" />
-    <app-table [triggerUpdate]="triggerUpdate" [type]="'exits'" />
+    <app-table [type]="'exits'" />
   </main>
 } @else {
   <app-not-logged />

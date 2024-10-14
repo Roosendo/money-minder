@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -23,6 +22,7 @@ import { timer } from 'rxjs'
 import { ReminderDeleteComponent } from './reminder-delete'
 import { ReminderEditComponent } from './reminder-edit'
 import { RemindersStore } from '@app/store'
+import { RemindersCardComponent } from '@app/dashboard/common/reminders-card/reminders-card.component'
 
 @Component({
   selector: 'app-reminder',
@@ -32,11 +32,11 @@ import { RemindersStore } from '@app/store'
   imports: [
     AlertMessageComponent,
     FormsModule,
-    DatePipe,
     ReminderEditComponent,
     ReminderDeleteComponent,
     SubmitBttnComponent,
-    NotLoggedComponent
+    NotLoggedComponent,
+    RemindersCardComponent
   ]
 })
 export default class RemindersComponent implements OnInit {

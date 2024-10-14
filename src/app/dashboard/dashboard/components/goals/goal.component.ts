@@ -1,12 +1,12 @@
-import { CurrencyPipe } from '@angular/common'
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
+import { SavingsCardComponent } from '@app/dashboard/common/savings-card/savings-card.component'
 import { SavingsStore } from '@app/store'
 
 @Component({
   selector: 'app-goal',
   standalone: true,
   templateUrl: './goal.component.html',
-  imports: [CurrencyPipe],
+  imports: [SavingsCardComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GoalComponent {

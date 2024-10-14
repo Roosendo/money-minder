@@ -1,4 +1,3 @@
-import { CurrencyPipe } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -24,6 +23,7 @@ import { timer } from 'rxjs'
 import { GoalModalDeleteComponent } from './goal-modal-delete'
 import { GoalModalEditComponent } from './goal-modal-edit'
 import { SavingsStore } from '@app/store'
+import { SavingsCardComponent } from '@app/dashboard/common/savings-card/savings-card.component'
 
 @Component({
   selector: 'app-goals',
@@ -36,7 +36,7 @@ import { SavingsStore } from '@app/store'
     GoalModalDeleteComponent,
     SubmitBttnComponent,
     NotLoggedComponent,
-    CurrencyPipe
+    SavingsCardComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -159,12 +159,5 @@ export default class GoalsComponent implements OnInit {
         console.log('Error deleting saving')
       }
     })
-  }
-
-  calculateProgress(saving: Saving): number {
-    const progress = Math.round(
-      (saving.current_amount / saving.target_amount) * 100
-    )
-    return progress > 100 ? 100 : progress
   }
 }

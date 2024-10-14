@@ -66,20 +66,11 @@
     @if (reminders().length) {
       <div id="reminders-list" class="mx-auto mt-6 max-w-lg space-y-4">
         @for (reminder of reminders(); track reminder.id) {
-          <div
-            class="dark:bg-gray-800 bg-gray-100 p-6 mb-6 rounded-lg shadow-md flex justify-between items-center relative"
+          <app-reminders-card
+            [title]="reminder.title"
+            [description]="reminder.description"
+            [reminder_date]="reminder.reminder_date"
           >
-            <div class="flex flex-col">
-              <h3 class="text-lg font-bold dark:text-gray-100 text-gray-600">
-                {{ reminder.title }}
-              </h3>
-              <p class="dark:text-gray-400 text-gray-600">
-                {{ reminder.description }}
-              </p>
-              <p class="dark:text-gray-400 text-gray-600 uppercase">
-                {{ reminder.reminder_date | date: "d/MM/y 'a las' hh:mm a" }}
-              </p>
-            </div>
             <button
               (click)="openReminderDelete(reminder)"
               id="deleteButton"
@@ -94,7 +85,7 @@
             >
               Editar
             </button>
-          </div>
+          </app-reminders-card>
         }
         @if (isReminderEditOpen()) {
           <app-reminder-edit

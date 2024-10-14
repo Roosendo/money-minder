@@ -2,7 +2,7 @@ import { AsyncPipe, NgOptimizedImage } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
-  OnInit,
+  type OnInit,
   inject
 } from '@angular/core'
 import { Title } from '@angular/platform-browser'
