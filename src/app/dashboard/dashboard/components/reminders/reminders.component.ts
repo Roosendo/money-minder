@@ -1,20 +1,15 @@
-import { AsyncPipe, DatePipe } from '@angular/common'
+import { DatePipe } from '@angular/common'
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
-import { ApiCallsService } from '@app/services'
+import { RemindersStore } from '@app/store'
 
 @Component({
   selector: 'app-reminders',
   standalone: true,
   templateUrl: './reminders.component.html',
-  imports: [AsyncPipe, DatePipe],
+  imports: [DatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RemindersComponent {
-  private readonly apiCallsService
-  reminders$
-
-  constructor() {
-    this.apiCallsService = inject(ApiCallsService)
-    this.reminders$ = this.apiCallsService.getReminders()
-  }
+  readonly store = inject(RemindersStore)
+  reminders = this.store.reminders
 }
