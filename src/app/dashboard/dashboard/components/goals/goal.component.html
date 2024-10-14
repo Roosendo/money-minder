@@ -1,23 +1,21 @@
-@let goals = goals$ | async;
-
-@if (goals && goals.length > 0) {
+@if (savings().length) {
   <div class="rounded-lg bg-gray-100 p-4 shadow-lg dark:bg-gray-800">
     <h2 class="mb-4 text-lg font-semibold">Progreso hacia Objetivos</h2>
     <div id="goals" class="space-y-4">
-      @for (goal of goals; track goal.id) {
-        @let percentage = (goal.current_amount / goal.target_amount) * 100;
+      @for (saving of savings(); track saving.id) {
+        @let percentage = (saving.current_amount / saving.target_amount) * 100;
         @let style = "width: " + percentage + "%";
         <div
           class="bg-gray-200 dark:bg-gray-700 p-6 rounded-lg shadow-md relative"
         >
           <h3 class="text-lg font-bold mt-2 text-gray-700 dark:text-gray-100">
-            Nombre del objetivo: {{ goal.name }}
+            Nombre del objetivo: {{ saving.name }}
           </h3>
           <p class="text-gray-600 dark:text-gray-400">
-            Monto objetivo: {{ goal.target_amount | currency:'USD':'symbol' }}
+            Monto objetivo: {{ saving.target_amount | currency:'USD':'symbol' }}
           </p>
           <p class="text-gray-600 dark:text-gray-400">
-            Monto actual: {{ goal.current_amount | currency:'USD':'symbol' }}
+            Monto actual: {{ saving.current_amount | currency:'USD':'symbol' }}
           </p>
           <div
             class="w-full bg-gray-200 dark:bg-gray-50 rounded-full h-2 mt-2 mb-3"

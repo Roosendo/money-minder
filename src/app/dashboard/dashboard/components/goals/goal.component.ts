@@ -1,20 +1,15 @@
-import { AsyncPipe, CurrencyPipe } from '@angular/common'
+import { CurrencyPipe } from '@angular/common'
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
-import { ApiCallsService } from '@app/services'
+import { SavingsStore } from '@app/store'
 
 @Component({
   selector: 'app-goal',
   standalone: true,
   templateUrl: './goal.component.html',
-  imports: [AsyncPipe, CurrencyPipe],
+  imports: [CurrencyPipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GoalComponent {
-  private readonly apiCalls
-  goals$
-
-  constructor() {
-    this.apiCalls = inject(ApiCallsService)
-    this.goals$ = this.apiCalls.getSavings()
-  }
+  readonly store = inject(SavingsStore)
+  savings = this.store.savings
 }

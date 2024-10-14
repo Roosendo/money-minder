@@ -1,4 +1,4 @@
-import { inject, InjectionToken } from '@angular/core'
+import { InjectionToken, inject } from '@angular/core'
 import type { TransactionChart } from '@app/models'
 import { ApiCallsService } from '@app/services'
 import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals'

@@ -6,6 +6,6 @@
   - [X] Implement an update method for cash flow.
   - [X] Add a transaction method that accepts an array with month, total_income, and total_expenses.
 - [X] **Categories Store**: To handle the logic related to main categories.
-- [ ] **Savings Store**: To handle the logic related to savings.
+- [X] **Savings Store**: To handle the logic related to savings.
 - [ ] **Reminders Store**: To handle the logic related to reminders.
 - [x] **Quote Store**: Already done.
