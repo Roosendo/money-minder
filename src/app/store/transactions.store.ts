@@ -3,7 +3,7 @@ import type { RecentTransactions, Transaction } from '@app/models'
 import { ApiCallsService } from '@app/services'
 import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals'
 import { withEntities } from '@ngrx/signals/entities'
-import { lastValueFrom } from 'rxjs'
+import { firstValueFrom } from 'rxjs'
 
 type TransactionState = {
   recentTransactions: RecentTransactions[],
@@ -31,7 +31,7 @@ export const TransactionsStore = signalStore(
     },
 
     async updateRecentTransactions(): Promise<void> {
-      const recentTransactions = await lastValueFrom(apiCallsService.getRecentTransactions())
+      const recentTransactions = await firstValueFrom(apiCallsService.getRecentTransactions())
       patchState(store, { recentTransactions })
     },
 
@@ -62,9 +62,9 @@ export const TransactionsStore = signalStore(
   withHooks({
     async onInit(store, apiCallsService = inject(ApiCallsService)) {
       try {
-        const recentTransactions = await lastValueFrom(apiCallsService.getRecentTransactions())
-        const entries = await lastValueFrom(apiCallsService.getLastEntries())
-        const exits = await lastValueFrom(apiCallsService.getLastExits())
+        const recentTransactions = await firstValueFrom(apiCallsService.getRecentTransactions())
+        const entries = await firstValueFrom(apiCallsService.getLastEntries())
+        const exits = await firstValueFrom(apiCallsService.getLastExits())
 
         patchState(store, { recentTransactions, entries, exits })
       } catch (error) {

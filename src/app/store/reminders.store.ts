@@ -3,7 +3,7 @@ import type { Reminder } from '@app/models'
 import { ApiCallsService } from '@app/services'
 import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals'
 import { withEntities } from '@ngrx/signals/entities'
-import { lastValueFrom } from 'rxjs'
+import { firstValueFrom } from 'rxjs'
 
 type RemindersState = {
   reminders: Reminder[]
@@ -27,7 +27,7 @@ export const RemindersStore = signalStore(
     },
 
     async updateReminders(): Promise<void> {
-      const reminders = await lastValueFrom(apiCallsService.getReminders())
+      const reminders = await firstValueFrom(apiCallsService.getReminders())
       patchState(store, { reminders })
     },
 
@@ -48,7 +48,7 @@ export const RemindersStore = signalStore(
   withHooks({
     async onInit(store, apiCallsService = inject(ApiCallsService)) {
       try {
-        const reminders = await lastValueFrom(apiCallsService.getReminders())
+        const reminders = await firstValueFrom(apiCallsService.getReminders())
         patchState(store, { reminders })
       } catch (error) {
         console.error('Error fetching reminders:', error)

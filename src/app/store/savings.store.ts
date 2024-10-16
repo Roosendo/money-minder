@@ -3,7 +3,7 @@ import type { Saving } from '@app/models'
 import { ApiCallsService } from '@app/services'
 import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals'
 import { withEntities } from '@ngrx/signals/entities'
-import { lastValueFrom } from 'rxjs'
+import { firstValueFrom } from 'rxjs'
 
 type SavingsState = {
   savings: Saving[]
@@ -27,7 +27,7 @@ export const SavingsStore = signalStore(
     },
 
     async updateSavings(): Promise<void> {
-      const savings = await lastValueFrom(apiCallsService.getSavings())
+      const savings = await firstValueFrom(apiCallsService.getSavings())
       patchState(store, { savings })
     },
 
@@ -48,7 +48,7 @@ export const SavingsStore = signalStore(
   withHooks({
     async onInit(store, apiCallsService = inject(ApiCallsService)) {
       try {
-        const savings = await lastValueFrom(apiCallsService.getSavings())
+        const savings = await firstValueFrom(apiCallsService.getSavings())
         patchState(store, { savings })
       } catch (error) {
         console.error('Error fetching savings:', error)

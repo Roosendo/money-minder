@@ -14,9 +14,8 @@ export interface RecentTransactions {
   amount: number
 }
 
-export type MonthString = `${'0' | '1'}${number}`
 export interface CashFLow {
-  month: MonthString
+  month: string
   total_ingresos: number
   total_egresos: number
 }

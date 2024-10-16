@@ -3,7 +3,7 @@ import type { Quote } from '@app/models'
 import { ApiCallsService } from '@app/services'
 import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals'
 import { withEntities } from '@ngrx/signals/entities'
-import { lastValueFrom } from 'rxjs'
+import { firstValueFrom } from 'rxjs'
 
 type QuoteState = {
   quote: Quote
@@ -31,14 +31,14 @@ export const QuoteStore = signalStore(
     },
 
     async updateQuote(): Promise<void> {
-      const quote = await lastValueFrom(apiCallsService.getQuote())
+      const quote = await firstValueFrom(apiCallsService.getQuote())
       patchState(store, { quote })
     }
   })),
   withHooks({
     async onInit(store, apiCallsService = inject(ApiCallsService)) {
       try {
-        const quote = await lastValueFrom(apiCallsService.getQuote())
+        const quote = await firstValueFrom(apiCallsService.getQuote())
         patchState(store, { quote })
       } catch (error) {
         console.error('Error fetching quote:', error)

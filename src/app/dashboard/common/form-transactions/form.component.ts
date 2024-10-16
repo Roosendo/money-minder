@@ -12,7 +12,7 @@ import { AlertMessageComponent, SubmitBttnComponent } from '@app/core'
 import { AuthCacheService, FormSubmitService } from '@app/services'
 import { timer } from 'rxjs'
 import categoriesJson from './categories.json'
-import { TransactionsStore } from '@app/store'
+import { CashFlowStore, FinancialSummaryStore, TransactionsStore } from '@app/store'
 
 @Component({
   selector: 'app-form',
@@ -29,6 +29,8 @@ export class FormComponent {
   private readonly formSubmit
   private readonly cdr
   readonly store = inject(TransactionsStore)
+  readonly storeFinancialSummary = inject(FinancialSummaryStore)
+  readonly storeCashFlow = inject(CashFlowStore)
   private readonly authCache = inject(AuthCacheService)
 
   am_success = signal<boolean>(false)
@@ -59,6 +61,15 @@ export class FormComponent {
         })
 
         this.store.addEntry(this.formData)
+        this.store.addRecentTransaction(this.formData)
+        const currentYear = new Date().getFullYear()
+        const formYear = new Date(this.formData.date).getFullYear()
+        const formMonth = (new Date(this.formData.date).getMonth() + 1).toString().padStart(2, '0')
+
+        if (formYear === currentYear) {
+          this.storeFinancialSummary.addSummaryEntry(this.formData.amount)
+          this.storeCashFlow.addEntryTransaction(formMonth, this.formData.amount)
+        }
         this.formData = { date: '', amount: 0, category: '', description: '', id: Math.floor(Math.random() * 1000000), user_email: this.authCache.getUser()?.email }
         this.formSubmitted.emit()
       },
@@ -82,6 +93,15 @@ export class FormComponent {
         })
 
         this.store.addExit(this.formData)
+        this.store.addRecentTransaction(this.formData)
+        const currentYear = new Date().getFullYear()
+        const formYear = new Date(this.formData.date).getFullYear()
+        const formMonth = (new Date(this.formData.date).getMonth() + 1).toString().padStart(2, '0')
+
+        if (formYear === currentYear) {
+          this.storeFinancialSummary.addSummaryExit(this.formData.amount)
+          this.storeCashFlow.addExitTransaction(formMonth, this.formData.amount)
+        }
         this.formData = { date: '', amount: 0, category: '', description: '', id: Math.floor(Math.random() * 1000000), user_email: this.authCache.getUser()?.email }
         this.formSubmitted.emit()
       },

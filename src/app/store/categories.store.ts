@@ -3,7 +3,7 @@ import type { TransactionChart } from '@app/models'
 import { ApiCallsService } from '@app/services'
 import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals'
 import { withEntities } from '@ngrx/signals/entities'
-import { lastValueFrom } from 'rxjs'
+import { firstValueFrom } from 'rxjs'
 
 type CategoriesState = {
   categories: TransactionChart[]
@@ -27,7 +27,7 @@ export const CategoriesStore = signalStore(
     },
 
     async updateCategories(): Promise<void> {
-      const categories = await lastValueFrom(apiCallsService.getMainCategories())
+      const categories = await firstValueFrom(apiCallsService.getMainCategories())
       patchState(store, { categories })
     },
 
@@ -51,7 +51,7 @@ export const CategoriesStore = signalStore(
   withHooks({
     async onInit(store, apiCallsService = inject(ApiCallsService)) {
       try {
-        const categories = await lastValueFrom(apiCallsService.getMainCategories())
+        const categories = await firstValueFrom(apiCallsService.getMainCategories())
         patchState(store, { categories })
       } catch (error) {
         console.error('Error fetching categories:', error)

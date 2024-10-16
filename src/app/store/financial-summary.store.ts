@@ -3,7 +3,7 @@ import type { FinancialSummary } from '@app/models'
 import { ApiCallsService } from '@app/services'
 import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals'
 import { withEntities } from '@ngrx/signals/entities'
-import { lastValueFrom } from 'rxjs'
+import { firstValueFrom } from 'rxjs'
 
 type FinancialSummaryState = {
   financialSummary: FinancialSummary
@@ -30,7 +30,7 @@ export const FinancialSummaryStore = signalStore(
     },
 
     async updateFinancialSummary(): Promise<void> {
-      const financialSummary = await lastValueFrom(apiCallsService.getFinancialSummary())
+      const financialSummary = await firstValueFrom(apiCallsService.getFinancialSummary())
       patchState(store, { financialSummary })
     },
 
@@ -65,7 +65,7 @@ export const FinancialSummaryStore = signalStore(
   withHooks({
     async onInit(store, apiCallsService = inject(ApiCallsService)) {
       try {
-        const financialSummary = await lastValueFrom(apiCallsService.getFinancialSummary())
+        const financialSummary = await firstValueFrom(apiCallsService.getFinancialSummary())
         patchState(store, { financialSummary })
       } catch (error) {
         console.error('Error fetching financial summary:', error)
