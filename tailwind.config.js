@@ -1,4 +1,5 @@
 import animations from '@midudev/tailwind-animations'
+const purgeCss = require('@fullhuman/postcss-purgecss')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -7,5 +8,11 @@ module.exports = {
   theme: {
     extend: {}
   },
-  plugins: [animations, require('@tailwindcss/typography')]
+  plugins: [
+    animations,
+    require('@tailwindcss/typography'),
+    purgeCss({
+      content: ['./**/*.hmtl']
+    })
+  ]
 }
