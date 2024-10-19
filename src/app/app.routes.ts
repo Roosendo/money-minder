@@ -59,6 +59,16 @@ export const routes: Routes = [
         path: 'reminders',
         loadComponent: () =>
           import('./dashboard/reminders/components/reminder.component')
+      },
+      {
+        path: 'credit-cards',
+        loadComponent: () =>
+          import('./dashboard/credit-cards').then((component) => component.CreditCardsComponent)
+      },
+      {
+        path: 'loans',
+        loadComponent: () =>
+          import('./dashboard/loans').then((component) => component.LoansComponent)
       }
     ]
   }
