@@ -9,6 +9,7 @@ import {
 } from '../adapters'
 import type {
   CashFLow,
+  CreditCards,
   EntryTransaction,
   ExitTransaction,
   FinancialSummary,
@@ -238,6 +239,18 @@ export class ApiCallsService {
         catchError((error) => {
           console.error('Error fetching Monthly Exits', error)
           return throwError(() => new Error('Error fetching Monthly Exits'))
+        })
+      )
+  }
+
+  getCreditCards(): Observable<CreditCards[]> {
+    const url = `${this.API_URL}/credit-cards?email=${this.email}`
+    return this.http.get<CreditCards[]>(url)
+      .pipe(
+        map((result) => result),
+        catchError((error) => {
+          console.error('Error fetching Credit Cards', error)
+          return throwError(() => new Error('Error fetching Credit Cards'))
         })
       )
   }

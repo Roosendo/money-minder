@@ -76,6 +76,40 @@
       </div>
     </div>
   </div>
+  @if (type() === 'exits') {
+    <div class="flex items-center me-4 mb-5">
+      <input [(ngModel)]="formData.isCreditPayment" name="isCreditPayment" id="teal-checkbox" type="checkbox" value="" class="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+      <label for="teal-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">¿El egreso fue con tarjeta de crédito?</label>
+    </div>
+    @if (formData.isCreditPayment) {
+      <div class="mb-5 gap-3">
+        <label for="card_select" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-200">
+          Selecciona una tarjeta:
+        </label>
+        @if (creditCards().length) {
+          <select
+            name="card_select"
+            id="card_select"
+            [(ngModel)]="formData.creditCardId"
+            class="block w-full p-2.5 border rounded-lg border-gray-300 bg-gray-50 text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option value="0" selected disabled>Elige una tarjeta...</option>
+            @for (card of creditCards(); track card.credit_card_id) {
+              <option [value]="card.credit_card_id">{{ card.name }}</option>
+            }
+          </select>
+        } @else {
+          <p class="text-rose-500 dark:text-rose-400">No tienes tarjetas registradas. Agrega una antes de continuar.</p>
+        }
+      </div>
+    }
+    @if (am_credit()) {
+      <app-alert-message
+        [alertMessage]="'Selecciona una tarjeta de crédito'"
+        [typeAlert]="'warning'"
+      />
+    }
+  }
   <div class="mb-5">
     <label for="underline_select" class="sr-only">Underline select</label>
     <select

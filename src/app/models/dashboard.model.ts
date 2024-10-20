@@ -90,9 +90,18 @@ export interface ExitTransaction extends ApiTransaction {
 
 export interface Transaction extends ApiTransaction {
   id: number
+  credit_card_id?: number | null
+  is_credit_payment?: 0 | 1
 }
 
 export interface Summary {
   totalEntries: number
   totalExits: number
+}
+
+export interface CreditCards {
+  credit_card_id: number
+  name: string
+  cut_off_date: string
+  payment_due_date: string
 }

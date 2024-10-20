@@ -8,7 +8,10 @@ interface BaseTransaction {
 }
 
 export interface NewEntry extends BaseTransaction {}
-export interface NewExit extends BaseTransaction {}
+export interface NewExit extends BaseTransaction {
+  creditCardId: number | null
+  isCreditPayment: boolean
+}
 
 export interface NewSaving {
   email?: string
