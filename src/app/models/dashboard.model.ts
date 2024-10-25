@@ -105,3 +105,10 @@ export interface CreditCards {
   cut_off_date: string
   payment_due_date: string
 }
+
+export interface Purchases {
+  exit_id: number
+  amount: number
+  description: string
+  date: string
+}

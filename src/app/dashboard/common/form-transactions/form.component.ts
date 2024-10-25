@@ -102,6 +102,14 @@ export class FormComponent {
 
         this.store.addExit({ ...this.formData, is_credit_payment: this.formData.isCreditPayment ? 1 : 0 })
         this.store.addRecentTransaction(this.formData)
+        if (this.formData.isCreditPayment) {
+          this.storeCreditCards.addPurchase({
+            amount: this.formData.amount,
+            date: this.formData.date,
+            description: this.formData.description,
+            exit_id: this.formData.id
+          })
+        }
         const currentYear = new Date().getFullYear()
         const formYear = new Date(this.formData.date).getFullYear()
         const formMonth = (new Date(this.formData.date).getMonth() + 1).toString().padStart(2, '0')

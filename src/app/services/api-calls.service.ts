@@ -13,6 +13,7 @@ import type {
   EntryTransaction,
   ExitTransaction,
   FinancialSummary,
+  Purchases,
   Quote,
   RecentTransactions,
   Reminder,
@@ -251,6 +252,18 @@ export class ApiCallsService {
         catchError((error) => {
           console.error('Error fetching Credit Cards', error)
           return throwError(() => new Error('Error fetching Credit Cards'))
+        })
+      )
+  }
+
+  getPurchases(creditCardId: number): Observable<Purchases[]> {
+    const url = `${this.API_URL}/credit-cards/${creditCardId}/purchases`
+    return this.http.get<Purchases[]>(url)
+      .pipe(
+        map((result) => result),
+        catchError((error) => {
+          console.error('Error fetching Purchases', error)
+          return throwError(() => new Error('Error fetching Purchases'))
         })
       )
   }

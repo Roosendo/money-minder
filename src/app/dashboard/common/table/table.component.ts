@@ -7,7 +7,7 @@ import {
   inject,
   input
 } from '@angular/core'
-import type { ExitTransaction, Transaction } from '@app/models'
+import type { Transaction } from '@app/models'
 import { TransactionsStore } from '@app/store'
 
 @Component({
