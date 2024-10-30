@@ -60,10 +60,17 @@
   <div class="mx-auto p-3 bg-gray-100 dark:bg-gray-800">
     @for (card of creditCards(); track card.credit_card_id) {
       <div class="mb-4 cursor-pointer shadow-lg rounded bg-white p-4 dark:bg-gray-700" (click)="toggleCardExpansion(card.credit_card_id)">
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center relative">
           <span class="text-xl font-bold text-teal-500">{{ card.name }}</span>
+          <button
+              (click)="openModalDelete(card)"
+              id="deleteButton"
+              class="absolute top-3 right-20 p-2 rounded transition-colors font-medium tracking-wide text-rose-500 hover:bg-rose-300 hover:text-gray-900 dark:hover:bg-gray-200 dark:text-rose-400 dark:hover:text-gray-900"
+            >
+              Eliminar
+            </button>
           <svg
-            class="-mr-1 md:size-5 size-4 duration-200"
+            class="-mr-1 md:size-5 size-4 text-gray-800 dark:text-gray-100 duration-200"
             [ngClass]="expandedCard === card.credit_card_id ? 'rotate-180' : ''"
             viewBox='0 0 20 20'
             fill='currentColor'
@@ -86,7 +93,7 @@
         </div>
 
         @if (expandedCard === card.credit_card_id) {
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 animate-fade-in-down">
             <div class="overflow-x-auto rounded-lg">
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50 dark:bg-gray-600">
@@ -96,17 +103,19 @@
                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Fecha</th>
                   </tr>
                 </thead>
-                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200">
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 text-gray-800 dark:text-gray-100">
                   @for (transaction of getPurchasesForCard(card.credit_card_id); track transaction.exit_id) {
-                    <tr>
-                      <td class="px-4 py-2 whitespace-nowrap">{{ transaction.amount | currency }}</td>
-                      <td class="px-4 py-2 whitespace-nowrap">{{ transaction.description }}</td>
-                      <td class="px-4 py-2 whitespace-nowrap">{{ transaction.date | date:"d/MM/y" }}</td>
-                    </tr>
-                  } @empty {
-                    <tr>
-                      <td class="px-4 py-2 whitespace-nowrap" colspan="3">No hay transacciones</td>
-                    </tr>
+                    @if (!transaction.amount) {
+                      <tr>
+                        <td class="px-4 py-2 whitespace-nowrap text-center" colspan="3">No hay transacciones para esta tarjeta</td>
+                      </tr>
+                    } @else {
+                      <tr>
+                        <td class="px-4 py-2 whitespace-nowrap">{{ transaction.amount | currency }}</td>
+                        <td class="px-4 py-2 whitespace-nowrap">{{ transaction.description }}</td>
+                        <td class="px-4 py-2 whitespace-nowrap">{{ transaction.date | date:"d/MM/y" }}</td>
+                      </tr>
+                    }
                   }
                 </tbody>
               </table>
@@ -122,6 +131,9 @@
           </div>
         }
       </div>
+    }
+    @if (modalDelete()) {
+      <app-modal-delete-cc [creditCard]="selectedCard!" (close)="closeModalDelete()" (delete)="deleteCard($event)" />
     }
   </div>
 </div>

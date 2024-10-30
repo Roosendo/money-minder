@@ -38,8 +38,8 @@ export const CreditCardsStore = signalStore(
       patchState(store, { creditCards: updatedCreditCards })
     },
 
-    deleteCreditCard(creditCard: CreditCards): void {
-      const updatedCreditCards = store.creditCards().filter((c) => c.credit_card_id  !== creditCard.credit_card_id)
+    deleteCreditCard(creditCardId: number): void {
+      const updatedCreditCards = store.creditCards().filter((c) => c.credit_card_id  !== creditCardId)
       patchState(store, { creditCards: updatedCreditCards })
     },
 

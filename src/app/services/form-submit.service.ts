@@ -187,4 +187,11 @@ export class FormSubmitService {
       )
       .pipe(catchError(this.handleError))
   }
+
+  deleteCreditCard(id: number) {
+    const url = `${this.API_URL}/credit-cards/${id}`
+    return this.http
+      .delete(url, { ...this.requestOptions, body: { userEmail: this.email } })
+      .pipe(catchError(this.handleError))
+  }
 }
