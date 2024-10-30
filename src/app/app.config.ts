@@ -8,6 +8,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http'
 import { provideClientHydration } from '@angular/platform-browser'
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts'
 import { routes } from './app.routes'
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideExperimentalZonelessChangeDetection(),
     provideHttpClient(withFetch()),
     provideRouter(routes, withComponentInputBinding()),
-    provideCharts(withDefaultRegisterables())
+    provideCharts(withDefaultRegisterables()),
+    provideAnimationsAsync()
   ]
 }

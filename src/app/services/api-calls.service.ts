@@ -256,8 +256,8 @@ export class ApiCallsService {
       )
   }
 
-  getPurchases(creditCardId: number): Observable<Purchases[]> {
-    const url = `${this.API_URL}/credit-cards/${creditCardId}/purchases`
+  getPurchases(): Observable<Purchases[]> {
+    const url = `${this.API_URL}/credit-cards/purchases?email=${this.email}`
     return this.http.get<Purchases[]>(url)
       .pipe(
         map((result) => result),

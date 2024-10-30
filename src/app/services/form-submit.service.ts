@@ -6,6 +6,7 @@ import { AuthCacheService } from '.'
 import type {
   EditReminder,
   EditSaving,
+  NewCreditCard,
   NewEntry,
   NewExit,
   NewReminder,
@@ -172,6 +173,18 @@ export class FormSubmitService {
     const url = `${this.API_URL}/reminders/delete-reminder?id=${id}&email=${this.email}`
     return this.http
       .delete(url, this.requestOptions)
+      .pipe(catchError(this.handleError))
+  }
+
+  creditCardSubmit(creditCardSubmit: NewCreditCard) {
+    const url = `${this.API_URL}/credit-cards`
+    const { email, fullName } = this
+    return this.http
+      .post(
+        url,
+        JSON.stringify({ email, fullName, ...creditCardSubmit }),
+        this.requestOptions
+      )
       .pipe(catchError(this.handleError))
   }
 }

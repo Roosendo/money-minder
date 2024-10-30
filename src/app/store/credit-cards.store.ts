@@ -48,7 +48,7 @@ export const CreditCardsStore = signalStore(
     },
 
     async updatePurchases(id: number): Promise<void> {
-      const purchases = await firstValueFrom(apiCallsService.getPurchases(id))
+      const purchases = await firstValueFrom(apiCallsService.getPurchases())
       patchState(store, { purchases })
     },
 
@@ -61,8 +61,9 @@ export const CreditCardsStore = signalStore(
     async onInit(store, apiCallsService = inject(ApiCallsService)) {
       try {
         const creditCards = await firstValueFrom(apiCallsService.getCreditCards())
+        const purchases = await firstValueFrom(apiCallsService.getPurchases())
 
-        patchState(store, { creditCards })
+        patchState(store, { creditCards, purchases })
       } catch (error) {
         console.error('Error fetching Credit Cards:', error)
         patchState(store, { creditCards: initialState.creditCards })

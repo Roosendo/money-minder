@@ -1,6 +1,7 @@
 @let typeOf = type() === 'entries' ? 'Ingreso' : 'Egreso';
 
 <form
+  [formGroup]="form()"
   (submit)="onSubmit()"
   class="mx-auto mb-8 bg-gray-100 dark:bg-gray-800 mt-6 max-w-md rounded-md p-6 text-gray-900 border border-gray-800 dark:border-gray-100 dark:text-white"
 >
@@ -10,9 +11,8 @@
       >Fecha del monto:</label
     >
     <input
-      [(ngModel)]="formData.date"
+      formControlName="date"
       type="date"
-      name="date"
       id="date"
       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 shadow-sm dark:border-gray-600 dark:bg-gray-700"
     />
@@ -42,9 +42,8 @@
           </svg>
         </div>
         <input
-          [(ngModel)]="formData.amount"
+          formControlName="amount"
           type="number"
-          name="currency-input"
           id="currency-input"
           class="z-20 block w-full rounded-s-lg border border-e-2 border-gray-300 border-e-gray-50 bg-gray-50 p-2.5 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:border-e-gray-700 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500"
           placeholder="3.99"
@@ -78,23 +77,23 @@
   </div>
   @if (type() === 'exits') {
     <div class="flex items-center me-4 mb-5">
-      <input [(ngModel)]="formData.isCreditPayment" name="isCreditPayment" id="teal-checkbox" type="checkbox" value="" class="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+      <input formControlName="isCreditPayment" id="teal-checkbox" type="checkbox" value="" class="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
       <label for="teal-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">¿El egreso fue con tarjeta de crédito?</label>
     </div>
-    @if (formData.isCreditPayment) {
+    @if (form().get('isCreditPayment')?.value) {
       <div class="mb-5 gap-3">
         <label for="card_select" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-200">
           Selecciona una tarjeta:
         </label>
-        @if (creditCards().length) {
+        @if (creditCardsStore.creditCards().length) {
           <select
             name="card_select"
             id="card_select"
-            [(ngModel)]="formData.creditCardId"
+            formControlName="creditCardId"
             class="block w-full p-2.5 border rounded-lg border-gray-300 bg-gray-50 text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 focus:ring-indigo-500 focus:border-indigo-500"
           >
             <option value="0" selected disabled>Elige una tarjeta...</option>
-            @for (card of creditCards(); track card.credit_card_id) {
+            @for (card of creditCardsStore.creditCards(); track card.credit_card_id) {
               <option [value]="card.credit_card_id">{{ card.name }}</option>
             }
           </select>
@@ -113,7 +112,7 @@
   <div class="mb-5">
     <label for="underline_select" class="sr-only">Underline select</label>
     <select
-      [(ngModel)]="formData.category"
+      formControlName="category"
       name="underline_select"
       id="underline_select"
       class="block w-full appearance-none border-0 border-b-2 border-gray-200 bg-transparent px-0 py-2.5 text-sm text-gray-500 focus:border-gray-200 focus:outline-none focus:ring-0 dark:border-gray-700 dark:text-gray-400"
@@ -136,7 +135,7 @@
       >Descripción del {{ typeOf }}:</label
     >
     <textarea
-      [(ngModel)]="formData.description"
+      formControlName="description"
       name="message"
       id="message"
       rows="4"

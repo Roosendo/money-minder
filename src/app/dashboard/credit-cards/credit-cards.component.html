@@ -1,95 +1,125 @@
-<div class="container mx-auto p-6 my-8 max-w-xl rounded bg-gray-100 dark:bg-gray-800 h-auto">
+<div class="container mx-auto p-6 my-8 max-w-3xl rounded bg-gray-100 dark:bg-gray-800 h-auto">
   <section class="mb-8 [&_header]:mb-8">
     <header>
       <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Tarjetas de Crédito</h1>
       <p class="text-gray-600 dark:text-gray-300">Añade una nueva tarjeta de crédito</p>
     </header>
     <article>
-      <form class="space-y-4">
+      <form [formGroup]="formData()" (submit)="onSubmit()" class="space-y-4">
         <div class="space-y-2">
           <label for="cardName" class="text-gray-700 dark:text-gray-200">Nombre de la Tarjeta</label>
           <input
             id="cardName"
+            formControlName="name"
             type="text"
             placeholder="Tarjeta BAC Walmart"
             required
             class="w-full p-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded"
           />
+          @if (am_Name()) {
+            <app-alert-message [alertMessage]="'Antes debes agregarle un nombre'" [typeAlert]="'warning'" />
+          }
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div class="space-y-2">
             <label for="cutOffDate" class="text-gray-700 dark:text-gray-200">Fecha de Corte</label>
-            <select required id="cutOffDate" class="w-full p-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded">
+            <select required formControlName="payment_due_date" id="cutOffDate" class="w-full p-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded">
               <option value="" disabled selected>Seleccionar fecha</option>
               @for (day of days; track $index) {
                 <option [value]="day">{{ day }}</option>
               }
             </select>
+            @if (am_CutOff()) {
+              <app-alert-message [alertMessage]="'Antes debes agregar una fecha de corte'" [typeAlert]="'warning'" />
+            }
           </div>
           <div class="space-y-2">
             <label for="paymentDueDate" class="text-gray-700 dark:text-gray-200">Fecha de Pago</label>
-            <select required id="paymentDueDate" class="w-full p-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded">
+            <select required formControlName="cut_off_date" id="paymentDueDate" class="w-full p-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded">
               <option value="" disabled selected>Seleccionar fecha</option>
               @for (day of days; track $index) {
                 <option [value]="day">{{ day }}</option>
               }
             </select>
+            @if (am_PaymentDue()) {
+              <app-alert-message [alertMessage]="'Antes debes agregar una fecha de pago'" [typeAlert]="'warning'" />
+            }
           </div>
         </div>
+        @if (am_success()) {
+          <app-alert-message [alertMessage]="'¡Tarjeta Agregada!'" [typeAlert]="'success'" />
+        }
+        @if (am_warning()) {
+          <app-alert-message [alertMessage]="'Algo salió mal, pero no es tu culpa'" [typeAlert]="'warning'" />
+        }
         <app-submit-bttn [text]="'Agregar tarjeta'" />
       </form>
     </article>
   </section>
 
-  <div class="gap-4">
+  <div class="mx-auto p-3 bg-gray-100 dark:bg-gray-800">
     @for (card of creditCards(); track card.credit_card_id) {
-      <div class="bg-gradient-to-br dark:from-gray-800 from-gray-100 dark:to-gray-700 to-gray-200 text-teal-500 shadow-lg rounded p-4 mb-4">
-        <header class="cursor-pointer flex flex-row items-center justify-between" (click)="toggleCardExpansion(card.credit_card_id)">
-          <h3 class="text-xl font-bold">{{ card.name }}</h3>
-          @if (expandedCard === card.credit_card_id) {
-            <span class="text-gray-500">▲</span>
-          } @else {
-            <span class="text-gray-500">▼</span>
-          }
-        </header>
-        <article>
-          <div class="space-y-2 dark:text-gray-100 text-gray-800">
-            <p>Fecha de Corte: {{ card.cut_off_date }}</p>
-            <p>Fecha de Pago: {{ card.payment_due_date }}</p>
-          </div>
-        </article>
+      <div class="mb-4 cursor-pointer shadow-lg rounded bg-white p-4 dark:bg-gray-700" (click)="toggleCardExpansion(card.credit_card_id)">
+        <div class="flex justify-between items-center">
+          <span class="text-xl font-bold text-teal-500">{{ card.name }}</span>
+          <svg
+            class="-mr-1 md:size-5 size-4 duration-200"
+            [ngClass]="expandedCard === card.credit_card_id ? 'rotate-180' : ''"
+            viewBox='0 0 20 20'
+            fill='currentColor'
+            aria-hidden='true'
+          >
+            <path
+              fill-rule='evenodd'
+              d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'
+              clip-rule='evenodd'></path>
+          </svg>
+        </div>
+
+        <div class="text-gray-600 dark:text-gray-300">
+          <p>Fecha de Corte: {{ card.cut_off_date }}</p>
+          <p>Fecha de Pago: {{ card.payment_due_date }}</p>
+          <p class="mt-2 font-semibold">
+            Período de Facturación: {{ getPurchasesForCard(card.credit_card_id)[0].start_cut_off_date | date:'d/MM/y' }} -
+            {{ getPurchasesForCard(card.credit_card_id)[0].end_cut_off_date | date:'d/MM/y' }}
+          </p>
+        </div>
+
         @if (expandedCard === card.credit_card_id) {
-          <footer class="block mt-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                  <thead>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div class="overflow-x-auto rounded-lg">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50 dark:bg-gray-600">
+                  <tr>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Monto</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Descripción</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Fecha</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200">
+                  @for (transaction of getPurchasesForCard(card.credit_card_id); track transaction.exit_id) {
                     <tr>
-                      <th class="w-[100px]">Monto</th>
-                      <th>Descripción</th>
-                      <th>Fecha</th>
+                      <td class="px-4 py-2 whitespace-nowrap">{{ transaction.amount | currency }}</td>
+                      <td class="px-4 py-2 whitespace-nowrap">{{ transaction.description }}</td>
+                      <td class="px-4 py-2 whitespace-nowrap">{{ transaction.date | date:"d/MM/y" }}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    @for (purchase of purchases(); track purchase.exit_id) {
-                      <tr>
-                        <td class="font-medium">{{ purchase.amount | currency }}</td>
-                        <td>{{ purchase.description }}</td>
-                        <td>{{ purchase.date | date:"d/MM/y" }}</td>
-                      </tr>
-                    }
-                  </tbody>
-                </table>
-              </div>
-              <div class="bg-gray-100 dark:bg-gray-600 p-4 rounded-lg">
-                <h3 class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-100">Resumen</h3>
-                <p class="text-2xl font-bold text-teal-600 dark:text-teal-400">{{ total() | currency }}</p>
-                <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">
-                  Fecha de pago: {{ card.payment_due_date }}/{{ currentMonth }}/{{ currentYear }}
-                </p>
-              </div>
+                  } @empty {
+                    <tr>
+                      <td class="px-4 py-2 whitespace-nowrap" colspan="3">No hay transacciones</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
             </div>
-          </footer>
+
+            <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
+              <h3 class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-100">Resumen</h3>
+              <p class="text-2xl font-bold text-teal-500">{{ getPurchasesForCard(card.credit_card_id)[0].total_amount | currency }}</p>
+              <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">
+                Fecha de pago: {{ card.payment_due_date }}/{{ currentMonth() }}/{{ currentYear() }}
+              </p>
+            </div>
+          </div>
         }
       </div>
     }

@@ -107,8 +107,20 @@ export interface CreditCards {
 }
 
 export interface Purchases {
+  credit_card_id: number
+  name: string
+  cut_off_date: string
+  start_cut_off_date: string
+  end_cut_off_date: string
   exit_id: number
   amount: number
   description: string
   date: string
+  total_amount: number
+}
+
+export interface NewCreditCard {
+  name: string
+  cutOffDate: string
+  paymentDueDate: string
 }

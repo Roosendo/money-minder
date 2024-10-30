@@ -9,7 +9,7 @@
   padding: 0;
 }
 body {
-  min-height: 100dvh;
+  min-height: 100%;
 }
 html {
   font-family: "Saira Variable", sans-serif;
@@ -48,6 +48,5 @@ svg {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-    transition: none;
   }
 }
