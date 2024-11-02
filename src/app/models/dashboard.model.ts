@@ -124,3 +124,20 @@ export interface NewCreditCard {
   cutOffDate: string
   paymentDueDate: string
 }
+
+export interface Loans {
+  loan_title: string
+  bank_name: string
+  interest_rate: number
+  loan_amount: number
+  loan_start_date: string
+  loan_end_date: string
+  last_five_payments: Payments[]
+  total_payments: number
+}
+
+export interface Payments {
+  id: number
+  payment_date: string
+  payment_amount: number
+}

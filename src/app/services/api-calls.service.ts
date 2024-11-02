@@ -13,6 +13,7 @@ import type {
   EntryTransaction,
   ExitTransaction,
   FinancialSummary,
+  Loans,
   Purchases,
   Quote,
   RecentTransactions,
@@ -264,6 +265,18 @@ export class ApiCallsService {
         catchError((error) => {
           console.error('Error fetching Purchases', error)
           return throwError(() => new Error('Error fetching Purchases'))
+        })
+      )
+  }
+
+  getLoans(): Observable<Loans[]> {
+    const url = `${this.API_URL}/loans?email=${this.email}`
+    return this.http.get<Loans[]>(url)
+      .pipe(
+        map((result) => result),
+        catchError((error) => {
+          console.error('Error fetching Loans', error)
+          return throwError(() => new Error('Error fetching Loans'))
         })
       )
   }

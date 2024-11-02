@@ -34,7 +34,7 @@ export const CreditCardsStore = signalStore(
     },
 
     addCreditCard(creditCard: CreditCards): void {
-      const updatedCreditCards = [creditCard, ...store.creditCards()]
+      const updatedCreditCards = [...store.creditCards(), creditCard]
       patchState(store, { creditCards: updatedCreditCards })
     },
 

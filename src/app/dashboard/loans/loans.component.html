@@ -1,1 +1,143 @@
-<app-work-in-progress [featureName]="'préstamos'" />
+<div class="min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
+  <div class="max-w-2xl mx-auto bg-gray-200 dark:bg-gray-800 rounded shadow-md">
+    <div class="p-4 border-b border-gray-200">
+      <h2 class="text-2xl font-bold text-teal-500">Préstamos</h2>
+    </div>
+    <div class="p-4">
+      <!-- Formulario para agregar un préstamo -->
+      <form (submit)="handleAddLoan()" class="space-y-4">
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título del Préstamo</label>
+            <input id="title" placeholder="Título del préstamo" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full"
+              required />
+          </div>
+          <div>
+            <label for="bankName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre del Banco</label>
+            <input id="bankName" placeholder="Nombre del banco" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full"
+              required />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="interestRate" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Porcentaje de Interés (%)</label>
+            <input id="interestRate" type="number" placeholder="Tasa de interés"
+              class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full" required />
+          </div>
+          <div>
+            <label for="amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cantidad del Préstamo (USD)</label>
+            <input id="amount" type="number" placeholder="Monto del préstamo"
+              class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full" required />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="startDate" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fecha de Inicio</label>
+            <input id="startDate" type="date" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full" required />
+          </div>
+          <div>
+            <label for="endDate" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fecha de Fin (Aprox.)</label>
+            <input id="endDate" type="date" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full" required />
+          </div>
+        </div>
+        <app-submit-bttn [text]="'Agregar Préstamo'" />
+      </form>
+
+      <hr class="my-8" />
+
+      @for (loan of store.loans(); track loan.loan_title) {
+      <div class="bg-gray-300 dark:bg-gray-700 rounded shadow-md my-4">
+        <div class="p-4 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-teal-500">{{ loan.loan_title }}</h3>
+        </div>
+        <div class="p-4">
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Banco</p>
+              <p class="text-gray-700 dark:text-gray-300">{{ loan.bank_name }}</p>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Interés</p>
+              <p class="text-gray-700 dark:text-gray-300">{{ loan.interest_rate }}%</p>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Cantidad</p>
+              <p class="text-gray-700 dark:text-gray-300">{{ loan.loan_amount | currency }}</p>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Duración</p>
+              <p class="text-gray-700 dark:text-gray-300">{{ loan.loan_start_date | date:"d/MM/y" }} - {{ loan.loan_end_date | date:"d/MM/y" }}</p>
+            </div>
+          </div>
+
+          <hr class="my-4" />
+
+          <div>
+            <h4 class="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-300">Pagos (últimos 5)</h4>
+            <ul class="space-y-2">
+              @for (payment of loan.last_five_payments; track $index) {
+                <li class="flex justify-between items-center text-gray-700 dark:text-gray-300">
+                  <!-- Modo de visualización normal -->
+                  @if (!editingPaymentIds[payment.id]) {
+                    <span>
+                      <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block mr-2 size-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                      </svg>
+                      {{ payment.payment_date | date:"d/MM/y" }}
+                    </span>
+                    <div class="ml-auto flex space-x-3">
+                      <span>
+                        {{ payment.payment_amount | currency }}
+                      </span>
+                      <button (click)="toggleEditMode(payment.id)" class="hover:scale-110 hover:text-blue-500 transition">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block mr-2 size-4">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                        </svg>
+                      </button>
+                    </div>
+                  }
+                  <!-- Modo de edición para el pago específico -->
+                  @if (editingPaymentIds[payment.id]) {
+                    <input type="date" [(ngModel)]="editPaymentDate" class="border border-gray-400 outline-none rounded p-1 bg-transparent focus:border-gray-500" />
+                    <input type="number" [(ngModel)]="editPaymentAmount" class="border border-gray-400 outline-none rounded p-1 bg-transparent focus:border-gray-500" placeholder="Amount" />
+                    <div class="flex space-x-4">
+                      <button (click)="confirmEditPayment(payment.id)" class="text-green-500 hover:scale-110 transition-transform">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block mr-2 size-4">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                      </button>
+                      <button (click)="cancelEdit(payment.id)" class="text-red-500 hover:scale-110 transition-transform">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block mr-2 size-4">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                      </button>
+                    </div>
+                  }
+                </li>
+              }              
+            </ul>
+            <p class="mt-4 font-semibold text-gray-700 dark:text-gray-300">Total Pagado: {{ loan.total_payments | currency }}</p>
+          </div>
+
+          <form (submit)="handleAddPayment($event)" class="mt-4 space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label [for]="'paymentDate-' + $index" class="block text-sm font-medium text-gray-700">Fecha del Pago</label>
+                <input [id]="'paymentDate-' + $index" type="date"
+                  class="mt-1 p-2 border bg-gray-400 dark:bg-gray-700 border-gray-600 dark:border-gray-300 rounded w-full" required />
+              </div>
+              <div>
+                <label [for]="'paymentAmount-' + $index" class="block text-sm font-medium text-gray-700">Cantidad
+                  (USD)</label>
+                <input [id]="'paymentAmount-' + $index" type="number" placeholder="Monto del pago"
+                  class="mt-1 p-2 border bg-gray-400 dark:bg-gray-700 border-gray-600 dark:border-gray-300 rounded w-full" required />
+              </div>
+            </div>
+            <app-submit-bttn [text]="'Agregar Pago'" />
+          </form>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>

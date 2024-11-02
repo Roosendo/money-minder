@@ -128,6 +128,7 @@ export class FormComponent {
     } else {
       this.transactionsStore.addExit({ ...formData, is_credit_payment: formData.isCreditPayment ? 1 : 0 })
       this.transactionsStore.addRecentTransaction(formData)
+      this.creditCardsStore.addPurchase(formData)
       if (formYear === currentYear) {
         this.financialSummaryStore.addSummaryExit(formData.amount)
         this.cashFlowStore.addExitTransaction(formMonth, formData.amount)
