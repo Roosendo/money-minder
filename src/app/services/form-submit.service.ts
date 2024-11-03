@@ -4,11 +4,14 @@ import { type Observable, catchError, throwError } from 'rxjs'
 
 import { AuthCacheService } from '.'
 import type {
+  EditPayment,
   EditReminder,
   EditSaving,
   NewCreditCard,
   NewEntry,
   NewExit,
+  NewLoan,
+  NewPayment,
   NewReminder,
   NewSaving
 } from '../models'
@@ -192,6 +195,28 @@ export class FormSubmitService {
     const url = `${this.API_URL}/credit-cards/${id}`
     return this.http
       .delete(url, { ...this.requestOptions, body: { userEmail: this.email } })
+      .pipe(catchError(this.handleError))
+  }
+
+  addLoan(loan: NewLoan) {
+    const url = `${this.API_URL}/loans`
+    return this.http
+      .post(url, JSON.stringify({ ...loan, userEmail: this.email }), this.requestOptions)
+      .pipe(catchError(this.handleError))
+  }
+
+  addPayment(payment: NewPayment) {
+    const url = `${this.API_URL}/loans/payments`
+    return this.http
+      .post(url, JSON.stringify(payment), this.requestOptions)
+      .pipe(catchError(this.handleError))
+  }
+
+  editPayment(editPayment: EditPayment) {
+    const url = `${this.API_URL}/loans/payments/edit`
+    console.log({ ...editPayment, email: this.email })
+    return this.http
+      .patch(url, JSON.stringify({ ...editPayment, email: this.email }), this.requestOptions)
       .pipe(catchError(this.handleError))
   }
 }

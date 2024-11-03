@@ -8,7 +8,7 @@ import {
   output,
   signal
 } from '@angular/core'
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms'
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { AlertMessageComponent, SubmitBttnComponent } from '@app/core'
 import { AuthCacheService, FormSubmitService } from '@app/services'
 import { CashFlowStore, CreditCardsStore, FinancialSummaryStore, TransactionsStore } from '@app/store'
@@ -45,7 +45,6 @@ export class FormComponent {
   readonly financialSummaryStore = inject(FinancialSummaryStore)
   readonly cashFlowStore = inject(CashFlowStore)
   readonly creditCardsStore = inject(CreditCardsStore)
-  private fb = inject(FormBuilder)
 
   am_success = signal(false)
   am_category = signal(false)

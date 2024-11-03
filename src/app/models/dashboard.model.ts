@@ -126,6 +126,7 @@ export interface NewCreditCard {
 }
 
 export interface Loans {
+  id: number
   loan_title: string
   bank_name: string
   interest_rate: number
@@ -136,8 +137,29 @@ export interface Loans {
   total_payments: number
 }
 
+export interface NewLoan {
+  loanTitle: string
+  bankName: string
+  interestRate: number
+  loanAmount: number
+  loanStartDate: string
+  loanEndDate: string
+}
+
 export interface Payments {
   id: number
   payment_date: string
   payment_amount: number
+}
+
+export interface NewPayment {
+  loanId: number
+  paymentDate: string
+  paymentAmount: number
+}
+
+export interface EditPayment {
+  paymentId: number
+  paymentDate: string
+  paymentAmount: number
 }

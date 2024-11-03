@@ -5,47 +5,53 @@
     </div>
     <div class="p-4">
       <!-- Formulario para agregar un préstamo -->
-      <form (submit)="handleAddLoan()" class="space-y-4">
+      <form [formGroup]="addLoanForm()" (submit)="handleAddLoan()" class="space-y-4">
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título del Préstamo</label>
-            <input id="title" placeholder="Título del préstamo" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full"
+            <input id="title" formControlName="title" placeholder="Título del préstamo" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full"
               required />
           </div>
           <div>
             <label for="bankName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre del Banco</label>
-            <input id="bankName" placeholder="Nombre del banco" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full"
+            <input id="bankName" formControlName="bankName" placeholder="Nombre del banco" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full"
               required />
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label for="interestRate" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Porcentaje de Interés (%)</label>
-            <input id="interestRate" type="number" placeholder="Tasa de interés"
+            <input id="interestRate" formControlName="interestRate" type="number" placeholder="Tasa de interés"
               class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full" required />
           </div>
           <div>
             <label for="amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cantidad del Préstamo (USD)</label>
-            <input id="amount" type="number" placeholder="Monto del préstamo"
+            <input id="amount" formControlName="amount" type="number" placeholder="Monto del préstamo"
               class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full" required />
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label for="startDate" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fecha de Inicio</label>
-            <input id="startDate" type="date" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full" required />
+            <input id="startDate" formControlName="startDate" type="date" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full" required />
           </div>
           <div>
             <label for="endDate" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fecha de Fin (Aprox.)</label>
-            <input id="endDate" type="date" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full" required />
+            <input id="endDate" formControlName="endDate" type="date" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full" required />
           </div>
         </div>
+        @if (am_success_loan()) {
+          <app-alert-message [alertMessage]="'Préstamo agregado 😁'" [typeAlert]="'success'" />
+        }
+        @if (am_error_loan()) {
+          <app-alert-message [alertMessage]="'Error al agregar el préstamo 🙁'" [typeAlert]="'warning'" />
+        }
         <app-submit-bttn [text]="'Agregar Préstamo'" />
       </form>
 
       <hr class="my-8" />
 
-      @for (loan of store.loans(); track loan.loan_title) {
+      @for (loan of loans(); track loan.id) {
       <div class="bg-gray-300 dark:bg-gray-700 rounded shadow-md my-4">
         <div class="p-4 border-b border-gray-200">
           <h3 class="text-xl font-semibold text-teal-500">{{ loan.loan_title }}</h3>
@@ -75,10 +81,10 @@
           <div>
             <h4 class="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-300">Pagos (últimos 5)</h4>
             <ul class="space-y-2">
-              @for (payment of loan.last_five_payments; track $index) {
+              @for (payment of loan.last_five_payments; track payment.id) {
                 <li class="flex justify-between items-center text-gray-700 dark:text-gray-300">
                   <!-- Modo de visualización normal -->
-                  @if (!editingPaymentIds[payment.id]) {
+                  @if (editingPaymentId() !== payment.id) {
                     <span>
                       <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block mr-2 size-4">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
@@ -95,44 +101,53 @@
                         </svg>
                       </button>
                     </div>
-                  }
-                  <!-- Modo de edición para el pago específico -->
-                  @if (editingPaymentIds[payment.id]) {
-                    <input type="date" [(ngModel)]="editPaymentDate" class="border border-gray-400 outline-none rounded p-1 bg-transparent focus:border-gray-500" />
-                    <input type="number" [(ngModel)]="editPaymentAmount" class="border border-gray-400 outline-none rounded p-1 bg-transparent focus:border-gray-500" placeholder="Amount" />
-                    <div class="flex space-x-4">
-                      <button (click)="confirmEditPayment(payment.id)" class="text-green-500 hover:scale-110 transition-transform">
-                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block mr-2 size-4">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                      </button>
-                      <button (click)="cancelEdit(payment.id)" class="text-red-500 hover:scale-110 transition-transform">
-                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block mr-2 size-4">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                      </button>
-                    </div>
+                  } @else {
+                    <!-- Modo de edición para el pago específico -->
+                    <form [formGroup]="editPaymentForm()" class="flex justify-between items-center space-x-4 w-full">
+                      <input type="date" formControlName="date" class="border border-gray-400 outline-none rounded p-1 bg-transparent focus:border-gray-500" />
+                      <input type="number" formControlName="amount" class="border border-gray-400 outline-none rounded p-1 bg-transparent focus:border-gray-500" placeholder="Amount" />
+                      <div class="flex space-x-4">
+                        <button type="submit" (click)="confirmEditPayment(payment.id)" class="text-green-500 hover:scale-110 transition-transform">
+                          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block mr-2 size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                          </svg>
+                        </button>
+                        <button (click)="cancelEdit()" class="text-red-500 hover:scale-110 transition-transform">
+                          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block mr-2 size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                          </svg>
+                        </button>
+                      </div>
+                    </form>
                   }
                 </li>
-              }              
+              } @empty {
+                <li class="text-gray-700 dark:text-gray-300">No hay pagos registrados</li>
+              }
             </ul>
             <p class="mt-4 font-semibold text-gray-700 dark:text-gray-300">Total Pagado: {{ loan.total_payments | currency }}</p>
           </div>
 
-          <form (submit)="handleAddPayment($event)" class="mt-4 space-y-4">
+          <form [formGroup]="addPaymentForm()" (submit)="handleAddPayment(loan.id)" class="mt-4 space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div>
                 <label [for]="'paymentDate-' + $index" class="block text-sm font-medium text-gray-700">Fecha del Pago</label>
-                <input [id]="'paymentDate-' + $index" type="date"
+                <input [id]="'paymentDate-' + $index" type="date" formControlName="date"
                   class="mt-1 p-2 border bg-gray-400 dark:bg-gray-700 border-gray-600 dark:border-gray-300 rounded w-full" required />
               </div>
               <div>
                 <label [for]="'paymentAmount-' + $index" class="block text-sm font-medium text-gray-700">Cantidad
                   (USD)</label>
-                <input [id]="'paymentAmount-' + $index" type="number" placeholder="Monto del pago"
+                <input [id]="'paymentAmount-' + $index" type="number" placeholder="Monto del pago" formControlName="amount"
                   class="mt-1 p-2 border bg-gray-400 dark:bg-gray-700 border-gray-600 dark:border-gray-300 rounded w-full" required />
               </div>
             </div>
+            @if (am_success_payment()) {
+              <app-alert-message [alertMessage]="'Pago agregado 😁'" [typeAlert]="'success'" />
+            }
+            @if (am_error_payment()) {
+              <app-alert-message [alertMessage]="'Error al agregar el pago 🙁'" [typeAlert]="'warning'" />
+            }
             <app-submit-bttn [text]="'Agregar Pago'" />
           </form>
         </div>
