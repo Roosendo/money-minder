@@ -1,30 +1,12 @@
 import { CurrencyPipe, DatePipe } from '@angular/common'
-import { ChangeDetectionStrategy, Component, type OnInit, inject, signal, type Signal, computed } from '@angular/core'
+import { ChangeDetectionStrategy, Component, type OnInit, inject, signal, type Signal, computed, type WritableSignal } from '@angular/core'
 import { FormControl, FormsModule, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
 import { Title } from '@angular/platform-browser'
 import { AlertMessageComponent, SubmitBttnComponent } from '@app/core'
 import { FormSubmitService } from '@app/services'
 import { LoansStore } from '@app/store/loans.store'
 import { timer } from 'rxjs'
-
-interface TemplateLoanForm {
-  title: FormControl<string>
-  bankName: FormControl<string>
-  interestRate: FormControl<number>
-  amount: FormControl<number>
-  startDate: FormControl<string>
-  endDate: FormControl<string>
-}
-
-interface TemplateEditForm {
-  date: FormControl<string>
-  amount: FormControl<number>
-}
-
-interface TemplateAddPaymentForm {
-  date: FormControl<string>
-  amount: FormControl<number>
-}
+import type { TemplateLoanForm, TemplateEditForm, TemplateAddPaymentForm } from '@app/models'
 
 @Component({
   selector: 'app-loans',
@@ -34,22 +16,28 @@ interface TemplateAddPaymentForm {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansComponent implements OnInit {
-  private title = inject(Title)
+  private titleService = inject(Title)
   private submitService = inject(FormSubmitService)
   readonly store = inject(LoansStore)
+
   loans = this.store.loans
   editingPaymentId = signal<number | null>(null)
+  
   am_success_payment = signal<boolean>(false)
   am_error_payment = signal<boolean>(false)
   am_success_loan = signal<boolean>(false)
   am_error_loan = signal<boolean>(false)
 
+  addLoanForm: Signal<FormGroup> = computed(() => this.createLoanForm())
+  editPaymentForm: Signal<FormGroup> = computed(() => this.createEditForm())
+  addPaymentForm: Signal<FormGroup> = computed(() => this.createPaymentForm())
+
   ngOnInit(): void {
-    this.title.setTitle('Loans | Money Minder')
+    this.titleService.setTitle('Loans | Money Minder')
   }
 
-  addLoanForm: Signal<FormGroup> = computed(() =>
-    new FormGroup<TemplateLoanForm>({
+  private createLoanForm(): FormGroup<TemplateLoanForm> {
+    return new FormGroup<TemplateLoanForm>({
       title: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
       bankName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
       interestRate: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
@@ -57,24 +45,25 @@ export class LoansComponent implements OnInit {
       startDate: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
       endDate: new FormControl('', { nonNullable: true, validators: [Validators.required] })
     })
-  )
+  }
 
-  editPaymentForm: Signal<FormGroup> = computed(() =>
-    new FormGroup<TemplateEditForm>({
+  private createEditForm(): FormGroup<TemplateEditForm> {
+    return new FormGroup<TemplateEditForm>({
       date: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
       amount: new FormControl(0, { nonNullable: true, validators: [Validators.required] })
     })
-  )
+  }
 
-  addPaymentForm: Signal<FormGroup> = computed(() =>
-    new FormGroup<TemplateAddPaymentForm>({
+  private createPaymentForm(): FormGroup<TemplateAddPaymentForm> {
+    return new FormGroup<TemplateAddPaymentForm>({
       date: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
       amount: new FormControl(0, { nonNullable: true, validators: [Validators.required] })
     })
-  )
+  }
 
   handleAddLoan(): void {
     if (this.addLoanForm().invalid) return
+
     this.submitService.addLoan({
       loanTitle: this.addLoanForm().get('title')?.value,
       bankName: this.addLoanForm().get('bankName')?.value,
@@ -83,50 +72,32 @@ export class LoansComponent implements OnInit {
       loanStartDate: this.addLoanForm().get('startDate')?.value,
       loanEndDate: this.addLoanForm().get('endDate')?.value
     }).subscribe({
-      next: () => {
-        this.am_success_loan.set(true)
-        timer(3500).subscribe(() => this.am_success_loan.set(false))
-        this.addLoanForm().reset()
-        this.store.updateLoans()
-      },
-      error: () => {
-        this.am_error_loan.set(true)
-        timer(3500).subscribe(() => this.am_error_loan.set(false))
-      }
+      next: () => this.handleSuccess(this.am_success_loan, this.addLoanForm(), () => this.store.updateLoans()),
+      error: () => this.handleError(this.am_error_loan)
     })
   }
 
   handleAddPayment(loanId: number): void {
     if (this.addPaymentForm().invalid) return
-    this.submitService.addPayment({
+
+    const paymentData = {
       loanId,
       paymentAmount: this.addPaymentForm().get('amount')?.value,
       paymentDate: this.addPaymentForm().get('date')?.value
-    }).subscribe({
-      next: () => {
-        this.am_success_payment.set(true)
-        timer(3500).subscribe(() => this.am_success_payment.set(false))
-        this.store.addPayment({
-          loanId,
-          paymentAmount: this.addPaymentForm().get('amount')?.value,
-          paymentDate: this.addPaymentForm().get('date')?.value
-        })
-        this.addPaymentForm().reset()
-      },
-      error: () => {
-        this.am_error_payment.set(true)
-        timer(3500).subscribe(() => this.am_error_payment.set(false))
-      }
+    }
+
+    this.submitService.addPayment(paymentData).subscribe({
+      next: () => this.handleSuccess(this.am_success_payment, this.addPaymentForm(), () => this.store.addPayment(paymentData)),
+      error: () => this.handleError(this.am_error_payment)
     })
   }
 
   toggleEditMode(paymentId: number): void {
-    if (paymentId !== this.editingPaymentId()) this.editingPaymentId.set(null)
-    this.editingPaymentId.set(paymentId)
-    this.editPaymentForm().setValue({
-      date: this.store.loans().flatMap(loan => loan.last_five_payments).find(payment => payment.id === paymentId)?.payment_date ?? '',
-      amount: this.store.loans().flatMap(loan => loan.last_five_payments).find(payment => payment.id === paymentId)?.payment_amount ?? 0
-    })
+    this.editingPaymentId.set(paymentId === this.editingPaymentId() ? null : paymentId)
+    const payment = this.store.loans().flatMap(loan => loan.last_five_payments).find(payment => payment.id === paymentId)
+    if (payment) {
+      this.editPaymentForm().setValue({ date: payment.payment_date, amount: payment.payment_amount })
+    }
   }
 
   cancelEdit(): void {
@@ -136,14 +107,31 @@ export class LoansComponent implements OnInit {
 
   confirmEditPayment(paymentId: number): void {
     if (this.editPaymentForm().invalid) return
-    this.submitService.editPayment({ paymentId, paymentDate: this.editPaymentForm().get('date')?.value, paymentAmount: this.editPaymentForm().get('amount')?.value })
-      .subscribe({
-        next: () => {
-          this.store.updatePayment({ paymentId, paymentDate: this.editPaymentForm().get('date')?.value, paymentAmount: this.editPaymentForm().get('amount')?.value })
-          this.editPaymentForm().reset()
-          this.cancelEdit()
-        },
-        error: () => console.error('Error al editar el pago')
-      })
+
+    const editData = {
+      paymentId,
+      paymentDate: this.editPaymentForm().get('date')?.value,
+      paymentAmount: this.editPaymentForm().get('amount')?.value
+    }
+
+    this.submitService.editPayment(editData).subscribe({
+      next: () => {
+        this.store.updatePayment(editData)
+        this.cancelEdit()
+      },
+      error: () => console.error('Error al editar el pago')
+    })
+  }
+
+  private handleSuccess(flag: WritableSignal<boolean>, form: FormGroup, callback?: () => void): void {
+    flag.set(true)
+    timer(3500).subscribe(() => flag.set(false))
+    form.reset()
+    callback?.()
+  }
+
+  private handleError(flag: WritableSignal<boolean>): void {
+    flag.set(true)
+    timer(3500).subscribe(() => flag.set(false))
   }
 }

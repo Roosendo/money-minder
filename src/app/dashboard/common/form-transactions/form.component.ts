@@ -6,7 +6,8 @@ import {
   inject,
   input,
   output,
-  signal
+  signal,
+  type WritableSignal
 } from '@angular/core'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { AlertMessageComponent, SubmitBttnComponent } from '@app/core'
@@ -14,18 +15,7 @@ import { AuthCacheService, FormSubmitService } from '@app/services'
 import { CashFlowStore, CreditCardsStore, FinancialSummaryStore, TransactionsStore } from '@app/store'
 import { timer } from 'rxjs'
 import categoriesJson from './categories.json'
-
-interface TemplateForm {
-  date: FormControl<string>
-  amount: FormControl<number>
-  category: FormControl<string>
-  description: FormControl<string>
-  id: FormControl<number>
-  email: FormControl<string | undefined>
-  fullName: FormControl<string>
-  isCreditPayment: FormControl<boolean>
-  creditCardId: FormControl<string>
-}
+import type { TemplateForm } from '@app/models'
 
 @Component({
   selector: 'app-form',
@@ -51,73 +41,68 @@ export class FormComponent {
   am_warning = signal(false)
   am_credit = signal(false)
 
-  form: Signal<FormGroup> = computed(() =>
-    new FormGroup<TemplateForm>({
+  form: Signal<FormGroup> = computed(() => this.buildForm())
+
+  private buildForm() {
+    const user = this.authCache.getUser()
+    return new FormGroup<TemplateForm>({
       date: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
       amount: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
       category: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
       description: new FormControl('', { nonNullable: true }),
       id: new FormControl(this.generateRandomId(), { nonNullable: true }),
-      email: new FormControl(this.authCache.getUser()?.email, { nonNullable: true }),
-      fullName: new FormControl(`${this.authCache.getUser()?.firstName} ${this.authCache.getUser()?.lastName}`, {
-        nonNullable: true
-      }),
+      email: new FormControl(user?.email, { nonNullable: true }),
+      fullName: new FormControl(`${user?.firstName} ${user?.lastName}`, { nonNullable: true }),
       isCreditPayment: new FormControl(false, { nonNullable: true }),
       creditCardId: new FormControl('', { nonNullable: true })
     })
-  )
-
-  private generateRandomId() {
-    return Math.floor(Math.random() * 1000000)
   }
 
   onSubmit() {
     if (this.form().invalid) {
-      if (!this.form().get('category')?.value) {
-        this.am_category.set(true)
-        timer(3500).subscribe(() => this.am_category.set(false))
-      }
-      if (this.form().get('isCreditPayment')?.value && !this.form().get('creditCardId')?.value) {
-        this.am_credit.set(true)
-        timer(3500).subscribe(() => this.am_credit.set(false))
-      }
+      this.handleInvalidForm()
       return
     }
+    this.type() === 'entries' ? this.submitForm('entry') : this.submitForm('exit')
+  }
 
-    if (this.type() === 'entries') {
-      this.submitEntriesForm()
-    } else if (this.type() === 'exits') {
-      this.submitExitsForm()
+  private handleInvalidForm() {
+    if (!this.form().get('category')?.value) this.toggleAlert(this.am_category)
+    if (this.form().get('isCreditPayment')?.value && !this.form().get('creditCardId')?.value) {
+      this.toggleAlert(this.am_credit)
     }
   }
 
-  private submitEntriesForm() {
-    this.formSubmit.entrySubmit(this.form().value).subscribe({
-      next: () => this.handleSuccess(),
+  private submitForm(type: 'entry' | 'exit') {
+    const formData = this.form().value
+    const submitObservable = type === 'entry'
+      ? this.formSubmit.entrySubmit(formData)
+      : this.formSubmit.exitSubmit({ ...formData, creditCardId: this.parseCreditCardId(formData.creditCardId) })
+
+    submitObservable.subscribe({
+      next: () => this.handleSuccess(type),
       error: () => this.handleError()
     })
   }
 
-  private submitExitsForm() {
-    const formData = {
-      ...this.form().value,
-      creditCardId: (+this.form().value.creditCardId === 0 ? null : +this.form().value.creditCardId)
-    }
-    this.formSubmit.exitSubmit(formData).subscribe({
-      next: () => this.handleSuccess(),
-      error: () => this.handleError()
-    })
+  private handleSuccess(type: 'entry' | 'exit') {
+    this.toggleAlert(this.am_success)
+    this.updateStores(type)
+    this.resetForm()
+    this.formSubmitted.emit()
   }
 
-  private handleSuccess() {
-    this.am_success.set(true)
-    timer(3500).subscribe(() => this.am_success.set(false))
+  private handleError() {
+    this.toggleAlert(this.am_warning)
+  }
+
+  private updateStores(type: 'entry' | 'exit') {
     const formData = this.form().value
     const currentYear = new Date().getFullYear()
     const formYear = new Date(formData.date).getFullYear()
-    const formMonth = (new Date(formData.date).getMonth() + 1).toString().padStart(2, '0')
+    const formMonth = this.getMonthString(formData.date)
 
-    if (this.type() === 'entries') {
+    if (type === 'entry') {
       this.transactionsStore.addEntry(formData)
       this.transactionsStore.addRecentTransaction(formData)
       if (formYear === currentYear) {
@@ -133,17 +118,32 @@ export class FormComponent {
         this.cashFlowStore.addExitTransaction(formMonth, formData.amount)
       }
     }
-    this.form().reset()
-    this.form().patchValue({
-      id: this.generateRandomId(),
-      email: this.authCache.getUser()?.email,
-      fullName: `${this.authCache.getUser()?.firstName} ${this.authCache.getUser()?.lastName}`
-    })
-    this.formSubmitted.emit()
   }
 
-  private handleError() {
-    this.am_warning.set(true)
-    timer(3500).subscribe(() => this.am_warning.set(false))
+  private resetForm() {
+    this.form().reset()
+    const user = this.authCache.getUser()
+    this.form().patchValue({
+      id: this.generateRandomId(),
+      email: user?.email,
+      fullName: `${user?.firstName} ${user?.lastName}`
+    })
+  }
+
+  private toggleAlert(alertSignal: WritableSignal<boolean>) {
+    alertSignal.set(true)
+    timer(3500).subscribe(() => alertSignal.set(false))
+  }
+
+  private parseCreditCardId(creditCardId: string) {
+    return +creditCardId === 0 ? null : +creditCardId
+  }
+
+  private getMonthString(date: string) {
+    return (new Date(date).getMonth() + 1).toString().padStart(2, '0')
+  }
+
+  private generateRandomId() {
+    return Math.floor(Math.random() * 1000000)
   }
 }
