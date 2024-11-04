@@ -16,9 +16,6 @@
             required
             class="w-full p-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded"
           />
-          @if (am_Name()) {
-            <app-alert-message [alertMessage]="'Antes debes agregarle un nombre'" [typeAlert]="'warning'" />
-          }
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div class="space-y-2">
@@ -29,9 +26,6 @@
                 <option [value]="day">{{ day }}</option>
               }
             </select>
-            @if (am_CutOff()) {
-              <app-alert-message [alertMessage]="'Antes debes agregar una fecha de corte'" [typeAlert]="'warning'" />
-            }
           </div>
           <div class="space-y-2">
             <label for="paymentDueDate" class="text-gray-700 dark:text-gray-200">Fecha de Pago</label>
@@ -41,17 +35,8 @@
                 <option [value]="day">{{ day }}</option>
               }
             </select>
-            @if (am_PaymentDue()) {
-              <app-alert-message [alertMessage]="'Antes debes agregar una fecha de pago'" [typeAlert]="'warning'" />
-            }
           </div>
         </div>
-        @if (am_success()) {
-          <app-alert-message [alertMessage]="'¡Tarjeta Agregada!'" [typeAlert]="'success'" />
-        }
-        @if (am_warning()) {
-          <app-alert-message [alertMessage]="'Algo salió mal, pero no es tu culpa'" [typeAlert]="'warning'" />
-        }
         <app-submit-bttn [text]="'Agregar tarjeta'" />
       </form>
     </article>

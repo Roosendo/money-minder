@@ -6,14 +6,11 @@ import {
   inject,
   input,
   output,
-  signal,
-  type WritableSignal
 } from '@angular/core'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
-import { AlertMessageComponent, SubmitBttnComponent } from '@app/core'
-import { AuthCacheService, FormSubmitService } from '@app/services'
+import { SubmitBttnComponent } from '@app/core'
+import { AlertService, AuthCacheService, FormSubmitService } from '@app/services'
 import { CashFlowStore, CreditCardsStore, FinancialSummaryStore, TransactionsStore } from '@app/store'
-import { timer } from 'rxjs'
 import categoriesJson from './categories.json'
 import type { TemplateForm } from '@app/models'
 
@@ -22,7 +19,7 @@ import type { TemplateForm } from '@app/models'
   templateUrl: './form.component.html',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, AlertMessageComponent, SubmitBttnComponent]
+  imports: [ReactiveFormsModule, SubmitBttnComponent]
 })
 export class FormComponent {
   formSubmitted = output<void>()
@@ -35,11 +32,7 @@ export class FormComponent {
   readonly financialSummaryStore = inject(FinancialSummaryStore)
   readonly cashFlowStore = inject(CashFlowStore)
   readonly creditCardsStore = inject(CreditCardsStore)
-
-  am_success = signal(false)
-  am_category = signal(false)
-  am_warning = signal(false)
-  am_credit = signal(false)
+  readonly alertService = inject(AlertService)
 
   form: Signal<FormGroup> = computed(() => this.buildForm())
 
@@ -67,9 +60,15 @@ export class FormComponent {
   }
 
   private handleInvalidForm() {
-    if (!this.form().get('category')?.value) this.toggleAlert(this.am_category)
-    if (this.form().get('isCreditPayment')?.value && !this.form().get('creditCardId')?.value) {
-      this.toggleAlert(this.am_credit)
+    if (!this.form().get('category')?.value) {
+      this.alertService.showWarning({
+        feature: this.type() === 'entries' ? 'entry' : 'exit',
+        action: 'create',
+        customMessage: 'Tienes que agregar una categoría'
+      })
+    }
+    else if (this.form().get('isCreditPayment')?.value && !this.form().get('creditCardId')?.value) {
+      this.alertService.showInfo({ feature: 'exit', action: 'create', customMessage: 'Antes debes agregar una Tarjeta de Crédito' })
     }
   }
 
@@ -86,14 +85,20 @@ export class FormComponent {
   }
 
   private handleSuccess(type: 'entry' | 'exit') {
-    this.toggleAlert(this.am_success)
+    this.alertService.showSuccess({
+      feature: this.type() === 'entries' ? 'entry': 'exit',
+      action: 'create'
+    })
     this.updateStores(type)
     this.resetForm()
     this.formSubmitted.emit()
   }
 
   private handleError() {
-    this.toggleAlert(this.am_warning)
+    this.alertService.showError({
+      feature: this.type() === 'entries' ? 'entry' : 'exit',
+      action: 'fetch'
+    })
   }
 
   private updateStores(type: 'entry' | 'exit') {
@@ -128,11 +133,6 @@ export class FormComponent {
       email: user?.email,
       fullName: `${user?.firstName} ${user?.lastName}`
     })
-  }
-
-  private toggleAlert(alertSignal: WritableSignal<boolean>) {
-    alertSignal.set(true)
-    timer(3500).subscribe(() => alertSignal.set(false))
   }
 
   private parseCreditCardId(creditCardId: string) {

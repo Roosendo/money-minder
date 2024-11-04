@@ -49,18 +49,6 @@
         />
       </div>
       <app-submit-bttn [text]="'Agregar Recordatorio'" />
-      @if (amSuccess()) {
-        <app-alert-message
-          [typeAlert]="'success'"
-          [alertMessage]="'Recordatorio registrado 😁'"
-        />
-      }
-      @if (amWarning()) {
-        <app-alert-message
-          [typeAlert]="'warning'"
-          [alertMessage]="'Error al registrar el recordatorio 😔'"
-        />
-      }
     </form>
     <!-- Contenedor principal de la lista de recordatorios -->
     @if (reminders().length) {

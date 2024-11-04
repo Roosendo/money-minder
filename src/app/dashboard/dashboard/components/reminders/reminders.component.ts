@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
+import { RemindersCardComponent } from '@app/dashboard/common/reminders-card/reminders-card.component'
 import { RemindersStore } from '@app/store'
-import { RemindersCardComponent } from "../../../common/reminders-card/reminders-card.component";
 
 @Component({
   selector: 'app-reminders',

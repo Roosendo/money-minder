@@ -1,3 +1,4 @@
+import type { WritableSignal } from '@angular/core'
 import type { FormControl } from '@angular/forms'
 
 export interface TemplateLoanForm {
@@ -17,4 +18,15 @@ export interface TemplateEditForm {
 export interface TemplateAddPaymentForm {
 	date: FormControl<string>
 	amount: FormControl<number>
+}
+
+export interface AlertState {
+  loan: {
+    success: WritableSignal<boolean>
+    error: WritableSignal<boolean>
+  }
+  payment: {
+    success: WritableSignal<boolean>
+    error: WritableSignal<boolean>
+  }
 }

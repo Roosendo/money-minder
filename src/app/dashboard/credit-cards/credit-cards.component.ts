@@ -2,11 +2,10 @@ import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common'
 import { ChangeDetectionStrategy, Component, type Signal, computed, inject, signal } from '@angular/core'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { Title } from '@angular/platform-browser'
-import { AlertMessageComponent, SubmitBttnComponent } from '@app/core'
+import { SubmitBttnComponent } from '@app/core'
 import type { CreditCards, Purchases } from '@app/models'
-import { FormSubmitService } from '@app/services'
+import { AlertService, FormSubmitService } from '@app/services'
 import { CreditCardsStore } from '@app/store'
-import { timer } from 'rxjs'
 import { ModalDeleteCcComponent } from './modal-delete-cc'
 
 interface TemplateFormCC {
@@ -24,7 +23,6 @@ interface TemplateFormCC {
     DatePipe,
     CurrencyPipe,
     CommonModule,
-    AlertMessageComponent,
     ModalDeleteCcComponent
   ],
   templateUrl: './credit-cards.component.html',
@@ -35,18 +33,13 @@ export class CreditCardsComponent {
   private formSubmit = inject(FormSubmitService)
   private title = inject(Title)
   readonly store = inject(CreditCardsStore)
+  readonly alertService = inject(AlertService)
   creditCards = this.store.creditCards
   purchases = this.store.purchases
   currentMonth = computed(() => new Date().getMonth() + 1)
   currentYear = computed(() => new Date().getFullYear())
   total = computed(() => this.purchases().reduce((acc, purchase) => acc + purchase.amount, 0))
   selectedCard: CreditCards | null = null
-
-  am_success = signal(false)
-  am_warning = signal(false)
-  am_Name = signal(false)
-  am_CutOff = signal(false)
-  am_PaymentDue = signal(false)
   modalDelete = signal(false)
 
   constructor() {
@@ -100,16 +93,13 @@ export class CreditCardsComponent {
   onSubmit(): void {
     if (this.formData().invalid) {
       if (!this.formData().get('name')?.value) {
-        this.am_Name.set(true)
-        timer(3500).subscribe(() => this.am_Name.set(false))
+        this.alertService.showWarning({ feature: 'creditCard', action: 'create', customMessage: 'Antes debes agregar un nombre' })
       }
       if (!this.formData().get('cut_off_date')?.value) {
-        this.am_CutOff.set(true)
-        timer(3500).subscribe(() => this.am_CutOff.set(false))
+        this.alertService.showWarning({ feature: 'creditCard', action: 'create', customMessage: 'Antes debes agregar una fecha de corte' })
       }
       if (!this.formData().get('payment_due_date')?.value) {
-        this.am_PaymentDue.set(true)
-        timer(3500).subscribe(() => this.am_PaymentDue.set(false))
+        this.alertService.showWarning({ feature: 'creditCard', action: 'create', customMessage: 'Antes debes agregar una fecha de pago' })
       }
       return
     }
@@ -121,8 +111,7 @@ export class CreditCardsComponent {
     })
       .subscribe({
         next: () => {
-          this.am_success.set(true)
-          timer(3500).subscribe(() => this.am_success.set(false))
+          this.alertService.showSuccess({ feature: 'creditCard', action: 'create' })
           this.store.addCreditCard({
             credit_card_id: Math.floor(Math.random() * 1000000),
             cut_off_date: this.formData().get('cut_off_date')?.value,
@@ -136,7 +125,6 @@ export class CreditCardsComponent {
   }
 
   private handleError(): void {
-    this.am_warning.set(true)
-    timer(3500).subscribe(() => this.am_warning.set(false))
+    this.alertService.showError({ feature: 'creditCard', action: 'create' })
   }
 }

@@ -77,18 +77,6 @@
         />
       </div>
       <app-submit-bttn [text]="'Agregar Objetivo'" />
-      @if (amSuccess()) {
-        <app-alert-message
-          [alertMessage]="'Ahorro registrado 😁'"
-          [typeAlert]="'success'"
-        />
-      }
-      @if (amWarning()) {
-        <app-alert-message
-          [alertMessage]="'Error al registrar el ahorro 😔'"
-          [typeAlert]="'warning'"
-        />
-      }
     </form>
     @if (savings().length) {
       <div id="savings-list" class="mx-auto my-6 max-w-lg space-y-4">

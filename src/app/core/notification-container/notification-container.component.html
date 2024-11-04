@@ -1,0 +1,5 @@
+<div class="fixed right-4 top-4 z-50 flex flex-col gap-2">
+  @for (notification of notifications(); track notification.id) {
+    <app-notification [notification]="notification" (click)="notificationService.remove(notification.id)" />
+  }
+</div>

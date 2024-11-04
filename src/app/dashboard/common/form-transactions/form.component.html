@@ -102,12 +102,6 @@
         }
       </div>
     }
-    @if (am_credit()) {
-      <app-alert-message
-        [alertMessage]="'Selecciona una tarjeta de crédito'"
-        [typeAlert]="'warning'"
-      />
-    }
   }
   <div class="mb-5">
     <label for="underline_select" class="sr-only">Underline select</label>
@@ -144,22 +138,4 @@
     ></textarea>
   </div>
   <app-submit-bttn [text]="'Registrar ' + typeOf " />
-  @if (am_success()) {
-    <app-alert-message
-      [alertMessage]="typeOf + ' registrado 😁'"
-      [typeAlert]="'success'"
-    />
-  }
-  @if (am_category()) {
-    <app-alert-message
-      [alertMessage]="'Selecciona una categoría'"
-      [typeAlert]="'warning'"
-    />
-  }
-  @if (am_warning()) {
-    <app-alert-message
-      [alertMessage]="'Error al registrar el ' + typeOf + ' 😔'"
-      [typeAlert]="'warning'"
-    />
-  }
 </form>

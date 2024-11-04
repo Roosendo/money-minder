@@ -1,1 +1,1 @@
-export * from './am.component'
+export * from './notification.component'
