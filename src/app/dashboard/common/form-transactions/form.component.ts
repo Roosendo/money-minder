@@ -61,15 +61,19 @@ export class FormComponent {
 
   private handleInvalidForm() {
     if (!this.form().get('category')?.value) {
-      this.alertService.showWarning({
-        feature: this.type() === 'entries' ? 'entry' : 'exit',
-        action: 'create',
-        customMessage: 'Tienes que agregar una categoría'
-      })
+      this.showCategoryAlert()
     }
-    else if (this.form().get('isCreditPayment')?.value && !this.form().get('creditCardId')?.value) {
-      this.alertService.showInfo({ feature: 'exit', action: 'create', customMessage: 'Antes debes agregar una Tarjeta de Crédito' })
+    if (this.type() === 'exits' && this.form().get('isCreditPayment')?.value && !this.form().get('creditCardId')?.value) {
+      this.showCreditCardAlert()
     }
+  }
+
+  private showCategoryAlert() {
+    this.alertService.showWarning({ feature: this.type() === 'entries' ? 'entry' : 'exit', action: 'create', customMessage: 'Tienes que agregar una categoría' })
+  }
+
+  private showCreditCardAlert() {
+    this.alertService.showInfo({ feature: 'exit', action: 'create', customMessage: 'Antes debes agregar una Tarjeta de Crédito' })
   }
 
   private submitForm(type: 'entry' | 'exit') {
