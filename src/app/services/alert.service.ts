@@ -28,14 +28,20 @@ export class AlertService {
   }
 
   showWarning(config: NotificationConfig): void {
-    if (config.customMessage) {
-      this.notificationService.show(config.customMessage, 'warning')
+    const message = config.customMessage ?? 
+      NOTIFICATION_MESSAGES[config.feature][config.action]?.error
+
+    if (message) {
+      this.notificationService.show(message, 'warning')
     }
   }
 
   showInfo(config: NotificationConfig): void {
-    if (config.customMessage) {
-      this.notificationService.show(config.customMessage, 'info')
+    const message = config.customMessage ?? 
+      NOTIFICATION_MESSAGES[config.feature][config.action]?.success
+
+    if (message) {
+      this.notificationService.show(message, 'info')
     }
   }
 }
