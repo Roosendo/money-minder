@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core'
-import { LoansStore } from '@app/store/loans.store'
+import { LoansStore } from '@app/store'
 import type { EditPayment, NewPayment } from '@app/models'
 
 @Injectable()

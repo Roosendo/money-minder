@@ -41,7 +41,8 @@
   "overrides": [
     {
       "include": ["*.ts"],
-      "linter": { "rules": { "complexity": { "noUselessConstructor": "off" } } }
+      "linter": { "rules": { "complexity": { "noUselessConstructor": "off" } } },
+      "javascript": { "formatter": { "quoteStyle": "single" } }
     },
     {
       "include": ["*.html"],

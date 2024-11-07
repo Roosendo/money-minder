@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import type { TemplateLoanForm, TemplateEditForm, TemplateAddPaymentForm, Payments, NewLoan, NewPayment } from '@app/models'
+import type { NewLoan, NewPayment, Payments, TemplateAddPaymentForm, TemplateEditForm, TemplateLoanForm } from '@app/models'
 
 @Injectable()
 export class LoansFormService {

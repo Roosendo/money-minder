@@ -1,5 +1,5 @@
 import { InjectionToken, inject } from '@angular/core'
-import type { EditPayment, Loans, NewLoan, NewPayment } from '@app/models'
+import type { EditPayment, Loans, NewPayment } from '@app/models'
 import { ApiCallsService } from '@app/services'
 import {
   patchState,
@@ -71,13 +71,13 @@ export const LoansStore = signalStore(
       patchState(store, {
         loans: store.loans().map((loan) => {
           if (loan.id !== newPayment.loanId) return loan // Si no es el préstamo correcto, devolver sin cambios
-    
+
           // Agregar el nuevo pago y mantener solo los últimos cinco
           const updatedPayments = addNewPayment(loan.last_five_payments, newPayment)
-    
+
           // Actualizar el total de pagos
           const updatedTotalPayments = loan.total_payments + newPayment.paymentAmount
-    
+
           return {
             ...loan,
             last_five_payments: updatedPayments,

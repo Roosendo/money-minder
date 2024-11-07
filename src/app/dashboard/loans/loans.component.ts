@@ -1,10 +1,10 @@
 import { CurrencyPipe, DatePipe } from '@angular/common'
-import { ChangeDetectionStrategy, Component, inject, computed, type Signal } from '@angular/core'
+import { ChangeDetectionStrategy, Component, type Signal, computed, inject } from '@angular/core'
 import { type FormGroup, ReactiveFormsModule } from '@angular/forms'
 import { Title } from '@angular/platform-browser'
 import { SubmitBttnComponent } from '@app/core'
-import { LoansFormService, LoansStateService, PaymentStateService, AlertService } from '@app/services'
-import type { Payments, EditPayment } from '@app/models'
+import type { EditPayment, Payments } from '@app/models'
+import { AlertService, LoansFormService, LoansStateService, PaymentStateService } from '@app/services'
 
 @Component({
   selector: 'app-loans',
