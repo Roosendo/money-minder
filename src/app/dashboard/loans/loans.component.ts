@@ -7,21 +7,20 @@ import type { EditPayment, Payments } from '@app/models'
 import { AlertService, LoansFormService, LoansStateService, PaymentStateService, FormSubmitService } from '@app/services'
 
 @Component({
-  selector: 'app-loans',
-  standalone: true,
-  imports: [
-    CurrencyPipe,
-    DatePipe,
-    ReactiveFormsModule,
-    SubmitBttnComponent
-  ],
-  templateUrl: './loans.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    LoansFormService,
-    LoansStateService,
-    PaymentStateService
-  ]
+    selector: 'app-loans',
+    imports: [
+        CurrencyPipe,
+        DatePipe,
+        ReactiveFormsModule,
+        SubmitBttnComponent
+    ],
+    templateUrl: './loans.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        LoansFormService,
+        LoansStateService,
+        PaymentStateService
+    ]
 })
 export class LoansComponent {
   private readonly titleService = inject(Title)

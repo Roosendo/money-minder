@@ -8,11 +8,10 @@ import { FormsModule } from '@angular/forms'
 import type { Reminder } from '@app/models'
 
 @Component({
-  selector: 'app-reminder-delete',
-  templateUrl: './rmd.component.html',
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule]
+    selector: 'app-reminder-delete',
+    templateUrl: './rmd.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [FormsModule]
 })
 export class ReminderDeleteComponent {
   reminder = input.required<Reminder>()

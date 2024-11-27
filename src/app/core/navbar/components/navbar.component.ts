@@ -13,11 +13,10 @@ import { NavigationBttnComponent } from '@app/core/navigation-bttn'
 import { AuthCacheService } from '@app/services/auth-cache.service'
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true,
-  templateUrl: './navbar.component.html',
-  imports: [RouterLink, NavigationBttnComponent, LoginBttnComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-navbar',
+    templateUrl: './navbar.component.html',
+    imports: [RouterLink, NavigationBttnComponent, LoginBttnComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavBarComponent implements OnInit, OnDestroy {
   private authCacheService

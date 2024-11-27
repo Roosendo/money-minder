@@ -15,11 +15,10 @@ import { CashFlowStore, CreditCardsStore, FinancialSummaryStore, TransactionsSto
 import categoriesJson from './categories.json'
 
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, SubmitBttnComponent]
+    selector: 'app-form',
+    templateUrl: './form.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [ReactiveFormsModule, SubmitBttnComponent]
 })
 export class FormComponent {
   formSubmitted = output<void>()

@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common'
 import type { Notification } from '@app/models'
 
 @Component({
-  selector: 'app-notification',
-  templateUrl: './notification.component.html',
-  standalone: true,
-  imports: [CommonModule],
-  styles: [
-    `:host {
+    selector: 'app-notification',
+    templateUrl: './notification.component.html',
+    imports: [CommonModule],
+    styles: [
+        `:host {
       display: block;
       animation: slideIn 0.3s ease-out;
     }
@@ -23,8 +22,8 @@ import type { Notification } from '@app/models'
         opacity: 1;
       }
     }`
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotificationComponent {
   notification = input.required<Notification>()

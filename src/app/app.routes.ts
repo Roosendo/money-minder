@@ -23,7 +23,7 @@ export const routes: Routes = [
         path: 'login',
         loadComponent: () => import('./login/components/login.component')
       }
-    ]
+    ],
   },
   {
     path: '',

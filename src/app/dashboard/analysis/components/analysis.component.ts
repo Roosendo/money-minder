@@ -14,11 +14,10 @@ import { ApiCallsService, AuthCacheService } from '@app/services'
 import type { Observable } from 'rxjs'
 
 @Component({
-  selector: 'app-analysis',
-  standalone: true,
-  imports: [AsyncPipe, CommonModule, PieChartComponent, NotLoggedComponent, CurrencyPipe],
-  templateUrl: './analysis.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-analysis',
+    imports: [AsyncPipe, CommonModule, PieChartComponent, NotLoggedComponent, CurrencyPipe],
+    templateUrl: './analysis.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class AnalysisComponent implements OnInit {
   private readonly titleService

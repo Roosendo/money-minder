@@ -6,15 +6,12 @@ import {
 } from '@angular/core'
 import type { CashFLow } from '@app/models'
 import { Chart, registerables } from 'chart.js'
-import { BaseChartDirective } from 'ng2-charts'
 import { createGraphicBar } from '../utils'
 
 @Component({
-  selector: 'app-bar-chart',
-  standalone: true,
-  imports: [BaseChartDirective],
-  templateUrl: './bar-chart.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-bar-chart',
+    templateUrl: './bar-chart.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BarChartComponent implements AfterViewInit {
   dataCF = input.required<CashFLow[]>()

@@ -1,25 +1,23 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   type OnInit,
-  Output,
-  input
+  input,
+  output
 } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import type { EditSaving, Saving } from '@app/models'
 
 @Component({
-  selector: 'app-goal-modal-edit',
-  templateUrl: './gme.component.html',
-  standalone: true,
-  imports: [FormsModule],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-goal-modal-edit',
+    templateUrl: './gme.component.html',
+    imports: [FormsModule],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GoalModalEditComponent implements OnInit {
   goal = input.required<Saving>()
-  @Output() save = new EventEmitter<EditSaving>()
-  @Output() closeModal = new EventEmitter<void>()
+  readonly save = output<EditSaving>()
+  readonly closeModal = output<void>()
   formEdit: EditSaving = {
     id: 0,
     newSavingName: '',

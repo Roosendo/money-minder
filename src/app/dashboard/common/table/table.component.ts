@@ -11,11 +11,10 @@ import type { Transaction } from '@app/models'
 import { TransactionsStore } from '@app/store'
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  standalone: true,
-  imports: [CommonModule, DatePipe, CurrencyPipe],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-table',
+    templateUrl: './table.component.html',
+    imports: [CommonModule, DatePipe, CurrencyPipe],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent implements OnInit {
   type = input.required<'entries' | 'exits'>()

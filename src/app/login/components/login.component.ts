@@ -10,11 +10,10 @@ import { BtnLoginComponent } from '@app/btn-login'
 import { AuthCacheService } from '@app/services'
 
 @Component({
-  standalone: true,
-  imports: [BtnLoginComponent],
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    imports: [BtnLoginComponent],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class LoginComponent implements OnInit {
   private authCacheService

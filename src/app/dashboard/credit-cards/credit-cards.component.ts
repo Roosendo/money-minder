@@ -15,19 +15,18 @@ interface TemplateFormCC {
 }
 
 @Component({
-  selector: 'app-credit-cards',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    SubmitBttnComponent,
-    DatePipe,
-    CurrencyPipe,
-    CommonModule,
-    ModalDeleteCcComponent
-  ],
-  templateUrl: './credit-cards.component.html',
-  styleUrl: './credit-cards.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-credit-cards',
+    imports: [
+        ReactiveFormsModule,
+        SubmitBttnComponent,
+        DatePipe,
+        CurrencyPipe,
+        CommonModule,
+        ModalDeleteCcComponent
+    ],
+    templateUrl: './credit-cards.component.html',
+    styleUrl: './credit-cards.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreditCardsComponent {
   private formSubmit = inject(FormSubmitService)
