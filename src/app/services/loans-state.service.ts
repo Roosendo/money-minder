@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core'
 import { LoansStore } from '@app/store'
-import type { EditPayment, NewPayment } from '@app/models'
+import type { EditPayment, Loans, NewPayment } from '@app/models'
 
 @Injectable()
 export class LoansStateService {
@@ -8,6 +8,10 @@ export class LoansStateService {
 
   get loans() {
     return this.store.loans
+  }
+
+  addLoan(newLoan: Loans): void {
+    this.store.addLoan(newLoan)
   }
 
   updateLoans(): void {

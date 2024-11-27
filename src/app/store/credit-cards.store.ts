@@ -47,7 +47,7 @@ export const CreditCardsStore = signalStore(
       patchState(store, { purchases: initialState.purchases })
     },
 
-    async updatePurchases(id: number): Promise<void> {
+    async updatePurchases(): Promise<void> {
       const purchases = await firstValueFrom(apiCallsService.getPurchases())
       patchState(store, { purchases })
     },

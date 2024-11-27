@@ -7,13 +7,11 @@ import {
 } from '@angular/core'
 import type { TransactionChart } from '@app/models'
 import { Chart, registerables } from 'chart.js'
-import { BaseChartDirective } from 'ng2-charts'
 import { createGraphic } from '../utils'
 
 @Component({
   selector: 'app-pie-chart',
   standalone: true,
-  imports: [BaseChartDirective],
   templateUrl: './pie-chart.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

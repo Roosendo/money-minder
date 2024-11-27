@@ -110,10 +110,10 @@ export class CreditCardsComponent {
       paymentDueDate: this.formData().get('payment_due_date')?.value
     })
       .subscribe({
-        next: () => {
+        next: (response) => {
           this.alertService.showSuccess({ feature: 'creditCard', action: 'create' })
           this.store.addCreditCard({
-            credit_card_id: Math.floor(Math.random() * 1000000),
+            credit_card_id: response,
             cut_off_date: this.formData().get('cut_off_date')?.value,
             name: this.formData().get('name')?.value,
             payment_due_date: this.formData().get('payment_due_date')?.value

@@ -9,10 +9,10 @@ import {
 } from '@angular/core'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { SubmitBttnComponent } from '@app/core'
+import type { TemplateForm } from '@app/models'
 import { AlertService, AuthCacheService, FormSubmitService } from '@app/services'
 import { CashFlowStore, CreditCardsStore, FinancialSummaryStore, TransactionsStore } from '@app/store'
 import categoriesJson from './categories.json'
-import type { TemplateForm } from '@app/models'
 
 @Component({
   selector: 'app-form',
@@ -43,7 +43,6 @@ export class FormComponent {
       amount: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
       category: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
       description: new FormControl('', { nonNullable: true }),
-      id: new FormControl(this.generateRandomId(), { nonNullable: true }),
       email: new FormControl(user?.email, { nonNullable: true }),
       fullName: new FormControl(`${user?.firstName} ${user?.lastName}`, { nonNullable: true }),
       isCreditPayment: new FormControl(false, { nonNullable: true }),
@@ -83,17 +82,20 @@ export class FormComponent {
       : this.formSubmit.exitSubmit({ ...formData, creditCardId: this.parseCreditCardId(formData.creditCardId) })
 
     submitObservable.subscribe({
-      next: () => this.handleSuccess(type),
+      next: (response) => {
+        const newResourceId = response
+        this.handleSuccess(type, newResourceId)
+      },
       error: () => this.handleError()
     })
   }
 
-  private handleSuccess(type: 'entry' | 'exit') {
+  private handleSuccess(type: 'entry' | 'exit', resourceId: number) {
     this.alertService.showSuccess({
-      feature: this.type() === 'entries' ? 'entry': 'exit',
+      feature: this.type() === 'entries' ? 'entry' : 'exit',
       action: 'create'
     })
-    this.updateStores(type)
+    this.updateStores(type, resourceId)
     this.resetForm()
     this.formSubmitted.emit()
   }
@@ -105,22 +107,22 @@ export class FormComponent {
     })
   }
 
-  private updateStores(type: 'entry' | 'exit') {
+  private updateStores(type: 'entry' | 'exit', resourceId: number) {
     const formData = this.form().value
     const currentYear = new Date().getFullYear()
     const formYear = new Date(formData.date).getFullYear()
     const formMonth = this.getMonthString(formData.date)
 
     if (type === 'entry') {
-      this.transactionsStore.addEntry(formData)
-      this.transactionsStore.addRecentTransaction(formData)
+      this.transactionsStore.addEntry({ ...formData, id: resourceId})
+      this.transactionsStore.addRecentTransaction({ ...formData, id: resourceId})
       if (formYear === currentYear) {
         this.financialSummaryStore.addSummaryEntry(formData.amount)
         this.cashFlowStore.addEntryTransaction(formMonth, formData.amount)
       }
     } else {
-      this.transactionsStore.addExit({ ...formData, is_credit_payment: formData.isCreditPayment ? 1 : 0 })
-      this.transactionsStore.addRecentTransaction(formData)
+      this.transactionsStore.addExit({ ...formData, is_credit_payment: formData.isCreditPayment ? 1 : 0, id: resourceId })
+      this.transactionsStore.addRecentTransaction({ ...formData, id: resourceId})
       this.creditCardsStore.addPurchase(formData)
       if (formYear === currentYear) {
         this.financialSummaryStore.addSummaryExit(formData.amount)

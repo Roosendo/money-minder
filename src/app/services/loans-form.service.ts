@@ -6,12 +6,12 @@ import type { NewLoan, NewPayment, Payments, TemplateAddPaymentForm, TemplateEdi
 export class LoansFormService {
   createLoanForm(): FormGroup<TemplateLoanForm> {
     return new FormGroup<TemplateLoanForm>({
-      title: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      loanTitle: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
       bankName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
       interestRate: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
-      amount: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
-      startDate: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      endDate: new FormControl('', { nonNullable: true, validators: [Validators.required] })
+      loanAmount: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
+      loanStartDate: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      loanEndDate: new FormControl('', { nonNullable: true, validators: [Validators.required] })
     })
   }
 

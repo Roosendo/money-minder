@@ -4,6 +4,7 @@ import { type Observable, catchError, map, throwError } from 'rxjs'
 
 import { AuthCacheService } from '.'
 import {
+  cashFlowAdapter,
   financialSummaryAdapter,
   transformArrayTransactions
 } from '../adapters'
@@ -28,7 +29,7 @@ import type {
   providedIn: 'root'
 })
 export class ApiCallsService {
-  private readonly API_URL = 'https://money-minder-api.vercel.app/api'
+  private readonly API_URL = 'https://money-minder-api.up.railway.app/api'
   private year = new Date().getFullYear()
   private readonly authCacheService = inject(AuthCacheService)
   private email = this.authCacheService.getUser()?.email
@@ -80,7 +81,7 @@ export class ApiCallsService {
     const url = `${this.API_URL}/specials/cash-flow?email=${this.email}&year=${this.year}`
     return this.http.get<CashFLow[]>(url)
       .pipe(
-        map((result) => result),
+        map((result) => cashFlowAdapter(result)),
         catchError((error) => {
           console.error('Error fetching Cash Flow', error)
           return throwError(() => new Error('Error fetching Cash Flow'))

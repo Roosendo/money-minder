@@ -38,6 +38,12 @@ export const LoansStore = signalStore(
       patchState(store, { loans })
     },
 
+    async addLoan(newLoan: Loans): Promise<void> {
+      patchState(store, {
+        loans: [...store.loans(), newLoan]
+      })
+    },
+
     async updatePayment(editPayment: EditPayment): Promise<void> {
       patchState(store, {
         loans: store.loans().map((loan) => {

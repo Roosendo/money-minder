@@ -9,7 +9,7 @@
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título del Préstamo</label>
-            <input id="title" formControlName="title" placeholder="Título del préstamo" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full"
+            <input id="title" formControlName="loanTitle" placeholder="Título del préstamo" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full"
               required />
           </div>
           <div>
@@ -26,18 +26,18 @@
           </div>
           <div>
             <label for="amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cantidad del Préstamo (USD)</label>
-            <input id="amount" formControlName="amount" type="number" placeholder="Monto del préstamo"
+            <input id="amount" formControlName="loanAmount" type="number" placeholder="Monto del préstamo"
               class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full" required />
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label for="startDate" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fecha de Inicio</label>
-            <input id="startDate" formControlName="startDate" type="date" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full" required />
+            <input id="startDate" formControlName="loanStartDate" type="date" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full" required />
           </div>
           <div>
             <label for="endDate" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fecha de Fin (Aprox.)</label>
-            <input id="endDate" formControlName="endDate" type="date" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full" required />
+            <input id="endDate" formControlName="loanEndDate" type="date" class="mt-1 p-2 border text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 border-gray-700 dark:border-gray-300 rounded w-full" required />
           </div>
         </div>
         <app-submit-bttn [text]="'Agregar Préstamo'" />

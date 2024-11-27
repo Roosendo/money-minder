@@ -2,12 +2,12 @@ import type { WritableSignal } from '@angular/core'
 import type { FormControl } from '@angular/forms'
 
 export interface TemplateLoanForm {
-	title: FormControl<string>
+	loanTitle: FormControl<string>
 	bankName: FormControl<string>
 	interestRate: FormControl<number>
-	amount: FormControl<number>
-	startDate: FormControl<string>
-	endDate: FormControl<string>
+	loanAmount: FormControl<number>
+	loanStartDate: FormControl<string>
+	loanEndDate: FormControl<string>
 }
 
 export interface TemplateEditForm {

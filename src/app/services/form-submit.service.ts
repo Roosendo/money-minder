@@ -1,6 +1,6 @@
 import { HttpClient, type HttpErrorResponse } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
-import { type Observable, catchError, throwError } from 'rxjs'
+import { type Observable, catchError, map, throwError } from 'rxjs'
 
 import { AuthCacheService } from '.'
 import type {
@@ -20,7 +20,7 @@ import type {
   providedIn: 'root'
 })
 export class FormSubmitService {
-  private readonly API_URL = 'https://money-minder-api.vercel.app/api'
+  private readonly API_URL = 'https://money-minder-api.up.railway.app/api'
   private readonly authCacheService = inject(AuthCacheService)
   private email = this.authCacheService.getUser()?.email
   private fullName = `${this.authCacheService.getUser()?.firstName} ${this.authCacheService.getUser()?.lastName}`
@@ -59,12 +59,15 @@ export class FormSubmitService {
     const url = `${this.API_URL}/entries/new-entry`
     const { email, fullName } = this
     return this.http
-      .post(
+      .post<{ id: number }>(
         url,
         JSON.stringify({ email, fullName, ...formNewEntry }),
         this.requestOptions
       )
-      .pipe(catchError(this.handleError))
+      .pipe(
+        map(response => response.id),
+        catchError(this.handleError)
+      )
   }
 
   /**
@@ -76,12 +79,15 @@ export class FormSubmitService {
     const url = `${this.API_URL}/exits/new-exit`
     const { email, fullName } = this
     return this.http
-      .post(
+      .post<{ id: number }>(
         url,
         JSON.stringify({ email, fullName, ...formNewExit }),
         this.requestOptions
       )
-      .pipe(catchError(this.handleError))
+      .pipe(
+        map(response => response.id),
+        catchError(this.handleError)
+      )
   }
 
   /**
@@ -183,12 +189,15 @@ export class FormSubmitService {
     const url = `${this.API_URL}/credit-cards`
     const { email, fullName } = this
     return this.http
-      .post(
+      .post<{ credit_card_id: number }>(
         url,
         JSON.stringify({ email, fullName, ...creditCardSubmit }),
         this.requestOptions
       )
-      .pipe(catchError(this.handleError))
+      .pipe(
+        map(response => response.credit_card_id),
+        catchError(this.handleError)
+      )
   }
 
   deleteCreditCard(id: number) {
@@ -201,8 +210,11 @@ export class FormSubmitService {
   addLoan(loan: NewLoan) {
     const url = `${this.API_URL}/loans`
     return this.http
-      .post(url, JSON.stringify({ ...loan, userEmail: this.email }), this.requestOptions)
-      .pipe(catchError(this.handleError))
+      .post<{ id: number }>(url, JSON.stringify({ ...loan, userEmail: this.email }), this.requestOptions)
+      .pipe(
+        map(response => response.id),
+        catchError(this.handleError)
+      )
   }
 
   addPayment(payment: NewPayment) {

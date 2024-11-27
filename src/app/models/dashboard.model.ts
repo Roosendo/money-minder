@@ -21,8 +21,10 @@ export interface CashFLow {
 }
 
 export interface TransactionChart {
-  category: string
+  ingresos: number
+  egresos: number
   total: number
+  category: string
 }
 
 export interface Saving {
@@ -95,8 +97,12 @@ export interface Transaction extends ApiTransaction {
 }
 
 export interface Summary {
-  totalEntries: number
-  totalExits: number
+  totalEntries: TotalE
+  totalExits:   TotalE
+}
+
+interface TotalE {
+  amount: number
 }
 
 export interface CreditCards {

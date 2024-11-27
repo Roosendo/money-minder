@@ -1,6 +1,6 @@
 @let summary = summary$ | async;
 @let balance =
-  ((summary?.totalEntries ?? 0) - (summary?.totalExits ?? 0)).toFixed(2);
+  ((summary?.totalEntries?.amount ?? 0) - (summary?.totalExits?.amount ?? 0)).toFixed(2);
 @let monthlyEntries = monthlyEntries$ | async;
 @let monthlyExits = monthlyExits$ | async;
 
@@ -48,11 +48,11 @@
     <div class="m-auto mt-6 flex w-2/3 flex-col text-center md:w-1/2">
       <h3>
         Total de Ingresos:
-        <span id="totalIngresos">{{ summary?.totalEntries ?? 0 | currency:'USD':'symbol' }}</span>
+        <span id="totalIngresos">{{ summary?.totalEntries?.amount | currency:'USD':'symbol' }}</span>
       </h3>
       <h3 class="border-b border-gray-400">
         - Total de Gastos:
-        <span id="totalEgresos">{{ summary?.totalExits ?? 0 | currency:'USD':'symbol' }}</span>
+        <span id="totalEgresos">{{ summary?.totalExits?.amount | currency:'USD':'symbol' }}</span>
       </h3>
       <h3>
         Saldo / Diferencia:

@@ -4,7 +4,7 @@ import { type FormGroup, ReactiveFormsModule } from '@angular/forms'
 import { Title } from '@angular/platform-browser'
 import { SubmitBttnComponent } from '@app/core'
 import type { EditPayment, Payments } from '@app/models'
-import { AlertService, LoansFormService, LoansStateService, PaymentStateService } from '@app/services'
+import { AlertService, LoansFormService, LoansStateService, PaymentStateService, FormSubmitService } from '@app/services'
 
 @Component({
   selector: 'app-loans',
@@ -29,6 +29,7 @@ export class LoansComponent {
   private readonly loansState = inject(LoansStateService)
   private readonly paymentState = inject(PaymentStateService)
   private readonly alertService = inject(AlertService)
+  private readonly formSubmit = inject(FormSubmitService)
 
   readonly loans = this.loansState.loans
   readonly editingPaymentId = this.paymentState.editingPaymentId
@@ -44,10 +45,31 @@ export class LoansComponent {
   handleAddLoan(): void {
     if (this.addLoanForm().invalid) return
 
-    this.loansState.updateLoans()
-    this.alertService.showSuccess({ feature: 'loan', action: 'create' })
-    this.loansForm.resetForm(this.addLoanForm())
-    this.loansState.updateLoans()
+    this.formSubmit.addLoan({
+      loanTitle: this.addLoanForm().get('loanTitle')?.value,
+      bankName: this.addLoanForm().get('bankName')?.value,
+      interestRate: this.addLoanForm().get('interestRate')?.value,
+      loanAmount: this.addLoanForm().get('loanAmount')?.value,
+      loanStartDate: this.addLoanForm().get('loanStartDate')?.value,
+      loanEndDate: this.addLoanForm().get('loanEndDate')?.value
+    }).subscribe({
+      next: (response) => {
+        this.alertService.showSuccess({ feature: 'loan', action: 'create' })
+        this.loansState.addLoan({
+          id: response,
+          bank_name: this.addLoanForm().get('bankName')?.value,
+          interest_rate: this.addLoanForm().get('interestRate')?.value,
+          last_five_payments: [],
+          loan_amount: this.addLoanForm().get('loanAmount')?.value,
+          loan_end_date: this.addLoanForm().get('loanEndDate')?.value,
+          loan_start_date: this.addLoanForm().get('loanStartDate')?.value,
+          loan_title: this.addLoanForm().get('loanTitle')?.value,
+          total_payments: 0
+        })
+        this.loansForm.resetForm(this.addLoanForm())
+      },
+      error: () => this.alertService.showError({ feature: 'loan', action: 'create' })
+    })
   }
 
   handleAddPayment(loanId: number): void {

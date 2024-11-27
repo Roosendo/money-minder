@@ -1,4 +1,5 @@
 import type {
+  CashFLow,
   EntryTransaction,
   ExitTransaction,
   FSClean,
@@ -33,4 +34,16 @@ export const transformArrayTransactions = (
       (item as EntryTransaction).entry_id || (item as ExitTransaction).exit_id
     return { ...item, id }
   })
+}
+
+/**
+ * Filters out cash flow entries where both total income and total expenses are zero.
+ *
+ * @param cashFlow - Array of CashFlow objects to be filtered
+ * @returns Array of CashFlow objects where either total income or total expenses are non-zero
+ */
+export const cashFlowAdapter = (cashFlow: CashFLow[]) => {
+  return cashFlow.filter(flow => 
+    flow.total_ingresos !== 0 || flow.total_egresos !== 0
+  )
 }
