@@ -11,10 +11,11 @@ import { FormComponent, TableComponent } from '@app/dashboard/common'
 import { AuthCacheService } from '@app/services'
 
 @Component({
-    selector: 'app-exits',
-    templateUrl: './exits.component.html',
-    imports: [FormComponent, TableComponent, NotLoggedComponent],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-exits',
+  templateUrl: './exits.component.html',
+  standalone: true,
+  imports: [FormComponent, TableComponent, NotLoggedComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class ExitsComponent implements OnInit {
   private readonly titleService

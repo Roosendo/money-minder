@@ -7,18 +7,21 @@ import {
   inject
 } from '@angular/core'
 
+import { RouterLink } from '@angular/router'
 import { LoginBttnComponent, NavigationBttnComponent } from '@app/core'
 import { AuthCacheService, type User } from '@app/services/auth-cache.service'
 
 @Component({
-    selector: 'app-btn-login',
-    templateUrl: './btn-login.component.html',
-    imports: [
-        NgOptimizedImage,
-        NavigationBttnComponent,
-        LoginBttnComponent
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-btn-login',
+  standalone: true,
+  templateUrl: './btn-login.component.html',
+  imports: [
+    NgOptimizedImage,
+    RouterLink,
+    NavigationBttnComponent,
+    LoginBttnComponent
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BtnLoginComponent implements OnInit {
   private platformId

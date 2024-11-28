@@ -9,10 +9,11 @@ import { FormsModule } from '@angular/forms'
 import type { EditReminder, Reminder } from '@app/models'
 
 @Component({
-    selector: 'app-reminder-edit',
-    templateUrl: './rme.component.html',
-    imports: [FormsModule],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-reminder-edit',
+  templateUrl: './rme.component.html',
+  standalone: true,
+  imports: [FormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReminderEditComponent implements OnInit {
   reminder = input.required<Reminder>()

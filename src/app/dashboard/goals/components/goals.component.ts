@@ -21,17 +21,18 @@ import { SavingsStore } from '@app/store'
 import { SavingsCardComponent } from '@app/dashboard/common/savings-card/savings-card.component'
 
 @Component({
-    selector: 'app-goals',
-    templateUrl: './goals.component.html',
-    imports: [
-        FormsModule,
-        GoalModalEditComponent,
-        GoalModalDeleteComponent,
-        SubmitBttnComponent,
-        NotLoggedComponent,
-        SavingsCardComponent
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-goals',
+  templateUrl: './goals.component.html',
+  standalone: true,
+  imports: [
+    FormsModule,
+    GoalModalEditComponent,
+    GoalModalDeleteComponent,
+    SubmitBttnComponent,
+    NotLoggedComponent,
+    SavingsCardComponent
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class GoalsComponent implements OnInit {
   formData = {

@@ -3,10 +3,11 @@ import { RemindersCardComponent } from '@app/dashboard/common/reminders-card/rem
 import { RemindersStore } from '@app/store'
 
 @Component({
-    selector: 'app-reminders',
-    templateUrl: './reminders.component.html',
-    imports: [RemindersCardComponent],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-reminders',
+  standalone: true,
+  templateUrl: './reminders.component.html',
+  imports: [RemindersCardComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RemindersComponent {
   readonly store = inject(RemindersStore)

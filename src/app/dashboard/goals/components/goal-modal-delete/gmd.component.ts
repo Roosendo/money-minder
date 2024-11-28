@@ -1,22 +1,24 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  input,
-  output
+  EventEmitter,
+  Output,
+  input
 } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import type { Saving } from '@app/models'
 
 @Component({
-    selector: 'app-goal-modal-delete',
-    templateUrl: './gmd.component.html',
-    imports: [FormsModule],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-goal-modal-delete',
+  templateUrl: './gmd.component.html',
+  standalone: true,
+  imports: [FormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GoalModalDeleteComponent {
   saving = input.required<Saving>()
-  readonly delete = output<number>()
-  readonly closeModal = output<void>()
+  @Output() delete = new EventEmitter<number>()
+  @Output() closeModal = new EventEmitter<void>()
 
   onDelete() {
     this.delete.emit(this.saving().id)

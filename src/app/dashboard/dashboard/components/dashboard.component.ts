@@ -1,4 +1,4 @@
-import { NgOptimizedImage } from '@angular/common'
+import { AsyncPipe, NgOptimizedImage } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -17,19 +17,21 @@ import { RecentTransactionsComponent } from './recent-transactions'
 import { RemindersComponent } from './reminders'
 
 @Component({
-    selector: 'app-dashboard',
-    templateUrl: './dashboard.component.html',
-    imports: [
-        NgOptimizedImage,
-        RecentTransactionsComponent,
-        CashFlowComponent,
-        FinancialSummaryComponent,
-        MainCategoriesComponent,
-        GoalComponent,
-        RemindersComponent,
-        QuoteComponent
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-dashboard',
+  standalone: true,
+  templateUrl: './dashboard.component.html',
+  imports: [
+    NgOptimizedImage,
+    AsyncPipe,
+    RecentTransactionsComponent,
+    CashFlowComponent,
+    FinancialSummaryComponent,
+    MainCategoriesComponent,
+    GoalComponent,
+    RemindersComponent,
+    QuoteComponent
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class DashboardComponent implements OnInit {
   private readonly authCache

@@ -7,16 +7,17 @@ import { ThemeToggleComponent } from '@app/core'
 import { AuthCacheService, type User } from '@app/services'
 
 @Component({
-    selector: 'app-sidebar',
-    templateUrl: './sidebar.component.html',
-    imports: [
-        NgOptimizedImage,
-        RouterLink,
-        ThemeToggleComponent,
-        BtnLoginComponent,
-        CommonModule
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-sidebar',
+  standalone: true,
+  templateUrl: './sidebar.component.html',
+  imports: [
+    NgOptimizedImage,
+    RouterLink,
+    ThemeToggleComponent,
+    BtnLoginComponent,
+    CommonModule
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent {
   private readonly authCacheService

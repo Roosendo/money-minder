@@ -20,17 +20,18 @@ import { RemindersStore } from '@app/store'
 import { RemindersCardComponent } from '@app/dashboard/common/reminders-card/reminders-card.component'
 
 @Component({
-    selector: 'app-reminder',
-    templateUrl: './reminder.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [
-        FormsModule,
-        ReminderEditComponent,
-        ReminderDeleteComponent,
-        SubmitBttnComponent,
-        NotLoggedComponent,
-        RemindersCardComponent
-    ]
+  selector: 'app-reminder',
+  templateUrl: './reminder.component.html',
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    FormsModule,
+    ReminderEditComponent,
+    ReminderDeleteComponent,
+    SubmitBttnComponent,
+    NotLoggedComponent,
+    RemindersCardComponent
+  ]
 })
 export default class RemindersComponent implements OnInit {
   private readonly title

@@ -4,10 +4,11 @@ import { NotificationComponent } from '@app/core/alert-message'
 import { NotificationService } from '@app/services'
 
 @Component({
-    selector: 'app-notification-container',
-    imports: [CommonModule, NotificationComponent],
-    templateUrl: './notification-container.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-notification-container',
+  standalone: true,
+  imports: [CommonModule, NotificationComponent],
+  templateUrl: './notification-container.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotificationContainerComponent {
   protected notificationService = inject(NotificationService)

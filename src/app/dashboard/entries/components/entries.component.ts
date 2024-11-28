@@ -11,10 +11,11 @@ import { FormComponent, TableComponent } from '@app/dashboard/common'
 import { AuthCacheService } from '@app/services'
 
 @Component({
-    selector: 'app-entries',
-    templateUrl: './entries.component.html',
-    imports: [FormComponent, TableComponent, NotLoggedComponent],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-entries',
+  templateUrl: './entries.component.html',
+  standalone: true,
+  imports: [FormComponent, TableComponent, NotLoggedComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class EntriesComponent implements OnInit {
   private readonly titleService
