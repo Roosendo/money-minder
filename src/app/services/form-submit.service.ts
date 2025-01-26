@@ -20,7 +20,7 @@ import type {
   providedIn: 'root'
 })
 export class FormSubmitService {
-  private readonly API_URL = 'https://money-minder-api.up.railway.app/api'
+  private readonly API_URL = 'https://money-minder-api.vercel.app/api'
   private readonly authCacheService = inject(AuthCacheService)
   private email = this.authCacheService.getUser()?.email
   private fullName = `${this.authCacheService.getUser()?.firstName} ${this.authCacheService.getUser()?.lastName}`

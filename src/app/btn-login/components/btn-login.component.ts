@@ -7,7 +7,6 @@ import {
   inject
 } from '@angular/core'
 
-import { RouterLink } from '@angular/router'
 import { LoginBttnComponent, NavigationBttnComponent } from '@app/core'
 import { AuthCacheService, type User } from '@app/services/auth-cache.service'
 
@@ -17,7 +16,6 @@ import { AuthCacheService, type User } from '@app/services/auth-cache.service'
   templateUrl: './btn-login.component.html',
   imports: [
     NgOptimizedImage,
-    RouterLink,
     NavigationBttnComponent,
     LoginBttnComponent
   ],
@@ -37,7 +35,7 @@ export class BtnLoginComponent implements OnInit {
   }
 
   redirectTo(provider: string): void {
-    const url = `https://money-minder-api.up.railway.app/api/${provider}`
+    const url = `https://money-minder-api.vercel.app/api/${provider}`
     window.location.href = url
   }
 

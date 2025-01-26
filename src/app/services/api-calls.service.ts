@@ -29,7 +29,7 @@ import type {
   providedIn: 'root'
 })
 export class ApiCallsService {
-  private readonly API_URL = 'https://money-minder-api.up.railway.app/api'
+  private readonly API_URL = 'https://money-minder-api.vercel.app/api'
   private year = new Date().getFullYear()
   private readonly authCacheService = inject(AuthCacheService)
   private email = this.authCacheService.getUser()?.email
