@@ -22,7 +22,7 @@
     "@angular/forms": "^18.2.9",
     "@angular/platform-browser": "^18.2.9",
     "@angular/platform-browser-dynamic": "^18.2.9",
-    "@angular/platform-server": "^18.2.9",
+    "@angular/platform-server": "^20.3.33",
     "@angular/router": "^18.2.9",
     "@angular/ssr": "^18.2.10",
     "@fontsource-variable/saira": "5.1.0",
