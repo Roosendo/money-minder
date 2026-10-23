@@ -24,7 +24,7 @@
     "@angular/platform-browser-dynamic": "^18.2.9",
     "@angular/platform-server": "^18.2.9",
     "@angular/router": "^18.2.9",
-    "@angular/ssr": "^18.2.10",
+    "@angular/ssr": "^20.3.36",
     "@fontsource-variable/saira": "5.1.0",
     "@midudev/tailwind-animations": "0.1.0",
     "@ngrx/signals": "^18.1.0",
