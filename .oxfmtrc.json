@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "ignorePatterns": [],
+  "associations": [
+    {
+      "files": ["*.svg", "*.wxml"],
+      "language": "html"
+    },
+    {
+      "files": ["src/app/**/*.html"],
+      "language": "angular-html"
+    }
+  ]
+}
