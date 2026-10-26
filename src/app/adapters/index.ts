@@ -1,1 +1,1 @@
-export * from './dashboard.adapter'
+export * from "./dashboard.adapter";

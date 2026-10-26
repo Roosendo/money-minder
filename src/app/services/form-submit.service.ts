@@ -1,8 +1,8 @@
-import { HttpClient, type HttpErrorResponse } from '@angular/common/http'
-import { Injectable, inject } from '@angular/core'
-import { type Observable, catchError, map, throwError } from 'rxjs'
+import { HttpClient, type HttpErrorResponse } from "@angular/common/http";
+import { Injectable, inject } from "@angular/core";
+import { type Observable, catchError, map, throwError } from "rxjs";
 
-import { AuthCacheService } from '.'
+import { AuthCacheService } from ".";
 import type {
   EditPayment,
   EditReminder,
@@ -13,41 +13,37 @@ import type {
   NewLoan,
   NewPayment,
   NewReminder,
-  NewSaving
-} from '../models'
+  NewSaving,
+} from "../models";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class FormSubmitService {
-  private readonly API_URL = 'https://money-minder-api-mqz9.onrender.com/api'
-  private readonly authCacheService = inject(AuthCacheService)
-  private email = this.authCacheService.getUser()?.email
-  private fullName = `${this.authCacheService.getUser()?.firstName} ${this.authCacheService.getUser()?.lastName}`
+  private readonly API_URL = "https://money-minder-api-mqz9.onrender.com/api";
+  private readonly authCacheService = inject(AuthCacheService);
+  private email = this.authCacheService.getUser()?.email;
+  private fullName = `${this.authCacheService.getUser()?.firstName} ${this.authCacheService.getUser()?.lastName}`;
   private requestOptions = {
-    headers: { 'Content-Type': 'application/json' }
-  }
-  private http
+    headers: { "Content-Type": "application/json" },
+  };
+  private http;
 
   constructor() {
-    this.http = inject(HttpClient)
+    this.http = inject(HttpClient);
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message)
+      console.error("An error occurred:", error.error.message);
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
-      console.error(
-        `Backend returned code ${error.status}, ` + `body was: ${error.error}`
-      )
+      console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
     }
     // Return an observable with a user-facing error message.
-    return throwError(
-      () => new Error('Something bad happened; please try again later.')
-    )
+    return throwError(() => new Error("Something bad happened; please try again later."));
   }
 
   /**
@@ -56,18 +52,18 @@ export class FormSubmitService {
    * @returns An Observable that emits the response from the server.
    */
   entrySubmit(formNewEntry: NewEntry) {
-    const url = `${this.API_URL}/entries/new-entry`
-    const { email, fullName } = this
+    const url = `${this.API_URL}/entries/new-entry`;
+    const { email, fullName } = this;
     return this.http
       .post<{ id: number }>(
         url,
         JSON.stringify({ email, fullName, ...formNewEntry }),
-        this.requestOptions
+        this.requestOptions,
       )
       .pipe(
-        map(response => response.id),
-        catchError(this.handleError)
-      )
+        map((response) => response.id),
+        catchError(this.handleError),
+      );
   }
 
   /**
@@ -76,18 +72,18 @@ export class FormSubmitService {
    * @returns An Observable that emits the response from the server.
    */
   exitSubmit(formNewExit: NewExit) {
-    const url = `${this.API_URL}/exits/new-exit`
-    const { email, fullName } = this
+    const url = `${this.API_URL}/exits/new-exit`;
+    const { email, fullName } = this;
     return this.http
       .post<{ id: number }>(
         url,
         JSON.stringify({ email, fullName, ...formNewExit }),
-        this.requestOptions
+        this.requestOptions,
       )
       .pipe(
-        map(response => response.id),
-        catchError(this.handleError)
-      )
+        map((response) => response.id),
+        catchError(this.handleError),
+      );
   }
 
   /**
@@ -96,15 +92,11 @@ export class FormSubmitService {
    * @returns An Observable that emits the response from the server.
    */
   savingSubmit(formNewSaving: NewSaving) {
-    const url = `${this.API_URL}/savings/new-saving`
-    const { email, fullName } = this
+    const url = `${this.API_URL}/savings/new-saving`;
+    const { email, fullName } = this;
     return this.http
-      .post(
-        url,
-        JSON.stringify({ email, fullName, ...formNewSaving }),
-        this.requestOptions
-      )
-      .pipe(catchError(this.handleError))
+      .post(url, JSON.stringify({ email, fullName, ...formNewSaving }), this.requestOptions)
+      .pipe(catchError(this.handleError));
   }
 
   /**
@@ -113,15 +105,11 @@ export class FormSubmitService {
    * @returns An Observable that emits the response from the server.
    */
   editSaving(formEditSaving: EditSaving) {
-    const url = `${this.API_URL}/savings/update-saving`
-    const { email } = this
+    const url = `${this.API_URL}/savings/update-saving`;
+    const { email } = this;
     return this.http
-      .patch(
-        url,
-        JSON.stringify({ ...formEditSaving, email }),
-        this.requestOptions
-      )
-      .pipe(catchError(this.handleError))
+      .patch(url, JSON.stringify({ ...formEditSaving, email }), this.requestOptions)
+      .pipe(catchError(this.handleError));
   }
 
   /**
@@ -130,10 +118,8 @@ export class FormSubmitService {
    * @returns An Observable that emits the response from the server.
    */
   deleteSaving(id: number) {
-    const url = `${this.API_URL}/savings/delete-saving?id=${id}&email=${this.email}`
-    return this.http
-      .delete(url, this.requestOptions)
-      .pipe(catchError(this.handleError))
+    const url = `${this.API_URL}/savings/delete-saving?id=${id}&email=${this.email}`;
+    return this.http.delete(url, this.requestOptions).pipe(catchError(this.handleError));
   }
 
   /**
@@ -143,15 +129,11 @@ export class FormSubmitService {
    * @returns An Observable that emits the response from the server.
    */
   reminderSubmit(formNewReminder: NewReminder) {
-    const url = `${this.API_URL}/reminders/new-reminder`
-    const { email, fullName } = this
+    const url = `${this.API_URL}/reminders/new-reminder`;
+    const { email, fullName } = this;
     return this.http
-      .post(
-        url,
-        JSON.stringify({ ...formNewReminder, email, fullName }),
-        this.requestOptions
-      )
-      .pipe(catchError(this.handleError))
+      .post(url, JSON.stringify({ ...formNewReminder, email, fullName }), this.requestOptions)
+      .pipe(catchError(this.handleError));
   }
 
   /**
@@ -161,15 +143,11 @@ export class FormSubmitService {
    * @returns An Observable that emits the response from the server.
    */
   editReminder(formEditReminder: EditReminder) {
-    const url = `${this.API_URL}/reminders/update-reminder`
-    const { email } = this
+    const url = `${this.API_URL}/reminders/update-reminder`;
+    const { email } = this;
     return this.http
-      .patch(
-        url,
-        JSON.stringify({ ...formEditReminder, email }),
-        this.requestOptions
-      )
-      .pipe(catchError(this.handleError))
+      .patch(url, JSON.stringify({ ...formEditReminder, email }), this.requestOptions)
+      .pipe(catchError(this.handleError));
   }
 
   /**
@@ -179,56 +157,58 @@ export class FormSubmitService {
    * @returns A `Observable` that emits the response from the server.
    */
   deleteReminder(id: number) {
-    const url = `${this.API_URL}/reminders/delete-reminder?id=${id}&email=${this.email}`
-    return this.http
-      .delete(url, this.requestOptions)
-      .pipe(catchError(this.handleError))
+    const url = `${this.API_URL}/reminders/delete-reminder?id=${id}&email=${this.email}`;
+    return this.http.delete(url, this.requestOptions).pipe(catchError(this.handleError));
   }
 
   creditCardSubmit(creditCardSubmit: NewCreditCard) {
-    const url = `${this.API_URL}/credit-cards`
-    const { email, fullName } = this
+    const url = `${this.API_URL}/credit-cards`;
+    const { email, fullName } = this;
     return this.http
       .post<{ credit_card_id: number }>(
         url,
         JSON.stringify({ email, fullName, ...creditCardSubmit }),
-        this.requestOptions
+        this.requestOptions,
       )
       .pipe(
-        map(response => response.credit_card_id),
-        catchError(this.handleError)
-      )
+        map((response) => response.credit_card_id),
+        catchError(this.handleError),
+      );
   }
 
   deleteCreditCard(id: number) {
-    const url = `${this.API_URL}/credit-cards/${id}`
+    const url = `${this.API_URL}/credit-cards/${id}`;
     return this.http
       .delete(url, { ...this.requestOptions, body: { userEmail: this.email } })
-      .pipe(catchError(this.handleError))
+      .pipe(catchError(this.handleError));
   }
 
   addLoan(loan: NewLoan) {
-    const url = `${this.API_URL}/loans`
+    const url = `${this.API_URL}/loans`;
     return this.http
-      .post<{ id: number }>(url, JSON.stringify({ ...loan, userEmail: this.email }), this.requestOptions)
-      .pipe(
-        map(response => response.id),
-        catchError(this.handleError)
+      .post<{ id: number }>(
+        url,
+        JSON.stringify({ ...loan, userEmail: this.email }),
+        this.requestOptions,
       )
+      .pipe(
+        map((response) => response.id),
+        catchError(this.handleError),
+      );
   }
 
   addPayment(payment: NewPayment) {
-    const url = `${this.API_URL}/loans/payments`
+    const url = `${this.API_URL}/loans/payments`;
     return this.http
       .post(url, JSON.stringify(payment), this.requestOptions)
-      .pipe(catchError(this.handleError))
+      .pipe(catchError(this.handleError));
   }
 
   editPayment(editPayment: EditPayment) {
-    const url = `${this.API_URL}/loans/payments/edit`
-    console.log({ ...editPayment, email: this.email })
+    const url = `${this.API_URL}/loans/payments/edit`;
+    console.log({ ...editPayment, email: this.email });
     return this.http
       .patch(url, JSON.stringify({ ...editPayment, email: this.email }), this.requestOptions)
-      .pipe(catchError(this.handleError))
+      .pipe(catchError(this.handleError));
   }
 }

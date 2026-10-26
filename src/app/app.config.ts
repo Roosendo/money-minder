@@ -1,14 +1,11 @@
-import {
-  type ApplicationConfig,
-  provideExperimentalZonelessChangeDetection
-} from '@angular/core'
-import { provideRouter, withComponentInputBinding } from '@angular/router'
+import { type ApplicationConfig, provideExperimentalZonelessChangeDetection } from "@angular/core";
+import { provideRouter, withComponentInputBinding } from "@angular/router";
 
-import { provideHttpClient, withFetch } from '@angular/common/http'
-import { provideClientHydration } from '@angular/platform-browser'
-import { provideCharts, withDefaultRegisterables } from 'ng2-charts'
-import { routes } from './app.routes'
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
+import { provideHttpClient, withFetch } from "@angular/common/http";
+import { provideClientHydration } from "@angular/platform-browser";
+import { provideCharts, withDefaultRegisterables } from "ng2-charts";
+import { routes } from "./app.routes";
+import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +14,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideRouter(routes, withComponentInputBinding()),
     provideCharts(withDefaultRegisterables()),
-    provideAnimationsAsync()
-  ]
-}
+    provideAnimationsAsync(),
+  ],
+};

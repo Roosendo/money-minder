@@ -1,1 +1,1 @@
-export * from './components/sidebar.component'
+export * from "./components/sidebar.component";

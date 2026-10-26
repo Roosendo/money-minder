@@ -27,20 +27,12 @@
     >
       <div class="flex-1">
         @if (monthlyEntries && monthlyEntries.length > 0) {
-          <app-pie-chart
-            [dataTC]="monthlyEntries"
-            [text]="'Ingresos'"
-            [chartId]="'Ingresos'"
-          />
+          <app-pie-chart [dataTC]="monthlyEntries" [text]="'Ingresos'" [chartId]="'Ingresos'" />
         }
       </div>
       <div class="flex-1">
         @if (monthlyExits && monthlyExits.length > 0) {
-          <app-pie-chart
-            [dataTC]="monthlyExits"
-            [text]="'Egresos'"
-            [chartId]="'Egresos'"
-          />
+          <app-pie-chart [dataTC]="monthlyExits" [text]="'Egresos'" [chartId]="'Egresos'" />
         }
       </div>
     </div>
@@ -48,11 +40,15 @@
     <div class="m-auto mt-6 flex w-2/3 flex-col text-center md:w-1/2">
       <h3>
         Total de Ingresos:
-        <span id="totalIngresos">{{ summary?.totalEntries?.amount | currency:'USD':'symbol' }}</span>
+        <span id="totalIngresos">{{
+          summary?.totalEntries?.amount | currency: "USD" : "symbol"
+        }}</span>
       </h3>
       <h3 class="border-b border-gray-400">
         - Total de Gastos:
-        <span id="totalEgresos">{{ summary?.totalExits?.amount | currency:'USD':'symbol' }}</span>
+        <span id="totalEgresos">{{
+          summary?.totalExits?.amount | currency: "USD" : "symbol"
+        }}</span>
       </h3>
       <h3>
         Saldo / Diferencia:
@@ -63,7 +59,7 @@
             'text-teal-600 dark:text-teal-300': +balance >= 0,
             'text-rose-600 dark:text-rose-300': +balance < 0,
           }"
-          >{{ balance | currency:'USD':'symbol' }}</span
+          >{{ balance | currency: "USD" : "symbol" }}</span
         >
       </h3>
     </div>

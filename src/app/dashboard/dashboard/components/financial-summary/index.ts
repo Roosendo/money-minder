@@ -1,1 +1,1 @@
-export * from './fs.component'
+export * from "./fs.component";

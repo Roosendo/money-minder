@@ -3,7 +3,11 @@
     <h2 class="mb-4 text-lg font-semibold">Recordatorios</h2>
     <div id="reminders" class="space-y-4">
       @for (reminder of reminders(); track reminder.id) {
-        <app-reminders-card [title]="reminder.title" [description]="reminder.description" [reminder_date]="reminder.reminder_date" />
+        <app-reminders-card
+          [title]="reminder.title"
+          [description]="reminder.description"
+          [reminder_date]="reminder.reminder_date"
+        />
       }
     </div>
   </div>

@@ -4,10 +4,10 @@
     {{ saving().name }}
   </h3>
   <p class="text-gray-600 dark:text-gray-400">
-    Monto objetivo: {{ saving().target_amount| currency : "USD" : "symbol" }}
+    Monto objetivo: {{ saving().target_amount | currency: "USD" : "symbol" }}
   </p>
   <p class="text-gray-600 dark:text-gray-400">
-    Monto actual: {{ saving().current_amount| currency : "USD" : "symbol" }}
+    Monto actual: {{ saving().current_amount | currency: "USD" : "symbol" }}
   </p>
   <div class="w-full bg-gray-200 dark:bg-gray-50 rounded-full h-2 mt-2 mb-3">
     <div class="bg-teal-500 h-2 rounded-full" [style]="style"></div>

@@ -1,18 +1,18 @@
-import animations from '@midudev/tailwind-animations'
-const purgeCss = require('@fullhuman/postcss-purgecss')
+import animations from "@midudev/tailwind-animations";
+const purgeCss = require("@fullhuman/postcss-purgecss");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{html,ts}'],
-  darkMode: 'class',
+  content: ["./src/**/*.{html,ts}"],
+  darkMode: "class",
   theme: {
-    extend: {}
+    extend: {},
   },
   plugins: [
     animations,
-    require('@tailwindcss/typography'),
+    require("@tailwindcss/typography"),
     purgeCss({
-      content: ['./**/*.hmtl']
-    })
-  ]
-}
+      content: ["./**/*.hmtl"],
+    }),
+  ],
+};

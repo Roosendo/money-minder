@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { ThemeToggleComponent } from '@app/core/theme-toggle'
+import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ThemeToggleComponent } from "@app/core/theme-toggle";
 
 @Component({
-  selector: 'app-footer',
-  templateUrl: './footer.component.html',
+  selector: "app-footer",
+  templateUrl: "./footer.component.html",
   standalone: true,
   imports: [ThemeToggleComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent {
-  year: number = new Date().getFullYear()
+  year: number = new Date().getFullYear();
 }

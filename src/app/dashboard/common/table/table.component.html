@@ -1,14 +1,12 @@
 <div class="relative m-auto mb-6 max-w-xl overflow-x-auto rounded-lg shadow-md">
   <table class="min-w-full table-auto text-left text-sm text-gray-600 dark:text-gray-300">
-    <thead
-      class="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-gray-800 dark:text-gray-400"
-    >
+    <thead class="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-gray-800 dark:text-gray-400">
       <tr>
         <th scope="col" class="md:px-4 md:py-3 px-2 py-1">Monto</th>
         <th scope="col" class="md:px-4 md:py-3 px-2 py-1">Categoría</th>
         <th scope="col" class="md:px-4 md:py-3 px-2 py-1">Descripción</th>
         <th scope="col" class="md:px-4 md:py-3 px-2 py-1">Fecha</th>
-        @if (type() === 'exits') {
+        @if (type() === "exits") {
           <th scope="col" class="md:px-4 md:py-3 px-2 py-1">Método de Pago</th>
         }
       </tr>
@@ -22,12 +20,12 @@
             scope="row"
             class="md:px-4 md:py-3 px-2 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white"
           >
-            {{ lastData.amount | currency:'USD':'symbol' }}
+            {{ lastData.amount | currency: "USD" : "symbol" }}
           </th>
           <td class="md:px-4 md:py-3 px-2 py-1">{{ lastData.category }}</td>
           <td class="md:px-4 md:py-3 px-2 py-1">{{ lastData.description }}</td>
           <td class="md:px-4 md:py-3 px-2 py-1">{{ lastData.date | date: "d/MM/y" }}</td>
-          @if (type() === 'exits') {
+          @if (type() === "exits") {
             <td class="md:px-4 md:py-3 px-2 py-1">
               <!-- Si el método de pago es tarjeta, mostramos emoji y el nombre de la tarjeta -->
               @if (lastData.is_credit_payment) {
