@@ -1,1 +1,1 @@
-export * from './cf.component'
+export * from "./cf.component";

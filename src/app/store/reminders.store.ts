@@ -1,59 +1,59 @@
-import { inject, InjectionToken } from '@angular/core'
-import type { Reminder } from '@app/models'
-import { ApiCallsService } from '@app/services'
-import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals'
-import { withEntities } from '@ngrx/signals/entities'
-import { firstValueFrom } from 'rxjs'
+import { inject, InjectionToken } from "@angular/core";
+import type { Reminder } from "@app/models";
+import { ApiCallsService } from "@app/services";
+import { patchState, signalStore, withHooks, withMethods, withState } from "@ngrx/signals";
+import { withEntities } from "@ngrx/signals/entities";
+import { firstValueFrom } from "rxjs";
 
 type RemindersState = {
-  reminders: Reminder[]
-}
+  reminders: Reminder[];
+};
 
 const initialState: RemindersState = {
-  reminders: []
-}
+  reminders: [],
+};
 
-const REMINDERS_STATE = new InjectionToken('RemindersState', {
-  factory: () => initialState
-})
+const REMINDERS_STATE = new InjectionToken("RemindersState", {
+  factory: () => initialState,
+});
 
 export const RemindersStore = signalStore(
-  { providedIn: 'root' },
+  { providedIn: "root" },
   withState(() => inject(REMINDERS_STATE)),
   withEntities<RemindersState>(),
   withMethods((store, apiCallsService = inject(ApiCallsService)) => ({
     clearReminders(): void {
-      patchState(store, { reminders: initialState.reminders })
+      patchState(store, { reminders: initialState.reminders });
     },
 
     async updateReminders(): Promise<void> {
-      const reminders = await firstValueFrom(apiCallsService.getReminders())
-      patchState(store, { reminders })
+      const reminders = await firstValueFrom(apiCallsService.getReminders());
+      patchState(store, { reminders });
     },
 
     addReminder(reminder: Reminder): void {
-      patchState(store, { reminders: [ reminder, ...store.reminders() ] })
+      patchState(store, { reminders: [reminder, ...store.reminders()] });
     },
 
     editReminder(reminder: Reminder): void {
       patchState(store, {
-        reminders: store.reminders().map(r => r.id === reminder.id ? { ...r, ...reminder } : r)
-      })
+        reminders: store.reminders().map((r) => (r.id === reminder.id ? { ...r, ...reminder } : r)),
+      });
     },
 
     removeReminder(id: number): void {
-      patchState(store, { reminders: store.reminders().filter(reminder => reminder.id !== id) })
-    }
+      patchState(store, { reminders: store.reminders().filter((reminder) => reminder.id !== id) });
+    },
   })),
   withHooks({
     async onInit(store, apiCallsService = inject(ApiCallsService)) {
       try {
-        const reminders = await firstValueFrom(apiCallsService.getReminders())
-        patchState(store, { reminders })
+        const reminders = await firstValueFrom(apiCallsService.getReminders());
+        patchState(store, { reminders });
       } catch (error) {
-        console.error('Error fetching reminders:', error)
-        patchState(store, { reminders: initialState.reminders })
+        console.error("Error fetching reminders:", error);
+        patchState(store, { reminders: initialState.reminders });
       }
-    }
-  })
-)
+    },
+  }),
+);

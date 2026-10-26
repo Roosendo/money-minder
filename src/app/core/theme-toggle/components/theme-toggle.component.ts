@@ -1,65 +1,62 @@
-import { isPlatformBrowser } from '@angular/common'
+import { isPlatformBrowser } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
   type OnInit,
   PLATFORM_ID,
-  inject
-} from '@angular/core'
+  inject,
+} from "@angular/core";
 
 @Component({
-  selector: 'app-theme-toggle',
-  templateUrl: './theme-toggle.component.html',
+  selector: "app-theme-toggle",
+  templateUrl: "./theme-toggle.component.html",
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThemeToggleComponent implements OnInit {
-  private readonly STORAGE_THEME_ITEM = 'theme'
-  private readonly DARK_CLASS = 'dark'
-  private readonly LIGHT_CLASS = 'light'
-  private platformId
+  private readonly STORAGE_THEME_ITEM = "theme";
+  private readonly DARK_CLASS = "dark";
+  private readonly LIGHT_CLASS = "light";
+  private platformId;
 
   constructor() {
-    this.platformId = inject(PLATFORM_ID)
+    this.platformId = inject(PLATFORM_ID);
   }
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) this.setTheme()
+    if (isPlatformBrowser(this.platformId)) this.setTheme();
   }
 
   private setTheme(): void {
-    const triggerLightTheme = document.getElementById('light-theme')
-    const triggerDarkTheme = document.getElementById('dark-theme')
+    const triggerLightTheme = document.getElementById("light-theme");
+    const triggerDarkTheme = document.getElementById("dark-theme");
 
     const theme = (() => {
-      if (
-        typeof localStorage !== 'undefined' &&
-        localStorage.getItem(this.STORAGE_THEME_ITEM)
-      ) {
-        return localStorage.getItem(this.STORAGE_THEME_ITEM)
+      if (typeof localStorage !== "undefined" && localStorage.getItem(this.STORAGE_THEME_ITEM)) {
+        return localStorage.getItem(this.STORAGE_THEME_ITEM);
       }
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return this.DARK_CLASS
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return this.DARK_CLASS;
       }
-      return this.LIGHT_CLASS
-    })()
+      return this.LIGHT_CLASS;
+    })();
 
     if (theme === this.DARK_CLASS) {
-      document.documentElement.classList.add(this.DARK_CLASS)
+      document.documentElement.classList.add(this.DARK_CLASS);
     } else {
-      document.documentElement.classList.remove(this.DARK_CLASS)
+      document.documentElement.classList.remove(this.DARK_CLASS);
     }
 
-    if (theme) localStorage.setItem(this.STORAGE_THEME_ITEM, theme)
+    if (theme) localStorage.setItem(this.STORAGE_THEME_ITEM, theme);
 
-    triggerLightTheme?.addEventListener('click', () => {
-      document.documentElement.classList.remove(this.DARK_CLASS)
-      localStorage.setItem(this.STORAGE_THEME_ITEM, this.LIGHT_CLASS)
-    })
+    triggerLightTheme?.addEventListener("click", () => {
+      document.documentElement.classList.remove(this.DARK_CLASS);
+      localStorage.setItem(this.STORAGE_THEME_ITEM, this.LIGHT_CLASS);
+    });
 
-    triggerDarkTheme?.addEventListener('click', () => {
-      document.documentElement.classList.add(this.DARK_CLASS)
-      localStorage.setItem(this.STORAGE_THEME_ITEM, this.DARK_CLASS)
-    })
+    triggerDarkTheme?.addEventListener("click", () => {
+      document.documentElement.classList.add(this.DARK_CLASS);
+      localStorage.setItem(this.STORAGE_THEME_ITEM, this.DARK_CLASS);
+    });
   }
 }

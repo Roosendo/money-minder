@@ -1,34 +1,34 @@
-import { InjectionToken, inject } from '@angular/core'
-import type { TransactionChart } from '@app/models'
-import { ApiCallsService } from '@app/services'
-import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals'
-import { withEntities } from '@ngrx/signals/entities'
-import { firstValueFrom } from 'rxjs'
+import { InjectionToken, inject } from "@angular/core";
+import type { TransactionChart } from "@app/models";
+import { ApiCallsService } from "@app/services";
+import { patchState, signalStore, withHooks, withMethods, withState } from "@ngrx/signals";
+import { withEntities } from "@ngrx/signals/entities";
+import { firstValueFrom } from "rxjs";
 
 type CategoriesState = {
-  categories: TransactionChart[]
-}
+  categories: TransactionChart[];
+};
 
 const initialState: CategoriesState = {
-  categories: []
-}
+  categories: [],
+};
 
-const CATEGORIES_STATE = new InjectionToken<CategoriesState>('CategoriesState', {
-  factory: () => initialState
-})
+const CATEGORIES_STATE = new InjectionToken<CategoriesState>("CategoriesState", {
+  factory: () => initialState,
+});
 
 export const CategoriesStore = signalStore(
-  { providedIn: 'root' },
+  { providedIn: "root" },
   withState(() => inject(CATEGORIES_STATE)),
   withEntities<CategoriesState>(),
   withMethods((store, apiCallsService = inject(ApiCallsService)) => ({
     clearCategories(): void {
-      patchState(store, { categories: initialState.categories })
+      patchState(store, { categories: initialState.categories });
     },
 
     async updateCategories(): Promise<void> {
-      const categories = await firstValueFrom(apiCallsService.getMainCategories())
-      patchState(store, { categories })
+      const categories = await firstValueFrom(apiCallsService.getMainCategories());
+      patchState(store, { categories });
     },
 
     /**
@@ -38,25 +38,25 @@ export const CategoriesStore = signalStore(
      * @returns void - No return, updates the store
      */
     addTransactionCategory(category: TransactionChart): void {
-      const existingCategory = store.categories().find(cat => cat.category === category.category)
+      const existingCategory = store.categories().find((cat) => cat.category === category.category);
 
       if (existingCategory) {
-        existingCategory.total += category.total
-        patchState(store, { categories: [...store.categories()] })
+        existingCategory.total += category.total;
+        patchState(store, { categories: [...store.categories()] });
       } else {
-        patchState(store, { categories: [...store.categories(), category] })
+        patchState(store, { categories: [...store.categories(), category] });
       }
-    }
+    },
   })),
   withHooks({
     async onInit(store, apiCallsService = inject(ApiCallsService)) {
       try {
-        const categories = await firstValueFrom(apiCallsService.getMainCategories())
-        patchState(store, { categories })
+        const categories = await firstValueFrom(apiCallsService.getMainCategories());
+        patchState(store, { categories });
       } catch (error) {
-        console.error('Error fetching categories:', error)
-        patchState(store, { categories: initialState.categories })
+        console.error("Error fetching categories:", error);
+        patchState(store, { categories: initialState.categories });
       }
-    }
-  })
-)
+    },
+  }),
+);

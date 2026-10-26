@@ -5,13 +5,9 @@
       id="reminder-form"
       class="mx-auto mt-6 max-w-lg space-y-4 rounded-lg border border-gray-800 dark:border-gray-100 bg-gray-100 p-6 text-gray-700 dark:bg-gray-800 dark:text-gray-200"
     >
-      <h1 class="mb-4 text-center text-xl font-bold">
-        Agregar nuevo Recordatorio
-      </h1>
+      <h1 class="mb-4 text-center text-xl font-bold">Agregar nuevo Recordatorio</h1>
       <div>
-        <label for="reminder-title" class="block font-medium"
-          >Título del recordatorio</label
-        >
+        <label for="reminder-title" class="block font-medium">Título del recordatorio</label>
         <input
           [(ngModel)]="formReminder.title"
           name="title"
@@ -23,9 +19,7 @@
         />
       </div>
       <div>
-        <label for="reminder-description" class="block font-medium"
-          >Descripción</label
-        >
+        <label for="reminder-description" class="block font-medium">Descripción</label>
         <textarea
           [(ngModel)]="formReminder.description"
           name="description"
@@ -36,9 +30,7 @@
         ></textarea>
       </div>
       <div class="mb-4">
-        <label for="reminder-date" class="block font-medium"
-          >Fecha y hora</label
-        >
+        <label for="reminder-date" class="block font-medium">Fecha y hora</label>
         <input
           [(ngModel)]="formReminder.reminderDate"
           name="reminderDate"

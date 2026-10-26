@@ -8,9 +8,9 @@
     <p class="dark:text-gray-400 text-gray-600">
       {{ description() }}
     </p>
-    <hr class="my-1 border-gray-600 dark:border-gray-100 sm:mx-auto">
+    <hr class="my-1 border-gray-600 dark:border-gray-100 sm:mx-auto" />
     <p class="dark:text-gray-400 text-gray-600 uppercase">
-      {{ reminder_date() | date : "d/MM/y 'a las' hh:mm a" }}
+      {{ reminder_date() | date: "d/MM/y 'a las' hh:mm a" }}
     </p>
   </div>
   <ng-content />

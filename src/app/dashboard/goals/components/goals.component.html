@@ -4,13 +4,9 @@
       (submit)="onNewSavingSubmit()"
       class="mx-auto mt-6 max-w-md rounded-lg bg-gray-100 p-6 text-gray-700 border border-gray-800 dark:border-gray-100 dark:bg-gray-800 dark:text-gray-200"
     >
-      <h2 class="mb-4 text-center text-xl font-bold">
-        Agregar Nuevo Objetivo de Ahorro
-      </h2>
+      <h2 class="mb-4 text-center text-xl font-bold">Agregar Nuevo Objetivo de Ahorro</h2>
       <div class="mb-4">
-        <label for="goal-name" class="mb-2 block font-semibold"
-          >Nombre del objetivo</label
-        >
+        <label for="goal-name" class="mb-2 block font-semibold">Nombre del objetivo</label>
         <input
           [(ngModel)]="formData.name"
           name="name"
@@ -22,9 +18,7 @@
         />
       </div>
       <div class="mb-4">
-        <label for="target-amount" class="mb-2 block font-semibold"
-          >Monto objetivo</label
-        >
+        <label for="target-amount" class="mb-2 block font-semibold">Monto objetivo</label>
         <input
           [(ngModel)]="formData.targetAmount"
           name="targetAmount"
@@ -51,9 +45,7 @@
         />
       </div>
       <div class="mb-4">
-        <label for="start-date" class="mb-2 block font-semibold"
-          >Fecha de inicio</label
-        >
+        <label for="start-date" class="mb-2 block font-semibold">Fecha de inicio</label>
         <input
           [(ngModel)]="formData.startDate"
           name="startDate"
@@ -64,9 +56,7 @@
         />
       </div>
       <div class="mb-4">
-        <label for="end-date" class="mb-2 block font-semibold"
-          >Fecha de fin</label
-        >
+        <label for="end-date" class="mb-2 block font-semibold">Fecha de fin</label>
         <input
           [(ngModel)]="formData.endDate"
           name="endDate"
@@ -81,9 +71,7 @@
     @if (savings().length) {
       <div id="savings-list" class="mx-auto my-6 max-w-lg space-y-4">
         @for (saving of savings(); track saving.id) {
-          <app-savings-card
-            [saving]="saving"
-          >
+          <app-savings-card [saving]="saving">
             <button
               (click)="openEditModal(saving)"
               class="absolute top-3 right-4 p-2 rounded transition-colors font-medium tracking-wide text-teal-500 hover:bg-teal-300 hover:text-gray-900 dark:hover:bg-gray-200 dark:text-teal-400 dark:hover:text-gray-900"

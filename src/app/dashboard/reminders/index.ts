@@ -1,1 +1,1 @@
-export * from './components/reminder.component'
+export * from "./components/reminder.component";

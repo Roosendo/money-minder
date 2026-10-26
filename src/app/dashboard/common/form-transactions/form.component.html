@@ -1,15 +1,13 @@
-@let typeOf = type() === 'entries' ? 'Ingreso' : 'Egreso';
+@let typeOf = type() === "entries" ? "Ingreso" : "Egreso";
 
 <form
   [formGroup]="form()"
   (submit)="onSubmit()"
   class="mx-auto mb-8 bg-gray-100 dark:bg-gray-800 mt-6 max-w-md rounded-md p-6 text-gray-900 border border-gray-800 dark:border-gray-100 dark:text-white"
 >
-  <h1 class="mb-6 text-center text-2xl uppercase">registro de {{ typeOf + 's' }}</h1>
+  <h1 class="mb-6 text-center text-2xl uppercase">registro de {{ typeOf + "s" }}</h1>
   <div class="mb-5">
-    <label for="date" class="mb-2 block text-sm font-medium"
-      >Fecha del monto:</label
-    >
+    <label for="date" class="mb-2 block text-sm font-medium">Fecha del monto:</label>
     <input
       formControlName="date"
       type="date"
@@ -23,9 +21,7 @@
     >
     <div class="flex">
       <div class="relative w-full">
-        <div
-          class="pointer-events-none absolute inset-y-0 start-0 top-0 flex items-center ps-3.5"
-        >
+        <div class="pointer-events-none absolute inset-y-0 start-0 top-0 flex items-center ps-3.5">
           <svg
             class="size-4 text-gray-500 dark:text-gray-400"
             aria-hidden="true"
@@ -75,14 +71,25 @@
       </div>
     </div>
   </div>
-  @if (type() === 'exits') {
+  @if (type() === "exits") {
     <div class="flex items-center me-4 mb-5">
-      <input formControlName="isCreditPayment" id="teal-checkbox" type="checkbox" value="" class="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-      <label for="teal-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">¿El egreso fue con tarjeta de crédito?</label>
+      <input
+        formControlName="isCreditPayment"
+        id="teal-checkbox"
+        type="checkbox"
+        value=""
+        class="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+      />
+      <label for="teal-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        >¿El egreso fue con tarjeta de crédito?</label
+      >
     </div>
-    @if (form().get('isCreditPayment')?.value) {
+    @if (form().get("isCreditPayment")?.value) {
       <div class="mb-5 gap-3">
-        <label for="card_select" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-200">
+        <label
+          for="card_select"
+          class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-200"
+        >
           Selecciona una tarjeta:
         </label>
         @if (creditCardsStore.creditCards().length) {
@@ -98,7 +105,9 @@
             }
           </select>
         } @else {
-          <p class="text-rose-500 dark:text-rose-400">No tienes tarjetas registradas. Agrega una antes de continuar.</p>
+          <p class="text-rose-500 dark:text-rose-400">
+            No tienes tarjetas registradas. Agrega una antes de continuar.
+          </p>
         }
       </div>
     }
@@ -111,17 +120,17 @@
       id="underline_select"
       class="block w-full appearance-none border-0 border-b-2 border-gray-200 bg-transparent px-0 py-2.5 text-sm text-gray-500 focus:border-gray-200 focus:outline-none focus:ring-0 dark:border-gray-700 dark:text-gray-400"
     >
-    @if (typeOf === 'Egreso') {
-      <option value="" selected>Elige una categoría...</option>
-      @for (categorie of categories.Egreso; track $index) {
-        <option value="{{ categorie }}" selected>{{ categorie }}</option>
+      @if (typeOf === "Egreso") {
+        <option value="" selected>Elige una categoría...</option>
+        @for (categorie of categories.Egreso; track $index) {
+          <option value="{{ categorie }}" selected>{{ categorie }}</option>
+        }
+      } @else {
+        <option value="" selected>Elige una categoría...</option>
+        @for (categorie of categories.Ingreso; track $index) {
+          <option value="{{ categorie }}" selected>{{ categorie }}</option>
+        }
       }
-    } @else {
-      <option value="" selected>Elige una categoría...</option>
-      @for (categorie of categories.Ingreso; track $index) {
-        <option value="{{ categorie }}" selected>{{ categorie }}</option>
-      }
-    }
     </select>
   </div>
   <div class="mx-auto mb-5 max-w-sm">
@@ -137,5 +146,5 @@
       placeholder="Deja tu descripción..."
     ></textarea>
   </div>
-  <app-submit-bttn [text]="'Registrar ' + typeOf " />
+  <app-submit-bttn [text]="'Registrar ' + typeOf" />
 </form>

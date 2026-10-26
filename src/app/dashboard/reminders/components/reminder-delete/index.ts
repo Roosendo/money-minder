@@ -1,1 +1,1 @@
-export * from './rmd.component'
+export * from "./rmd.component";
