@@ -1,73 +1,71 @@
 @let summary = summary$ | async;
-@let balance =
-  ((summary?.totalEntries?.amount ?? 0) - (summary?.totalExits?.amount ?? 0)).toFixed(2);
+@let balance = ((summary?.totalEntries ?? 0) - (summary?.totalExits ?? 0)).toFixed(2);
 @let monthlyEntries = monthlyEntries$ | async;
 @let monthlyExits = monthlyExits$ | async;
 
-@if (isLogged) {
-  <div
-    class="m-auto mt-6 w-full max-w-3xl rounded-lg bg-gray-100 dark:bg-gray-800/20 p-6 text-gray-900 dark:text-gray-50 shadow-md"
-  >
-    <h2 id="month-text" class="mb-4 text-center text-xl font-semibold">
-      Mostrando datos de {{ currentMonth }} {{ currentYear }}
-    </h2>
+@if (isLogged()) {
+  <main class="container py-10">
+    <header class="border-b border-rule pb-6">
+      <h1 class="text-4xl">Análisis del mes</h1>
+      <p class="lead mt-3 max-w-[48ch] text-ink-2">
+        Mostrando datos de {{ currentMonth }} {{ currentYear }}.
+      </p>
+    </header>
 
-    <div class="mb-4 flex justify-center">
+    <div class="mt-6">
+      <label for="month-input" class="mb-2 block">Mes</label>
       <input
         id="month-input"
         type="month"
-        class="w-auto rounded-lg border border-gray-300 p-2 text-center text-white"
+        class="w-auto"
         [value]="currentDate"
         (change)="onMonthChange($event)"
       />
     </div>
 
-    <div
-      class="mx-auto mt-4 flex h-auto w-2/3 flex-col space-y-4 sm:w-full sm:flex-row md:space-x-4 md:space-y-0"
-    >
-      <div class="flex-1">
+    <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div>
         @if (monthlyEntries && monthlyEntries.length > 0) {
-          <app-pie-chart
-            [dataTC]="monthlyEntries"
-            [text]="'Ingresos'"
-            [chartId]="'Ingresos'"
-          />
+          <app-pie-chart [dataTC]="monthlyEntries" [text]="'Ingresos'" [chartId]="'Ingresos'" />
         }
       </div>
-      <div class="flex-1">
+      <div>
         @if (monthlyExits && monthlyExits.length > 0) {
-          <app-pie-chart
-            [dataTC]="monthlyExits"
-            [text]="'Egresos'"
-            [chartId]="'Egresos'"
-          />
+          <app-pie-chart [dataTC]="monthlyExits" [text]="'Egresos'" [chartId]="'Egresos'" />
         }
       </div>
     </div>
 
-    <div class="m-auto mt-6 flex w-2/3 flex-col text-center md:w-1/2">
-      <h3>
-        Total de Ingresos:
-        <span id="totalIngresos">{{ summary?.totalEntries?.amount | currency:'USD':'symbol' }}</span>
-      </h3>
-      <h3 class="border-b border-gray-400">
-        - Total de Gastos:
-        <span id="totalEgresos">{{ summary?.totalExits?.amount | currency:'USD':'symbol' }}</span>
-      </h3>
-      <h3>
-        Saldo / Diferencia:
-        <span
-          id="difference"
-          class="font-semibold"
-          [ngClass]="{
-            'text-teal-600 dark:text-teal-300': +balance >= 0,
-            'text-rose-600 dark:text-rose-300': +balance < 0,
-          }"
-          >{{ balance | currency:'USD':'symbol' }}</span
-        >
-      </h3>
-    </div>
-  </div>
+    <section class="mt-10 max-w-xl" aria-label="Totales del mes">
+      <dl>
+        <div class="flex items-baseline justify-between border-t border-rule py-4">
+          <dt class="text-muted">Total de ingresos</dt>
+          <dd id="totalIngresos" class="stat-figure text-xl">
+            {{ summary?.totalEntries ?? 0 | currency: "USD" : "symbol" }}
+          </dd>
+        </div>
+        <div class="flex items-baseline justify-between border-t border-rule py-4">
+          <dt class="text-muted">Total de gastos</dt>
+          <dd id="totalEgresos" class="stat-figure text-xl">
+            {{ summary?.totalExits ?? 0 | currency: "USD" : "symbol" }}
+          </dd>
+        </div>
+        <div class="flex items-baseline justify-between border-y border-rule py-4">
+          <dt class="text-ink">Saldo</dt>
+          <dd
+            id="difference"
+            class="stat-figure text-xl"
+            [ngClass]="{
+              'text-accent': +balance >= 0,
+              'text-danger': +balance < 0,
+            }"
+          >
+            {{ balance | currency: "USD" : "symbol" }}
+          </dd>
+        </div>
+      </dl>
+    </section>
+  </main>
 } @else {
   <app-not-logged />
 }

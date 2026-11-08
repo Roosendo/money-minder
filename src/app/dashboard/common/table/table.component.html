@@ -1,50 +1,38 @@
-<div class="relative m-auto mb-6 max-w-xl overflow-x-auto rounded-lg shadow-md">
-  <table class="min-w-full table-auto text-left text-sm text-gray-600 dark:text-gray-300">
-    <thead
-      class="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-gray-800 dark:text-gray-400"
-    >
+<div class="mb-8 w-full overflow-x-auto">
+  <table>
+    <thead>
       <tr>
-        <th scope="col" class="md:px-4 md:py-3 px-2 py-1">Monto</th>
-        <th scope="col" class="md:px-4 md:py-3 px-2 py-1">Categoría</th>
-        <th scope="col" class="md:px-4 md:py-3 px-2 py-1">Descripción</th>
-        <th scope="col" class="md:px-4 md:py-3 px-2 py-1">Fecha</th>
-        @if (type() === 'exits') {
-          <th scope="col" class="md:px-4 md:py-3 px-2 py-1">Método de Pago</th>
+        <th scope="col" class="px-2 py-3">Monto</th>
+        <th scope="col" class="px-2 py-3">Categoría</th>
+        <th scope="col" class="px-2 py-3">Descripción</th>
+        <th scope="col" class="px-2 py-3">Fecha</th>
+        @if (type() === "exits") {
+          <th scope="col" class="px-2 py-3">Método de pago</th>
         }
       </tr>
     </thead>
     <tbody>
       @for (lastData of dataTransactions(); track $index) {
-        <tr
-          class="bg-gray-200 dark:bg-gray-700 dark:border-gray-800 hover:bg-gray-300 dark:hover:bg-gray-600"
-        >
-          <th
-            scope="row"
-            class="md:px-4 md:py-3 px-2 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-          >
-            {{ lastData.amount | currency:'USD':'symbol' }}
+        <tr>
+          <th scope="row" class="num px-2 py-3 text-left font-normal whitespace-nowrap">
+            {{ lastData.amount | currency: "USD" : "symbol" }}
           </th>
-          <td class="md:px-4 md:py-3 px-2 py-1">{{ lastData.category }}</td>
-          <td class="md:px-4 md:py-3 px-2 py-1">{{ lastData.description }}</td>
-          <td class="md:px-4 md:py-3 px-2 py-1">{{ lastData.date | date: "d/MM/y" }}</td>
-          @if (type() === 'exits') {
-            <td class="md:px-4 md:py-3 px-2 py-1">
-              <!-- Si el método de pago es tarjeta, mostramos emoji y el nombre de la tarjeta -->
+          <td class="px-2 py-3">{{ lastData.category }}</td>
+          <td class="px-2 py-3">{{ lastData.description }}</td>
+          <td class="num px-2 py-3 whitespace-nowrap">{{ lastData.date | date: "d/MM/y" }}</td>
+          @if (type() === "exits") {
+            <td class="px-2 py-3">
               @if (lastData.is_credit_payment) {
-                💳
+                Tarjeta
               } @else {
-                <!-- Si es en efectivo -->
-                💵
+                Efectivo
               }
             </td>
           }
         </tr>
       } @empty {
-        <tr class="bg-white dark:bg-gray-800">
-          <td
-            class="md:px-4 md:py-3 px-2 py-1 text-center font-medium text-gray-900 dark:text-white"
-            [colSpan]="type() === 'exits' ? 5 : 4"
-          >
+        <tr>
+          <td class="px-2 py-6 text-center text-muted" [colSpan]="type() === 'exits' ? 5 : 4">
             Sin registros
           </td>
         </tr>

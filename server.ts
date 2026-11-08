@@ -1,60 +1,47 @@
-import { dirname, join, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { APP_BASE_HREF } from '@angular/common'
-import { CommonEngine } from '@angular/ssr'
-import express from 'express'
-import bootstrap from './src/main.server'
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import {
+  AngularNodeAppEngine,
+  createNodeRequestHandler,
+  isMainModule,
+  writeResponseToNodeResponse,
+} from "@angular/ssr/node";
+import express from "express";
 
 // The Express app is exported so that it can be used by serverless Functions.
+const angularApp = new AngularNodeAppEngine();
+
 export function app(): express.Express {
-  const server = express()
-  const serverDistFolder = dirname(fileURLToPath(import.meta.url))
-  const browserDistFolder = resolve(serverDistFolder, '../browser')
-  const indexHtml = join(serverDistFolder, 'index.server.html')
+  const server = express();
+  const serverDistFolder = dirname(fileURLToPath(import.meta.url));
+  const browserDistFolder = resolve(serverDistFolder, "../browser");
 
-  const commonEngine = new CommonEngine()
-
-  server.set('view engine', 'html')
-  server.set('views', browserDistFolder)
-
-  // Example Express Rest API endpoints
-  // server.get('/api/**', (req, res) => { })
-  // Serve static files from /browser
-  server.get(
-    '**',
+  server.use(
     express.static(browserDistFolder, {
-      maxAge: '1y',
-      index: 'index.html'
-    })
-  )
+      maxAge: "1y",
+      index: false,
+      redirect: false,
+    }),
+  );
 
-  // All regular routes use the Angular engine
-  server.get('**', (req, res, next) => {
-    const { protocol, originalUrl, baseUrl, headers } = req
+  // Serve prerendered pages and render remaining Angular routes.
+  server.use((req, res, next) => {
+    angularApp
+      .handle(req)
+      .then((response) => (response ? writeResponseToNodeResponse(response, res) : next()))
+      .catch((err) => next(err));
+  });
 
-    commonEngine
-      .render({
-        bootstrap,
-        documentFilePath: indexHtml,
-        url: `${protocol}://${headers.host}${originalUrl}`,
-        publicPath: browserDistFolder,
-        providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }]
-      })
-      .then((html) => res.send(html))
-      .catch((err) => next(err))
-  })
-
-  return server
+  return server;
 }
 
-function run(): void {
-  const port = process.env['PORT'] || 4000
+const server = app();
 
-  // Start up the Node server
-  const server = app()
+if (isMainModule(import.meta.url)) {
+  const port = process.env["PORT"] || 4000;
   server.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`)
-  })
+    console.log(`Node Express server listening on http://localhost:${port}`);
+  });
 }
 
-run()
+export const reqHandler = createNodeRequestHandler(server);

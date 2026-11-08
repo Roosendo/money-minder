@@ -1,1 +1,1 @@
-export * from './rc.component'
+export * from "./rc.component";

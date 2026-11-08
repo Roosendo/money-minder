@@ -1,1 +1,1 @@
-export * from './modal-delete-cc.component'
+export * from "./modal-delete-cc.component";

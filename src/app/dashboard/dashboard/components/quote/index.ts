@@ -1,1 +1,1 @@
-export * from './quote.component'
+export * from "./quote.component";

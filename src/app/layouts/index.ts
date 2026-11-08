@@ -1,2 +1,2 @@
-export * from './Main.component'
-export * from './Dashboard.component'
+export * from "./Main.component";
+export * from "./Dashboard.component";

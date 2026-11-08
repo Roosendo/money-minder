@@ -1,192 +1,176 @@
-<main
-  class="m-auto my-10 flex h-auto w-[90dvw] flex-col gap-3 rounded bg-gray-200 p-5 dark:bg-gray-800 md:h-[80dvh] md:w-[80dvw] md:flex-row"
->
-  <section class="m-auto flex-1 text-black dark:text-white prose prose-invert">
-    <h1 class="text-5xl text-teal-500">¡Bienvenido a Money Minder!</h1>
-    <p class="text-4xl">
-      Dónde puedes monitorear tus finanzas, de una forma rápida y segura.
-    </p>
+<main id="main">
+  <!-- Hero: the register's title page. Type and one ledger sample, no photograph. -->
+  <header class="container border-b border-rule py-16 md:py-24">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-7">
+        <h1 class="max-w-[18ch]">Tu dinero, en orden.</h1>
+        <p class="lead mt-6 max-w-[46ch] text-ink-2">
+          Registra ingresos y gastos, mide tu flujo y llega a tus metas.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <app-login-bttn [text]="'Iniciar sesión'" />
+          <app-navigation-bttn [text]="'Ver servicios'" [navigateTo]="''" [fragment]="'services'" />
+        </div>
+      </div>
+
+      <figure class="lg:col-span-5">
+        <div class="sheet sheet--pad">
+          <table>
+            <caption class="mb-3 text-left">
+              Ejemplo de registro en USD. No son tus datos.
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Categoría</th>
+                <th scope="col" class="text-right">Monto</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="num py-3">04/11</td>
+                <td class="py-3">Salario</td>
+                <td class="num py-3 text-right">1,250.00</td>
+              </tr>
+              <tr>
+                <td class="num py-3">05/11</td>
+                <td class="py-3">Supermercado</td>
+                <td class="num py-3 text-right">86.40</td>
+              </tr>
+              <tr>
+                <td class="num py-3">06/11</td>
+                <td class="py-3">Ahorro</td>
+                <td class="num py-3 text-right">200.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </figure>
+    </div>
+  </header>
+
+  <!-- Services: a numbered register, the category's own content. -->
+  <section id="services" class="container py-16 md:py-24" aria-labelledby="services-heading">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <h2 id="services-heading" class="max-w-[16ch]">Lo que el registro hace por ti</h2>
+        <p class="mt-4 max-w-[38ch] text-ink-2">
+          Seis funciones, una sola cuenta. Cada una trabaja sobre los mismos datos.
+        </p>
+      </div>
+
+      <ol class="grid grid-cols-1 gap-x-10 sm:grid-cols-2 lg:col-span-8">
+        @for (description of services.descriptions; track $index) {
+          <li class="border-t border-rule py-5">
+            <span class="stat-figure text-sm text-muted">{{ $index + 1 }}</span>
+            <h3 class="mt-2 text-xl">{{ description.title }}</h3>
+            <p class="mt-2 text-ink-2">{{ description.text }}</p>
+          </li>
+        }
+      </ol>
+    </div>
   </section>
-  <section class="m-auto flex-1">
-    <div class="flex flex-col gap-6 text-xl">
-      <app-login-bttn [text]="'¡Inicia sesión!'" />
-      <app-navigation-bttn
-        [text]="'¿Más información?'"
-        [navigateTo]="''"
-        [fragment]="'services'"
-      />
+
+  <!-- About: the argument, with one of the app's own images. -->
+  <section
+    id="about-us"
+    class="border-y border-rule bg-paper-2 py-16 md:py-24"
+    aria-labelledby="about-heading"
+  >
+    <div class="container grid grid-cols-1 gap-12 lg:grid-cols-12">
+      <article class="lg:col-span-7">
+        <h2 id="about-heading" class="max-w-[20ch]">Por qué existe Money Minder</h2>
+        @for (article of sections.hero.articles; track $index) {
+          <h3 class="mt-8 text-xl">{{ article.title }}</h3>
+          <p class="mt-2 max-w-[62ch] text-ink-2">{{ article.text }}</p>
+        }
+
+        <h3 class="mt-10 text-xl">Valores que nos guían</h3>
+        <dl class="mt-3 max-w-[62ch]">
+          <div class="border-t border-rule py-3">
+            <dt class="font-medium text-ink">Transparencia</dt>
+            <dd class="text-ink-2">Apertura y honestidad en todas nuestras interacciones.</dd>
+          </div>
+          <div class="border-t border-rule py-3">
+            <dt class="font-medium text-ink">Compromiso</dt>
+            <dd class="text-ink-2">La mejor experiencia posible para cada usuario.</dd>
+          </div>
+          <div class="border-t border-rule py-3">
+            <dt class="font-medium text-ink">Innovación</dt>
+            <dd class="text-ink-2">Formas más simples de gestionar el dinero.</dd>
+          </div>
+          <div class="border-y border-rule py-3">
+            <dt class="font-medium text-ink">Sostenibilidad</dt>
+            <dd class="text-ink-2">
+              Decisiones financieras que también apoyan prácticas sostenibles.
+            </dd>
+          </div>
+        </dl>
+      </article>
+
+      <aside class="lg:col-span-5">
+        <figure class="border border-rule-2 bg-sheet p-3">
+          <img
+            src="assets/images/1.webp"
+            width="512"
+            height="512"
+            alt=""
+            class="aspect-square w-full object-cover [filter:saturate(0.65)_contrast(0.97)]"
+          />
+          <figcaption class="mt-3 text-sm text-muted">
+            Money Minder ordena el mes en una sola hoja: ingresos, gastos y ahorro.
+          </figcaption>
+        </figure>
+
+        <div class="mt-8 border-t-2 border-rule-2 pt-6">
+          <h3 class="text-xl">Misión</h3>
+          <p class="mt-2 text-ink-2">
+            Facilitar la gestión financiera personal, fomentar hábitos saludables y ayudar a
+            alcanzar los objetivos económicos de cada usuario.
+          </p>
+          <h3 class="mt-6 text-xl">Visión</h3>
+          <p class="mt-2 text-ink-2">
+            Ser la plataforma que transforma la relación de las personas con su dinero, con libertad
+            y confianza financiera.
+          </p>
+          <div class="mt-6">
+            <app-login-bttn [text]="'Iniciar sesión'" variant="quiet" />
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Terms: the long document, set as a printed page. -->
+  <section id="terms-conds" class="container py-16 md:py-24" aria-labelledby="terms-heading">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <h2 id="terms-heading" class="max-w-[16ch]">Términos y Condiciones</h2>
+        <p class="mt-4 max-w-[38ch] text-ink-2">
+          Las reglas que rigen el uso de Money Minder y la relación entre tú y la plataforma.
+        </p>
+      </div>
+
+      <article class="lg:col-span-8">
+        <p class="max-w-[65ch] text-ink-2">
+          Bienvenido a Money Minder, tu compañero en la gestión financiera personal. Al acceder y
+          utilizar nuestros servicios, aceptas los siguientes términos y condiciones. Te pedimos
+          leerlos con calma: establecen las normas y responsabilidades que rigen tu experiencia en
+          la plataforma.
+        </p>
+
+        <ol class="mt-8">
+          @for (termCord of termsConds; track $index) {
+            <li class="border-t border-rule py-5">
+              <h3 class="text-lg">
+                <span class="stat-figure mr-3 text-sm text-muted">{{ $index + 1 }}</span>
+                {{ termCord.title }}
+              </h3>
+              <p class="mt-2 max-w-[65ch] text-ink-2">{{ termCord.text }}</p>
+            </li>
+          }
+        </ol>
+      </article>
     </div>
   </section>
 </main>
-
-<section
-  class="flex w-full flex-col p-6 text-black shadow-xl dark:text-white md:flex-row"
->
-  <div class="m-auto grid w-2/3 grid-cols-2 gap-6 p-4 md:w-1/3">
-    @for (img of sections.hero.imgs; track $index) {
-      <img ngSrc="{{ img.src }}" width="512" height="512" [alt]="img.alt" />
-    }
-  </div>
-  <div class="m-auto flex flex-1 flex-col gap-6 p-6">
-    @for (article of sections.hero.articles; track $index) {
-      <article class="prose-invert">
-        <h2 class="text-4xl text-teal-500">{{ article.title }}</h2>
-        <p class="text-lg">{{ article.text }}</p>
-      </article>
-    }
-    <app-navigation-bttn
-      [text]="'Conoce más...'"
-      [navigateTo]="''"
-      [fragment]="'services'"
-    />
-  </div>
-</section>
-
-<section
-  id="services"
-  class="flex w-full flex-col gap-6 p-6 text-black shadow-xl dark:text-white md:flex-row"
->
-  <div class="m-auto flex flex-col gap-6 p-6 md:w-1/3 prose prose-invert">
-    <h2 class="text-center text-2xl">Empieza a gozar de nuestros servicios.</h2>
-    <svg
-      class="text-black dark:text-white m-auto size-44 md:size-80"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-      <path d="M15 11v.01"></path>
-      <path
-        d="M16 3l0 3.803a6.019 6.019 0 0 1 2.658 3.197h1.341a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-1.342a6.008 6.008 0 0 1 -1.658 2.473v2.027a1.5 1.5 0 0 1 -3 0v-.583a6.04 6.04 0 0 1 -1 .083h-4a6.04 6.04 0 0 1 -1 -.083v.583a1.5 1.5 0 0 1 -3 0v-2l0 -.027a6 6 0 0 1 4 -10.473h2.5l4.5 -3z"
-      ></path>
-    </svg>
-    <p>
-      Nos comprometemos a ofrecerte una experiencia financiera completa y
-      centrada en tus necesidades. ¡Comienza hoy mismo y da el primer paso hacia
-      una mejor salud financiera!
-    </p>
-    <app-login-bttn [text]="'¡Inicia sesión ahora!'" />
-  </div>
-  <article
-    class="flex flex-1 flex-col gap-6 md:w-2/3 [&_h3]:text-2xl [&_h3]:font-bold [&_h3]:text-teal-500 [&_p]:text-wrap [&_p]:text-lg"
-  >
-    <h1 class="dont-bold text-4xl text-teal-500">Nuestros Servicios</h1>
-    <p>
-      Estamos aquí para hacer que el manejo de tus finanzas sea más sencillo,
-      efectivo y, lo más importante, ¡para ayudarte a alcanzar tus metas
-      financieras! Descubre lo que nuestra aplicación tiene para ofrecer:
-    </p>
-    @for (description of services.descriptions; track $index) {
-      <div class="prose prose-invert">
-        <h3>{{ $index + 1 }}. {{ description.title }}:</h3>
-        <p>{{ description.text }}</p>
-      </div>
-    }
-  </article>
-</section>
-
-<section
-  id="about-us"
-  class="flex w-full flex-col gap-6 p-6 text-lg text-black shadow-xl dark:text-white md:flex-row"
->
-  <article class="flex flex-1 flex-col gap-6 md:w-2/3 prose prose-invert">
-    <h1 class="text-4xl text-teal-500">¡Bienvenido a Money Minder!</h1>
-    <h3 class="text-2xl">¡Simplifica tu vida financiera!</h3>
-    <p>
-      Queremos cambiar la forma en que el mundo maneja su dinero. ¿Cuántas veces
-      te has preguntado a dónde se fue tu salario?, ¿O si estás haciendo las
-      mejores elecciones financieras? Nosotros también lo hemos hecho, y es por
-      eso que creamos Money Minder.
-    </p>
-    <img
-      ngSrc="assets/images/5.webp"
-      width="512"
-      height="512"
-      alt="Imagen principal"
-    />
-    <h3 class="text-2xl font-bold text-teal-500">Nuestra historia</h3>
-    <p>
-      Creemos que la gestión financiera no debería ser una tarea complicada,
-      sino una herramienta que empodere a las personas para tomar el control de
-      sus finanzas y alcanzar sus metas. Nuestra historia comenzó con un equipo
-      apasionado por simplificar la forma en que las personas manejan su dinero.
-    </p>
-    <h3 class="text-xl font-bold text-teal-500">Valores que nos guian</h3>
-    <p>
-      En Money Minder, nos regimos por valores que definen nuestra cultura y
-      cómo interactuamos con nuestros usuarios:
-    </p>
-    <div>
-      <p>
-        <span class="text-teal-600">- Transparencia:</span> Creemos en la
-        apertura y honestidad en todas nuestras interacciones.
-      </p>
-      <p>
-        <span class="text-teal-600">- Compromiso:</span> Estamos comprometidos a
-        brindar la mejor experiencia posible a nuestros usuarios.
-      </p>
-      <p>
-        <span class="text-teal-600">- Innovación:</span> Buscamos constantemente
-        formas de mejorar y simplificar la gestión financiera.
-      </p>
-      <p>
-        <span class="text-teal-600">- Sostenibilidad:</span> No solo te
-        ayudaremos a ahorrar y gestionar gastos, sino que también se podran
-        fomentar decisiones financieras que apoyan prácticas sostenibles.
-      </p>
-    </div>
-    <p>
-      Somos más que una aplicación de seguimiento de gastos. Somos tu socio
-      financiero personal, tu guía para un futuro financiero más seguro.
-    </p>
-  </article>
-  <article class="flex flex-col gap-4 text-lg md:w-1/3 prose prose-invert">
-    <div>
-      <h2 class="font-bold text-teal-500">Misión</h2>
-      <p>
-        Facilitar la gestión financiera personal, fomentar hábitos financieros
-        saludables y ayudar a nuestros usuarios a alcanzar sus objetivos
-        económicos.
-      </p>
-    </div>
-    <div>
-      <h2 class="font-bold text-teal-500">Visión</h2>
-      <p>
-        Ser la plataforma líder que transforma la relación de las personas con
-        su dinero, brindando libertad y confianza financiera.
-      </p>
-    </div>
-    <app-login-bttn [text]="'¡Inicia sesión ahora!'" />
-  </article>
-</section>
-
-<section
-  id="terms-conds"
-  class="m-auto my-10 flex h-auto w-[90dvw] flex-col gap-3 rounded bg-gray-200 p-5 text-lg text-black dark:bg-black/70 dark:text-white md:w-[80dvw] md:flex-row"
->
-  <article
-    class="flex flex-col gap-4 [&_span]:font-bold [&_span]:text-teal-500"
-  >
-    <h3 class="text-center text-4xl font-bold text-teal-500">
-      Términos y Condiciones en Money Minder
-    </h3>
-    <p class="text-xl prose prose-invert">
-      Bienvenido a Money Minder, tu compañero en la gestión financiera personal.
-      Al acceder y utilizar nuestros servicios, aceptas los siguientes términos
-      y condiciones que rigen la relación entre tú y Money Minder. Te instamos a
-      leer detenidamente estos términos, ya que establecen las normas y
-      responsabilidades fundamentales que rigen tu experiencia con nuestra
-      plataforma.
-    </p>
-    @for (termCord of termsConds; track $index) {
-      <p class="prose prose-invert prose-lg">
-        <span>{{ $index + 1 }}. {{ termCord.title }}:</span> {{ termCord.text }}
-      </p>
-    }
-  </article>
-</section>

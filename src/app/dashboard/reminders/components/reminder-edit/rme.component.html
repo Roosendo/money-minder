@@ -1,72 +1,63 @@
-<form
-  (submit)="onSave()"
-  id="edit-modal"
-  class="fixed inset-0 animate-zoom-in items-center justify-center bg-gray-900 bg-opacity-50 flex"
->
-  <div class="bg-white text-black p-6 rounded-lg shadow-md max-w-lg w-full">
-    <h2 class="text-xl font-bold mb-4 text-center">Editar Recordatorio</h2>
+<form (submit)="onSave()" class="overlay fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="sheet w-full max-w-lg p-6">
+    <h2 class="mb-4 text-xl">Editar recordatorio</h2>
     <div class="mb-4">
-      <label
-        for="edit-title"
-        id="label-edit-title"
-        class="block font-semibold mb-2"
-        >Título actual</label
-      >
+      <label for="edit-title" class="mb-2 block">Título actual</label>
       <input
-        [(ngModel)]="reminderEdit.newTitle"
+        [(ngModel)]="reminderEdit.title"
         name="title"
         type="text"
         id="edit-title"
-        class="block p-2.5 w-full z-20 ps-10 text-sm text-gray-900 bg-gray-50 rounded-lg border-e-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+        class="w-full"
         placeholder="Título del recordatorio"
         required
-        value="${reminder.title}"
       />
     </div>
     <div class="mb-4">
-      <label
-        for="edit-description"
-        class="block text-gray-700 font-semibold mb-2"
-        >Descripción actual</label
-      >
+      <label for="edit-amount" class="mb-2 block">Monto (opcional)</label>
       <input
-        [(ngModel)]="reminderEdit.newDescription"
-        name="description"
-        type="text"
-        id="edit-description"
-        class="block p-2.5 w-full z-20 ps-10 text-sm text-gray-900 bg-gray-50 rounded-lg border-e-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
-        value="${reminder.description}"
+        [(ngModel)]="reminderEdit.amount"
+        name="amount"
+        type="number"
+        id="edit-amount"
+        class="w-full"
+        step="0.01"
+        min="0"
       />
     </div>
     <div class="mb-4">
-      <label
-        for="edit-reminder-date"
-        class="block text-gray-700 font-semibold mb-2"
-        >Fecha de recordatorio</label
-      >
+      <label for="edit-reminder-date" class="mb-2 block">Fecha del recordatorio</label>
       <input
-        [(ngModel)]="reminderEdit.newDate"
-        name="reminderDate"
+        [(ngModel)]="reminderEdit.dueAt"
+        name="dueAt"
         type="datetime-local"
         id="edit-reminder-date"
-        class="w-full p-2 border text-white border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-        value="${reminder.reminder_date}"
+        class="w-full"
       />
     </div>
-    <button
-      type="submit"
-      id="saveChanges"
-      class="w-full bg-teal-500 text-white font-semibold p-2 rounded-md hover:bg-teal-600"
-    >
-      Guardar Cambios
-    </button>
-    <button
-      (click)="onCloseModal()"
-      type="button"
-      id="cancel"
-      class="w-full mt-2 border border-gray-500 text-gray-500 font-semibold p-2 rounded-md hover:bg-gray-600 hover:text-white"
-    >
-      Cancelar
-    </button>
+    <div class="mb-4">
+      <label for="edit-recurrence" class="mb-2 block">Repetición</label>
+      <select
+        [(ngModel)]="reminderEdit.recurrence"
+        name="recurrence"
+        id="edit-recurrence"
+        class="w-full"
+      >
+        <option value="none">Una sola vez</option>
+        <option value="monthly">Mensual</option>
+        <option value="yearly">Anual</option>
+      </select>
+    </div>
+    <div class="mb-4">
+      <label for="edit-status" class="mb-2 block">Estado</label>
+      <select [(ngModel)]="reminderEdit.status" name="status" id="edit-status" class="w-full">
+        <option value="pending">Pendiente</option>
+        <option value="done">Completado</option>
+      </select>
+    </div>
+    <div class="mt-6 flex flex-wrap gap-3">
+      <button type="submit" class="btn btn--primary">Guardar cambios</button>
+      <button type="button" (click)="onCloseModal()" class="btn btn--quiet">Cancelar</button>
+    </div>
   </div>
 </form>

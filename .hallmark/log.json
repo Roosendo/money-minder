@@ -1,0 +1,20 @@
+[
+  {
+    "shape": "register",
+    "theme": "almanac (by request)",
+    "axes": "mid/grotesk-sans/chromatic-magenta",
+    "hero": "type over one rule, ledger sample on the right",
+    "nav": "edge-aligned mast",
+    "footer": "mast over links",
+    "imagery": "the app own images, muted",
+    "photos": ["assets/images/1.webp"],
+    "entry": "project-wide theme application",
+    "fingerprint": "almanac-money-minder",
+    "sections": "hero, services, about, terms",
+    "signature": "the ledger sample set on the sheet",
+    "waived": [],
+    "prompt": "apply almanac design to this project with Hanken Grotesk, Newsreader and JetBrains Mono via Fontsource variable",
+    "date": "2026-11-08",
+    "mode": "build"
+  }
+]

@@ -1,2 +1,2 @@
-export * from './table/table.component'
-export * from './form-transactions/form.component'
+export * from "./table/table.component";
+export * from "./form-transactions/form.component";

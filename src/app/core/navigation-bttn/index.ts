@@ -1,1 +1,1 @@
-export * from './navigation-bttn.component'
+export * from "./navigation-bttn.component";

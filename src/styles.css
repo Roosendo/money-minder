@@ -1,52 +1,364 @@
-/* You can add global styles to this file, and also import other style files */
-@import "@fontsource-variable/saira/wght.css";
+/* Hallmark · shape: register · genre: editorial · theme: Almanac (by request) · job: track income, spending and savings · draw: by request · hero: type and figures over one rule, no photograph · nav: edge-aligned mast · footer: mast over links · imagery: the app's own images, muted · signature: the ledger figure, set in mono at display scale · axes: mid/grotesk-sans/chromatic-magenta · posture: restrained · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P5 H4 E5 S5 R4 V4 · weakest: R, the app carries many legacy surfaces; fix: one rule language, one accent, no second decoration */
+@import "./tokens.css";
+@import "./base.css" layer(base);
+@import "@fontsource-variable/hanken-grotesk";
+@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource-variable/newsreader";
 @tailwind base;
+/* Tailwind preflight resets heads after the imported base file, so restore the almanac scale inside the base layer, after it. */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: var(--display-weight, 600);
+    font-synthesis: none;
+    letter-spacing: var(--tracking-display);
+    line-height: 1.05;
+    overflow-wrap: break-word;
+    min-width: 0;
+    text-wrap: balance;
+    color: var(--color-ink);
+  }
+  h1 {
+    max-width: 20ch;
+    font-size: var(--text-display);
+  }
+  h2 {
+    max-width: 30ch;
+    font-size: var(--text-section);
+  }
+  h3 {
+    max-width: 40ch;
+    font-size: var(--text-title);
+    line-height: 1.2;
+  }
+  h4 {
+    max-width: 48ch;
+    font-size: var(--text-lg);
+    line-height: 1.25;
+  }
+  .lead {
+    font-size: var(--text-lead);
+    line-height: 1.45;
+    max-width: 52ch;
+  }
+}
 @tailwind components;
 @tailwind utilities;
 
-* {
-  margin: 0;
-  padding: 0;
-}
-body {
-  min-height: 100%;
-}
-html {
-  font-family: "Saira Variable", sans-serif;
-  scroll-behavior: smooth;
-}
-input,
-button,
-textarea,
-select {
-  font: inherit;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  text-wrap: balance;
-}
-p {
-  max-width: 75ch;
-  text-wrap: pretty;
-}
-img,
-video,
-svg {
-  height: auto;
-  max-width: 100%;
+/* Almanac components. Square corners, two rule weights, one magenta signal. */
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    min-height: 44px;
+    padding: var(--space-xs) var(--space-lg);
+    border: var(--rule-hair) solid var(--color-ink);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color var(--dur-micro) var(--ease-out),
+      color var(--dur-micro) var(--ease-out),
+      border-color var(--dur-micro) var(--ease-out);
+  }
+  .btn:hover {
+    background: var(--color-paper-2);
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .btn--primary {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+  .btn--primary:hover {
+    background: var(--color-accent-2);
+    border-color: var(--color-accent-2);
+  }
+  .btn--quiet {
+    border-color: var(--color-rule-2);
+  }
+  .btn--quiet:hover {
+    background: var(--color-paper-2);
+  }
+  .btn--danger {
+    border-color: var(--color-error);
+    color: var(--color-error);
+  }
+  .btn--danger:hover {
+    background: color-mix(in oklab, var(--color-error) 12%, transparent);
+  }
+
+  .nav--almanac {
+    border-bottom: var(--rule-hair) solid var(--color-rule);
+    background: var(--color-paper);
+  }
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    min-height: 64px;
+    padding-block: var(--space-sm);
+  }
+  .nav__brand {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    letter-spacing: var(--tracking-display);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .nav__link {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-ink-2);
+    text-decoration: none;
+  }
+  .nav__link:hover {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+  .nav__link[aria-current="page"] {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+  }
+
+  .mast {
+    border-top: var(--rule-bar) solid var(--color-ink);
+    background: var(--color-paper-2);
+  }
+  .mast__word {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    letter-spacing: var(--tracking-display);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .mast__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-sm);
+  }
+  .mast__links a {
+    color: var(--color-ink-2);
+    text-decoration: none;
+  }
+  .mast__links a:hover {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-underline-offset: 0.18em;
+  }
+  .overlay {
+    background: color-mix(in oklab, var(--color-ink) 62%, transparent);
+  }
+
+  .stat-figure {
+    font-family: var(--font-outlier);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.04em;
+    color: var(--color-ink);
+  }
+  .stat-label {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+  .sheet--pad {
+    padding: var(--space-lg);
+  }
+  .rule-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .rule-list > li {
+    border-top: var(--rule-hair) solid var(--color-rule);
+    padding-block: var(--space-sm);
+  }
+  .rule-list > li:last-child {
+    border-bottom: var(--rule-hair) solid var(--color-rule);
+  }
+  .index-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .index-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-xs);
+    border-top: var(--rule-hair) solid var(--color-rule);
+    color: var(--color-ink-2);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    transition:
+      background-color var(--dur-micro) var(--ease-out),
+      color var(--dur-micro) var(--ease-out);
+  }
+  .index-list li:last-child .index-link {
+    border-bottom: var(--rule-hair) solid var(--color-rule);
+  }
+  .index-link:hover {
+    color: var(--color-ink);
+    background: var(--color-paper-3);
+  }
+  .index-link[aria-current="page"] {
+    color: var(--color-ink);
+    box-shadow: inset 2px 0 0 var(--color-accent);
+  }
+  .fill {
+    color: var(--color-muted);
+    border-bottom: 1px dashed var(--color-muted);
+  }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+/* Typography plugin, held to the almanac: serif prose, grotesk heads, no tracked caps. */
+.prose {
+  --tw-prose-body: var(--color-ink-2);
+  --tw-prose-headings: var(--color-ink);
+  --tw-prose-links: var(--color-ink);
+  --tw-prose-bold: var(--color-ink);
+  --tw-prose-counters: var(--color-muted);
+  --tw-prose-bullets: var(--color-rule-2);
+  --tw-prose-hr: var(--color-rule);
+  --tw-prose-quotes: var(--color-ink);
+  --tw-prose-quote-borders: var(--color-accent);
+  max-width: 65ch;
+}
+.prose :where(h1, h2, h3, h4) {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: var(--tracking-display);
+  color: var(--color-ink);
+  text-transform: none;
+}
+.prose :where(p, li) {
+  color: var(--color-ink-2);
+}
+.prose :where(a) {
+  color: var(--color-ink);
+  text-decoration-color: var(--color-accent);
+}
+.prose :where(strong) {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+/* Legacy card surfaces: the shadow becomes the almanac's firm top rule. */
+.shadow,
+.shadow-md,
+.shadow-lg,
+.shadow-xl,
+.shadow-2xl {
+  box-shadow: none;
+  border-top: var(--rule-bar) solid var(--color-rule-2);
+}
+.dark .shadow,
+.dark .shadow-md,
+.dark .shadow-lg,
+.dark .shadow-xl,
+.dark .shadow-2xl {
+  border-top-color: var(--color-rule);
+}
+
+/* Scrollbar, in the theme's ink rather than the old teal. */
+html {
+  scrollbar-color: var(--color-muted) var(--color-paper);
+}
+
+/* Existing forms and tables inherit the almanac even where a legacy utility set a grey. */
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  border: var(--rule-hair) solid var(--color-muted);
+  border-radius: var(--radius-pill);
+  background: var(--color-sheet);
+  color: var(--color-ink);
+  min-height: 40px;
+  padding: var(--space-xs) var(--space-sm);
+}
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
+  border-color: var(--color-rule-2);
+}
+input:disabled,
+select:disabled,
+textarea:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+thead {
+  background: transparent;
+}
+tbody tr {
+  background: transparent;
+}
+thead th {
+  border-bottom: var(--rule-bar) solid var(--color-rule-2);
+  color: var(--color-muted);
+  text-transform: none;
+  letter-spacing: 0;
+}
+tbody th,
+tbody td {
+  border-top: var(--rule-hair) solid var(--color-rule);
+}
+tbody th {
+  text-align: left;
+}
+
+/* Clear the fixed index toggle above dashboard pages on small screens. */
+@media (max-width: 47.9375rem) {
+  app-dashboard-layout main.container {
+    padding-top: 4.5rem;
   }
 }

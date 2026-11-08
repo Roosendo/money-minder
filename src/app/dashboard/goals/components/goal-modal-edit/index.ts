@@ -1,1 +1,1 @@
-export * from './gme.component'
+export * from "./gme.component";

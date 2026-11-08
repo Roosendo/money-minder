@@ -1,68 +1,85 @@
-import { Injectable } from '@angular/core'
-import { FormControl, FormGroup, Validators } from '@angular/forms'
-import type { NewLoan, NewPayment, Payments, TemplateAddPaymentForm, TemplateEditForm, TemplateLoanForm } from '@app/models'
+import { Injectable } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import type {
+  EditPayment,
+  LoanDirection,
+  NewLoan,
+  NewPayment,
+  Payments,
+  TemplateAddPaymentForm,
+  TemplateEditForm,
+  TemplateLoanForm,
+} from "@app/models";
 
 @Injectable()
 export class LoansFormService {
   createLoanForm(): FormGroup<TemplateLoanForm> {
     return new FormGroup<TemplateLoanForm>({
-      loanTitle: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      bankName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      name: new FormControl("", { nonNullable: true, validators: [Validators.required] }),
+      direction: new FormControl<LoanDirection>("borrowed", {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      principal: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
       interestRate: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
-      loanAmount: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
-      loanStartDate: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      loanEndDate: new FormControl('', { nonNullable: true, validators: [Validators.required] })
-    })
+      startDate: new FormControl("", { nonNullable: true, validators: [Validators.required] }),
+      dueDate: new FormControl("", { nonNullable: true }),
+    });
   }
 
   createEditForm(): FormGroup<TemplateEditForm> {
     return new FormGroup<TemplateEditForm>({
-      date: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      amount: new FormControl(0, { nonNullable: true, validators: [Validators.required] })
-    })
+      paidAt: new FormControl("", { nonNullable: true, validators: [Validators.required] }),
+      amount: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
+      note: new FormControl("", { nonNullable: true }),
+    });
   }
 
   createPaymentForm(): FormGroup<TemplateAddPaymentForm> {
     return new FormGroup<TemplateAddPaymentForm>({
-      date: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      amount: new FormControl(0, { nonNullable: true, validators: [Validators.required] })
-    })
+      paidAt: new FormControl("", { nonNullable: true, validators: [Validators.required] }),
+      amount: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
+      note: new FormControl("", { nonNullable: true }),
+    });
   }
 
   getLoanFormData(form: FormGroup): NewLoan {
     return {
-      loanTitle: form.get('title')?.value,
-      bankName: form.get('bankName')?.value,
-      interestRate: form.get('interestRate')?.value,
-      loanAmount: form.get('amount')?.value,
-      loanStartDate: form.get('startDate')?.value,
-      loanEndDate: form.get('endDate')?.value
-    }
+      name: form.get("name")?.value,
+      direction: form.get("direction")?.value,
+      principal: form.get("principal")?.value,
+      interestRate: form.get("interestRate")?.value,
+      startDate: form.get("startDate")?.value,
+      dueDate: form.get("dueDate")?.value || undefined,
+    };
   }
 
-  getPaymentFormData(form: FormGroup, loanId: number): NewPayment {
+  getPaymentFormData(form: FormGroup, loanId: string): NewPayment {
     return {
       loanId,
-      paymentAmount: form.get('amount')?.value,
-      paymentDate: form.get('date')?.value
-    }
+      amount: form.get("amount")?.value,
+      paidAt: form.get("paidAt")?.value,
+      note: form.get("note")?.value || undefined,
+    };
   }
 
-  getEditFormData(form: FormGroup): Omit<NewPayment, 'loanId'> {
+  getEditFormData(form: FormGroup): Omit<EditPayment, "loanId" | "paymentId"> {
     return {
-      paymentDate: form.get('date')?.value,
-      paymentAmount: form.get('amount')?.value
-    }
+      amount: form.get("amount")?.value,
+      paidAt: form.get("paidAt")?.value,
+      note: form.get("note")?.value || undefined,
+    };
   }
 
   setEditFormValues(form: FormGroup, payment: Payments): void {
     form.setValue({
-      date: payment.payment_date,
-      amount: payment.payment_amount
-    })
+      paidAt: payment.paidAt.slice(0, 10),
+      amount: payment.amount,
+      note: payment.note ?? "",
+    });
   }
 
   resetForm(form: FormGroup): void {
-    form.reset()
+    form.reset();
   }
 }

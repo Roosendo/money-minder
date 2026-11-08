@@ -1,1 +1,1 @@
-export * from './gmd.component'
+export * from "./gmd.component";

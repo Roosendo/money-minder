@@ -1,13 +1,11 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core'
-import { LoaderComponent } from '../loader'
+import { Component, input } from "@angular/core";
+import { LoaderComponent } from "../loader";
 
 @Component({
-  selector: 'app-work-in-progress',
-  standalone: true,
+  selector: "app-work-in-progress",
   imports: [LoaderComponent],
-  templateUrl: './work-in-progress.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: "./work-in-progress.component.html",
 })
 export class WorkInProgressComponent {
-  featureName = input.required<string>()
+  featureName = input.required<string>();
 }

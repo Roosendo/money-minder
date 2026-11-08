@@ -1,5 +1,11 @@
-@if (isLogged) {
-  <main class="min-h-screen p-4">
+@if (isLogged()) {
+  <main class="container py-10">
+    <header class="border-b border-rule pb-6">
+      <h1 class="text-4xl">Ingresos</h1>
+      <p class="lead mt-3 max-w-[48ch] text-ink-2">
+        Registra cada entrada de dinero y revisa el historial completo del mes.
+      </p>
+    </header>
     <app-form [type]="'entries'" (formSubmitted)="onFormSubmitted()" />
     <app-table [type]="'entries'" />
   </main>

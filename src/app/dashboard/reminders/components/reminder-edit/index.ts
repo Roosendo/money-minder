@@ -1,1 +1,1 @@
-export * from './rme.component'
+export * from "./rme.component";

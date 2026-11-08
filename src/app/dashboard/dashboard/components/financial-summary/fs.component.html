@@ -1,23 +1,28 @@
 @if (financialSummary().totalEntries && financialSummary().totalExits) {
-  <section class='grid grid-cols-1 md:grid-cols-3 gap-4'>
-    <div class='rounded-lg bg-gray-100 p-4 shadow-lg dark:bg-gray-800'>
-      <h2 class='text-lg'>Balance Total</h2>
-      <p id='balance' class='text-2xl font-semibold'>
-        {{ balance() | currency:'USD':'symbol' }}
+  <section
+    class="grid grid-cols-1 gap-0 border-y border-rule-2 md:grid-cols-3"
+    aria-label="Resumen financiero"
+  >
+    <div
+      class="border-t border-rule px-0 py-5 md:border-t-0 md:border-l md:px-5 md:first:border-l-0 md:first:pl-0"
+    >
+      <h2 class="text-sm font-normal text-muted">Balance total</h2>
+      <p id="balance" class="stat-figure mt-2 text-3xl">
+        {{ balance() | currency: "USD" : "symbol" }}
       </p>
     </div>
 
-    <div class='rounded-lg bg-gray-100 p-4 shadow-lg dark:bg-gray-800'>
-      <h2 class='text-lg'>Total Ingresos</h2>
-      <p id='entries' class='text-2xl font-semibold'>
-        {{ financialSummary().totalEntries | currency:'USD':'symbol' }}
+    <div class="border-t border-rule py-5 md:border-t-0 md:border-l md:px-5">
+      <h2 class="text-sm font-normal text-muted">Total ingresos</h2>
+      <p id="entries" class="stat-figure mt-2 text-3xl">
+        {{ financialSummary().totalEntries | currency: "USD" : "symbol" }}
       </p>
     </div>
 
-    <div class='rounded-lg bg-gray-100 p-4 shadow-lg dark:bg-gray-800'>
-      <h2 class='text-lg'>Total Gastos</h2>
-      <p id='exits' class='text-2xl font-semibold'>
-        {{ financialSummary().totalExits | currency:'USD':'symbol' }}
+    <div class="border-t border-rule py-5 md:border-t-0 md:border-l md:px-5">
+      <h2 class="text-sm font-normal text-muted">Total gastos</h2>
+      <p id="exits" class="stat-figure mt-2 text-3xl">
+        {{ financialSummary().totalExits | currency: "USD" : "symbol" }}
       </p>
     </div>
   </section>
