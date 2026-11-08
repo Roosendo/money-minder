@@ -17,7 +17,7 @@ export default class LoginComponent implements OnInit {
   constructor() {
     this.authCacheService = inject(AuthCacheService);
     this.titleService = inject(Title);
-    this.isLogged = this.authCacheService.isAuthenticated();
+    this.isLogged = this.authCacheService.isLoggedIn;
   }
 
   ngOnInit() {

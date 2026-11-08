@@ -1,4 +1,3 @@
-import { NgOptimizedImage } from "@angular/common";
 import { Component, type OnInit, inject } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 
@@ -15,7 +14,6 @@ import { RemindersComponent } from "./reminders";
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
   imports: [
-    NgOptimizedImage,
     RecentTransactionsComponent,
     CashFlowComponent,
     FinancialSummaryComponent,
@@ -28,15 +26,13 @@ import { RemindersComponent } from "./reminders";
 export default class DashboardComponent implements OnInit {
   private readonly authCache;
   private readonly titleService;
-  user;
   isAuth;
 
   constructor() {
     this.authCache = inject(AuthCacheService);
     this.titleService = inject(Title);
 
-    this.user = this.authCache.getUser();
-    this.isAuth = this.authCache.isAuthenticated();
+    this.isAuth = this.authCache.isLoggedIn;
   }
 
   ngOnInit() {

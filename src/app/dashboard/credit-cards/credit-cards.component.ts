@@ -3,15 +3,17 @@ import { Component, type Signal, computed, inject, signal } from "@angular/core"
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 import { SubmitBttnComponent } from "@app/core";
-import type { CreditCards, Purchases } from "@app/models";
+import type { CreditCards, Purchases, Transaction } from "@app/models";
 import { AlertService, FormSubmitService } from "@app/services";
 import { CreditCardsStore } from "@app/store";
 import { ModalDeleteCcComponent } from "./modal-delete-cc";
 
 interface TemplateFormCC {
   name: FormControl<string>;
-  cut_off_date: FormControl<number>;
-  payment_due_date: FormControl<number>;
+  last4: FormControl<string>;
+  creditLimit: FormControl<number>;
+  statementDay: FormControl<number>;
+  dueDay: FormControl<number>;
 }
 
 @Component({
@@ -25,7 +27,6 @@ interface TemplateFormCC {
     ModalDeleteCcComponent,
   ],
   templateUrl: "./credit-cards.component.html",
-  styleUrl: "./credit-cards.component.css",
 })
 export class CreditCardsComponent {
   private formSubmit = inject(FormSubmitService);
@@ -34,9 +35,10 @@ export class CreditCardsComponent {
   readonly alertService = inject(AlertService);
   creditCards = this.store.creditCards;
   purchases = this.store.purchases;
+  cardTransactions = this.store.cardTransactions;
   currentMonth = computed(() => new Date().getMonth() + 1);
   currentYear = computed(() => new Date().getFullYear());
-  total = computed(() => this.purchases().reduce((acc, purchase) => acc + purchase.amount, 0));
+  total = computed(() => this.purchases().reduce((acc, purchase) => acc + purchase.totalSpent, 0));
   selectedCard: CreditCards | null = null;
   modalDelete = signal(false);
 
@@ -48,23 +50,29 @@ export class CreditCardsComponent {
     () =>
       new FormGroup<TemplateFormCC>({
         name: new FormControl("", { nonNullable: true, validators: [Validators.required] }),
-        cut_off_date: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
-        payment_due_date: new FormControl(0, {
+        last4: new FormControl("", {
           nonNullable: true,
-          validators: [Validators.required],
+          validators: [Validators.pattern(/^\d{4}$/)],
         }),
+        creditLimit: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
+        statementDay: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
+        dueDay: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
       }),
   );
 
   days = Array.from({ length: 31 }, (_, i) => i + 1);
 
-  expandedCard: number | null = null;
-  toggleCardExpansion(index: number): void {
-    this.expandedCard = this.expandedCard === index ? null : index;
+  expandedCard: string | null = null;
+  toggleCardExpansion(cardId: string): void {
+    this.expandedCard = this.expandedCard === cardId ? null : cardId;
   }
 
-  getPurchasesForCard(cardId: number): Purchases[] {
-    return this.purchases().filter((p) => p.credit_card_id === cardId);
+  getPurchasesForCard(cardId: string): Purchases | undefined {
+    return this.purchases().find((p) => p.id === cardId);
+  }
+
+  getTransactionsForCard(cardId: string): Transaction[] {
+    return this.cardTransactions().filter((t) => t.credit_card_id === cardId);
   }
 
   openModalDelete(card: CreditCards): void {
@@ -77,7 +85,7 @@ export class CreditCardsComponent {
     this.selectedCard = null;
   }
 
-  deleteCard(id: number): void {
+  deleteCard(id: string): void {
     this.formSubmit.deleteCreditCard(id).subscribe({
       next: () => {
         this.store.deleteCreditCard(id);
@@ -99,14 +107,21 @@ export class CreditCardsComponent {
           customMessage: "Antes debes agregar un nombre",
         });
       }
-      if (!this.formData().get("cut_off_date")?.value) {
+      if (!this.formData().get("creditLimit")?.value) {
+        this.alertService.showWarning({
+          feature: "creditCard",
+          action: "create",
+          customMessage: "Antes debes agregar un límite de crédito",
+        });
+      }
+      if (!this.formData().get("statementDay")?.value) {
         this.alertService.showWarning({
           feature: "creditCard",
           action: "create",
           customMessage: "Antes debes agregar una fecha de corte",
         });
       }
-      if (!this.formData().get("payment_due_date")?.value) {
+      if (!this.formData().get("dueDay")?.value) {
         this.alertService.showWarning({
           feature: "creditCard",
           action: "create",
@@ -116,22 +131,28 @@ export class CreditCardsComponent {
       return;
     }
 
+    const last4 = this.formData().get("last4")?.value;
+
     this.formSubmit
       .creditCardSubmit({
-        cutOffDate: this.formData().get("cut_off_date")?.value,
         name: this.formData().get("name")?.value,
-        paymentDueDate: this.formData().get("payment_due_date")?.value,
+        last4: last4 || undefined,
+        creditLimit: this.formData().get("creditLimit")?.value,
+        statementDay: this.formData().get("statementDay")?.value,
+        dueDay: this.formData().get("dueDay")?.value,
       })
       .subscribe({
-        next: (response) => {
+        next: (card) => {
           this.alertService.showSuccess({ feature: "creditCard", action: "create" });
-          this.store.addCreditCard({
-            credit_card_id: response,
-            cut_off_date: this.formData().get("cut_off_date")?.value,
-            name: this.formData().get("name")?.value,
-            payment_due_date: this.formData().get("payment_due_date")?.value,
+          this.store.addCreditCard(card);
+          void this.store.updatePurchases();
+          this.formData().reset({
+            name: "",
+            last4: "",
+            creditLimit: 0,
+            statementDay: 0,
+            dueDay: 0,
           });
-          this.formData().reset();
         },
         error: () => this.handleError(),
       });

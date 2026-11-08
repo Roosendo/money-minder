@@ -8,4 +8,5 @@ import { RouterLink } from "@angular/router";
 })
 export class LoginBttnComponent {
   text = input.required<string>();
+  variant = input<"primary" | "quiet">("primary");
 }

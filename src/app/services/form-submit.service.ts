@@ -2,8 +2,14 @@ import { HttpClient, type HttpErrorResponse } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { type Observable, catchError, map, throwError } from "rxjs";
 
-import { AuthCacheService } from ".";
+import { API_BASE_URL } from "../constants/api";
+import { creditCardAdapter, loanAdapter, reminderAdapter, savingAdapter } from "../adapters";
 import type {
+  ApiCreditCard,
+  ApiLoan,
+  ApiReminder,
+  ApiSaving,
+  CreditCards,
   EditPayment,
   EditReminder,
   EditSaving,
@@ -14,52 +20,46 @@ import type {
   NewPayment,
   NewReminder,
   NewSaving,
+  Reminder,
+  Saving,
 } from "../models";
 
+/**
+ * Writes to the Money Minder API (v1).
+ *
+ * The backend derives the user from the authenticated session, so payloads no
+ * longer carry `email` or `fullName`. Nest's validation pipe rejects unknown
+ * properties, which is why every payload is built explicitly.
+ */
 @Injectable({
   providedIn: "root",
 })
 export class FormSubmitService {
-  private readonly API_URL = "https://money-minder-api-mqz9.onrender.com/api";
-  private readonly authCacheService = inject(AuthCacheService);
-  private email = this.authCacheService.getUser()?.email;
-  private fullName = `${this.authCacheService.getUser()?.firstName} ${this.authCacheService.getUser()?.lastName}`;
-  private requestOptions = {
-    headers: { "Content-Type": "application/json" },
-  };
-  private http;
-
-  constructor() {
-    this.http = inject(HttpClient);
-  }
+  private readonly http = inject(HttpClient);
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
       console.error("An error occurred:", error.error.message);
     } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
+      console.error(`Backend returned code ${error.status}, body was:`, error.error);
     }
-    // Return an observable with a user-facing error message.
     return throwError(() => new Error("Something bad happened; please try again later."));
   }
 
   /**
    * Submits a new entry.
    * @param formNewEntry - The data for the new entry.
-   * @returns An Observable that emits the response from the server.
+   * @returns An Observable that emits the new entry id.
    */
-  entrySubmit(formNewEntry: NewEntry) {
-    const url = `${this.API_URL}/entries/new-entry`;
-    const { email, fullName } = this;
+  entrySubmit(formNewEntry: NewEntry): Observable<string> {
+    const url = `${API_BASE_URL}/entries`;
     return this.http
-      .post<{ id: number }>(
-        url,
-        JSON.stringify({ email, fullName, ...formNewEntry }),
-        this.requestOptions,
-      )
+      .post<{ id: string }>(url, {
+        amount: Number(formNewEntry.amount),
+        date: formNewEntry.date,
+        category: formNewEntry.category,
+        description: formNewEntry.description || undefined,
+      })
       .pipe(
         map((response) => response.id),
         catchError(this.handleError),
@@ -67,19 +67,20 @@ export class FormSubmitService {
   }
 
   /**
-   * Edits an entry.
+   * Submits a new exit.
    * @param formNewExit - The data for the new exit.
-   * @returns An Observable that emits the response from the server.
+   * @returns An Observable that emits the new exit id.
    */
-  exitSubmit(formNewExit: NewExit) {
-    const url = `${this.API_URL}/exits/new-exit`;
-    const { email, fullName } = this;
+  exitSubmit(formNewExit: NewExit): Observable<string> {
+    const url = `${API_BASE_URL}/exits`;
     return this.http
-      .post<{ id: number }>(
-        url,
-        JSON.stringify({ email, fullName, ...formNewExit }),
-        this.requestOptions,
-      )
+      .post<{ id: string }>(url, {
+        amount: Number(formNewExit.amount),
+        date: formNewExit.date,
+        category: formNewExit.category,
+        description: formNewExit.description || undefined,
+        creditCardId: formNewExit.creditCardId || undefined,
+      })
       .pipe(
         map((response) => response.id),
         catchError(this.handleError),
@@ -87,128 +88,164 @@ export class FormSubmitService {
   }
 
   /**
-   * Submits a new saving.
-   * @param formNewSaving - The data for the new saving.
-   * @returns An Observable that emits the response from the server.
+   * Creates a saving goal.
    */
-  savingSubmit(formNewSaving: NewSaving) {
-    const url = `${this.API_URL}/savings/new-saving`;
-    const { email, fullName } = this;
+  savingSubmit(formNewSaving: NewSaving): Observable<Saving> {
+    const url = `${API_BASE_URL}/savings`;
     return this.http
-      .post(url, JSON.stringify({ email, fullName, ...formNewSaving }), this.requestOptions)
-      .pipe(catchError(this.handleError));
+      .post<ApiSaving>(url, {
+        name: formNewSaving.name,
+        targetAmount: Number(formNewSaving.targetAmount),
+        currentAmount: Number(formNewSaving.currentAmount ?? 0),
+        targetDate: formNewSaving.targetDate || undefined,
+      })
+      .pipe(
+        map((response) => savingAdapter(response)),
+        catchError(this.handleError),
+      );
   }
 
   /**
-   * Edits a saving.
-   * @param formEditSaving - The data for editing the saving.
-   * @returns An Observable that emits the response from the server.
+   * Updates a saving goal.
    */
-  editSaving(formEditSaving: EditSaving) {
-    const url = `${this.API_URL}/savings/update-saving`;
-    const { email } = this;
+  editSaving(formEditSaving: EditSaving): Observable<Saving> {
+    const url = `${API_BASE_URL}/savings/${formEditSaving.id}`;
     return this.http
-      .patch(url, JSON.stringify({ ...formEditSaving, email }), this.requestOptions)
-      .pipe(catchError(this.handleError));
+      .patch<ApiSaving>(url, {
+        name: formEditSaving.newSavingName,
+        targetAmount: Number(formEditSaving.newTarget),
+        currentAmount: Number(formEditSaving.newCurrentAmount),
+        targetDate: formEditSaving.newTargetDate || undefined,
+      })
+      .pipe(
+        map((response) => savingAdapter(response)),
+        catchError(this.handleError),
+      );
   }
 
   /**
-   * Deletes a saving.
-   * @param id - The ID of the saving to delete.
-   * @returns An Observable that emits the response from the server.
+   * Deletes a saving goal.
+   * @param id - The id of the saving to delete.
    */
-  deleteSaving(id: number) {
-    const url = `${this.API_URL}/savings/delete-saving?id=${id}&email=${this.email}`;
-    return this.http.delete(url, this.requestOptions).pipe(catchError(this.handleError));
+  deleteSaving(id: string): Observable<{ deleted: boolean }> {
+    const url = `${API_BASE_URL}/savings/${id}`;
+    return this.http.delete<{ deleted: boolean }>(url).pipe(catchError(this.handleError));
   }
 
   /**
    * Submits a new reminder.
    *
    * @param formNewReminder - The new reminder data.
-   * @returns An Observable that emits the response from the server.
    */
-  reminderSubmit(formNewReminder: NewReminder) {
-    const url = `${this.API_URL}/reminders/new-reminder`;
-    const { email, fullName } = this;
+  reminderSubmit(formNewReminder: NewReminder): Observable<Reminder> {
+    const url = `${API_BASE_URL}/reminders`;
     return this.http
-      .post(url, JSON.stringify({ ...formNewReminder, email, fullName }), this.requestOptions)
-      .pipe(catchError(this.handleError));
+      .post<ApiReminder>(url, {
+        title: formNewReminder.title,
+        amount:
+          formNewReminder.amount === null || formNewReminder.amount === undefined
+            ? undefined
+            : Number(formNewReminder.amount),
+        dueAt: formNewReminder.dueAt,
+        recurrence: formNewReminder.recurrence ?? "none",
+        status: formNewReminder.status ?? "pending",
+      })
+      .pipe(
+        map((response) => reminderAdapter(response)),
+        catchError(this.handleError),
+      );
   }
 
   /**
    * Edits a reminder.
    *
    * @param formEditReminder - The data for editing the reminder.
-   * @returns An Observable that emits the response from the server.
    */
-  editReminder(formEditReminder: EditReminder) {
-    const url = `${this.API_URL}/reminders/update-reminder`;
-    const { email } = this;
+  editReminder(formEditReminder: EditReminder): Observable<Reminder> {
+    const url = `${API_BASE_URL}/reminders/${formEditReminder.id}`;
     return this.http
-      .patch(url, JSON.stringify({ ...formEditReminder, email }), this.requestOptions)
-      .pipe(catchError(this.handleError));
+      .patch<ApiReminder>(url, {
+        title: formEditReminder.title,
+        amount:
+          formEditReminder.amount === null || formEditReminder.amount === undefined
+            ? undefined
+            : Number(formEditReminder.amount),
+        dueAt: formEditReminder.dueAt,
+        recurrence: formEditReminder.recurrence,
+        status: formEditReminder.status,
+      })
+      .pipe(
+        map((response) => reminderAdapter(response)),
+        catchError(this.handleError),
+      );
   }
 
   /**
    * Deletes a reminder.
-   *
-   * @param id - The ID of the reminder to delete.
-   * @returns A `Observable` that emits the response from the server.
+   * @param id - The id of the reminder to delete.
    */
-  deleteReminder(id: number) {
-    const url = `${this.API_URL}/reminders/delete-reminder?id=${id}&email=${this.email}`;
-    return this.http.delete(url, this.requestOptions).pipe(catchError(this.handleError));
+  deleteReminder(id: string): Observable<{ deleted: boolean }> {
+    const url = `${API_BASE_URL}/reminders/${id}`;
+    return this.http.delete<{ deleted: boolean }>(url).pipe(catchError(this.handleError));
   }
 
-  creditCardSubmit(creditCardSubmit: NewCreditCard) {
-    const url = `${this.API_URL}/credit-cards`;
-    const { email, fullName } = this;
+  creditCardSubmit(creditCardSubmit: NewCreditCard): Observable<CreditCards> {
+    const url = `${API_BASE_URL}/credit-cards`;
     return this.http
-      .post<{ credit_card_id: number }>(
-        url,
-        JSON.stringify({ email, fullName, ...creditCardSubmit }),
-        this.requestOptions,
-      )
+      .post<ApiCreditCard>(url, {
+        name: creditCardSubmit.name,
+        last4: creditCardSubmit.last4 || undefined,
+        creditLimit: Number(creditCardSubmit.creditLimit),
+        statementDay: Number(creditCardSubmit.statementDay),
+        dueDay: Number(creditCardSubmit.dueDay),
+      })
       .pipe(
-        map((response) => response.credit_card_id),
+        map((response) => creditCardAdapter(response)),
         catchError(this.handleError),
       );
   }
 
-  deleteCreditCard(id: number) {
-    const url = `${this.API_URL}/credit-cards/${id}`;
-    return this.http
-      .delete(url, { ...this.requestOptions, body: { userEmail: this.email } })
-      .pipe(catchError(this.handleError));
+  deleteCreditCard(id: string): Observable<{ deleted: boolean }> {
+    const url = `${API_BASE_URL}/credit-cards/${id}`;
+    return this.http.delete<{ deleted: boolean }>(url).pipe(catchError(this.handleError));
   }
 
-  addLoan(loan: NewLoan) {
-    const url = `${this.API_URL}/loans`;
+  addLoan(loan: NewLoan): Observable<unknown> {
+    const url = `${API_BASE_URL}/loans`;
     return this.http
-      .post<{ id: number }>(
-        url,
-        JSON.stringify({ ...loan, userEmail: this.email }),
-        this.requestOptions,
-      )
+      .post<ApiLoan>(url, {
+        name: loan.name,
+        direction: loan.direction,
+        principal: Number(loan.principal),
+        interestRate: Number(loan.interestRate ?? 0),
+        startDate: loan.startDate,
+        dueDate: loan.dueDate || undefined,
+      })
       .pipe(
-        map((response) => response.id),
+        map((response) => loanAdapter(response)),
         catchError(this.handleError),
       );
   }
 
-  addPayment(payment: NewPayment) {
-    const url = `${this.API_URL}/loans/payments`;
+  addPayment(payment: NewPayment): Observable<unknown> {
+    const url = `${API_BASE_URL}/loans/${payment.loanId}/payments`;
     return this.http
-      .post(url, JSON.stringify(payment), this.requestOptions)
+      .post(url, {
+        amount: Number(payment.amount),
+        paidAt: payment.paidAt,
+        note: payment.note || undefined,
+      })
       .pipe(catchError(this.handleError));
   }
 
-  editPayment(editPayment: EditPayment) {
-    const url = `${this.API_URL}/loans/payments/edit`;
-    console.log({ ...editPayment, email: this.email });
+  editPayment(editPayment: EditPayment): Observable<unknown> {
+    const url = `${API_BASE_URL}/loans/${editPayment.loanId}/payments/${editPayment.paymentId}`;
     return this.http
-      .patch(url, JSON.stringify({ ...editPayment, email: this.email }), this.requestOptions)
+      .patch(url, {
+        amount: Number(editPayment.amount),
+        paidAt: editPayment.paidAt,
+        note: editPayment.note || undefined,
+      })
       .pipe(catchError(this.handleError));
   }
 }

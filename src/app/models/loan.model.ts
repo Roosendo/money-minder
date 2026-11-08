@@ -1,23 +1,26 @@
 import type { WritableSignal } from "@angular/core";
 import type { FormControl } from "@angular/forms";
+import type { LoanDirection } from "./dashboard.model";
 
 export interface TemplateLoanForm {
-  loanTitle: FormControl<string>;
-  bankName: FormControl<string>;
+  name: FormControl<string>;
+  direction: FormControl<LoanDirection>;
+  principal: FormControl<number>;
   interestRate: FormControl<number>;
-  loanAmount: FormControl<number>;
-  loanStartDate: FormControl<string>;
-  loanEndDate: FormControl<string>;
+  startDate: FormControl<string>;
+  dueDate: FormControl<string>;
 }
 
 export interface TemplateEditForm {
-  date: FormControl<string>;
+  paidAt: FormControl<string>;
   amount: FormControl<number>;
+  note: FormControl<string>;
 }
 
 export interface TemplateAddPaymentForm {
-  date: FormControl<string>;
+  paidAt: FormControl<string>;
   amount: FormControl<number>;
+  note: FormControl<string>;
 }
 
 export interface AlertState {

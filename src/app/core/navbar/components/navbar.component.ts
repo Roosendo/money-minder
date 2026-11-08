@@ -17,11 +17,11 @@ export class NavBarComponent implements OnInit, OnDestroy {
   private navbar: HTMLElement | null = null;
   private observer: IntersectionObserver | null = null;
   private platformId;
-  isLogged: boolean;
+  isLogged;
 
   constructor() {
     this.authCacheService = inject(AuthCacheService);
-    this.isLogged = this.authCacheService.isAuthenticated();
+    this.isLogged = this.authCacheService.isLoggedIn;
     this.platformId = inject(PLATFORM_ID);
   }
 
@@ -43,9 +43,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
         if (entry.isIntersecting) {
           for (const navItem of Array.from(navItems)) {
             if (navItem.getAttribute("aria-label") === entry.target.id) {
-              navItem.classList.add("text-cyan-500");
+              navItem.classList.add("text-accent");
             } else {
-              navItem.classList.remove("text-cyan-500");
+              navItem.classList.remove("text-accent");
             }
           }
         }

@@ -1,7 +1,7 @@
 @if (savings().length) {
-  <div class="rounded-lg bg-gray-100 p-4 shadow-lg dark:bg-gray-800">
-    <h2 class="mb-4 text-lg font-semibold">Progreso hacia Objetivos</h2>
-    <div id="goals" class="mx-auto mt-6 max-w-lg space-y-4">
+  <div class="sheet sheet--pad">
+    <h2 class="text-xl">Progreso hacia objetivos</h2>
+    <div id="goals" class="mt-4 space-y-4">
       @for (saving of savings(); track saving.id) {
         <app-savings-card [saving]="saving" />
       }

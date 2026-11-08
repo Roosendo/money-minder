@@ -9,11 +9,11 @@ import type { CreditCards } from "@app/models";
 })
 export class ModalDeleteCcComponent {
   creditCard = input.required<CreditCards>();
-  delete = output<number>();
+  delete = output<string>();
   close = output<void>();
 
   onDelete() {
-    this.delete.emit(this.creditCard().credit_card_id);
+    this.delete.emit(this.creditCard().id);
   }
 
   onClose() {

@@ -1,13 +1,20 @@
-@if (isLogged) {
-  <main class="min-h-screen p-4">
+@if (isLogged()) {
+  <main class="container py-10">
+    <header class="border-b border-rule pb-6">
+      <h1 class="text-4xl">Recordatorios</h1>
+      <p class="lead mt-3 max-w-[48ch] text-ink-2">
+        Anota los pagos y vencimientos que no quieres dejar pasar.
+      </p>
+    </header>
+
     <form
       (submit)="onNewReminderSubmit()"
       id="reminder-form"
-      class="mx-auto mt-6 max-w-lg space-y-4 rounded-lg border border-gray-800 dark:border-gray-100 bg-gray-100 p-6 text-gray-700 dark:bg-gray-800 dark:text-gray-200"
+      class="mx-auto mt-8 max-w-lg space-y-4 border-t-2 border-rule-2 pt-6"
     >
-      <h1 class="mb-4 text-center text-xl font-bold">Agregar nuevo Recordatorio</h1>
+      <h2 class="text-xl">Agregar nuevo recordatorio</h2>
       <div>
-        <label for="reminder-title" class="block font-medium">Título del recordatorio</label>
+        <label for="reminder-title" class="mb-2 block">Título del recordatorio</label>
         <input
           [(ngModel)]="formReminder.title"
           name="title"
@@ -15,56 +22,67 @@
           id="reminder-title"
           placeholder="Título del recordatorio"
           required
-          class="mt-1 w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-gray-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-600"
+          class="w-full"
         />
       </div>
       <div>
-        <label for="reminder-description" class="block font-medium">Descripción</label>
-        <textarea
-          [(ngModel)]="formReminder.description"
-          name="description"
-          id="reminder-description"
-          placeholder="Descripción"
-          rows="4"
-          class="mt-1 w-full resize-none rounded-md border border-gray-300 bg-gray-50 p-2 text-gray-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-600"
-        ></textarea>
-      </div>
-      <div class="mb-4">
-        <label for="reminder-date" class="block font-medium">Fecha y hora</label>
+        <label for="reminder-amount" class="mb-2 block">Monto (opcional)</label>
         <input
-          [(ngModel)]="formReminder.reminderDate"
-          name="reminderDate"
+          [(ngModel)]="formReminder.amount"
+          name="amount"
+          type="number"
+          id="reminder-amount"
+          placeholder="3.99"
+          step="0.01"
+          min="0"
+          class="w-full"
+        />
+      </div>
+      <div>
+        <label for="reminder-date" class="mb-2 block">Fecha y hora</label>
+        <input
+          [(ngModel)]="formReminder.dueAt"
+          name="dueAt"
           type="datetime-local"
           id="reminder-date"
           required
-          class="mt-1 w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-gray-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-600"
+          class="w-full"
         />
       </div>
-      <app-submit-bttn [text]="'Agregar Recordatorio'" />
+      <div>
+        <label for="reminder-recurrence" class="mb-2 block">Repetición</label>
+        <select
+          [(ngModel)]="formReminder.recurrence"
+          name="recurrence"
+          id="reminder-recurrence"
+          class="w-full"
+        >
+          <option value="none">Una sola vez</option>
+          <option value="monthly">Mensual</option>
+          <option value="yearly">Anual</option>
+        </select>
+      </div>
+      <app-submit-bttn [text]="'Agregar recordatorio'" />
     </form>
-    <!-- Contenedor principal de la lista de recordatorios -->
+
     @if (reminders().length) {
-      <div id="reminders-list" class="mx-auto mt-6 max-w-lg space-y-4">
+      <div id="reminders-list" class="mx-auto mt-8 max-w-lg space-y-4">
         @for (reminder of reminders(); track reminder.id) {
           <app-reminders-card
             [title]="reminder.title"
-            [description]="reminder.description"
-            [reminder_date]="reminder.reminder_date"
+            [amount]="reminder.amount"
+            [dueAt]="reminder.due_at"
+            [recurrence]="reminder.recurrence"
+            [status]="reminder.status"
           >
-            <button
-              (click)="openReminderDelete(reminder)"
-              id="deleteButton"
-              class="absolute top-3 right-20 p-2 rounded transition-colors font-medium tracking-wide text-rose-500 hover:bg-rose-300 hover:text-gray-900 dark:hover:bg-gray-200 dark:text-rose-400 dark:hover:text-gray-900"
-            >
-              Eliminar
-            </button>
-            <button
-              (click)="openReminderEdit(reminder)"
-              id="editButton"
-              class="absolute top-3 right-4 p-2 rounded transition-colors font-medium tracking-wide text-teal-500 hover:bg-teal-300 hover:text-gray-900 dark:hover:bg-gray-200 dark:text-teal-400 dark:hover:text-gray-900"
-            >
-              Editar
-            </button>
+            <div class="flex shrink-0 flex-col gap-2">
+              <button type="button" (click)="openReminderEdit(reminder)" class="btn btn--quiet">
+                Editar
+              </button>
+              <button type="button" (click)="openReminderDelete(reminder)" class="btn btn--quiet">
+                Eliminar
+              </button>
+            </div>
           </app-reminders-card>
         }
         @if (isReminderEditOpen()) {
