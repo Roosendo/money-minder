@@ -1,11 +1,10 @@
 import { Component } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
-import { NotificationComponent } from "./core";
 import { NotificationContainerComponent } from "./core/notification-container/notification-container.component";
 
 @Component({
   selector: "app-root",
-  imports: [RouterOutlet, NotificationComponent, NotificationContainerComponent],
+  imports: [RouterOutlet, NotificationContainerComponent],
   templateUrl: "./app.component.html",
 })
 export class AppComponent {}

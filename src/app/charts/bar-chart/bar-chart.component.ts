@@ -1,12 +1,10 @@
 import { type AfterViewInit, Component, input } from "@angular/core";
 import type { CashFLow } from "@app/models";
 import { Chart, registerables } from "chart.js";
-import { BaseChartDirective } from "ng2-charts";
 import { createGraphicBar } from "../utils";
 
 @Component({
   selector: "app-bar-chart",
-  imports: [BaseChartDirective],
   templateUrl: "./bar-chart.component.html",
 })
 export class BarChartComponent implements AfterViewInit {

@@ -1,4 +1,4 @@
-import { AsyncPipe, NgOptimizedImage } from "@angular/common";
+import { NgOptimizedImage } from "@angular/common";
 import { Component, type OnInit, inject } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 
@@ -16,7 +16,6 @@ import { RemindersComponent } from "./reminders";
   templateUrl: "./dashboard.component.html",
   imports: [
     NgOptimizedImage,
-    AsyncPipe,
     RecentTransactionsComponent,
     CashFlowComponent,
     FinancialSummaryComponent,
