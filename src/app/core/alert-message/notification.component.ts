@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, input } from "@angular/core";
-import { CommonModule } from "@angular/common";
+
 import type { Notification } from "@app/models";
 
 @Component({
   selector: "app-notification",
   templateUrl: "./notification.component.html",
-  imports: [CommonModule],
+  imports: [],
   styles: [
     `
       :host {

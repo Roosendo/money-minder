@@ -30,7 +30,7 @@ export class BtnLoginComponent implements OnInit {
   }
 
   redirectTo(provider: string): void {
-    const url = `https://money-minder-api-mqz9.onrender.com/api/${provider}`;
+    const url = `https://money-minder-api-mqz9.onrender.com/api/v1/auth/${provider}`;
     window.location.href = url;
   }
 

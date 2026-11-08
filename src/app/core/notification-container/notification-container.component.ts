@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
-import { CommonModule } from "@angular/common";
+
 import { NotificationComponent } from "@app/core/alert-message";
 import { NotificationService } from "@app/services";
 
 @Component({
   selector: "app-notification-container",
-  imports: [CommonModule, NotificationComponent],
+  imports: [NotificationComponent],
   templateUrl: "./notification-container.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
