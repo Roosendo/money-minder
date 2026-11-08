@@ -33,7 +33,6 @@ export class SidebarComponent {
     const separator = document.getElementById("separator-sidebar");
 
     sidebar?.classList.toggle("-translate-x-full", this.isSidebarOpen);
-    sidebar?.classList.toggle("shadow-2xl", !this.isSidebarOpen);
     separator?.classList.toggle("translate-x-64", !this.isSidebarOpen);
 
     this.isSidebarOpen = !this.isSidebarOpen;
@@ -46,5 +45,9 @@ export class SidebarComponent {
 
   getCurrentRoute() {
     return this.router.url;
+  }
+
+  onAvatarError(event: Event): void {
+    (event.target as HTMLImageElement).style.visibility = "hidden";
   }
 }

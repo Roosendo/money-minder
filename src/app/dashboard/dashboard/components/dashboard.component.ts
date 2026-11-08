@@ -1,4 +1,3 @@
-import { NgOptimizedImage } from "@angular/common";
 import { Component, type OnInit, inject } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 
@@ -15,7 +14,6 @@ import { RemindersComponent } from "./reminders";
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
   imports: [
-    NgOptimizedImage,
     RecentTransactionsComponent,
     CashFlowComponent,
     FinancialSummaryComponent,

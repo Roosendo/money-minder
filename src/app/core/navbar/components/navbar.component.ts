@@ -43,9 +43,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
         if (entry.isIntersecting) {
           for (const navItem of Array.from(navItems)) {
             if (navItem.getAttribute("aria-label") === entry.target.id) {
-              navItem.classList.add("text-cyan-500");
+              navItem.classList.add("text-accent");
             } else {
-              navItem.classList.remove("text-cyan-500");
+              navItem.classList.remove("text-accent");
             }
           }
         }

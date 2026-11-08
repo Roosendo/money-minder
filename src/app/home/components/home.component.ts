@@ -1,4 +1,3 @@
-import { NgOptimizedImage } from "@angular/common";
 import { Component, type OnInit, inject } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { LoginBttnComponent, NavigationBttnComponent } from "@app/core";
@@ -7,7 +6,7 @@ import content from "../content.json";
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
-  imports: [NgOptimizedImage, LoginBttnComponent, NavigationBttnComponent],
+  imports: [LoginBttnComponent, NavigationBttnComponent],
 })
 export class HomeComponent implements OnInit {
   private titleService;

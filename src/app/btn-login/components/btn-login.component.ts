@@ -1,13 +1,13 @@
 import { NgOptimizedImage, isPlatformBrowser } from "@angular/common";
 import { Component, type OnInit, PLATFORM_ID, inject } from "@angular/core";
 
-import { LoginBttnComponent, NavigationBttnComponent } from "@app/core";
+import { NavigationBttnComponent } from "@app/core/navigation-bttn";
 import { AuthCacheService, type User } from "@app/services/auth-cache.service";
 
 @Component({
   selector: "app-btn-login",
   templateUrl: "./btn-login.component.html",
-  imports: [NgOptimizedImage, NavigationBttnComponent, LoginBttnComponent],
+  imports: [NgOptimizedImage, NavigationBttnComponent],
 })
 export class BtnLoginComponent implements OnInit {
   private platformId;
@@ -20,6 +20,7 @@ export class BtnLoginComponent implements OnInit {
     this.authCache = inject(AuthCacheService);
     this.platformId = inject(PLATFORM_ID);
     this.isLogged = this.authCache.isAuthenticated();
+    this.user = this.authCache.getUser();
   }
 
   redirectTo(provider: string): void {
@@ -53,5 +54,9 @@ export class BtnLoginComponent implements OnInit {
   logout(): void {
     this.authCache.clearUser();
     window.location.href = "/login";
+  }
+
+  onAvatarError(event: Event): void {
+    (event.target as HTMLImageElement).style.visibility = "hidden";
   }
 }

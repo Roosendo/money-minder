@@ -25,7 +25,6 @@ interface TemplateFormCC {
     ModalDeleteCcComponent,
   ],
   templateUrl: "./credit-cards.component.html",
-  styleUrl: "./credit-cards.component.css",
 })
 export class CreditCardsComponent {
   private formSubmit = inject(FormSubmitService);

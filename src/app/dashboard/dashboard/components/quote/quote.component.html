@@ -1,12 +1,10 @@
 @if (quote()) {
-  <div class="flex items-center justify-center p-4">
-    <div class="max-w-lg rounded-lg bg-gray-100 p-6 shadow-lg dark:bg-gray-800">
-      <p class="mb-4 text-2xl text-gray-900 dark:text-gray-200">
-        &ldquo;{{ quote().phrase }}&rdquo;
-      </p>
-      <p class="text-right text-lg font-semibold text-gray-700 dark:text-gray-100">
-        &mdash; {{ quote().character }} en {{ quote().movie }}
-      </p>
-    </div>
-  </div>
+  <figure class="border-t-2 border-rule-2 py-6">
+    <blockquote class="max-w-[52ch] font-sans text-2xl leading-tight text-ink">
+      “{{ quote().phrase }}”
+    </blockquote>
+    <figcaption class="mt-3 text-sm text-muted">
+      {{ quote().character }} en {{ quote().movie }}
+    </figcaption>
+  </figure>
 }
