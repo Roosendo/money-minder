@@ -45,8 +45,8 @@ importers:
         specifier: 0.1.0
         version: 0.1.0(tailwindcss@3.4.10)
       '@ngrx/signals':
-        specifier: ^20.1.0
-        version: 20.1.0(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1))(rxjs@7.8.1)
+        specifier: ^22.0.1
+        version: 22.0.1(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1))(rxjs@7.8.1)
       autoprefixer:
         specifier: 10.4.20
         version: 10.4.20(postcss@8.4.47)
@@ -60,8 +60,8 @@ importers:
         specifier: 6.0.1
         version: 6.0.1(@angular/cdk@18.2.10(@angular/common@21.2.26(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1))(rxjs@7.8.1))(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1))(rxjs@7.8.1))(@angular/common@21.2.26(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1))(rxjs@7.8.1))(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1))(@angular/platform-browser@21.2.26(@angular/animations@21.2.26(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1)))(@angular/common@21.2.26(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1))(rxjs@7.8.1))(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1)))(chart.js@4.4.5)(rxjs@7.8.1)
       ngx-cookie-service:
-        specifier: ^20.1.1
-        version: 20.1.1(@angular/common@21.2.26(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1))(rxjs@7.8.1))(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1))
+        specifier: ^22.0.0
+        version: 22.0.0(@angular/common@21.2.26(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1))(rxjs@7.8.1))(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1))
       postcss:
         specifier: 8.4.47
         version: 8.4.47
@@ -1236,10 +1236,10 @@ packages:
       '@emnapi/core': ^1.7.1 || 2.0.0-beta.2 || 2.0.0-beta.3
       '@emnapi/runtime': ^1.7.1 || 2.0.0-beta.2 || 2.0.0-beta.3
 
-  '@ngrx/signals@20.1.0':
-    resolution: {integrity: sha512-ARAHp5yA131Sw6FEtY8XtYcdGcwW5lgpZaJoDIRxc6i12VO3ZDZYp3M/FQhpIDMDXkXHR+pDqoitrqvzI69aQA==}
+  '@ngrx/signals@22.0.1':
+    resolution: {integrity: sha512-R62VsPrnH54LgA3LAqw+GWA9FHii526CH1aqah8aiK1RZocp+3N9rS3g5wrrXU655eVH65jhN4k/k+EFyxO/RA==}
     peerDependencies:
-      '@angular/core': ^20.0.0
+      '@angular/core': ^22.0.0
       rxjs: ^6.5.3 || ^7.4.0
     peerDependenciesMeta:
       rxjs:
@@ -3485,11 +3485,11 @@ packages:
       chart.js: ^3.4.0 || ^4.0.0
       rxjs: ^6.5.3 || ^7.4.0
 
-  ngx-cookie-service@20.1.1:
-    resolution: {integrity: sha512-jGjjIqu+Kt8De6YjDqTQOaUHKB7gYs0eaDuLyXfNhfKnA78lA7D7oWcaIzjkmXhRqTnh2/ex1UHmZHN9MX0yoQ==}
+  ngx-cookie-service@22.0.0:
+    resolution: {integrity: sha512-7V8am8MqTr7R1xCePfo3w+AfbunNQl+vaWPAeLtIruhsAqBXp0uunh4mYv+ikrYrdPg9pqBjckCX3ubNv8HX7w==}
     peerDependencies:
-      '@angular/common': ^20.0.0
-      '@angular/core': ^20.0.0
+      '@angular/common': ^22.0.0
+      '@angular/core': ^22.0.0
 
   node-addon-api@6.1.0:
     resolution: {integrity: sha512-+eawOlIgy680F0kBzPUNFhMZGtJ1YmqM6l4+Crf4IkImjYrO/mqPwRMh352g23uIaQKFItcQ64I7KMaJxHgAVA==}
@@ -4227,6 +4227,9 @@ packages:
 
   tslib@2.8.0:
     resolution: {integrity: sha512-jWVzBLplnCmoaTr13V9dYbiQ99wvZRd0vNWaDRg+aVYRcjDF3nDksxFDE/+fkXnKhpnUUkmx5pK/v8mCtLVqZA==}
+
+  tslib@2.9.1:
+    resolution: {integrity: sha512-a4Ux9VKuIMHsOS7ENbEq6hK2ZGYIT27Rtl0E4eD9KqwxhKiQeMZE/9xb3IdYwWaSOyIBQLExhQgXDTYoiCxnWA==}
 
   tuf-js@4.1.0:
     resolution: {integrity: sha512-50QV99kCKH5P/Vs4E2Gzp7BopNV+KzTXqWeaxrfu5IQJBOULRsTIS9seSsOVT8ZnGXzCyx55nYWAi4qJzpZKEQ==}
@@ -5598,7 +5601,7 @@ snapshots:
       '@tybys/wasm-util': 0.10.4
     optional: true
 
-  '@ngrx/signals@20.1.0(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1))(rxjs@7.8.1)':
+  '@ngrx/signals@22.0.1(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1))(rxjs@7.8.1)':
     dependencies:
       '@angular/core': 21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1)
       tslib: 2.8.0
@@ -7803,11 +7806,11 @@ snapshots:
       rxjs: 7.8.1
       tslib: 2.8.0
 
-  ngx-cookie-service@20.1.1(@angular/common@21.2.26(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1))(rxjs@7.8.1))(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1)):
+  ngx-cookie-service@22.0.0(@angular/common@21.2.26(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1))(rxjs@7.8.1))(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1)):
     dependencies:
       '@angular/common': 21.2.26(@angular/core@21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1))(rxjs@7.8.1)
       '@angular/core': 21.2.26(@angular/compiler@21.2.26)(rxjs@7.8.1)(zone.js@0.15.1)
-      tslib: 2.8.0
+      tslib: 2.9.1
 
   node-addon-api@6.1.0:
     optional: true
@@ -8712,6 +8715,8 @@ snapshots:
   ts-interface-checker@0.1.13: {}
 
   tslib@2.8.0: {}
+
+  tslib@2.9.1: {}
 
   tuf-js@4.1.0(supports-color@7.2.0):
     dependencies:
