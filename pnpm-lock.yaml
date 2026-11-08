@@ -11,9 +11,6 @@ importers:
       '@angular/animations':
         specifier: ^20.3.35
         version: 20.3.35(@angular/core@20.3.35(@angular/compiler@20.3.35)(rxjs@7.8.1)(zone.js@0.15.1))
-      '@angular/cdk':
-        specifier: 18.2.10
-        version: 18.2.10(@angular/common@20.3.35(@angular/core@20.3.35(@angular/compiler@20.3.35)(rxjs@7.8.1)(zone.js@0.15.1))(rxjs@7.8.1))(@angular/core@20.3.35(@angular/compiler@20.3.35)(rxjs@7.8.1)(zone.js@0.15.1))(rxjs@7.8.1)
       '@angular/common':
         specifier: ^20.3.35
         version: 20.3.35(@angular/core@20.3.35(@angular/compiler@20.3.35)(rxjs@7.8.1)(zone.js@0.15.1))(rxjs@7.8.1)
