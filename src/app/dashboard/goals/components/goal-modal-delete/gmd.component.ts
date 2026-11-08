@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output, input } from "@angular/core";
+import { Component, EventEmitter, Output, input } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import type { Saving } from "@app/models";
 
@@ -6,7 +6,6 @@ import type { Saving } from "@app/models";
   selector: "app-goal-modal-delete",
   templateUrl: "./gmd.component.html",
   imports: [FormsModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GoalModalDeleteComponent {
   saving = input.required<Saving>();

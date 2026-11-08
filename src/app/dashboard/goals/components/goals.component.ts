@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, type OnInit, inject, signal } from "@angular/core";
+import { Component, type OnInit, inject, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 
@@ -21,7 +21,6 @@ import { SavingsCardComponent } from "@app/dashboard/common/savings-card/savings
     NotLoggedComponent,
     SavingsCardComponent,
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class GoalsComponent implements OnInit {
   formData = {

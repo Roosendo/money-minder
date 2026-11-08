@@ -1,5 +1,5 @@
 import { AsyncPipe, NgOptimizedImage } from "@angular/common";
-import { ChangeDetectionStrategy, Component, type OnInit, inject } from "@angular/core";
+import { Component, type OnInit, inject } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 
 import { AuthCacheService } from "../../../services";
@@ -25,7 +25,6 @@ import { RemindersComponent } from "./reminders";
     RemindersComponent,
     QuoteComponent,
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class DashboardComponent implements OnInit {
   private readonly authCache;

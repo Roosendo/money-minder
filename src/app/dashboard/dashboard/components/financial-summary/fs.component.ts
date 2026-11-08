@@ -1,12 +1,11 @@
 import { AsyncPipe, CurrencyPipe } from "@angular/common";
-import { ChangeDetectionStrategy, Component, computed, inject } from "@angular/core";
+import { Component, computed, inject } from "@angular/core";
 import { FinancialSummaryStore } from "@app/store";
 
 @Component({
   selector: "app-financial-summary",
   templateUrl: "./fs.component.html",
   imports: [AsyncPipe, CurrencyPipe],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FinancialSummaryComponent {
   private readonly store = inject(FinancialSummaryStore);

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, type OnInit, inject } from "@angular/core";
+import { Component, type OnInit, inject } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 
 import { NotLoggedComponent } from "@app/core";
@@ -9,7 +9,6 @@ import { AuthCacheService } from "@app/services";
   selector: "app-entries",
   templateUrl: "./entries.component.html",
   imports: [FormComponent, TableComponent, NotLoggedComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class EntriesComponent implements OnInit {
   private readonly titleService;

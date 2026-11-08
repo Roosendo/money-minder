@@ -1,5 +1,5 @@
 import { AsyncPipe, CommonModule, CurrencyPipe } from "@angular/common";
-import { ChangeDetectionStrategy, Component, type OnInit, inject } from "@angular/core";
+import { Component, type OnInit, inject } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 
 import { PieChartComponent } from "@app/charts";
@@ -12,7 +12,6 @@ import type { Observable } from "rxjs";
   selector: "app-analysis",
   imports: [AsyncPipe, CommonModule, PieChartComponent, NotLoggedComponent, CurrencyPipe],
   templateUrl: "./analysis.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class AnalysisComponent implements OnInit {
   private readonly titleService;

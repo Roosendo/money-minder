@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe } from "@angular/common";
-import { ChangeDetectionStrategy, Component, type Signal, computed, inject } from "@angular/core";
+import { Component, type Signal, computed, inject } from "@angular/core";
 import { type FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 import { SubmitBttnComponent } from "@app/core";
@@ -16,7 +16,6 @@ import {
   selector: "app-loans",
   imports: [CurrencyPipe, DatePipe, ReactiveFormsModule, SubmitBttnComponent],
   templateUrl: "./loans.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [LoansFormService, LoansStateService, PaymentStateService],
 })
 export class LoansComponent {

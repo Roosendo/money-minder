@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { BarChartComponent } from "@app/charts";
 import { CashFlowStore } from "@app/store";
@@ -7,7 +7,6 @@ import { CashFlowStore } from "@app/store";
   selector: "app-cash-flow",
   templateUrl: "./cf.component.html",
   imports: [BarChartComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CashFlowComponent {
   readonly store = inject(CashFlowStore);

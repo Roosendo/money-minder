@@ -1,12 +1,5 @@
 import { CommonModule, CurrencyPipe, DatePipe } from "@angular/common";
-import {
-  ChangeDetectionStrategy,
-  Component,
-  type OnInit,
-  type Signal,
-  inject,
-  input,
-} from "@angular/core";
+import { Component, type OnInit, type Signal, inject, input } from "@angular/core";
 import type { Transaction } from "@app/models";
 import { TransactionsStore } from "@app/store";
 
@@ -14,7 +7,6 @@ import { TransactionsStore } from "@app/store";
   selector: "app-table",
   templateUrl: "./table.component.html",
   imports: [CommonModule, DatePipe, CurrencyPipe],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements OnInit {
   type = input.required<"entries" | "exits">();

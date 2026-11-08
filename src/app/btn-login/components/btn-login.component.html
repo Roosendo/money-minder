@@ -5,7 +5,7 @@
     <h1>¡Hola {{ user?.firstName }}!</h1>
     <img
       ngSrc="{{ user?.picture }}"
-      [alt]="user?.firstName"
+      [alt]="$safeNavigationMigration(user?.firstName)"
       height="100"
       width="100"
       class="rounded"

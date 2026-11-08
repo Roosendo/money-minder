@@ -1,16 +1,9 @@
 import { isPlatformBrowser } from "@angular/common";
-import {
-  ChangeDetectionStrategy,
-  Component,
-  type OnInit,
-  PLATFORM_ID,
-  inject,
-} from "@angular/core";
+import { Component, type OnInit, PLATFORM_ID, inject } from "@angular/core";
 
 @Component({
   selector: "app-theme-toggle",
   templateUrl: "./theme-toggle.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThemeToggleComponent implements OnInit {
   private readonly STORAGE_THEME_ITEM = "theme";

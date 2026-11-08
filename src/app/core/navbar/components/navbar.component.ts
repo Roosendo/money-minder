@@ -1,12 +1,5 @@
 import { isPlatformBrowser } from "@angular/common";
-import {
-  ChangeDetectionStrategy,
-  Component,
-  type OnDestroy,
-  type OnInit,
-  PLATFORM_ID,
-  inject,
-} from "@angular/core";
+import { Component, type OnDestroy, type OnInit, PLATFORM_ID, inject } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { LoginBttnComponent } from "@app/core/login-bttn";
 import { NavigationBttnComponent } from "@app/core/navigation-bttn";
@@ -16,7 +9,6 @@ import { AuthCacheService } from "@app/services/auth-cache.service";
   selector: "app-navbar",
   templateUrl: "./navbar.component.html",
   imports: [RouterLink, NavigationBttnComponent, LoginBttnComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavBarComponent implements OnInit, OnDestroy {
   private authCacheService;

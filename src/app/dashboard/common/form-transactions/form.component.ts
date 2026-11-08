@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  type Signal,
-  computed,
-  inject,
-  input,
-  output,
-} from "@angular/core";
+import { Component, type Signal, computed, inject, input, output } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { SubmitBttnComponent } from "@app/core";
 import type { TemplateForm } from "@app/models";
@@ -22,7 +14,6 @@ import categoriesJson from "./categories.json";
 @Component({
   selector: "app-form",
   templateUrl: "./form.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, SubmitBttnComponent],
 })
 export class FormComponent {

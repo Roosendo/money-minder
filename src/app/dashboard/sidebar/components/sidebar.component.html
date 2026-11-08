@@ -23,7 +23,7 @@
       <section class="mb-10 flex flex-row gap-3">
         <img
           ngSrc="{{ user?.picture }}"
-          [alt]="user?.firstName"
+          [alt]="$safeNavigationMigration(user?.firstName)"
           height="100"
           width="100"
           class="size-16 rounded-xl"

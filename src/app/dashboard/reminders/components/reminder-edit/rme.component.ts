@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, type OnInit, input, output } from "@angular/core";
+import { Component, type OnInit, input, output } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import type { EditReminder, Reminder } from "@app/models";
 
@@ -6,7 +6,6 @@ import type { EditReminder, Reminder } from "@app/models";
   selector: "app-reminder-edit",
   templateUrl: "./rme.component.html",
   imports: [FormsModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReminderEditComponent implements OnInit {
   reminder = input.required<Reminder>();

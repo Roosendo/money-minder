@@ -1,10 +1,4 @@
-import {
-  type AfterViewChecked,
-  ChangeDetectionStrategy,
-  Component,
-  type OnDestroy,
-  input,
-} from "@angular/core";
+import { type AfterViewChecked, Component, type OnDestroy, input } from "@angular/core";
 import type { TransactionChart } from "@app/models";
 import { Chart, registerables } from "chart.js";
 import { createGraphic } from "../utils";
@@ -12,7 +6,6 @@ import { createGraphic } from "../utils";
 @Component({
   selector: "app-pie-chart",
   templateUrl: "./pie-chart.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PieChartComponent implements AfterViewChecked, OnDestroy {
   dataTC = input.required<TransactionChart[]>();

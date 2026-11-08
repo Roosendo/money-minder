@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, type OnInit, inject } from "@angular/core";
+import { Component, type OnInit, inject } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 
 import { BtnLoginComponent } from "@app/btn-login";
@@ -8,7 +8,6 @@ import { AuthCacheService } from "@app/services";
   imports: [BtnLoginComponent],
   selector: "app-login",
   templateUrl: "./login.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class LoginComponent implements OnInit {
   private authCacheService;

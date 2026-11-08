@@ -1,12 +1,5 @@
 import { CommonModule, CurrencyPipe, DatePipe } from "@angular/common";
-import {
-  ChangeDetectionStrategy,
-  Component,
-  type Signal,
-  computed,
-  inject,
-  signal,
-} from "@angular/core";
+import { Component, type Signal, computed, inject, signal } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 import { SubmitBttnComponent } from "@app/core";
@@ -33,7 +26,6 @@ interface TemplateFormCC {
   ],
   templateUrl: "./credit-cards.component.html",
   styleUrl: "./credit-cards.component.css",
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreditCardsComponent {
   private formSubmit = inject(FormSubmitService);

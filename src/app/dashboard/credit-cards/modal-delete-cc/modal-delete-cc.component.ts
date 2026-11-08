@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import type { CreditCards } from "@app/models";
 
@@ -6,7 +6,6 @@ import type { CreditCards } from "@app/models";
   selector: "app-modal-delete-cc",
   imports: [FormsModule],
   templateUrl: "./modal-delete-cc.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalDeleteCcComponent {
   creditCard = input.required<CreditCards>();

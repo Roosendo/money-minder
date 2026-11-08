@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, input, output } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import type { Reminder } from "@app/models";
 
 @Component({
   selector: "app-reminder-delete",
   templateUrl: "./rmd.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FormsModule],
 })
 export class ReminderDeleteComponent {

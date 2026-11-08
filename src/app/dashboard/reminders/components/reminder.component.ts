@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, type OnInit, inject, signal } from "@angular/core";
+import { Component, type OnInit, inject, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 import { NotLoggedComponent, SubmitBttnComponent } from "@app/core";
@@ -12,7 +12,6 @@ import { RemindersCardComponent } from "@app/dashboard/common/reminders-card/rem
 @Component({
   selector: "app-reminder",
   templateUrl: "./reminder.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
     ReminderEditComponent,

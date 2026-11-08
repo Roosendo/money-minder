@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input } from "@angular/core";
+import { Component, computed, input } from "@angular/core";
 
 import type { Notification } from "@app/models";
 
@@ -25,7 +25,6 @@ import type { Notification } from "@app/models";
       }
     `,
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationComponent {
   notification = input.required<Notification>();

@@ -41,13 +41,13 @@
       <h3>
         Total de Ingresos:
         <span id="totalIngresos">{{
-          summary?.totalEntries?.amount | currency: "USD" : "symbol"
+          $safeNavigationMigration(summary?.totalEntries?.amount) | currency: "USD" : "symbol"
         }}</span>
       </h3>
       <h3 class="border-b border-gray-400">
         - Total de Gastos:
         <span id="totalEgresos">{{
-          summary?.totalExits?.amount | currency: "USD" : "symbol"
+          $safeNavigationMigration(summary?.totalExits?.amount) | currency: "USD" : "symbol"
         }}</span>
       </h3>
       <h3>

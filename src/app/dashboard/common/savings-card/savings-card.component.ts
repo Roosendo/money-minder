@@ -1,12 +1,11 @@
 import { CurrencyPipe } from "@angular/common";
-import { ChangeDetectionStrategy, Component, input } from "@angular/core";
+import { Component, input } from "@angular/core";
 import type { Saving } from "@app/models";
 
 @Component({
   selector: "app-savings-card",
   imports: [CurrencyPipe],
   templateUrl: "./savings-card.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SavingsCardComponent {
   saving = input.required<Saving>();

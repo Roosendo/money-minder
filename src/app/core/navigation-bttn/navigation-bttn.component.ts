@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, type OnInit, inject, input } from "@angular/core";
+import { Component, type OnInit, inject, input } from "@angular/core";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 
 @Component({
   selector: "app-navigation-bttn",
   imports: [RouterLink],
   templateUrl: "./navigation-bttn.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationBttnComponent implements OnInit {
   text = input.required<string>();

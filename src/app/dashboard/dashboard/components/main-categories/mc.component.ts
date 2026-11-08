@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 
 import { PieChartComponent } from "@app/charts";
 import { CategoriesStore } from "@app/store";
@@ -7,7 +7,6 @@ import { CategoriesStore } from "@app/store";
   selector: "app-main-categories",
   templateUrl: "./mc.component.html",
   imports: [PieChartComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainCategoriesComponent {
   readonly store = inject(CategoriesStore);

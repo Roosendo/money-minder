@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  type OnInit,
-  Output,
-  input,
-} from "@angular/core";
+import { Component, EventEmitter, type OnInit, Output, input } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import type { EditSaving, Saving } from "@app/models";
 
@@ -13,7 +6,6 @@ import type { EditSaving, Saving } from "@app/models";
   selector: "app-goal-modal-edit",
   templateUrl: "./gme.component.html",
   imports: [FormsModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GoalModalEditComponent implements OnInit {
   goal = input.required<Saving>();
