@@ -2,7 +2,7 @@ import { Component, type OnInit, inject, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 import { NotLoggedComponent, SubmitBttnComponent } from "@app/core";
-import type { EditReminder, Reminder } from "@app/models";
+import type { EditReminder, NewReminder, Reminder, ReminderRecurrence } from "@app/models";
 import { AlertService, AuthCacheService, FormSubmitService } from "@app/services";
 import { ReminderDeleteComponent } from "./reminder-delete";
 import { ReminderEditComponent } from "./reminder-edit";
@@ -26,23 +26,25 @@ export default class RemindersComponent implements OnInit {
   private readonly formSubmit;
   private readonly authCache;
   readonly store = inject(RemindersStore);
-  isLogged: boolean;
+  isLogged;
   selectedReminder: Reminder | null = null;
   isReminderEditOpen = signal<boolean>(false);
   isReminderDeleteOpen = signal<boolean>(false);
   reminders = this.store.reminders;
   readonly alertService = inject(AlertService);
-  formReminder = {
-    description: "",
-    reminderDate: "",
+  readonly recurrenceOptions: ReminderRecurrence[] = ["none", "monthly", "yearly"];
+  formReminder: NewReminder = {
     title: "",
+    amount: null,
+    dueAt: "",
+    recurrence: "none",
   };
 
   constructor() {
     this.title = inject(Title);
     this.formSubmit = inject(FormSubmitService);
     this.authCache = inject(AuthCacheService);
-    this.isLogged = this.authCache.isAuthenticated();
+    this.isLogged = this.authCache.isLoggedIn;
   }
 
   ngOnInit(): void {
@@ -51,18 +53,14 @@ export default class RemindersComponent implements OnInit {
 
   onNewReminderSubmit() {
     this.formSubmit.reminderSubmit(this.formReminder).subscribe({
-      next: () => {
+      next: (reminder) => {
         this.alertService.showSuccess({ feature: "reminder", action: "create" });
-        this.store.addReminder({
-          description: this.formReminder.description,
-          id: 0,
-          reminder_date: this.formReminder.reminderDate,
-          title: this.formReminder.title,
-        });
+        this.store.addReminder(reminder);
         this.formReminder = {
-          description: "",
-          reminderDate: "",
           title: "",
+          amount: null,
+          dueAt: "",
+          recurrence: "none",
         };
       },
       error: () => {
@@ -91,7 +89,7 @@ export default class RemindersComponent implements OnInit {
     this.selectedReminder = null;
   }
 
-  onDelete(id: number) {
+  onDelete(id: string) {
     this.formSubmit.deleteReminder(id).subscribe({
       next: () => {
         this.closeReminderDelete();
@@ -106,15 +104,10 @@ export default class RemindersComponent implements OnInit {
 
   onSave(editReminder: EditReminder) {
     this.formSubmit.editReminder(editReminder).subscribe({
-      next: () => {
+      next: (reminder) => {
         this.alertService.showInfo({ feature: "reminder", action: "update" });
         this.onCloseModal();
-        this.store.editReminder({
-          description: editReminder.newDescription,
-          id: editReminder.id,
-          reminder_date: editReminder.newDate,
-          title: editReminder.newTitle,
-        });
+        this.store.editReminder(reminder);
       },
       error: () => {
         this.alertService.showError({ feature: "reminder", action: "update" });

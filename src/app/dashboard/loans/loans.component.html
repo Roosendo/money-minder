@@ -15,24 +15,21 @@
         class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2"
       >
         <div>
-          <label for="title" class="label mb-1 block">Título del préstamo</label>
+          <label for="name" class="label mb-1 block">Nombre del préstamo</label>
           <input
-            id="title"
-            formControlName="loanTitle"
-            placeholder="Título del préstamo"
+            id="name"
+            formControlName="name"
+            placeholder="Préstamo del carro"
             class="w-full"
             required
           />
         </div>
         <div>
-          <label for="bankName" class="label mb-1 block">Nombre del banco</label>
-          <input
-            id="bankName"
-            formControlName="bankName"
-            placeholder="Nombre del banco"
-            class="w-full"
-            required
-          />
+          <label for="direction" class="label mb-1 block">Dirección</label>
+          <select id="direction" formControlName="direction" class="w-full" required>
+            <option value="borrowed">Dinero que debo</option>
+            <option value="lent">Dinero que me deben</option>
+          </select>
         </div>
         <div>
           <label for="interestRate" class="label mb-1 block">Porcentaje de interés (%)</label>
@@ -40,17 +37,21 @@
             id="interestRate"
             formControlName="interestRate"
             type="number"
+            min="0"
+            step="0.01"
             placeholder="Tasa de interés"
             class="w-full"
             required
           />
         </div>
         <div>
-          <label for="amount" class="label mb-1 block">Cantidad del préstamo (USD)</label>
+          <label for="principal" class="label mb-1 block">Cantidad del préstamo (USD)</label>
           <input
-            id="amount"
-            formControlName="loanAmount"
+            id="principal"
+            formControlName="principal"
             type="number"
+            min="0.01"
+            step="0.01"
             placeholder="Monto del préstamo"
             class="w-full"
             required
@@ -58,17 +59,11 @@
         </div>
         <div>
           <label for="startDate" class="label mb-1 block">Fecha de inicio</label>
-          <input
-            id="startDate"
-            formControlName="loanStartDate"
-            type="date"
-            class="w-full"
-            required
-          />
+          <input id="startDate" formControlName="startDate" type="date" class="w-full" required />
         </div>
         <div>
-          <label for="endDate" class="label mb-1 block">Fecha de fin (aprox.)</label>
-          <input id="endDate" formControlName="loanEndDate" type="date" class="w-full" required />
+          <label for="dueDate" class="label mb-1 block">Fecha de fin (aprox.)</label>
+          <input id="dueDate" formControlName="dueDate" type="date" class="w-full" />
         </div>
         <div class="sm:col-span-2">
           <app-submit-bttn [text]="'Agregar Préstamo'" />
@@ -83,35 +78,40 @@
         <header
           class="flex flex-wrap items-baseline justify-between gap-4 border-b border-rule pb-4"
         >
-          <h2 class="text-xl">{{ loan.loan_title }}</h2>
-          <p class="stat-figure text-lg">{{ loan.loan_amount | currency }}</p>
+          <div>
+            <h2 class="text-xl">{{ loan.name }}</h2>
+            <p class="label mt-1">{{ directionLabel(loan.direction) }}</p>
+          </div>
+          <p class="stat-figure text-lg">{{ loan.principal | currency }}</p>
         </header>
 
         <dl class="mt-4 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
           <div>
-            <dt class="label">Banco</dt>
-            <dd class="mt-1 text-ink">{{ loan.bank_name }}</dd>
-          </div>
-          <div>
             <dt class="label">Interés</dt>
-            <dd class="num mt-1 text-ink">{{ loan.interest_rate }}%</dd>
+            <dd class="num mt-1 text-ink">{{ loan.interestRate }}%</dd>
           </div>
           <div>
             <dt class="label">Cantidad</dt>
-            <dd class="num mt-1 text-ink">{{ loan.loan_amount | currency }}</dd>
+            <dd class="num mt-1 text-ink">{{ loan.principal | currency }}</dd>
           </div>
           <div>
             <dt class="label">Duración</dt>
             <dd class="num mt-1 text-sm text-ink">
-              {{ loan.loan_start_date | date: "d/MM/y" }} –
-              {{ loan.loan_end_date | date: "d/MM/y" }}
+              {{ loan.startDate | date: "d/MM/y" }}
+              @if (loan.dueDate) {
+                – {{ loan.dueDate | date: "d/MM/y" }}
+              }
             </dd>
+          </div>
+          <div>
+            <dt class="label">Estado</dt>
+            <dd class="mt-1 text-ink">{{ loan.status === "paid" ? "Pagado" : "Activo" }}</dd>
           </div>
         </dl>
 
         <h3 class="mt-8 text-lg">Pagos (últimos 5)</h3>
         <ul class="rule-list mt-2">
-          @for (payment of loan.last_five_payments; track payment.id) {
+          @for (payment of loan.lastFivePayments; track payment.id) {
             <li class="flex flex-wrap items-center gap-3">
               @if (editingPaymentId() !== payment.id) {
                 <span class="num text-sm text-ink-2">
@@ -129,14 +129,17 @@
                       d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
                     />
                   </svg>
-                  {{ payment.payment_date | date: "d/MM/y" }}
+                  {{ payment.paidAt | date: "d/MM/y" }}
                 </span>
-                <span class="num ml-auto">{{ payment.payment_amount | currency }}</span>
+                @if (payment.note) {
+                  <span class="text-sm text-muted">{{ payment.note }}</span>
+                }
+                <span class="num ml-auto">{{ payment.amount | currency }}</span>
                 <button
                   type="button"
                   (click)="toggleEditMode(payment.id)"
                   class="btn btn--quiet"
-                  [attr.aria-label]="'Editar pago del ' + (payment.payment_date | date: 'd/MM/y')"
+                  [attr.aria-label]="'Editar pago del ' + (payment.paidAt | date: 'd/MM/y')"
                 >
                   <svg
                     fill="none"
@@ -160,7 +163,7 @@
                 >
                   <input
                     type="date"
-                    formControlName="date"
+                    formControlName="paidAt"
                     class="min-w-0 flex-1"
                     aria-label="Fecha del pago"
                   />
@@ -171,10 +174,17 @@
                     placeholder="Monto"
                     aria-label="Monto del pago"
                   />
+                  <input
+                    type="text"
+                    formControlName="note"
+                    class="min-w-0 flex-1"
+                    placeholder="Nota"
+                    aria-label="Nota del pago"
+                  />
                   <div class="flex gap-2">
                     <button
                       type="submit"
-                      (click)="confirmEditPayment(payment.id)"
+                      (click)="confirmEditPayment(loan.id, payment.id)"
                       class="btn btn--quiet text-ok"
                       aria-label="Guardar pago"
                     >
@@ -223,10 +233,16 @@
           }
         </ul>
 
-        <p class="mt-4 flex items-baseline justify-between gap-4 border-t border-rule-2 pt-3">
-          <span class="label">Total pagado</span>
-          <span class="stat-figure">{{ loan.total_payments | currency }}</span>
-        </p>
+        <dl class="mt-4 grid grid-cols-2 gap-4 border-t border-rule-2 pt-3">
+          <div class="flex items-baseline justify-between gap-4">
+            <dt class="label">Total pagado</dt>
+            <dd class="stat-figure">{{ loan.totalPaid | currency }}</dd>
+          </div>
+          <div class="flex items-baseline justify-between gap-4">
+            <dt class="label">Saldo pendiente</dt>
+            <dd class="stat-figure">{{ loan.remaining | currency }}</dd>
+          </div>
+        </dl>
 
         <form
           [formGroup]="addPaymentForm()"
@@ -238,7 +254,7 @@
             <input
               [id]="'paymentDate-' + $index"
               type="date"
-              formControlName="date"
+              formControlName="paidAt"
               class="w-full"
               required
             />
@@ -252,6 +268,16 @@
               formControlName="amount"
               class="w-full"
               required
+            />
+          </div>
+          <div>
+            <label [for]="'paymentNote-' + $index" class="label mb-1 block">Nota (opcional)</label>
+            <input
+              [id]="'paymentNote-' + $index"
+              type="text"
+              placeholder="Nota"
+              formControlName="note"
+              class="w-full"
             />
           </div>
           <div class="sm:col-span-3">

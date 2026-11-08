@@ -42,8 +42,8 @@
         @if (creditCardsStore.creditCards().length) {
           <select name="card_select" id="card_select" formControlName="creditCardId" class="w-full">
             <option value="0" selected disabled>Elige una tarjeta...</option>
-            @for (card of creditCardsStore.creditCards(); track card.credit_card_id) {
-              <option [value]="card.credit_card_id">{{ card.name }}</option>
+            @for (card of creditCardsStore.creditCards(); track card.id) {
+              <option [value]="card.id">{{ card.name }}</option>
             }
           </select>
         } @else {

@@ -14,8 +14,9 @@ export const updateSpecificPayment = (
     payment.id === editPayment.paymentId
       ? {
           ...payment,
-          payment_amount: editPayment.paymentAmount,
-          payment_date: editPayment.paymentDate,
+          amount: editPayment.amount,
+          paidAt: editPayment.paidAt,
+          note: editPayment.note ?? null,
         }
       : payment,
   );
@@ -38,16 +39,16 @@ export const calculatePaymentDifference = (originalAmount: number, newAmount: nu
  * @returns A new array of payments with the added payment.
  */
 export const addNewPayment = (payments: Payments[], newPayment: NewPayment): Payments[] => {
-  // Crear un objeto de pago con los datos de `newPayment`
   const newPaymentEntry: Payments = {
-    id: Date.now(), // Generar un ID único
-    payment_amount: newPayment.paymentAmount,
-    payment_date: newPayment.paymentDate,
+    id: `pending-${Date.now()}`,
+    amount: newPayment.amount,
+    paidAt: newPayment.paidAt,
+    note: newPayment.note ?? null,
   };
 
-  // Agregar el nuevo pago y limitar a cinco pagos
+  // Add the new payment and keep only the latest five.
   const updatedPayments = [newPaymentEntry, ...payments];
-  if (updatedPayments.length > 5) updatedPayments.pop(); // Mantener solo los últimos cinco
+  if (updatedPayments.length > 5) updatedPayments.pop();
 
   return updatedPayments;
 };

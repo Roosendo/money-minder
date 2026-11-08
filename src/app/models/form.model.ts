@@ -5,8 +5,6 @@ export interface TemplateForm {
   amount: FormControl<number>;
   category: FormControl<string>;
   description: FormControl<string>;
-  email: FormControl<string | undefined>;
-  fullName: FormControl<string>;
   isCreditPayment: FormControl<boolean>;
   creditCardId: FormControl<string>;
 }

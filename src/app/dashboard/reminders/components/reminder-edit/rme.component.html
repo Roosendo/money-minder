@@ -4,7 +4,7 @@
     <div class="mb-4">
       <label for="edit-title" class="mb-2 block">Título actual</label>
       <input
-        [(ngModel)]="reminderEdit.newTitle"
+        [(ngModel)]="reminderEdit.title"
         name="title"
         type="text"
         id="edit-title"
@@ -14,24 +14,46 @@
       />
     </div>
     <div class="mb-4">
-      <label for="edit-description" class="mb-2 block">Descripción actual</label>
+      <label for="edit-amount" class="mb-2 block">Monto (opcional)</label>
       <input
-        [(ngModel)]="reminderEdit.newDescription"
-        name="description"
-        type="text"
-        id="edit-description"
+        [(ngModel)]="reminderEdit.amount"
+        name="amount"
+        type="number"
+        id="edit-amount"
         class="w-full"
+        step="0.01"
+        min="0"
       />
     </div>
     <div class="mb-4">
       <label for="edit-reminder-date" class="mb-2 block">Fecha del recordatorio</label>
       <input
-        [(ngModel)]="reminderEdit.newDate"
-        name="reminderDate"
+        [(ngModel)]="reminderEdit.dueAt"
+        name="dueAt"
         type="datetime-local"
         id="edit-reminder-date"
         class="w-full"
       />
+    </div>
+    <div class="mb-4">
+      <label for="edit-recurrence" class="mb-2 block">Repetición</label>
+      <select
+        [(ngModel)]="reminderEdit.recurrence"
+        name="recurrence"
+        id="edit-recurrence"
+        class="w-full"
+      >
+        <option value="none">Una sola vez</option>
+        <option value="monthly">Mensual</option>
+        <option value="yearly">Anual</option>
+      </select>
+    </div>
+    <div class="mb-4">
+      <label for="edit-status" class="mb-2 block">Estado</label>
+      <select [(ngModel)]="reminderEdit.status" name="status" id="edit-status" class="w-full">
+        <option value="pending">Pendiente</option>
+        <option value="done">Completado</option>
+      </select>
     </div>
     <div class="mt-6 flex flex-wrap gap-3">
       <button type="submit" class="btn btn--primary">Guardar cambios</button>

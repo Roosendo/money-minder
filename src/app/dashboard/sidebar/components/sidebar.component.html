@@ -24,11 +24,11 @@
     <a routerLink="/" class="nav__brand" aria-label="Money Minder, inicio">Money Minder</a>
     <p class="mt-1 text-sm text-muted">Índice de tu registro</p>
 
-    @if (isLogged) {
+    @if (isLogged()) {
       <section class="mt-8 flex items-center gap-3 border-y border-rule py-4">
-        @if (user?.picture) {
+        @if (user()?.picture) {
           <img
-            ngSrc="{{ user?.picture }}"
+            ngSrc="{{ user()?.picture }}"
             [alt]="''"
             height="56"
             width="56"
@@ -38,9 +38,9 @@
         }
         <article class="min-w-0">
           <h2 id="user-name" class="truncate text-lg">
-            {{ user?.firstName }} {{ user?.lastName }}
+            {{ user()?.firstName }} {{ user()?.lastName }}
           </h2>
-          <p id="user-email" class="truncate text-sm text-muted">{{ user?.email }}</p>
+          <p id="user-email" class="truncate text-sm text-muted">{{ user()?.email }}</p>
         </article>
       </section>
     }
@@ -221,7 +221,7 @@
     </nav>
 
     <div class="mt-8 border-t-2 border-rule-2 pt-5">
-      @if (user) {
+      @if (user()) {
         <button type="button" (click)="logOut()" id="logout" class="index-link w-full text-left">
           <svg class="size-5 shrink-0" aria-hidden="true" fill="none" viewBox="0 0 18 16">
             <path

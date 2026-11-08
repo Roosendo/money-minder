@@ -17,7 +17,7 @@ export default class AnalysisComponent implements OnInit {
   private readonly titleService;
   private readonly apiCalls;
   private readonly authCache;
-  isLogged: boolean;
+  isLogged;
 
   currentMonth = new Date().toLocaleString("default", { month: "long" });
   currentMonthNumber = new Date().getMonth() + 1;
@@ -31,7 +31,7 @@ export default class AnalysisComponent implements OnInit {
     this.titleService = inject(Title);
     this.apiCalls = inject(ApiCallsService);
     this.authCache = inject(AuthCacheService);
-    this.isLogged = this.authCache.isAuthenticated();
+    this.isLogged = this.authCache.isLoggedIn;
   }
 
   ngOnInit() {

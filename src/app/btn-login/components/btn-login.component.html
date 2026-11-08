@@ -1,10 +1,10 @@
-@if (isLogged) {
+@if (isLogged()) {
   <section class="sheet sheet--pad">
-    <h1 class="text-2xl">Hola, {{ user?.firstName }}</h1>
+    <h1 class="text-2xl">Hola, {{ user()?.firstName }}</h1>
     <div class="mt-4 flex items-center gap-4 border-y border-rule py-4">
-      @if (user?.picture) {
+      @if (user()?.picture) {
         <img
-          ngSrc="{{ user?.picture }}"
+          ngSrc="{{ user()?.picture }}"
           [alt]="''"
           height="64"
           width="64"
@@ -12,7 +12,7 @@
           class="size-16 border border-rule-2 object-cover [filter:saturate(0.65)_contrast(0.97)]"
         />
       }
-      <p class="text-sm text-ink-2">{{ user?.email }}</p>
+      <p class="text-sm text-ink-2">{{ user()?.email }}</p>
     </div>
     <p class="mt-4 text-ink-2">
       Si tus datos son correctos, puedes pasar al Dashboard. Si quieres cambiar de cuenta, cierra
@@ -69,5 +69,10 @@
       </svg>
       Ingresar con Google
     </button>
+    @if (loginError()) {
+      <p class="text-danger" role="alert">
+        No se pudo iniciar sesión. Intenta de nuevo en unos segundos.
+      </p>
+    }
   </div>
 }

@@ -1,3 +1,4 @@
+export * from "./api.model";
 export * from "./dashboard.model";
 export * from "./form-submit.model";
 export * from "./loan.model";

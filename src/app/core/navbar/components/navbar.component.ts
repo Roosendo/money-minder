@@ -17,11 +17,11 @@ export class NavBarComponent implements OnInit, OnDestroy {
   private navbar: HTMLElement | null = null;
   private observer: IntersectionObserver | null = null;
   private platformId;
-  isLogged: boolean;
+  isLogged;
 
   constructor() {
     this.authCacheService = inject(AuthCacheService);
-    this.isLogged = this.authCacheService.isAuthenticated();
+    this.isLogged = this.authCacheService.isLoggedIn;
     this.platformId = inject(PLATFORM_ID);
   }
 

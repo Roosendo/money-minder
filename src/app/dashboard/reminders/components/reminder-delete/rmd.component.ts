@@ -9,7 +9,7 @@ import type { Reminder } from "@app/models";
 })
 export class ReminderDeleteComponent {
   reminder = input.required<Reminder>();
-  delete = output<number>();
+  delete = output<string>();
   close = output<void>();
 
   onDelete() {

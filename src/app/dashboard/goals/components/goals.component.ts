@@ -3,7 +3,7 @@ import { FormsModule } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 
 import { NotLoggedComponent, SubmitBttnComponent } from "@app/core";
-import type { EditSaving, Saving } from "@app/models";
+import type { EditSaving, NewSaving, Saving } from "@app/models";
 import { AlertService, AuthCacheService, FormSubmitService } from "@app/services";
 import { GoalModalDeleteComponent } from "./goal-modal-delete";
 import { GoalModalEditComponent } from "./goal-modal-edit";
@@ -23,12 +23,11 @@ import { SavingsCardComponent } from "@app/dashboard/common/savings-card/savings
   ],
 })
 export default class GoalsComponent implements OnInit {
-  formData = {
+  formData: NewSaving = {
     name: "",
     targetAmount: 0,
     currentAmount: 0,
-    startDate: "",
-    endDate: "",
+    targetDate: "",
   };
   isModalEditOpen = signal<boolean>(false);
   isModalDeleteOpen = signal<boolean>(false);
@@ -36,7 +35,7 @@ export default class GoalsComponent implements OnInit {
   private readonly formSubmit;
   private readonly title;
   private readonly authCache;
-  isLogged: boolean;
+  isLogged;
   readonly store = inject(SavingsStore);
   readonly alertService = inject(AlertService);
   savings = this.store.savings;
@@ -45,7 +44,7 @@ export default class GoalsComponent implements OnInit {
     this.formSubmit = inject(FormSubmitService);
     this.title = inject(Title);
     this.authCache = inject(AuthCacheService);
-    this.isLogged = this.authCache.isAuthenticated();
+    this.isLogged = this.authCache.isLoggedIn;
   }
 
   ngOnInit(): void {
@@ -54,21 +53,14 @@ export default class GoalsComponent implements OnInit {
 
   onNewSavingSubmit() {
     this.formSubmit.savingSubmit(this.formData).subscribe({
-      next: () => {
+      next: (saving) => {
         this.alertService.showSuccess({ feature: "saving", action: "create" });
-        this.store.addSaving({
-          id: Math.floor(Math.random() * 1000000),
-          name: this.formData.name,
-          target_amount: this.formData.targetAmount,
-          current_amount: this.formData.currentAmount,
-          end_date: this.formData.endDate,
-        });
+        this.store.addSaving(saving);
         this.formData = {
           name: "",
           targetAmount: 0,
           currentAmount: 0,
-          startDate: "",
-          endDate: "",
+          targetDate: "",
         };
       },
       error: () => {
@@ -99,16 +91,10 @@ export default class GoalsComponent implements OnInit {
 
   editSaving(saving: EditSaving) {
     this.formSubmit.editSaving(saving).subscribe({
-      next: () => {
+      next: (updated) => {
         this.closeEditModal();
         this.alertService.showInfo({ feature: "saving", action: "update" });
-        this.store.editSaving({
-          id: saving.id,
-          name: saving.newSavingName,
-          target_amount: saving.newTarget,
-          current_amount: saving.newCurrentAmount,
-          end_date: saving.newEndDate,
-        });
+        this.store.editSaving(updated);
       },
       error: () => {
         this.alertService.showError({ feature: "saving", action: "update" });
@@ -116,7 +102,7 @@ export default class GoalsComponent implements OnInit {
     });
   }
 
-  deleteSaving(id: number) {
+  deleteSaving(id: string) {
     this.formSubmit.deleteSaving(id).subscribe({
       next: () => {
         this.closeDeleteModal();

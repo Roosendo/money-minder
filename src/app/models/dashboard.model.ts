@@ -9,15 +9,20 @@ export interface FSClean {
 }
 
 export interface RecentTransactions {
+  id?: string;
+  type?: "income" | "expense";
   date: string;
   category: string;
   amount: number;
+  description?: string | null;
+  creditCard?: string | null;
 }
 
 export interface CashFLow {
   month: string;
   total_ingresos: number;
   total_egresos: number;
+  balance?: number;
 }
 
 export interface TransactionChart {
@@ -28,44 +33,48 @@ export interface TransactionChart {
 }
 
 export interface Saving {
-  id: number;
+  id: string;
   name: string;
   target_amount: number;
   current_amount: number;
-  end_date: string;
+  target_date: string | null;
 }
 
 export interface EditSaving {
-  id: number;
+  id: string;
   newSavingName: string;
   newTarget: number;
   newCurrentAmount: number;
-  newEndDate: string;
+  newTargetDate: string;
 }
 
-export interface DeleteSaving {
-  email: string;
-  id: number;
-}
+export type ReminderRecurrence = "none" | "monthly" | "yearly";
+export type ReminderStatus = "pending" | "done";
 
 export interface Reminder {
-  id: number;
+  id: string;
   title: string;
-  description: string;
-  reminder_date: string;
+  amount: number | null;
+  due_at: string;
+  recurrence: ReminderRecurrence;
+  status: ReminderStatus;
 }
 
 export interface NewReminder {
   title: string;
-  description: string;
-  reminderDate: string;
+  amount?: number | null;
+  dueAt: string;
+  recurrence?: ReminderRecurrence;
+  status?: ReminderStatus;
 }
 
 export interface EditReminder {
-  id: number;
-  newTitle: string;
-  newDescription: string;
-  newDate: string;
+  id: string;
+  title: string;
+  amount: number | null;
+  dueAt: string;
+  recurrence: ReminderRecurrence;
+  status: ReminderStatus;
 }
 
 export interface Quote {
@@ -74,98 +83,97 @@ export interface Quote {
   character: string;
 }
 
-export interface ApiTransaction {
-  user_email?: string;
+export interface Transaction {
+  id: string;
   amount: number;
   description: string;
   category: string;
   date: string;
-}
-
-export interface EntryTransaction extends ApiTransaction {
-  entry_id: number;
-}
-
-export interface ExitTransaction extends ApiTransaction {
-  exit_id: number;
-}
-
-export interface Transaction extends ApiTransaction {
-  id: number;
-  credit_card_id?: number | null;
+  credit_card_id?: string | null;
   is_credit_payment?: 0 | 1;
 }
 
 export interface Summary {
-  totalEntries: TotalE;
-  totalExits: TotalE;
-}
-
-interface TotalE {
-  amount: number;
+  month: number;
+  year: number;
+  totalEntries: number;
+  totalExits: number;
+  netBalance: number;
 }
 
 export interface CreditCards {
-  credit_card_id: number;
+  id: string;
   name: string;
-  cut_off_date: string;
-  payment_due_date: string;
+  last4: string | null;
+  credit_limit: number;
+  statement_day: number;
+  due_day: number;
 }
 
 export interface Purchases {
-  credit_card_id: number;
+  id: string;
   name: string;
-  cut_off_date: string;
-  start_cut_off_date: string;
-  end_cut_off_date: string;
-  exit_id: number;
-  amount: number;
-  description: string;
-  date: string;
-  total_amount: number;
+  statementDay: number;
+  dueDay: number;
+  creditLimit: number;
+  startDate: string;
+  endDate: string;
+  totalSpent: number;
+  availableCredit: number;
 }
 
 export interface NewCreditCard {
   name: string;
-  cutOffDate: string;
-  paymentDueDate: string;
+  last4?: string;
+  creditLimit: number;
+  statementDay: number;
+  dueDay: number;
 }
 
+export type LoanDirection = "borrowed" | "lent";
+export type LoanStatus = "active" | "paid";
+
 export interface Loans {
-  id: number;
-  loan_title: string;
-  bank_name: string;
-  interest_rate: number;
-  loan_amount: number;
-  loan_start_date: string;
-  loan_end_date: string;
-  last_five_payments: Payments[];
-  total_payments: number;
+  id: string;
+  name: string;
+  direction: LoanDirection;
+  principal: number;
+  interestRate: number;
+  startDate: string;
+  dueDate: string | null;
+  status: LoanStatus;
+  totalPaid: number;
+  remaining: number;
+  lastFivePayments: Payments[];
 }
 
 export interface NewLoan {
-  loanTitle: string;
-  bankName: string;
-  interestRate: number;
-  loanAmount: number;
-  loanStartDate: string;
-  loanEndDate: string;
+  name: string;
+  direction: LoanDirection;
+  principal: number;
+  interestRate?: number;
+  startDate: string;
+  dueDate?: string;
 }
 
 export interface Payments {
-  id: number;
-  payment_date: string;
-  payment_amount: number;
+  id: string;
+  amount: number;
+  paidAt: string;
+  note: string | null;
 }
 
 export interface NewPayment {
-  loanId: number;
-  paymentDate: string;
-  paymentAmount: number;
+  loanId: string;
+  amount: number;
+  paidAt: string;
+  note?: string;
 }
 
 export interface EditPayment {
-  paymentId: number;
-  paymentDate: string;
-  paymentAmount: number;
+  loanId: string;
+  paymentId: string;
+  amount: number;
+  paidAt: string;
+  note?: string;
 }

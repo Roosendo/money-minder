@@ -1,10 +1,9 @@
 @let summary = summary$ | async;
-@let balance =
-  ((summary?.totalEntries?.amount ?? 0) - (summary?.totalExits?.amount ?? 0)).toFixed(2);
+@let balance = ((summary?.totalEntries ?? 0) - (summary?.totalExits ?? 0)).toFixed(2);
 @let monthlyEntries = monthlyEntries$ | async;
 @let monthlyExits = monthlyExits$ | async;
 
-@if (isLogged) {
+@if (isLogged()) {
   <main class="container py-10">
     <header class="border-b border-rule pb-6">
       <h1 class="text-4xl">Análisis del mes</h1>
@@ -42,13 +41,13 @@
         <div class="flex items-baseline justify-between border-t border-rule py-4">
           <dt class="text-muted">Total de ingresos</dt>
           <dd id="totalIngresos" class="stat-figure text-xl">
-            {{ summary?.totalEntries?.amount ?? 0 | currency: "USD" : "symbol" }}
+            {{ summary?.totalEntries ?? 0 | currency: "USD" : "symbol" }}
           </dd>
         </div>
         <div class="flex items-baseline justify-between border-t border-rule py-4">
           <dt class="text-muted">Total de gastos</dt>
           <dd id="totalEgresos" class="stat-figure text-xl">
-            {{ summary?.totalExits?.amount ?? 0 | currency: "USD" : "symbol" }}
+            {{ summary?.totalExits ?? 0 | currency: "USD" : "symbol" }}
           </dd>
         </div>
         <div class="flex items-baseline justify-between border-y border-rule py-4">

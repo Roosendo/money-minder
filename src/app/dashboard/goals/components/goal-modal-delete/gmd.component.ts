@@ -9,7 +9,7 @@ import type { Saving } from "@app/models";
 })
 export class GoalModalDeleteComponent {
   saving = input.required<Saving>();
-  @Output() delete = new EventEmitter<number>();
+  @Output() delete = new EventEmitter<string>();
   @Output() closeModal = new EventEmitter<void>();
 
   onDelete() {

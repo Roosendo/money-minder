@@ -5,8 +5,10 @@
       @for (reminder of reminders(); track reminder.id) {
         <app-reminders-card
           [title]="reminder.title"
-          [description]="reminder.description"
-          [reminder_date]="reminder.reminder_date"
+          [amount]="reminder.amount"
+          [dueAt]="reminder.due_at"
+          [recurrence]="reminder.recurrence"
+          [status]="reminder.status"
         />
       }
     </div>

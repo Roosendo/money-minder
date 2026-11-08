@@ -41,7 +41,7 @@ export const SavingsStore = signalStore(
       });
     },
 
-    removeSaving(id: number): void {
+    removeSaving(id: string): void {
       patchState(store, { savings: store.savings().filter((saving) => saving.id !== id) });
     },
   })),

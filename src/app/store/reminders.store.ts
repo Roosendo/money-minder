@@ -41,7 +41,7 @@ export const RemindersStore = signalStore(
       });
     },
 
-    removeReminder(id: number): void {
+    removeReminder(id: string): void {
       patchState(store, { reminders: store.reminders().filter((reminder) => reminder.id !== id) });
     },
   })),

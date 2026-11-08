@@ -1,4 +1,4 @@
-@if (isLogged) {
+@if (isLogged()) {
   <main class="container py-10">
     <header class="border-b border-rule pb-6">
       <h1 class="text-4xl">Objetivos de ahorro</h1>
@@ -50,22 +50,12 @@
         />
       </div>
       <div class="mb-4">
-        <label for="start-date" class="mb-2 block">Fecha de inicio</label>
+        <label for="target-date" class="mb-2 block">Fecha objetivo</label>
         <input
-          [(ngModel)]="formData.startDate"
-          name="startDate"
+          [(ngModel)]="formData.targetDate"
+          name="targetDate"
           type="date"
-          id="start-date"
-          class="w-full"
-        />
-      </div>
-      <div class="mb-4">
-        <label for="end-date" class="mb-2 block">Fecha de fin</label>
-        <input
-          [(ngModel)]="formData.endDate"
-          name="endDate"
-          type="date"
-          id="end-date"
+          id="target-date"
           class="w-full"
         />
       </div>

@@ -12,20 +12,20 @@ export class GoalModalEditComponent implements OnInit {
   @Output() save = new EventEmitter<EditSaving>();
   @Output() closeModal = new EventEmitter<void>();
   formEdit: EditSaving = {
-    id: 0,
+    id: "",
     newSavingName: "",
     newTarget: 0,
     newCurrentAmount: 0,
-    newEndDate: "",
+    newTargetDate: "",
   };
 
   ngOnInit() {
     this.formEdit = {
+      id: this.goal().id,
       newSavingName: this.goal().name,
       newTarget: this.goal().target_amount,
       newCurrentAmount: this.goal().current_amount,
-      newEndDate: this.goal().end_date,
-      id: this.goal().id,
+      newTargetDate: this.goal().target_date ?? "",
     };
   }
 

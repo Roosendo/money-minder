@@ -36,7 +36,7 @@
           >
         </li>
         <li class="pt-2 md:pt-0">
-          @if (isLogged) {
+          @if (isLogged()) {
             <app-navigation-bttn [text]="'Ir al Dashboard'" [navigateTo]="'/dashboard'" />
           } @else {
             <app-login-bttn [text]="'Iniciar sesión'" variant="quiet" />

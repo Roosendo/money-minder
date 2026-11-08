@@ -1,4 +1,4 @@
-@if (isLogged) {
+@if (isLogged()) {
   <main class="container py-10">
     <header class="border-b border-rule pb-6">
       <h1 class="text-4xl">Recordatorios</h1>
@@ -26,26 +26,41 @@
         />
       </div>
       <div>
-        <label for="reminder-description" class="mb-2 block">Descripción</label>
-        <textarea
-          [(ngModel)]="formReminder.description"
-          name="description"
-          id="reminder-description"
-          placeholder="Descripción"
-          rows="4"
-          class="w-full resize-none"
-        ></textarea>
+        <label for="reminder-amount" class="mb-2 block">Monto (opcional)</label>
+        <input
+          [(ngModel)]="formReminder.amount"
+          name="amount"
+          type="number"
+          id="reminder-amount"
+          placeholder="3.99"
+          step="0.01"
+          min="0"
+          class="w-full"
+        />
       </div>
       <div>
         <label for="reminder-date" class="mb-2 block">Fecha y hora</label>
         <input
-          [(ngModel)]="formReminder.reminderDate"
-          name="reminderDate"
+          [(ngModel)]="formReminder.dueAt"
+          name="dueAt"
           type="datetime-local"
           id="reminder-date"
           required
           class="w-full"
         />
+      </div>
+      <div>
+        <label for="reminder-recurrence" class="mb-2 block">Repetición</label>
+        <select
+          [(ngModel)]="formReminder.recurrence"
+          name="recurrence"
+          id="reminder-recurrence"
+          class="w-full"
+        >
+          <option value="none">Una sola vez</option>
+          <option value="monthly">Mensual</option>
+          <option value="yearly">Anual</option>
+        </select>
       </div>
       <app-submit-bttn [text]="'Agregar recordatorio'" />
     </form>
@@ -55,8 +70,10 @@
         @for (reminder of reminders(); track reminder.id) {
           <app-reminders-card
             [title]="reminder.title"
-            [description]="reminder.description"
-            [reminder_date]="reminder.reminder_date"
+            [amount]="reminder.amount"
+            [dueAt]="reminder.due_at"
+            [recurrence]="reminder.recurrence"
+            [status]="reminder.status"
           >
             <div class="flex shrink-0 flex-col gap-2">
               <button type="button" (click)="openReminderEdit(reminder)" class="btn btn--quiet">

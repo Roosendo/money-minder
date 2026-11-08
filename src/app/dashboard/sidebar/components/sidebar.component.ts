@@ -4,7 +4,7 @@ import { Router, RouterLink } from "@angular/router";
 
 import { BtnLoginComponent } from "@app/btn-login";
 import { ThemeToggleComponent } from "@app/core";
-import { AuthCacheService, type User } from "@app/services";
+import { AuthCacheService } from "@app/services";
 
 @Component({
   selector: "app-sidebar",
@@ -15,15 +15,15 @@ export class SidebarComponent {
   private readonly authCacheService;
   private readonly router;
 
-  isLogged: boolean;
-  user: User | undefined;
+  isLogged;
+  user;
 
   constructor() {
     this.authCacheService = inject(AuthCacheService);
     this.router = inject(Router);
 
-    this.isLogged = this.authCacheService.isAuthenticated();
-    this.user = this.authCacheService.getUser();
+    this.isLogged = this.authCacheService.isLoggedIn;
+    this.user = this.authCacheService.user;
   }
 
   isSidebarOpen = false;
@@ -38,9 +38,9 @@ export class SidebarComponent {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
-  logOut() {
-    this.authCacheService.clearUser();
-    document.location.reload();
+  async logOut() {
+    await this.authCacheService.logout();
+    await this.router.navigate(["/login"]);
   }
 
   getCurrentRoute() {

@@ -13,13 +13,13 @@ import { AuthCacheService } from "@app/services";
 export default class EntriesComponent implements OnInit {
   private readonly titleService;
   private readonly authCache;
-  isLogged: boolean;
+  isLogged;
   triggerUpdate = false;
 
   constructor() {
     this.titleService = inject(Title);
     this.authCache = inject(AuthCacheService);
-    this.isLogged = this.authCache.isAuthenticated();
+    this.isLogged = this.authCache.isLoggedIn;
   }
 
   ngOnInit() {
