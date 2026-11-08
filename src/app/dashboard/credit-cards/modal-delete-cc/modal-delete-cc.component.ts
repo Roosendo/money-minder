@@ -4,7 +4,6 @@ import type { CreditCards } from "@app/models";
 
 @Component({
   selector: "app-modal-delete-cc",
-  standalone: true,
   imports: [FormsModule],
   templateUrl: "./modal-delete-cc.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,

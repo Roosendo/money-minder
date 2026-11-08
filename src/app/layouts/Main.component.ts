@@ -6,7 +6,6 @@ import { NavBarComponent } from "@app/core/navbar";
 
 @Component({
   selector: "app-main-layout",
-  standalone: true,
   template: `
     <app-navbar />
     <router-outlet />

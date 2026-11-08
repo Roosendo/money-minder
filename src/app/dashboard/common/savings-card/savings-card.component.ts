@@ -4,7 +4,6 @@ import type { Saving } from "@app/models";
 
 @Component({
   selector: "app-savings-card",
-  standalone: true,
   imports: [CurrencyPipe],
   templateUrl: "./savings-card.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,

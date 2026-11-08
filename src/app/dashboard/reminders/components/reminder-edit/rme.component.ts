@@ -5,7 +5,6 @@ import type { EditReminder, Reminder } from "@app/models";
 @Component({
   selector: "app-reminder-edit",
   templateUrl: "./rme.component.html",
-  standalone: true,
   imports: [FormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

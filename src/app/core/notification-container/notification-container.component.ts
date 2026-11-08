@@ -5,7 +5,6 @@ import { NotificationService } from "@app/services";
 
 @Component({
   selector: "app-notification-container",
-  standalone: true,
   imports: [CommonModule, NotificationComponent],
   templateUrl: "./notification-container.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,

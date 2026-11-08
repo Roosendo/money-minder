@@ -4,7 +4,6 @@ import { ThemeToggleComponent } from "@app/core/theme-toggle";
 @Component({
   selector: "app-footer",
   templateUrl: "./footer.component.html",
-  standalone: true,
   imports: [ThemeToggleComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

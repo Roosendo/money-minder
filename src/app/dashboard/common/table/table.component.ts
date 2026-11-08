@@ -13,7 +13,6 @@ import { TransactionsStore } from "@app/store";
 @Component({
   selector: "app-table",
   templateUrl: "./table.component.html",
-  standalone: true,
   imports: [CommonModule, DatePipe, CurrencyPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

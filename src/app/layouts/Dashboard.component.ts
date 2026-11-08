@@ -4,7 +4,6 @@ import { SidebarComponent } from "../dashboard/sidebar";
 
 @Component({
   selector: "app-dashboard-layout",
-  standalone: true,
   template: `
     <app-sidebar />
     <router-outlet />

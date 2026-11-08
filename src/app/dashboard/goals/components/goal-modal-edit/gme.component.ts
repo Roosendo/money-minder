@@ -12,7 +12,6 @@ import type { EditSaving, Saving } from "@app/models";
 @Component({
   selector: "app-goal-modal-edit",
   templateUrl: "./gme.component.html",
-  standalone: true,
   imports: [FormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

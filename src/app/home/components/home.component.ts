@@ -6,7 +6,6 @@ import content from "../content.json";
 
 @Component({
   selector: "app-home",
-  standalone: true,
   templateUrl: "./home.component.html",
   imports: [NgOptimizedImage, LoginBttnComponent, NavigationBttnComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,

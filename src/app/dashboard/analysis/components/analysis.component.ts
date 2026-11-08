@@ -10,7 +10,6 @@ import type { Observable } from "rxjs";
 
 @Component({
   selector: "app-analysis",
-  standalone: true,
   imports: [AsyncPipe, CommonModule, PieChartComponent, NotLoggedComponent, CurrencyPipe],
   templateUrl: "./analysis.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,

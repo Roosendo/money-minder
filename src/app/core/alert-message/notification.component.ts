@@ -5,7 +5,6 @@ import type { Notification } from "@app/models";
 @Component({
   selector: "app-notification",
   templateUrl: "./notification.component.html",
-  standalone: true,
   imports: [CommonModule],
   styles: [
     `

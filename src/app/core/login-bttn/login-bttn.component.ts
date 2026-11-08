@@ -4,7 +4,6 @@ import { RouterLink } from "@angular/router";
 @Component({
   selector: "app-login-bttn",
   templateUrl: "./login-bttn.component.html",
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink],
 })

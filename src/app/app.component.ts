@@ -5,7 +5,6 @@ import { NotificationContainerComponent } from "./core/notification-container/no
 
 @Component({
   selector: "app-root",
-  standalone: true,
   imports: [RouterOutlet, NotificationComponent, NotificationContainerComponent],
   templateUrl: "./app.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,

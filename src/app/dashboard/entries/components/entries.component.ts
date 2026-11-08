@@ -8,7 +8,6 @@ import { AuthCacheService } from "@app/services";
 @Component({
   selector: "app-entries",
   templateUrl: "./entries.component.html",
-  standalone: true,
   imports: [FormComponent, TableComponent, NotLoggedComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

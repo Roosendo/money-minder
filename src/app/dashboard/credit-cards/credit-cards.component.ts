@@ -23,7 +23,6 @@ interface TemplateFormCC {
 
 @Component({
   selector: "app-credit-cards",
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     SubmitBttnComponent,

@@ -12,7 +12,6 @@ import { RemindersCardComponent } from "@app/dashboard/common/reminders-card/rem
 @Component({
   selector: "app-reminder",
   templateUrl: "./reminder.component.html",
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,

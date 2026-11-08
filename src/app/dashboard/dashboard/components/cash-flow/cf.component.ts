@@ -5,7 +5,6 @@ import { CashFlowStore } from "@app/store";
 
 @Component({
   selector: "app-cash-flow",
-  standalone: true,
   templateUrl: "./cf.component.html",
   imports: [BarChartComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,

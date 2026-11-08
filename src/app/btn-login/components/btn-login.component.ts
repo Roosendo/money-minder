@@ -12,7 +12,6 @@ import { AuthCacheService, type User } from "@app/services/auth-cache.service";
 
 @Component({
   selector: "app-btn-login",
-  standalone: true,
   templateUrl: "./btn-login.component.html",
   imports: [NgOptimizedImage, NavigationBttnComponent, LoginBttnComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,

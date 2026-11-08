@@ -5,7 +5,6 @@ import type { Saving } from "@app/models";
 @Component({
   selector: "app-goal-modal-delete",
   templateUrl: "./gmd.component.html",
-  standalone: true,
   imports: [FormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

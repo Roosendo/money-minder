@@ -6,7 +6,6 @@ import { createGraphicBar } from "../utils";
 
 @Component({
   selector: "app-bar-chart",
-  standalone: true,
   imports: [BaseChartDirective],
   templateUrl: "./bar-chart.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,

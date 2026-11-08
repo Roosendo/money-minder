@@ -5,7 +5,6 @@ import { CategoriesStore } from "@app/store";
 
 @Component({
   selector: "app-main-categories",
-  standalone: true,
   templateUrl: "./mc.component.html",
   imports: [PieChartComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,

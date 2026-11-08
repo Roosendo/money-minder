@@ -5,7 +5,6 @@ import { FinancialSummaryStore } from "@app/store";
 @Component({
   selector: "app-financial-summary",
   templateUrl: "./fs.component.html",
-  standalone: true,
   imports: [AsyncPipe, CurrencyPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

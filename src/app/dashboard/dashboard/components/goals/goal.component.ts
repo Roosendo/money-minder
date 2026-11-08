@@ -4,7 +4,6 @@ import { SavingsStore } from "@app/store";
 
 @Component({
   selector: "app-goal",
-  standalone: true,
   templateUrl: "./goal.component.html",
   imports: [SavingsCardComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,

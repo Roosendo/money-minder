@@ -8,7 +8,6 @@ import { AuthCacheService } from "@app/services";
 @Component({
   selector: "app-exits",
   templateUrl: "./exits.component.html",
-  standalone: true,
   imports: [FormComponent, TableComponent, NotLoggedComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

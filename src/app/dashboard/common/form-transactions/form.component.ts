@@ -22,7 +22,6 @@ import categoriesJson from "./categories.json";
 @Component({
   selector: "app-form",
   templateUrl: "./form.component.html",
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, SubmitBttnComponent],
 })

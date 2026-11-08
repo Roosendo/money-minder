@@ -10,7 +10,6 @@ import {
 @Component({
   selector: "app-theme-toggle",
   templateUrl: "./theme-toggle.component.html",
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThemeToggleComponent implements OnInit {

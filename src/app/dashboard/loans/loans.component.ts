@@ -14,7 +14,6 @@ import {
 
 @Component({
   selector: "app-loans",
-  standalone: true,
   imports: [CurrencyPipe, DatePipe, ReactiveFormsModule, SubmitBttnComponent],
   templateUrl: "./loans.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,

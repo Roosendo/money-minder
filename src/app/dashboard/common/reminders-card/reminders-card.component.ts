@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component, input } from "@angular/core";
 
 @Component({
   selector: "app-reminders-card",
-  standalone: true,
   imports: [DatePipe],
   templateUrl: "./reminders-card.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,

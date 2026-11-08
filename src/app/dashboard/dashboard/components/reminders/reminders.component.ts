@@ -4,7 +4,6 @@ import { RemindersStore } from "@app/store";
 
 @Component({
   selector: "app-reminders",
-  standalone: true,
   templateUrl: "./reminders.component.html",
   imports: [RemindersCardComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -13,7 +13,6 @@ import { SavingsCardComponent } from "@app/dashboard/common/savings-card/savings
 @Component({
   selector: "app-goals",
   templateUrl: "./goals.component.html",
-  standalone: true,
   imports: [
     FormsModule,
     GoalModalEditComponent,

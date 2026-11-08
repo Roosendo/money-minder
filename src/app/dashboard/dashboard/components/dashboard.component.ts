@@ -13,7 +13,6 @@ import { RemindersComponent } from "./reminders";
 
 @Component({
   selector: "app-dashboard",
-  standalone: true,
   templateUrl: "./dashboard.component.html",
   imports: [
     NgOptimizedImage,
