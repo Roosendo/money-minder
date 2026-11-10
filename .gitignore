@@ -32,6 +32,9 @@ bun.lockb
 !.vscode/extensions.json
 .history/*
 
+# Agent skills
+/.agents
+
 # Miscellaneous
 /.angular/cache
 .sass-cache/
