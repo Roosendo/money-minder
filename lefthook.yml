@@ -2,7 +2,7 @@ pre-commit:
   parallel: true
   commands:
     lint:
-      glob: "*.{js,ts,html,css}"
+      glob: "*.{js,ts}"
       run: pnpm exec oxlint {staged_files}
     format:
       glob: "*.{js,ts,html,json,css,md}"
