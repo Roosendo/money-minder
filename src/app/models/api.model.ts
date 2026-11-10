@@ -5,6 +5,9 @@
  * `BigIntInterceptor`, and uses UUID strings as identifiers.
  */
 
+/** Money values are exchanged as fixed-point decimal strings (`"1250.00"`). */
+export type Money = string;
+
 export interface Paginated<T> {
   items: T[];
   total: number;
@@ -163,4 +166,83 @@ export interface ApiSession {
     id: string;
     expiresAt: string;
   };
+}
+
+export type AccountType = "bank" | "cash" | "savings" | "credit_card";
+
+/** Account types accepted by `POST /accounts`; credit cards have their own endpoint. */
+export type WritableAccountType = Exclude<AccountType, "credit_card">;
+
+export interface ApiAccount {
+  id: string;
+  name: string;
+  type: AccountType;
+  openingBalance: Money;
+  openingBalanceDate: string;
+  isActive: boolean;
+  movementsTotal: Money;
+  balance: Money;
+  outstandingDebt: Money | null;
+}
+
+export interface ApiDebitCardAccount {
+  id: string;
+  name: string;
+  type: AccountType;
+}
+
+export interface DebitCard {
+  id: string;
+  name: string;
+  last4: string | null;
+  createdAt?: string;
+  accountId: string;
+  account: ApiDebitCardAccount | null;
+  accountName?: string | null;
+}
+
+export interface ApiTransferDetails {
+  transactionId: string;
+  fromAccountId: string;
+  toAccountId: string;
+  fee: Money;
+}
+
+export interface ApiTransferMovement {
+  id: string;
+  accountId: string;
+  amount: Money;
+  account: {
+    id: string;
+    name: string;
+    type: AccountType;
+    isActive: boolean;
+  } | null;
+}
+
+/** Raw transaction shape returned by `GET /transfers`. */
+export interface ApiTransfer {
+  id: string;
+  type: "transfer";
+  amount: Money;
+  description: string | null;
+  occurredAt: string;
+  createdAt?: string;
+  transfer: ApiTransferDetails | null;
+  movements?: ApiTransferMovement[];
+  reversed?: boolean;
+}
+
+/** Flattened view model used by the transfers table. */
+export interface Transfer {
+  id: string;
+  date: string;
+  amount: Money;
+  fee: Money;
+  description: string | null;
+  fromAccountId: string;
+  toAccountId: string;
+  fromAccountName: string | null;
+  toAccountName: string | null;
+  reversed: boolean;
 }

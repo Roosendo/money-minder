@@ -6,7 +6,10 @@ export type FeatureType =
   | "exit"
   | "saving"
   | "reminder"
-  | "creditCard";
+  | "creditCard"
+  | "account"
+  | "transfer"
+  | "debitCard";
 export type ActionType = "create" | "update" | "delete" | "fetch";
 
 export interface Notification {
