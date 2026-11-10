@@ -10,12 +10,15 @@ import type {
   ApiRecentTransaction,
   ApiReminder,
   ApiSaving,
+  ApiTransfer,
   ApiYearlyCategories,
   CashFLow,
   CreditCards,
   FinancialSummary,
   FSClean,
   Loans,
+  Money,
+  Paginated,
   Payments,
   Purchases,
   RecentTransactions,
@@ -24,6 +27,7 @@ import type {
   Summary,
   Transaction,
   TransactionChart,
+  Transfer,
 } from "../models";
 
 /**
@@ -211,3 +215,33 @@ export const loanAdapter = (data: ApiLoan): Loans => ({
 });
 
 export const loansAdapter = (data: ApiLoan[]): Loans[] => data.map(loanAdapter);
+
+const ZERO_MONEY: Money = "0.00";
+
+/**
+ * Flattens a transfer transaction into the row model used by the table.
+ */
+export const transferAdapter = (data: ApiTransfer): Transfer => {
+  const fromAccountId = data.transfer?.fromAccountId ?? "";
+  const toAccountId = data.transfer?.toAccountId ?? "";
+  const fromMovement = data.movements?.find((movement) => movement.accountId === fromAccountId);
+  const toMovement = data.movements?.find((movement) => movement.accountId === toAccountId);
+
+  return {
+    id: data.id,
+    date: toDate(data.occurredAt),
+    amount: data.amount,
+    fee: data.transfer?.fee ?? ZERO_MONEY,
+    description: data.description ?? null,
+    fromAccountId,
+    toAccountId,
+    fromAccountName: fromMovement?.account?.name ?? null,
+    toAccountName: toMovement?.account?.name ?? null,
+    reversed: data.reversed ?? false,
+  };
+};
+
+export const paginatedTransfersAdapter = (data: Paginated<ApiTransfer>): Paginated<Transfer> => ({
+  ...data,
+  items: (data.items ?? []).map(transferAdapter),
+});
