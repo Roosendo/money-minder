@@ -194,8 +194,14 @@
     text-underline-offset: 0.18em;
   }
   .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
     background: color-mix(in oklab, var(--color-ink) 52%, transparent);
-    padding-block: var(--space-lg);
     overflow-y: auto;
   }
   /* The modal is a sheet cut from the page: ink bar on top, hairline all round. */
@@ -394,5 +400,17 @@ tbody th {
 @media (max-width: 47.9375rem) {
   app-dashboard-layout main.container {
     padding-top: 4.5rem;
+  }
+}
+
+/* Respect users who ask the OS to reduce motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

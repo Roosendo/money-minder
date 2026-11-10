@@ -6,7 +6,7 @@
   aria-controls="sidebar"
   [attr.aria-expanded]="isSidebarOpen"
 >
-  <span class="sr-only">Abrir índice</span>
+  <span class="sr-only">{{ isSidebarOpen ? "Cerrar índice" : "Abrir índice" }}</span>
   <svg class="size-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
     <path
       clip-rule="evenodd"
@@ -19,6 +19,8 @@
 <aside
   id="sidebar"
   class="fixed left-0 top-0 z-40 h-screen w-72 -translate-x-full border-r border-rule-2 bg-paper-2 transition-transform duration-200"
+  [attr.inert]="isSidebarOpen ? null : ''"
+  [attr.aria-hidden]="isSidebarOpen ? null : 'true'"
 >
   <div class="h-full overflow-y-auto px-5 py-6">
     <a routerLink="/" class="nav__brand" aria-label="Money Minder, inicio">Money Minder</a>
@@ -249,7 +251,7 @@
               <path d="M7 15l.01 0" />
               <path d="M11 15l2 0" />
             </svg>
-            Tarjetas de Crédito
+            Tarjetas de crédito
           </a>
         </li>
         <li>
@@ -279,7 +281,7 @@
               <path d="M3 10l18 0" />
               <path d="M7 15l4 0" />
             </svg>
-            Tarjetas de Débito
+            Tarjetas de débito
           </a>
         </li>
         <li>

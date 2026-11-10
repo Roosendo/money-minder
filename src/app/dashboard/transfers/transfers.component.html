@@ -100,13 +100,16 @@
     @if (transfers().length) {
       <div class="sheet mt-4 overflow-x-auto">
         <table class="min-w-full">
+          <caption class="sr-only">
+            Historial de transferencias
+          </caption>
           <thead>
             <tr>
-              <th class="p-4 text-left">Fecha</th>
-              <th class="p-4 text-left">Movimiento</th>
-              <th class="p-4 text-left">Monto</th>
-              <th class="p-4 text-left">Comisión</th>
-              <th class="p-4 text-left">Descripción</th>
+              <th scope="col" class="p-4 text-left">Fecha</th>
+              <th scope="col" class="p-4 text-left">Movimiento</th>
+              <th scope="col" class="p-4 text-left">Monto</th>
+              <th scope="col" class="p-4 text-left">Comisión</th>
+              <th scope="col" class="p-4 text-left">Descripción</th>
             </tr>
           </thead>
           <tbody>
@@ -138,7 +141,11 @@
       </div>
 
       @if (totalPages() > 1) {
-        <nav class="mt-4 flex items-center justify-between gap-4" aria-label="Paginación">
+        <nav
+          class="mt-4 flex items-center justify-between gap-4"
+          aria-label="Paginación"
+          [attr.aria-busy]="loading()"
+        >
           <button
             type="button"
             class="btn btn--quiet"
@@ -147,7 +154,7 @@
           >
             Anterior
           </button>
-          <p class="label">Página {{ page() }} de {{ totalPages() }}</p>
+          <p class="label" aria-live="polite">Página {{ page() }} de {{ totalPages() }}</p>
           <button
             type="button"
             class="btn btn--quiet"

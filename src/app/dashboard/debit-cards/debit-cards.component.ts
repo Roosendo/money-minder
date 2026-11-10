@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from "@angular/core";
+import { Component, HostListener, computed, inject, signal } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 import { RouterLink } from "@angular/router";
@@ -60,6 +60,7 @@ export class DebitCardsComponent {
 
   accountName(card: DebitCard): string {
     return (
+      card.account?.name ||
       card.accountName ||
       this.bankAccounts().find((account) => account.id === card.accountId)?.name ||
       "—"
@@ -101,6 +102,11 @@ export class DebitCardsComponent {
     this.deleteTarget.set(null);
   }
 
+  @HostListener("document:keydown.escape")
+  onEscape(): void {
+    if (this.deleteTarget()) this.closeDelete();
+  }
+
   confirmDelete(): void {
     const card = this.deleteTarget();
 
@@ -114,7 +120,7 @@ export class DebitCardsComponent {
       },
       error: (error: unknown) => {
         this.closeDelete();
-        this.handleError(error, "No se pudo eliminar la tarjeta.");
+        this.handleError(error, "No se pudo eliminar la tarjeta.", "delete");
       },
     });
   }
@@ -142,10 +148,14 @@ export class DebitCardsComponent {
     this.alertService.showWarning({ feature: "debitCard", action: "create", customMessage });
   }
 
-  private handleError(error: unknown, fallback: string): void {
+  private handleError(
+    error: unknown,
+    fallback: string,
+    action: "create" | "delete" = "create",
+  ): void {
     this.alertService.showError({
       feature: "debitCard",
-      action: "create",
+      action,
       customMessage: extractApiErrorMessage(error, fallback),
     });
   }
