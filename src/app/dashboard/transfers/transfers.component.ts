@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe } from "@angular/common";
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from "@angular/core";
+import { Component, computed, inject, signal } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 import { RouterLink } from "@angular/router";
@@ -35,7 +35,6 @@ interface TransferForm {
   selector: "app-transfers",
   imports: [ReactiveFormsModule, SubmitBttnComponent, CurrencyPipe, DatePipe, RouterLink],
   templateUrl: "./transfers.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TransfersComponent {
   private readonly formSubmit = inject(FormSubmitService);

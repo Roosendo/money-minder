@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  HostListener,
-  computed,
-  inject,
-  signal,
-} from "@angular/core";
+import { Component, HostListener, computed, inject, signal } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 import { RouterLink } from "@angular/router";
@@ -26,7 +19,6 @@ interface DebitCardForm {
   selector: "app-debit-cards",
   imports: [ReactiveFormsModule, SubmitBttnComponent, RouterLink],
   templateUrl: "./debit-cards.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DebitCardsComponent {
   private readonly formSubmit = inject(FormSubmitService);

@@ -1,12 +1,5 @@
 import { CurrencyPipe, DatePipe } from "@angular/common";
-import {
-  ChangeDetectionStrategy,
-  Component,
-  HostListener,
-  computed,
-  inject,
-  signal,
-} from "@angular/core";
+import { Component, HostListener, computed, inject, signal } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 import { RouterLink } from "@angular/router";
@@ -28,7 +21,6 @@ interface AccountForm {
   selector: "app-accounts",
   imports: [ReactiveFormsModule, SubmitBttnComponent, CurrencyPipe, RouterLink, DatePipe],
   templateUrl: "./accounts.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountsComponent {
   private readonly formSubmit = inject(FormSubmitService);
