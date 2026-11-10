@@ -10,6 +10,7 @@ import {
   loansAdapter,
   monthlySummaryAdapter,
   paginatedTransactionsAdapter,
+  paginatedTransfersAdapter,
   purchasesAdapter,
   recentTransactionsAdapter,
   remindersAdapter,
@@ -18,6 +19,7 @@ import {
 } from "../adapters";
 import { API_BASE_URL } from "../constants/api";
 import type {
+  ApiAccount,
   ApiCashFlow,
   ApiCategoryBreakdown,
   ApiCreditCard,
@@ -29,9 +31,11 @@ import type {
   ApiRecentTransaction,
   ApiReminder,
   ApiSaving,
+  ApiTransfer,
   ApiYearlyCategories,
   CashFLow,
   CreditCards,
+  DebitCard,
   FinancialSummary,
   Loans,
   Paginated,
@@ -43,6 +47,7 @@ import type {
   Summary,
   Transaction,
   TransactionChart,
+  Transfer,
 } from "../models";
 
 @Injectable({
@@ -231,6 +236,38 @@ export class ApiCallsService {
       map((result) => creditCardsAdapter(result)),
       catchError((error) => this.handleError("Credit Cards", error)),
     );
+  }
+
+  /**
+   * Retrieves every active account with its server-calculated balance.
+   */
+  getAccounts(): Observable<ApiAccount[]> {
+    const url = `${API_BASE_URL}/accounts`;
+    return this.http
+      .get<ApiAccount[]>(url)
+      .pipe(catchError((error) => this.handleError("Accounts", error)));
+  }
+
+  /**
+   * Retrieves transfers, flattened into the table view model.
+   */
+  getTransfers(page = 1, pageSize = 15): Observable<Paginated<Transfer>> {
+    const url = `${API_BASE_URL}/transfers?page=${page}&pageSize=${pageSize}`;
+    return this.http.get<Paginated<ApiTransfer>>(url).pipe(
+      map((result) => paginatedTransfersAdapter(result)),
+      catchError((error) => this.handleError("Transfers", error)),
+    );
+  }
+
+  /**
+   * Retrieves debit cards, optionally filtered by linked account.
+   */
+  getDebitCards(accountId?: string, page = 1, pageSize = 15): Observable<Paginated<DebitCard>> {
+    const accountFilter = accountId ? `&accountId=${accountId}` : "";
+    const url = `${API_BASE_URL}/debit-cards?page=${page}&pageSize=${pageSize}${accountFilter}`;
+    return this.http
+      .get<Paginated<DebitCard>>(url)
+      .pipe(catchError((error) => this.handleError("Debit Cards", error)));
   }
 
   getPurchases(): Observable<Purchases[]> {
