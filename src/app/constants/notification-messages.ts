@@ -120,4 +120,55 @@ export const NOTIFICATION_MESSAGES: NotificationMessages = {
       error: "Error al obtener los pagos ⚠️",
     },
   },
+  account: {
+    create: {
+      success: "Cuenta creada exitosamente 🏦",
+      error: "Error al crear la cuenta ❌",
+    },
+    update: {
+      success: "Cuenta actualizada exitosamente 🔄",
+      error: "Error al actualizar la cuenta ❌",
+    },
+    delete: {
+      success: "Cuenta archivada exitosamente 🗂️",
+      error: "Error al archivar la cuenta ❌",
+    },
+    fetch: {
+      error: "Error al obtener las cuentas ⚠️",
+    },
+  },
+  transfer: {
+    create: {
+      success: "Transferencia realizada exitosamente 🔁",
+      error: "Error al realizar la transferencia ❌",
+    },
+    update: {
+      success: "Transferencia actualizada exitosamente 🔄",
+      error: "Error al actualizar la transferencia ❌",
+    },
+    delete: {
+      success: "Transferencia revertida exitosamente 🗑️",
+      error: "Error al revertir la transferencia ❌",
+    },
+    fetch: {
+      error: "Error al obtener las transferencias ⚠️",
+    },
+  },
+  debitCard: {
+    create: {
+      success: "Tarjeta de débito agregada exitosamente 💳",
+      error: "Error al agregar la tarjeta de débito ❌",
+    },
+    update: {
+      success: "Tarjeta de débito actualizada exitosamente 🔄",
+      error: "Error al actualizar la tarjeta de débito ❌",
+    },
+    delete: {
+      success: "Tarjeta de débito eliminada exitosamente 🗑️",
+      error: "Error al eliminar la tarjeta de débito ❌",
+    },
+    fetch: {
+      error: "Error al obtener las tarjetas de débito ⚠️",
+    },
+  },
 } as const;
