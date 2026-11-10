@@ -1,6 +1,6 @@
 import { CommonModule, NgOptimizedImage } from "@angular/common";
 import { Component, inject } from "@angular/core";
-import { Router, RouterLink } from "@angular/router";
+import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 
 import { BtnLoginComponent } from "@app/btn-login";
 import { ThemeToggleComponent } from "@app/core";
@@ -9,11 +9,21 @@ import { AuthCacheService } from "@app/services";
 @Component({
   selector: "app-sidebar",
   templateUrl: "./sidebar.component.html",
-  imports: [NgOptimizedImage, RouterLink, ThemeToggleComponent, BtnLoginComponent, CommonModule],
+  imports: [
+    NgOptimizedImage,
+    RouterLink,
+    RouterLinkActive,
+    ThemeToggleComponent,
+    BtnLoginComponent,
+    CommonModule,
+  ],
 })
 export class SidebarComponent {
   private readonly authCacheService;
   private readonly router;
+
+  /** Match each router link exactly so only the current section is active. */
+  readonly linkMatch = { exact: true } as const;
 
   isLogged;
   user;

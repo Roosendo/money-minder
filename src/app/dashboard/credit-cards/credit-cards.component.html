@@ -1,14 +1,16 @@
 <main class="container max-w-3xl py-10">
   <header class="border-b border-rule pb-6">
-    <h1 class="text-4xl">Tarjetas de Crédito</h1>
-    <p class="lead mt-3 max-w-[48ch] text-ink-2">Añade una nueva tarjeta de crédito.</p>
+    <h1 class="text-4xl">Tarjetas de crédito</h1>
+    <p class="lead mt-3 max-w-[48ch] text-ink-2">
+      Registra tus tarjetas y controla su límite, su fecha de corte y su fecha de pago.
+    </p>
   </header>
 
   <section class="mt-8" aria-labelledby="add-card-heading">
     <div class="well p-6">
       <h2 id="add-card-heading" class="text-xl">Añadir tarjeta</h2>
       <form
-        [formGroup]="formData()"
+        [formGroup]="formData"
         (submit)="onSubmit()"
         class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2"
       >
@@ -92,25 +94,21 @@
             </p>
           </div>
           <div class="flex items-center gap-2">
-            <button
-              type="button"
-              (click)="openModalDelete(card)"
-              id="deleteButton"
-              class="btn btn--danger"
-            >
+            <button type="button" (click)="openModalDelete(card)" class="btn btn--danger">
               Eliminar
+              <span class="visually-hidden">{{ card.name }}</span>
             </button>
             <button
               type="button"
               class="btn btn--quiet"
               (click)="toggleCardExpansion(card.id)"
-              [attr.aria-expanded]="expandedCard === card.id"
+              [attr.aria-expanded]="expandedCard() === card.id"
               [attr.aria-controls]="'card-body-' + card.id"
             >
               <span class="visually-hidden">Ver detalle de {{ card.name }}</span>
               <svg
                 class="size-4 transition-transform duration-200"
-                [ngClass]="expandedCard === card.id ? 'rotate-180' : ''"
+                [class.rotate-180]="expandedCard() === card.id"
                 viewBox="0 0 20 20"
                 fill="currentColor"
                 aria-hidden="true"
@@ -134,15 +132,21 @@
           </p>
         }
 
-        @if (expandedCard === card.id) {
+        @if (expandedCard() === card.id) {
           <div [id]="'card-body-' + card.id" class="grid grid-cols-1 gap-6 p-5 md:grid-cols-2">
             <div class="overflow-x-auto">
               <table class="min-w-full">
+                <caption class="sr-only">
+                  Transacciones de
+                  {{
+                    card.name
+                  }}
+                </caption>
                 <thead>
                   <tr>
-                    <th class="py-2 text-left">Monto</th>
-                    <th class="py-2 text-left">Descripción</th>
-                    <th class="py-2 text-left">Fecha</th>
+                    <th scope="col" class="py-2 text-left">Monto</th>
+                    <th scope="col" class="py-2 text-left">Descripción</th>
+                    <th scope="col" class="py-2 text-left">Fecha</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -182,18 +186,23 @@
                 </div>
               </dl>
               <p class="label mt-3">
-                Fecha de pago: {{ card.due_day }}/{{ currentMonth() }}/{{ currentYear() }}
+                Fecha de pago: {{ card.due_day }}/{{ currentMonth }}/{{ currentYear }}
               </p>
             </div>
           </div>
         }
       </article>
+    } @empty {
+      <p class="text-ink-2">
+        Todavía no hay tarjetas de crédito registradas. Agrega la primera para controlar su límite y
+        sus fechas de corte y pago.
+      </p>
     }
   </section>
 
   @if (modalDelete()) {
     <app-modal-delete-cc
-      [creditCard]="selectedCard!"
+      [creditCard]="selectedCard()!"
       (close)="closeModalDelete()"
       (delete)="deleteCard($event)"
     />

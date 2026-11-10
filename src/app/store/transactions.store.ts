@@ -35,6 +35,18 @@ export const TransactionsStore = signalStore(
       patchState(store, { recentTransactions });
     },
 
+    /**
+     * Reloads the dashboard lists after a ledger mutation.
+     */
+    async refresh(): Promise<void> {
+      const [recentTransactions, entries, exits] = await Promise.all([
+        firstValueFrom(apiCallsService.getRecentTransactions()),
+        firstValueFrom(apiCallsService.getLastEntries()),
+        firstValueFrom(apiCallsService.getLastExits()),
+      ]);
+      patchState(store, { recentTransactions, entries, exits });
+    },
+
     addRecentTransaction(transaction: RecentTransactions): void {
       const updatedTransactions = [transaction, ...store.recentTransactions()];
       if (updatedTransactions.length > 8) {

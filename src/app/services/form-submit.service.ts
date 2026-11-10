@@ -5,21 +5,27 @@ import { type Observable, catchError, map, throwError } from "rxjs";
 import { API_BASE_URL } from "../constants/api";
 import { creditCardAdapter, loanAdapter, reminderAdapter, savingAdapter } from "../adapters";
 import type {
+  ApiAccount,
   ApiCreditCard,
   ApiLoan,
   ApiReminder,
   ApiSaving,
+  ApiTransfer,
   CreditCards,
+  DebitCard,
   EditPayment,
   EditReminder,
   EditSaving,
+  NewAccount,
   NewCreditCard,
+  NewDebitCard,
   NewEntry,
   NewExit,
   NewLoan,
   NewPayment,
   NewReminder,
   NewSaving,
+  NewTransfer,
   Reminder,
   Saving,
 } from "../models";
@@ -186,6 +192,70 @@ export class FormSubmitService {
    */
   deleteReminder(id: string): Observable<{ deleted: boolean }> {
     const url = `${API_BASE_URL}/reminders/${id}`;
+    return this.http.delete<{ deleted: boolean }>(url).pipe(catchError(this.handleError));
+  }
+
+  /**
+   * Creates a cash, bank, or savings account with its opening balance.
+   */
+  accountSubmit(newAccount: NewAccount): Observable<ApiAccount> {
+    const url = `${API_BASE_URL}/accounts`;
+    return this.http
+      .post<ApiAccount>(url, {
+        name: newAccount.name,
+        type: newAccount.type,
+        openingBalance: newAccount.openingBalance,
+        openingBalanceDate: newAccount.openingBalanceDate,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  /**
+   * Archives an account. Its history is preserved.
+   */
+  archiveAccount(id: string): Observable<{ archived: boolean; id: string }> {
+    const url = `${API_BASE_URL}/accounts/${id}/archive`;
+    return this.http
+      .post<{ archived: boolean; id: string }>(url, {})
+      .pipe(catchError(this.handleError));
+  }
+
+  /**
+   * Moves money between two accounts. Credit cards may only be the destination.
+   */
+  transferSubmit(newTransfer: NewTransfer): Observable<ApiTransfer> {
+    const url = `${API_BASE_URL}/transfers`;
+    return this.http
+      .post<ApiTransfer>(url, {
+        fromAccountId: newTransfer.fromAccountId,
+        toAccountId: newTransfer.toAccountId,
+        amount: newTransfer.amount,
+        fee: newTransfer.fee === undefined ? undefined : newTransfer.fee,
+        description: newTransfer.description || undefined,
+        occurredAt: newTransfer.occurredAt || undefined,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  /**
+   * Links a debit card to an owned bank account.
+   */
+  debitCardSubmit(newDebitCard: NewDebitCard): Observable<DebitCard> {
+    const url = `${API_BASE_URL}/debit-cards`;
+    return this.http
+      .post<DebitCard>(url, {
+        accountId: newDebitCard.accountId,
+        name: newDebitCard.name,
+        last4: newDebitCard.last4 || undefined,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  /**
+   * Deletes a debit card's metadata. The linked account is not modified.
+   */
+  deleteDebitCard(id: string): Observable<{ deleted: boolean }> {
+    const url = `${API_BASE_URL}/debit-cards/${id}`;
     return this.http.delete<{ deleted: boolean }>(url).pipe(catchError(this.handleError));
   }
 

@@ -22,7 +22,7 @@
           <td class="num px-2 py-3 whitespace-nowrap">{{ lastData.date | date: "d/MM/y" }}</td>
           @if (type() === "exits") {
             <td class="px-2 py-3">
-              @if (lastData.is_credit_payment) {
+              @if (lastData.isCredit) {
                 Tarjeta
               } @else {
                 Efectivo

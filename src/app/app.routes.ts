@@ -46,12 +46,22 @@ export const routes: Routes = [
         loadComponent: () => import("./dashboard/dashboard/components/dashboard.component"),
       },
       {
+        path: "accounts",
+        loadComponent: () =>
+          import("./dashboard/accounts").then((component) => component.AccountsComponent),
+      },
+      {
         path: "entries",
         loadComponent: () => import("./dashboard/entries/components/entries.component"),
       },
       {
         path: "exits",
         loadComponent: () => import("./dashboard/exits/components/exits.component"),
+      },
+      {
+        path: "transfers",
+        loadComponent: () =>
+          import("./dashboard/transfers").then((component) => component.TransfersComponent),
       },
       {
         path: "analysis",
@@ -69,6 +79,11 @@ export const routes: Routes = [
         path: "credit-cards",
         loadComponent: () =>
           import("./dashboard/credit-cards").then((component) => component.CreditCardsComponent),
+      },
+      {
+        path: "debit-cards",
+        loadComponent: () =>
+          import("./dashboard/debit-cards").then((component) => component.DebitCardsComponent),
       },
       {
         path: "loans",

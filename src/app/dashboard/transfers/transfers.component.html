@@ -1,0 +1,172 @@
+<main class="container max-w-3xl py-10">
+  <header class="border-b border-rule pb-6">
+    <h1 class="text-4xl">Transferencias</h1>
+    <p class="lead mt-3 max-w-[48ch] text-ink-2">
+      Mueve dinero entre tus cuentas. También puedes pagar una tarjeta de crédito.
+    </p>
+  </header>
+
+  @if (sourceAccounts().length === 0 || destinationAccounts().length < 2) {
+    <p class="mt-6 border border-rule-2 bg-paper-2 p-4 text-ink-2">
+      Necesitas al menos dos cuentas activas para hacer una transferencia.
+    </p>
+  }
+
+  <section class="mt-8" aria-labelledby="add-transfer-heading">
+    <div class="well p-6">
+      <h2 id="add-transfer-heading" class="text-xl">Nueva transferencia</h2>
+      <form
+        [formGroup]="formData"
+        (submit)="onSubmit()"
+        class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2"
+      >
+        <div>
+          <label for="fromAccountId" class="label mb-1 block">Desde</label>
+          <select id="fromAccountId" formControlName="fromAccountId" required class="w-full">
+            <option value="" disabled>Seleccionar cuenta</option>
+            @for (account of sourceAccounts(); track account.id) {
+              <option [value]="account.id">
+                {{ account.name }} · {{ accountTypeLabel(account.type) }}
+              </option>
+            }
+          </select>
+        </div>
+        <div>
+          <label for="toAccountId" class="label mb-1 block">Hacia</label>
+          <select id="toAccountId" formControlName="toAccountId" required class="w-full">
+            <option value="" disabled>Seleccionar cuenta</option>
+            @for (account of destinationAccounts(); track account.id) {
+              <option [value]="account.id">
+                {{ account.name }} · {{ accountTypeLabel(account.type) }}
+              </option>
+            }
+          </select>
+        </div>
+        <div>
+          <label for="transferAmount" class="label mb-1 block">Monto (USD)</label>
+          <input
+            id="transferAmount"
+            formControlName="amount"
+            type="number"
+            min="0.01"
+            step="0.01"
+            placeholder="0.00"
+            required
+            class="w-full"
+          />
+        </div>
+        <div>
+          <label for="transferFee" class="label mb-1 block">Comisión (USD)</label>
+          <input
+            id="transferFee"
+            formControlName="fee"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="0.00"
+            class="w-full"
+          />
+        </div>
+        <div>
+          <label for="transferDate" class="label mb-1 block">Fecha</label>
+          <input id="transferDate" formControlName="date" type="date" required class="w-full" />
+        </div>
+        <div>
+          <label for="transferDescription" class="label mb-1 block">Descripción (opcional)</label>
+          <input
+            id="transferDescription"
+            formControlName="description"
+            type="text"
+            placeholder="Ahorro del mes"
+            class="w-full"
+          />
+        </div>
+        <div class="sm:col-span-2">
+          <app-submit-bttn text="Transferir" />
+        </div>
+      </form>
+
+      <p class="mt-5 border-t border-rule pt-4 text-sm text-ink-2">
+        Una tarjeta de crédito solo puede recibir transferencias; su deuda baja por el monto
+        recibido. Para registrar el pago desde la tarjeta usa
+        <a routerLink="/credit-cards" class="underline">Tarjetas de crédito</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="mt-10" aria-labelledby="transfers-heading">
+    <h2 id="transfers-heading" class="text-xl">Historial de transferencias</h2>
+
+    @if (transfers().length) {
+      <div class="sheet mt-4 overflow-x-auto">
+        <table class="min-w-full">
+          <caption class="sr-only">
+            Historial de transferencias
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col" class="p-4 text-left">Fecha</th>
+              <th scope="col" class="p-4 text-left">Movimiento</th>
+              <th scope="col" class="p-4 text-left">Monto</th>
+              <th scope="col" class="p-4 text-left">Comisión</th>
+              <th scope="col" class="p-4 text-left">Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (transfer of transfers(); track transfer.id) {
+              <tr class="border-t border-rule">
+                <td class="num p-4 whitespace-nowrap">
+                  {{ transfer.date | date: "d/MM/y" : "UTC" }}
+                </td>
+                <td class="p-4">
+                  <p>
+                    {{ accountName(transfer.fromAccountId, transfer.fromAccountName) }} →
+                    {{ accountName(transfer.toAccountId, transfer.toAccountName) }}
+                  </p>
+                  @if (transfer.reversed) {
+                    <span class="label text-danger">Reversada</span>
+                  }
+                </td>
+                <td class="num p-4 whitespace-nowrap">
+                  {{ transfer.amount | currency: "USD" : "symbol" }}
+                </td>
+                <td class="num p-4 whitespace-nowrap">
+                  {{ transfer.fee | currency: "USD" : "symbol" }}
+                </td>
+                <td class="p-4">{{ transfer.description }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      @if (totalPages() > 1) {
+        <nav
+          class="mt-4 flex items-center justify-between gap-4"
+          aria-label="Paginación"
+          [attr.aria-busy]="loading()"
+        >
+          <button
+            type="button"
+            class="btn btn--quiet"
+            (click)="goToPage(page() - 1)"
+            [disabled]="page() <= 1 || loading()"
+          >
+            Anterior
+          </button>
+          <p class="label" aria-live="polite">Página {{ page() }} de {{ totalPages() }}</p>
+          <button
+            type="button"
+            class="btn btn--quiet"
+            (click)="goToPage(page() + 1)"
+            [disabled]="page() >= totalPages() || loading()"
+          >
+            Siguiente
+          </button>
+        </nav>
+      }
+    } @else {
+      <p class="mt-4 text-ink-2">Todavía no hay transferencias registradas.</p>
+    }
+  </section>
+</main>

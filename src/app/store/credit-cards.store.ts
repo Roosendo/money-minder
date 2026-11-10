@@ -39,6 +39,18 @@ export const CreditCardsStore = signalStore(
       patchState(store, { creditCards });
     },
 
+    /**
+     * Reloads cards, purchases, and card transactions after a ledger mutation.
+     */
+    async refresh(): Promise<void> {
+      const [creditCards, purchases, cardTransactions] = await Promise.all([
+        firstValueFrom(apiCallsService.getCreditCards()),
+        firstValueFrom(apiCallsService.getPurchases()),
+        firstValueFrom(apiCallsService.getAllCardTransactions()),
+      ]);
+      patchState(store, { creditCards, purchases, cardTransactions });
+    },
+
     addCreditCard(creditCard: CreditCards): void {
       const updatedCreditCards = [...store.creditCards(), creditCard];
       patchState(store, { creditCards: updatedCreditCards });

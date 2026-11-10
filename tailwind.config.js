@@ -1,5 +1,4 @@
-import animations from "@midudev/tailwind-animations";
-const purgeCss = require("@fullhuman/postcss-purgecss");
+const typography = require("@tailwindcss/typography");
 
 /* Almanac: cool slate stock, blue-black ink, one chart magenta.
    Legacy utilities are remapped onto the theme so existing components inherit it. */
@@ -126,11 +125,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    animations,
-    require("@tailwindcss/typography"),
-    purgeCss({
-      content: ["./**/*.hmtl"],
-    }),
-  ],
+  plugins: [typography],
 };

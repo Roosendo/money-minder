@@ -5,7 +5,11 @@
 @import "@fontsource-variable/hanken-grotesk";
 @import "@fontsource-variable/jetbrains-mono";
 @import "@fontsource-variable/newsreader";
-@tailwind base;
+@import "tailwindcss";
+/* v1 of the animations package ships CSS, so it is imported as a stylesheet. */
+@import "@midudev/tailwind-animations";
+/* Tailwind v4 no longer discovers the JavaScript config automatically. */
+@config "../tailwind.config.js";
 /* Tailwind preflight resets heads after the imported base file, so restore the almanac scale inside the base layer, after it. */
 @layer base {
   h1,
@@ -47,8 +51,6 @@
     max-width: 52ch;
   }
 }
-@tailwind components;
-@tailwind utilities;
 
 /* Almanac components. Square corners, two rule weights, one magenta signal. */
 @layer components {
@@ -192,7 +194,45 @@
     text-underline-offset: 0.18em;
   }
   .overlay {
-    background: color-mix(in oklab, var(--color-ink) 62%, transparent);
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    background: color-mix(in oklab, var(--color-ink) 52%, transparent);
+    overflow-y: auto;
+  }
+  /* The modal is a sheet cut from the page: ink bar on top, hairline all round. */
+  .modal {
+    width: 100%;
+    max-width: 34rem;
+    max-height: calc(100dvh - var(--space-xl));
+    overflow-y: auto;
+    padding: var(--space-lg);
+    background: var(--color-sheet);
+    border: var(--rule-hair) solid var(--color-rule);
+    border-top: var(--rule-bar) solid var(--color-ink);
+  }
+  .modal__head {
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-sm);
+    border-bottom: var(--rule-hair) solid var(--color-rule);
+  }
+  .modal__eyebrow {
+    margin: 0 0 var(--space-2xs);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+  .modal__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: var(--rule-hair) solid var(--color-rule);
   }
 
   .stat-figure {
@@ -360,5 +400,17 @@ tbody th {
 @media (max-width: 47.9375rem) {
   app-dashboard-layout main.container {
     padding-top: 4.5rem;
+  }
+}
+
+/* Respect users who ask the OS to reduce motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

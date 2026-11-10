@@ -1,0 +1,149 @@
+<main class="container max-w-3xl py-10">
+  <header class="border-b border-rule pb-6">
+    <h1 class="text-4xl">Cuentas</h1>
+    <p class="lead mt-3 max-w-[48ch] text-ink-2">
+      Agrega tus cuentas de efectivo, banco o ahorros con su saldo inicial.
+    </p>
+  </header>
+
+  <section class="mt-8" aria-labelledby="add-account-heading">
+    <div class="well p-6">
+      <h2 id="add-account-heading" class="text-xl">Añadir cuenta</h2>
+      <form
+        [formGroup]="formData"
+        (submit)="onSubmit()"
+        class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2"
+      >
+        <div class="sm:col-span-2">
+          <label for="accountName" class="label mb-1 block">Nombre de la cuenta</label>
+          <input
+            id="accountName"
+            formControlName="name"
+            type="text"
+            placeholder="Cuenta de ahorros BAC"
+            required
+            class="w-full"
+          />
+        </div>
+        <div>
+          <label for="accountType" class="label mb-1 block">Tipo de cuenta</label>
+          <select id="accountType" formControlName="type" required class="w-full">
+            @for (option of accountTypes; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+        </div>
+        <div>
+          <label for="openingBalanceDate" class="label mb-1 block">Fecha del saldo inicial</label>
+          <input
+            id="openingBalanceDate"
+            formControlName="openingBalanceDate"
+            type="date"
+            required
+            class="w-full"
+          />
+        </div>
+        <div class="sm:col-span-2">
+          <label for="openingBalance" class="label mb-1 block">Saldo inicial (USD)</label>
+          <input
+            id="openingBalance"
+            formControlName="openingBalance"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="0.00"
+            required
+            class="w-full"
+          />
+          <p class="mt-1 text-sm text-muted">
+            Es el dinero que la cuenta ya tenía en esa fecha, no incluye transacciones posteriores.
+          </p>
+        </div>
+        <div class="sm:col-span-2">
+          <app-submit-bttn text="Agregar cuenta" />
+        </div>
+      </form>
+
+      <p class="mt-5 border-t border-rule pt-4 text-sm text-ink-2">
+        Las tarjetas de crédito son cuentas de deuda y se crean desde
+        <a routerLink="/credit-cards" class="underline">Tarjetas de crédito</a>
+        para guardar su límite, fecha de corte y fecha de pago.
+      </p>
+    </div>
+  </section>
+
+  <section class="mt-10" aria-labelledby="accounts-heading">
+    <h2 id="accounts-heading" class="text-xl">Cuentas registradas</h2>
+
+    @if (accounts().length) {
+      <div class="sheet mt-4 overflow-x-auto">
+        <table class="min-w-full">
+          <caption class="sr-only">
+            Cuentas registradas
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col" class="p-4 text-left">Cuenta</th>
+              <th scope="col" class="p-4 text-left">Saldo actual</th>
+              <th scope="col" class="p-4 text-right">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (account of accounts(); track account.id) {
+              <tr class="border-t border-rule">
+                <td class="p-4">
+                  <p class="font-medium">{{ account.name }}</p>
+                  <p class="label mt-1">
+                    {{ accountTypeLabel(account.type) }} · Saldo desde
+                    {{ account.openingBalanceDate | date: "d/MM/y" : "UTC" }}
+                  </p>
+                </td>
+                <td class="num p-4 whitespace-nowrap">
+                  {{ account.balance | currency: "USD" : "symbol" }}
+                </td>
+                <td class="p-4 text-right">
+                  <button type="button" class="btn btn--danger" (click)="openArchive(account)">
+                    Archivar
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <p class="mt-4 text-ink-2">
+        Todavía no tienes cuentas registradas. Agrega la primera para poder registrar ingresos y
+        gastos.
+      </p>
+    }
+  </section>
+
+  @if (archiveTarget(); as account) {
+    <form (submit)="confirmArchive()" class="overlay">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="archive-account-title"
+        aria-describedby="archive-account-desc"
+      >
+        <div class="modal__head">
+          <p class="modal__eyebrow">Cuenta</p>
+          <h2 id="archive-account-title" class="text-xl">
+            ¿Archivar la cuenta {{ account.name }}?
+          </h2>
+        </div>
+        <p id="archive-account-desc" class="text-ink-2">
+          La cuenta dejará de aparecer en la lista. Su historial se conserva.
+        </p>
+        <div class="modal__actions">
+          <button type="submit" class="btn btn--danger">Archivar</button>
+          <button type="button" (click)="closeArchive()" class="btn btn--quiet" autofocus>
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </form>
+  }
+</main>
