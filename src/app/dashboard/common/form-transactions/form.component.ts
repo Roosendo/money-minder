@@ -157,7 +157,7 @@ export class FormComponent {
       date: formData.date,
       description: formData.description,
       credit_card_id: creditCardId,
-      is_credit_payment: creditCardId ? 1 : 0,
+      isCredit: creditCardId ? 1 : 0,
     });
     this.transactionsStore.addRecentTransaction({
       id: resourceId,

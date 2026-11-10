@@ -66,11 +66,14 @@
     @if (debitCards().length) {
       <div class="sheet mt-4 overflow-x-auto">
         <table class="min-w-full">
+          <caption class="sr-only">
+            Tarjetas de débito registradas
+          </caption>
           <thead>
             <tr>
-              <th class="p-4 text-left">Tarjeta</th>
-              <th class="p-4 text-left">Cuenta</th>
-              <th class="p-4 text-right">Acciones</th>
+              <th scope="col" class="p-4 text-left">Tarjeta</th>
+              <th scope="col" class="p-4 text-left">Cuenta</th>
+              <th scope="col" class="p-4 text-right">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -103,17 +106,25 @@
       (submit)="confirmDelete()"
       class="overlay fixed inset-0 z-50 flex items-center justify-center p-4"
     >
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="delete-debit-title">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="delete-debit-title"
+        aria-describedby="delete-debit-desc"
+      >
         <div class="modal__head">
           <p class="modal__eyebrow">Tarjeta de débito</p>
           <h2 id="delete-debit-title" class="text-xl">¿Eliminar la tarjeta {{ card.name }}?</h2>
         </div>
-        <p class="text-ink-2">
+        <p id="delete-debit-desc" class="text-ink-2">
           Solo se elimina el registro de la tarjeta. La cuenta y sus movimientos no se modifican.
         </p>
         <div class="modal__actions">
           <button type="submit" class="btn btn--danger">Eliminar</button>
-          <button type="button" (click)="closeDelete()" class="btn btn--quiet">Cancelar</button>
+          <button type="button" (click)="closeDelete()" class="btn btn--quiet" autofocus>
+            Cancelar
+          </button>
         </div>
       </div>
     </form>

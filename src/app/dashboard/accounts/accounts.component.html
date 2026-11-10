@@ -78,11 +78,14 @@
     @if (accounts().length) {
       <div class="sheet mt-4 overflow-x-auto">
         <table class="min-w-full">
+          <caption class="sr-only">
+            Cuentas registradas
+          </caption>
           <thead>
             <tr>
-              <th class="p-4 text-left">Cuenta</th>
-              <th class="p-4 text-left">Saldo actual</th>
-              <th class="p-4 text-right">Acciones</th>
+              <th scope="col" class="p-4 text-left">Cuenta</th>
+              <th scope="col" class="p-4 text-left">Saldo actual</th>
+              <th scope="col" class="p-4 text-right">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -121,19 +124,27 @@
       (submit)="confirmArchive()"
       class="overlay fixed inset-0 z-50 flex items-center justify-center p-4"
     >
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="archive-account-title">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="archive-account-title"
+        aria-describedby="archive-account-desc"
+      >
         <div class="modal__head">
           <p class="modal__eyebrow">Cuenta</p>
           <h2 id="archive-account-title" class="text-xl">
             ¿Archivar la cuenta {{ account.name }}?
           </h2>
         </div>
-        <p class="text-ink-2">
+        <p id="archive-account-desc" class="text-ink-2">
           La cuenta dejará de aparecer en la lista. Su historial se conserva.
         </p>
         <div class="modal__actions">
           <button type="submit" class="btn btn--danger">Archivar</button>
-          <button type="button" (click)="closeArchive()" class="btn btn--quiet">Cancelar</button>
+          <button type="button" (click)="closeArchive()" class="btn btn--quiet" autofocus>
+            Cancelar
+          </button>
         </div>
       </div>
     </form>

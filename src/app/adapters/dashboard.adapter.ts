@@ -65,7 +65,7 @@ export const transactionAdapter = (data: ApiEntry | ApiExit): Transaction => {
     description: data.description ?? "",
     date: toDate(data.date),
     credit_card_id: exit.credit_card_id ?? null,
-    is_credit_payment: exit.credit_card_id ? 1 : 0,
+    isCredit: exit.credit_card_id ? 1 : 0,
   };
 };
 

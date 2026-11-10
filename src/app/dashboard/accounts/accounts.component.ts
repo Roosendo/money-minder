@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe } from "@angular/common";
-import { Component, computed, inject, signal } from "@angular/core";
+import { Component, HostListener, computed, inject, signal } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 import { RouterLink } from "@angular/router";
@@ -122,6 +122,11 @@ export class AccountsComponent {
     this.archiveTarget.set(null);
   }
 
+  @HostListener("document:keydown.escape")
+  onEscape(): void {
+    if (this.archiveTarget()) this.closeArchive();
+  }
+
   confirmArchive(): void {
     const account = this.archiveTarget();
 
@@ -135,7 +140,7 @@ export class AccountsComponent {
       },
       error: (error: unknown) => {
         this.closeArchive();
-        this.handleError(error, "No se pudo archivar la cuenta.");
+        this.handleError(error, "No se pudo archivar la cuenta.", "delete");
       },
     });
   }
@@ -163,10 +168,14 @@ export class AccountsComponent {
     this.alertService.showWarning({ feature: "account", action: "create", customMessage });
   }
 
-  private handleError(error: unknown, fallback: string): void {
+  private handleError(
+    error: unknown,
+    fallback: string,
+    action: "create" | "delete" = "create",
+  ): void {
     this.alertService.showError({
       feature: "account",
-      action: "create",
+      action,
       customMessage: extractApiErrorMessage(error, fallback),
     });
   }

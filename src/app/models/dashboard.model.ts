@@ -90,7 +90,7 @@ export interface Transaction {
   category: string;
   date: string;
   credit_card_id?: string | null;
-  is_credit_payment?: 0 | 1;
+  isCredit?: 0 | 1;
 }
 
 export interface Summary {
