@@ -1,0 +1,67 @@
+<form
+  [formGroup]="formData"
+  (submit)="onSubmit()"
+  class="overlay fixed inset-0 z-50 flex items-center justify-center p-4"
+>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pay-card-title">
+    <div class="modal__head">
+      <p class="modal__eyebrow">Tarjeta de crédito</p>
+      <h2 id="pay-card-title" class="text-xl">Pagar {{ creditCard().name }}</h2>
+      <p class="mt-1 text-sm text-ink-2">
+        Deuda actual:
+        <span class="num">{{ creditCard().outstandingDebt | currency: "USD" : "symbol" }}</span>
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4">
+      <div>
+        <label for="paymentFromAccount" class="label mb-1 block">Pagar desde</label>
+        @if (accounts().length) {
+          <select id="paymentFromAccount" formControlName="fromAccountId" class="w-full">
+            @for (account of accounts(); track account.id) {
+              <option [value]="account.id">{{ account.name }}</option>
+            }
+          </select>
+        } @else {
+          <p class="text-sm text-muted">No hay cuentas de efectivo, banco o ahorros disponibles.</p>
+        }
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="paymentAmount" class="label mb-1 block">Monto (USD)</label>
+          <input
+            id="paymentAmount"
+            formControlName="amount"
+            type="number"
+            min="0.01"
+            step="0.01"
+            placeholder="0.00"
+            required
+            class="w-full"
+          />
+        </div>
+        <div>
+          <label for="paymentFee" class="label mb-1 block">Comisión (USD)</label>
+          <input
+            id="paymentFee"
+            formControlName="fee"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="0.00"
+            class="w-full"
+          />
+        </div>
+      </div>
+      <div>
+        <label for="paymentDate" class="label mb-1 block">Fecha</label>
+        <input id="paymentDate" formControlName="date" type="date" required class="w-full" />
+      </div>
+    </div>
+
+    <div class="modal__actions">
+      <button type="submit" class="btn" [disabled]="!accounts().length">Pagar tarjeta</button>
+      <button type="button" (click)="onClose()" class="btn btn--quiet">Cancelar</button>
+    </div>
+  </div>
+</form>

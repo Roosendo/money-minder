@@ -1,0 +1,121 @@
+<main class="container max-w-3xl py-10">
+  <header class="border-b border-rule pb-6">
+    <h1 class="text-4xl">Tarjetas de débito</h1>
+    <p class="lead mt-3 max-w-[48ch] text-ink-2">
+      Asocia tarjetas de débito a tus cuentas bancarias.
+    </p>
+  </header>
+
+  @if (bankAccounts().length === 0) {
+    <p class="mt-6 border border-rule-2 bg-paper-2 p-4 text-ink-2">
+      Primero agrega una cuenta de tipo banco en
+      <a routerLink="/accounts" class="underline">Cuentas</a>.
+    </p>
+  }
+
+  <section class="mt-8" aria-labelledby="add-debit-card-heading">
+    <div class="well p-6">
+      <h2 id="add-debit-card-heading" class="text-xl">Añadir tarjeta</h2>
+      <form
+        [formGroup]="formData"
+        (submit)="onSubmit()"
+        class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2"
+      >
+        <div class="sm:col-span-2">
+          <label for="debitCardName" class="label mb-1 block">Nombre de la tarjeta</label>
+          <input
+            id="debitCardName"
+            formControlName="name"
+            type="text"
+            placeholder="Tarjeta de débito BAC"
+            required
+            class="w-full"
+          />
+        </div>
+        <div>
+          <label for="debitCardAccount" class="label mb-1 block">Cuenta asociada</label>
+          <select id="debitCardAccount" formControlName="accountId" required class="w-full">
+            <option value="" disabled>Seleccionar cuenta bancaria</option>
+            @for (account of bankAccounts(); track account.id) {
+              <option [value]="account.id">{{ account.name }}</option>
+            }
+          </select>
+        </div>
+        <div>
+          <label for="debitCardLast4" class="label mb-1 block">Últimos 4 dígitos (opcional)</label>
+          <input
+            id="debitCardLast4"
+            formControlName="last4"
+            type="text"
+            inputmode="numeric"
+            maxlength="4"
+            placeholder="1234"
+            class="w-full"
+          />
+        </div>
+        <div class="sm:col-span-2">
+          <app-submit-bttn text="Agregar tarjeta" />
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="mt-10" aria-labelledby="debit-cards-heading">
+    <h2 id="debit-cards-heading" class="text-xl">Tarjetas registradas</h2>
+
+    @if (debitCards().length) {
+      <div class="sheet mt-4 overflow-x-auto">
+        <table class="min-w-full">
+          <thead>
+            <tr>
+              <th class="p-4 text-left">Tarjeta</th>
+              <th class="p-4 text-left">Cuenta</th>
+              <th class="p-4 text-right">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (card of debitCards(); track card.id) {
+              <tr class="border-t border-rule">
+                <td class="p-4">
+                  <p class="font-medium">{{ card.name }}</p>
+                  @if (card.last4) {
+                    <p class="num label mt-1">···· {{ card.last4 }}</p>
+                  }
+                </td>
+                <td class="p-4">{{ accountName(card) }}</td>
+                <td class="p-4 text-right">
+                  <button type="button" class="btn btn--danger" (click)="openDelete(card)">
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <p class="mt-4 text-ink-2">Todavía no hay tarjetas de débito registradas.</p>
+    }
+  </section>
+
+  @if (deleteTarget(); as card) {
+    <form
+      (submit)="confirmDelete()"
+      class="overlay fixed inset-0 z-50 flex items-center justify-center p-4"
+    >
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="delete-debit-title">
+        <div class="modal__head">
+          <p class="modal__eyebrow">Tarjeta de débito</p>
+          <h2 id="delete-debit-title" class="text-xl">¿Eliminar la tarjeta {{ card.name }}?</h2>
+        </div>
+        <p class="text-ink-2">
+          Solo se elimina el registro de la tarjeta. La cuenta y sus movimientos no se modifican.
+        </p>
+        <div class="modal__actions">
+          <button type="submit" class="btn btn--danger">Eliminar</button>
+          <button type="button" (click)="closeDelete()" class="btn btn--quiet">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  }
+</main>
