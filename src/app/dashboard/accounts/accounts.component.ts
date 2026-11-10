@@ -5,7 +5,7 @@ import { Title } from "@angular/platform-browser";
 import { RouterLink } from "@angular/router";
 
 import { SubmitBttnComponent } from "@app/core";
-import type { ApiAccount, WritableAccountType } from "@app/models";
+import type { AccountType, ApiAccount, WritableAccountType } from "@app/models";
 import { AlertService, FormSubmitService } from "@app/services";
 import { AccountsStore } from "@app/store";
 import { extractApiErrorMessage, isValidNonNegativeMoney, toMoney } from "@app/utils";
@@ -101,7 +101,7 @@ export class AccountsComponent {
       });
   }
 
-  accountTypeLabel(type: string): string {
+  accountTypeLabel(type: AccountType): string {
     switch (type) {
       case "cash":
         return "Efectivo";

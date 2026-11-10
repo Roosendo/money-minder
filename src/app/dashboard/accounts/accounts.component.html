@@ -120,10 +120,7 @@
   </section>
 
   @if (archiveTarget(); as account) {
-    <form
-      (submit)="confirmArchive()"
-      class="overlay fixed inset-0 z-50 flex items-center justify-center p-4"
-    >
+    <form (submit)="confirmArchive()" class="overlay">
       <div
         class="modal"
         role="dialog"

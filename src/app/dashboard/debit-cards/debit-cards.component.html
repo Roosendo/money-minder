@@ -102,10 +102,7 @@
   </section>
 
   @if (deleteTarget(); as card) {
-    <form
-      (submit)="confirmDelete()"
-      class="overlay fixed inset-0 z-50 flex items-center justify-center p-4"
-    >
+    <form (submit)="confirmDelete()" class="overlay">
       <div
         class="modal"
         role="dialog"

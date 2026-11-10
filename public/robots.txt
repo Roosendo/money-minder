@@ -1,0 +1,16 @@
+# Money Minder keeps the public landing and login in the index, and keeps the
+# authenticated ledger out of it.
+User-agent: *
+Allow: /
+
+Disallow: /dashboard
+Disallow: /accounts
+Disallow: /entries
+Disallow: /exits
+Disallow: /transfers
+Disallow: /analysis
+Disallow: /savings
+Disallow: /reminders
+Disallow: /credit-cards
+Disallow: /debit-cards
+Disallow: /loans

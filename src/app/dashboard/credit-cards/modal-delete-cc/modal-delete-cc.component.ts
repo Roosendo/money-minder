@@ -1,16 +1,19 @@
-import { Component, input, output } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { Component, HostListener, input, output } from "@angular/core";
 import type { CreditCards } from "@app/models";
 
 @Component({
   selector: "app-modal-delete-cc",
-  imports: [FormsModule],
   templateUrl: "./modal-delete-cc.component.html",
 })
 export class ModalDeleteCcComponent {
   creditCard = input.required<CreditCards>();
   delete = output<string>();
   close = output<void>();
+
+  @HostListener("document:keydown.escape")
+  onEscape(): void {
+    this.close.emit();
+  }
 
   onDelete() {
     this.delete.emit(this.creditCard().id);

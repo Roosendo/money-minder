@@ -1,10 +1,21 @@
-<form (submit)="onDelete()" class="overlay fixed inset-0 z-50 flex items-center justify-center p-4">
-  <div class="sheet w-full max-w-lg p-6">
-    <h2 class="text-xl">¿Eliminar la tarjeta {{ creditCard().name }}?</h2>
-    <p class="mt-2 text-ink-2">Esta acción no se puede deshacer.</p>
-    <div class="mt-6 flex flex-wrap gap-3">
+<form (submit)="onDelete()" class="overlay">
+  <div
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="delete-credit-title"
+    aria-describedby="delete-credit-desc"
+  >
+    <div class="modal__head">
+      <p class="modal__eyebrow">Tarjeta de crédito</p>
+      <h2 id="delete-credit-title" class="text-xl">
+        ¿Eliminar la tarjeta {{ creditCard().name }}?
+      </h2>
+    </div>
+    <p id="delete-credit-desc" class="text-ink-2">Esta acción no se puede deshacer.</p>
+    <div class="modal__actions">
       <button type="submit" class="btn btn--danger">Eliminar</button>
-      <button type="button" (click)="onClose()" class="btn btn--quiet">Cancelar</button>
+      <button type="button" (click)="onClose()" class="btn btn--quiet" autofocus>Cancelar</button>
     </div>
   </div>
 </form>

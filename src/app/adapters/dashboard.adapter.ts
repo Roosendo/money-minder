@@ -57,15 +57,15 @@ const toDate = (value: string | null | undefined): string => {
  * Converts an API entry or exit into the flat view model used by the tables.
  */
 export const transactionAdapter = (data: ApiEntry | ApiExit): Transaction => {
-  const exit = data as ApiExit;
+  const creditCardId = "credit_card_id" in data ? data.credit_card_id : null;
   return {
     id: data.id,
     amount: toNumber(data.amount),
     category: data.categories?.name ?? "General",
     description: data.description ?? "",
     date: toDate(data.date),
-    credit_card_id: exit.credit_card_id ?? null,
-    isCredit: exit.credit_card_id ? 1 : 0,
+    credit_card_id: creditCardId ?? null,
+    isCredit: creditCardId ? 1 : 0,
   };
 };
 

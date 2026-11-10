@@ -1,5 +1,5 @@
 import { CurrencyPipe } from "@angular/common";
-import { Component, type OnInit, inject, input, output } from "@angular/core";
+import { Component, HostListener, type OnInit, inject, input, output } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 
 import type { ApiAccount, CreditCards } from "@app/models";
@@ -95,6 +95,11 @@ export class ModalPayCcComponent implements OnInit {
 
   onClose(): void {
     this.close.emit();
+  }
+
+  @HostListener("document:keydown.escape")
+  onEscape(): void {
+    this.onClose();
   }
 
   private warn(customMessage: string): void {
